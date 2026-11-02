@@ -1,0 +1,4 @@
+-- [Text] alertHookText
+
+Script runtime error
+Value out of range

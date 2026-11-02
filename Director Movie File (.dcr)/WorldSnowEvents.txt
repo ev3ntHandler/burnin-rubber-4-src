@@ -1,0 +1,173 @@
+-- [Text] WorldSnowEvents
+
+//--------------------------------------------------------
+// World{:World} SPECFIFIC SETUP & RESET
+//--------------------------------------------------------
+SetupWorldSnow_Begin
+	PutMessage	--> SetupWorldSnow
+	// ModelList
+	SetValue		[#WorldModelList: {:WorldModels}.duplicate()]
+	// Additional textures & shader sets
+	Evaluate	"{:Setting}"="Night"	[#Event: "WorldSnowAdditiveTextures"]	
+	// Skybox
+	Event	SkyboxInitialization
+	SetSkybox	World{:World}	[#skybox: "SkyboxSnow"]
+SetupWorldSnow_End
+
+SetupWorldSnowSpecialEffects_Begin
+	PutMessage	SetupWorldSnowSpecialEffects		
+SetupWorldSnowSpecialEffects_End
+
+SetupWorldSnowEffectsLow_Begin
+	PutMessage	SetupWorldSnowEffectsLow
+	SetShader	World{:World}	[#shader: "WorldSnowMisc_Material", #texture2: "None"]
+	TurnOffVehicleEffects	x	x
+	WorldTrafficLightsOff	x	x
+SetupWorldSnowEffectsLow_End
+
+SetupWorldSnowEffectsMedium_Begin
+	PutMessage	SetupWorldSnowEffectsMedium
+	SetShader	World{:World}	[#shader: "WorldSnowMisc_Material", #texture2: "None"]
+	TurnOnVehicleEffects	x	x
+	WorldTrafficLightsOff	x	x
+SetupWorldSnowEffectsMedium_End
+
+SetupWorldSnowEffectsHigh_Begin
+	PutMessage	SetupWorldSnowEffectsHigh
+	Evaluate	"{:Setting}"="Night"	[#Event: "WorldSnowAdditive"]
+	TurnOnVehicleEffects	x	x
+	WorldTrafficLightsOn	x	x
+SetupWorldSnowEffectsHigh_End
+
+WorldSnowAdditiveTextures_Begin
+	CreateTexture	World{:World}	[#texture: "WorldMiscAdditive_Texture", #filtering: #high, #renderFormat: #rgba5650]
+WorldSnowAdditiveTextures_End
+
+WorldSnowAdditive_Begin
+	SetShader	World{:World}	[#shader: "WorldSnowMisc_Material", #texture3: "WorldMiscAdditive_Texture", #textureMode3: #none, #blendFunction3: #add]
+WorldSnowAdditive_End
+
+//--------------------------------------------------------
+// World{:World} TILE SPECIFIC EVENTS
+//--------------------------------------------------------
+SnowUpdateToSafeHouseMarker_Begin
+	PutMessage	--> --> SnowUpdateToSafeHouseMarker
+	SetValue	gGame.WorldStartDummy	[#Snow: "SafeHouseSnow_Marker"]
+SnowUpdateToSafeHouseMarker_End
+
+//--------------------------------------------------------
+// TRAFFIC
+//--------------------------------------------------------
+WorldSnowTraffic01_Begin
+	PutMessage	--> WorldSnowTraffic01
+	// RIGHT! NO LEFT CARS IN SNOW! All DIRECTION RIGHT1
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #right1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Shopper, #direction: #right1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Yup, #direction: #right1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Bus, #direction: #right1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Bus, #direction: #right1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Truck, #direction: #right1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #PoliceTraffic, #direction: #right1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #TaxiTraffic, #direction: #right1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Truck, #direction: #right1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Truck, #direction: #right1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #right1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Shopper, #direction: #right1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Yup, #direction: #right1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #ArmoredTruck, #direction: #right1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #right1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Bus, #direction: #right1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Bus, #direction: #right1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Truck, #direction: #right1, #skin: 2]	
+	Buildtraffic	World{:World}	[#type: #TaxiTraffic, #direction: #right1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Truck, #direction: #right1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Truck, #direction: #right1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #right1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Shopper, #direction: #right1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Yup, #direction: #right1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Bus, #direction: #right1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #right1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #right1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Bus, #direction: #right1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #ArmoredTruck, #direction: #right1, #skin: 1]	
+	Buildtraffic	World{:World}	[#type: #TaxiTraffic, #direction: #right1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #right1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Shopper, #direction: #right1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Yup, #direction: #right1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Bus, #direction: #right1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Bus, #direction: #right1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Truck, #direction: #right1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #PoliceTraffic, #direction: #right1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #TaxiTraffic, #direction: #right1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Truck, #direction: #right1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Truck, #direction: #right1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #right1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Shopper, #direction: #right1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #ArmoredTruck, #direction: #right1, #skin: 1]
+WorldSnowTraffic01_End
+
+//--------------------------------------------------------
+// NUCLEAR DETONATORS
+//--------------------------------------------------------
+NuclearDetonatorSnow1_Begin
+	PutMessage	--> NuclearDetonatorSnow1
+	// Std detonator
+	Event	NuclearDetonator
+	// set camera
+	SetValue	gGame.Camera[1]	[#state: #mimic]
+	SetValue	gGame.Camera[1]	[#target: "NuclearDetonatorSnow1_Camera"]
+	// DelayEvent to restore camera
+	DelayEvent		[#delay: 6000, #name: "RestoreCamera", #event: "RestoreCamera"]
+	// AddToList
+	AddToList	gGame.UPNuclearDetonators	[#value: "NuclearDetonatorSnow1", #override: TRUE]	
+	CheckNuclearDetonators	x	x
+NuclearDetonatorSnow1_End
+
+NuclearDetonatorSnow2_Begin
+	PutMessage	--> NuclearDetonatorSnow2
+	// Std detonator
+	Event	NuclearDetonator
+	// set camera
+	SetValue	gGame.Camera[1]	[#state: #mimic]
+	SetValue	gGame.Camera[1]	[#target: "NuclearDetonatorSnow2_Camera"]
+	// DelayEvent to restore camera
+	DelayEvent		[#delay: 6000, #name: "RestoreCamera", #event: "RestoreCamera"]
+	// AddToList
+	AddToList	gGame.UPNuclearDetonators	[#value: "NuclearDetonatorSnow2", #override: TRUE]		
+	CheckNuclearDetonators	x	x
+NuclearDetonatorSnow2_End
+
+NuclearDetonatorSnow3_Begin
+	PutMessage	--> NuclearDetonatorSnow3
+	// Std detonator
+	Event	NuclearDetonator
+	// set camera
+	SetValue	gGame.Camera[1]	[#state: #mimic]
+	SetValue	gGame.Camera[1]	[#target: "NuclearDetonatorSnow3_Camera"]
+	// DelayEvent to restore camera
+	DelayEvent		[#delay: 6000, #name: "RestoreCamera", #event: "RestoreCamera"]
+	// AddToList
+	AddToList	gGame.UPNuclearDetonators	[#value: "NuclearDetonatorSnow3", #override: TRUE]	
+	CheckNuclearDetonators	x	x
+NuclearDetonatorSnow3_End
+
+//--------------------------------------------------------
+// LANDMARK
+//--------------------------------------------------------
+LandMarkSnow_Begin
+	PutMessage	--> LandMarkSnow
+	// Sound
+	PlaySound	SpecialPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #LandmarkInformationTitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #LandmarkInformation]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World{:World}"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Do it
+	SetModel	World{:World}	[#model: "04_12_landmarksnow_1_object", #resource: "landmarksnowdestroyed_object", #shader: "WorldSnowMisc_Material"] 
+	AddToList	gGame.UPLandMarks	[#value: "LandMarkSnow_Object", #override: TRUE]
+	SaveData	x	x
+	CheckAllLandMarks	x	x
+LandMarkSnow_End

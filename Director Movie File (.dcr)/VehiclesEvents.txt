@@ -1,0 +1,93 @@
+-- [Text] VehiclesEvents
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// Cars
+//-------------------------------------------------------------------------------------------------------------------------------------------
+SetupCar_Begin
+	PutMessage	--> Setup{:Vehicle}
+	// Textures
+	CreateTexture	{:SetupCar}	[#texture: "{:SetupCar}Skin{:SetupSkin}_Texture", #filtering: #lowfiltered]
+	CreateTexture	{:SetupCar}	[#texture: "Wheels_Texture", #filtering: #lowfiltered])
+	CreateTexture	{:SetupCar}	[#texture: "Reflection_Texture", #filtering: #lowfiltered])
+	CreateTexture	{:SetupCar}	[#texture: "FrontLight_Texture", #filtering: #lowfiltered])
+	CreateTexture	{:SetupCar}	[#texture: "RearLight_Texture", #filtering: #lowfiltered])
+	// Set textures channel 1
+	SetShader	{:SetupCar}	[#shader: "{:SetupCar}_Material", #texture1: "{:SetupCar}Skin{:SetupSkin}_Texture", #shininess: 30.0]
+	SetShader	{:SetupCar}	[#shader: "{:SetupCar}Glass_Material", #texture1: "{:SetupCar}Skin{:SetupSkin}_Texture", #shininess: 35.0]
+	SetShader	{:SetupCar}	[#shader: "{:SetupCar}Wheels_Material", #texture1: "Wheels_Texture", #shininess: 30.0]
+	SetShader	{:SetupCar}	[#shader: "FrontLight_Material", #texture1: "FrontLight_Texture"]
+	SetShader	{:SetupCar}	[#shader: "RearLight_Material", #texture1: "RearLight_Texture"]
+	// Additive shaders light
+	BlendShader	{:SetupCar}	[#shader: "FrontLight_Material", #blendMode: #add]
+	BlendShader	{:SetupCar}	[#shader: "RearLight_Material", #blendMode: #add]
+	// Set textures channel 2
+	SetShader	{:SetupCar}	[#shader: "{:SetupCar}_Material", #texture2: "Reflection_Texture"]
+	SetShader	{:SetupCar}	[#shader: "{:SetupCar}Glass_Material", #texture2: "Reflection_Texture"]
+	// Set blendmodes
+	SetShader	{:SetupCar}	[#shader: "{:SetupCar}_Material", #blendFunction1: #multiply, #textureMode2: #reflection, #blendFunction2: #add]
+	SetShader	{:SetupCar}	[#shader: "{:SetupCar}Glass_Material", #blendFunction1: #multiply, #textureMode2: #reflection, #blendFunction2: #add]
+	SetShader	{:SetupCar}	[#shader: "{:SetupCar}Wheels_Material", #shininess: 0.0]
+SetupCar_End
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// Boats
+//-------------------------------------------------------------------------------------------------------------------------------------------
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// Planes
+//-------------------------------------------------------------------------------------------------------------------------------------------
+SetupSpitfire_Begin
+	PutMessage	--> SetupSpitfire
+	// Textures
+	CreateTexture	{:SetupCar}	[#texture: "{:SetupCar}Skin{:SetupSkin}_Texture", #filtering: #lowfiltered]
+	CreateTexture	{:SetupCar}	[#texture: "SpitfireRotor_Texture", #filtering: #lowfiltered, #renderFormat: #rgba8888]
+	// Set textures
+	SetShader	{:SetupCar}	[#shader: "{:SetupCar}_Material", #texture1: "{:SetupCar}Skin{:SetupSkin}_Texture", #shininess: 30.0]	
+	SetShader	{:SetupCar}	[#shader: "SpitfireRotor_Material", #texture1: "SpitfireRotor_Texture"]	
+SetupSpitfire_End
+
+SetupF22_Begin
+	PutMessage	--> SetupF22
+	// Textures
+	CreateTexture	{:SetupCar}	[#texture: "{:SetupCar}Skin{:SetupSkin}_Texture", #filtering: #lowfiltered]
+	CreateTexture	{:SetupCar}	[#texture: "F22Engine_Texture", #filtering: #lowfiltered, #renderFormat: #rgba8888]
+	// Set textures
+	SetShader	{:SetupCar}	[#shader: "{:SetupCar}_Material", #texture1: "{:SetupCar}Skin{:SetupSkin}_Texture", #shininess: 30.0]	
+	SetShader	{:SetupCar}	[#shader: "F22Engine_Material", #texture1: "F22Engine_Texture"]	
+	BlendShader	{:SetupCar}	[#shader: "F22Engine_Material", #blendMode: #add]
+SetupF22_End
+
+SetupAC130_Begin
+	PutMessage	--> SetupAC130
+	// Textures
+	CreateTexture	{:SetupCar}	[#texture: "{:SetupCar}Skin{:SetupSkin}_Texture", #filtering: #lowfiltered]
+	CreateTexture	{:SetupCar}	[#texture: "AC130Rotor_Texture", #filtering: #lowfiltered, #renderFormat: #rgba8888]
+	// Set textures
+	SetShader	{:SetupCar}	[#shader: "{:SetupCar}_Material", #texture1: "{:SetupCar}Skin{:SetupSkin}_Texture", #shininess: 30.0]	
+	SetShader	{:SetupCar}	[#shader: "AC130Rotor_Material", #texture1: "AC130Rotor_Texture"]	
+SetupAC130_End
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// Helicopters
+//-------------------------------------------------------------------------------------------------------------------------------------------
+SetupApache_Begin
+	PutMessage	--> SetupApache
+	// Textures
+	CreateTexture	{:SetupCar}	[#texture: "{:SetupCar}Skin{:SetupSkin}_Texture", #filtering: #lowfiltered]
+	CreateTexture	{:SetupCar}	[#texture: "ApacheRotor_Texture", #filtering: #lowfiltered, #renderFormat: #rgba8888]
+	CreateTexture	{:SetupCar}	[#texture: "ApacheRotor2_Texture", #filtering: #lowfiltered, #renderFormat: #rgba8888]
+	// Set textures
+	SetShader	{:SetupCar}	[#shader: "{:SetupCar}_Material", #texture1: "{:SetupCar}Skin{:SetupSkin}_Texture", #shininess: 30.0]	
+	SetShader	{:SetupCar}	[#shader: "{:SetupCar}Glass_Material", #texture1: "{:SetupCar}Skin{:SetupSkin}_Texture", #shininess: 35.0]
+	SetShader	{:SetupCar}	[#shader: "ApacheRotor_Material", #texture1: "ApacheRotor_Texture", #texture2: "ApacheRotor2_Texture"]
+	// BlendModes
+	SetShader	{:SetupCar}	[#shader: "ApacheRotor_Material", #blendFunction2: #blend, #blendConstant2: 0.0]
+SetupApache_End
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// Misc
+//-------------------------------------------------------------------------------------------------------------------------------------------
+NitroSetup_Begin
+	CreateTexture	Nitro	[#texture: "Nitro_Texture", #filtering: #lowfiltered]
+	BlendShader	Nitro	[#shader: "Nitro_Material", #blendMode: #add]
+NitroSetup_End

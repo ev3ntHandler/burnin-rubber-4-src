@@ -1,0 +1,924 @@
+-- [Text] WorldEvents
+
+//--------------------------------------------------------
+// WORLDGENERAL SETUP & RESET
+//--------------------------------------------------------
+SetupWorld_Begin
+	PutMessage	SetupWorld	
+	// Start showing init update
+	SetValue		[#ForceUpdate: TRUE]
+	SetValue		[#ForceState: #initializing]
+	SetValue		[#Scene: "World"]
+	UpdateTagsInitializingGame	x	x
+	// Update shockwave trophies
+	UpdateSWTrophies	x	x
+	// TrackInfo
+	SetValue		[#Track: "World{:World}"]
+	UpdateTrackInfo
+	// Setup textures & world
+	Event	SetupTexturesWorld
+	Event	SetupWorld{:World}
+	// Setup objects & pickups
+	Event	SetupObjects
+	Event	SetupDebris
+	Event	SetupPickups
+	Event	SetupWorldMarker
+	// Clone objects, pickups and markers
+	CloneModel	World{:world}	[#SourceMember: "Objects", #lod: FALSE, #delete: TRUE]
+	CloneModel	World{:world}	[#SourceMember: "Debris",   #lod: FALSE, #delete: TRUE]
+	CloneModel	World{:world}	[#SourceMember: "Pickups", #lod: FALSE, #delete: TRUE]
+	CloneModel	World{:world}	[#SourceMember: "WorldMarker", #lod: FALSE, #delete: TRUE]	
+	// Build sprite & add values
+	//ResetSprites	x	x
+	CreateSprite	World{:World}	[#channel: 1, #default3dScripts: TRUE]
+	AddValue		[#name: "Member", #value: member("World{:World}")]
+	AddValue		[#name: "Sprite", #value: sprite(1)]
+	// Add world & vehicle manager
+	// The game will start when world is initialized and the necessary vehicles have been downloaded
+	// If offline: imported when accessing the garage OR when starting a challenge
+	// If online: hold while downloading then import when accessing the garage or hold while downloading then import when starting a challenge
+	AddScript	#Game	[#script: "[PS] World Manager", #data: [#member: "World{:World}"]]	
+	AddScript	#System	[#script: "[PS] Vehicle Manager", #data: [#member: "World{:World}"]]	
+SetupWorld_End
+
+SetupWorldVehicleMangerOverride_Begin
+	PutMessage	SetupWorldVehicleMangerOverride
+	Event	WorldVehicleSetup
+	Event	WorldManagerSetState
+	Event	WorldManagerInitTileAndGrid
+SetupWorldVehicleMangerOverride_End
+
+//--------------------------------------------------------
+// WORLD LOADING & INIT
+//--------------------------------------------------------
+WorldManagerSetState_Begin
+	PutMessage	--> WorldManagerSetState
+	WorldManagerSetState		[#state: #managing]
+WorldManagerSetState_End
+
+WorldManagerInitTileAndGrid_Begin
+	PutMessage	--> WorldManagerInitTileAndGrid
+	WorldManagerInitTileAndGrid	x	x	
+	// Reset marker
+	Evaluate	"{:World}"<>"Jungle";"{:Vehicle}"="Car"	[#event: "WorldCarMarkerUpdate"]
+	Evaluate	"{:World}"="Jungle";"{:Vehicle}"="Car"	[#event: "WorldCarMarkerUpdate"]
+	Evaluate	"{:World}"="Jungle";"{:Vehicle}"="Boat"	[#event: "WorldBoatMarkerUpdate"]	
+WorldManagerInitTileAndGrid_End
+
+//--------------------------------------------------------
+// VEHICLE LOADING & IMPORT
+//--------------------------------------------------------
+DownloadVehicleSet1_Begin
+	PutMessage	--> DownloadVehicleSet1
+	VehicleManagerDownloadSet		[#set: 1]	
+DownloadVehicleSet1_End
+
+DownloadVehicleSet2_Begin
+	PutMessage	--> DownloadVehicleSet2
+	VehicleManagerDownloadSet		[#set: 2]	
+DownloadVehicleSet2_End
+
+DownloadVehicleSet3_Begin
+	PutMessage	--> DownloadVehicleSet3
+	VehicleManagerDownloadSet		[#set: 3]	
+DownloadVehicleSet3_End
+
+ImportVehicleSet1_Begin
+	PutMessage	--> ImportVehicleSet1
+	VehicleManagerImportSet		[#set: 1]	
+ImportVehicleSet1_End
+
+ImportVehicleSet2_Begin
+	PutMessage	--> ImportVehicleSet2
+	VehicleManagerImportSet		[#set: 2]	
+ImportVehicleSet2_End
+
+ImportVehicleSet3_Begin
+	PutMessage	--> ImportVehicleSet3
+	VehicleManagerImportSet		[#set: 3]
+	DeleteScript	#System	[#name: "Vehicle Manager"]
+ImportVehicleSet3_End
+
+//--------------------------------------------------------
+// WORLD SETUP & RESET
+//--------------------------------------------------------
+SetupTexturesWorld_Begin
+	PutMessage	--> SetupTexturesWorld
+	// Textures
+	CreateTexture	World{:World}	[#texture: "WorldBuildings_Texture"]
+	CreateTexture	World{:World}	[#texture: "WorldStreet_Texture"]
+	CreateTexture	World{:World}	[#texture: "WorldTransparent_Texture", #alpha: "WorldTransparentAlpha_Texture", #renderFormat: #rgba4444]
+	CreateTexture	World{:World}	[#texture: "WorldMisc_Texture"]
+	// Lightmaps
+	CreateTexture	World{:World}	[#texture: "World{:World}BuildingsLightmap_Texture", #filtering: #lowFiltered]
+	CreateTexture	World{:World}	[#texture: "World{:World}StreetLightmap_Texture", #filtering: #lowFiltered]
+	// Shaders
+	SetShader	World{:World}	[#shader: "World{:World}Buildings_Material", #texture1: "WorldBuildings_Texture"]
+	SetShader	World{:World}	[#shader: "World{:World}Street_Material", #texture1: "WorldStreet_Texture"]
+	Evaluate	{:Lightmaps}=TRUE	[#event: "WorldLightmapSetup"]
+	SetShader	World{:World}	[#shader: "World{:World}Transparent_Material", #texture1: "WorldTransparent_Texture"]
+	SetShader	World{:World}	[#shader: "World{:World}Opaque_Material", #texture1: "WorldTransparent_Texture", #transparent: FALSE]
+	SetShader	World{:World}	[#shader: "World{:World}Misc_Material", #texture1: "WorldMisc_Texture"]
+SetupTexturesWorld_End
+
+WorldLightmapSetup_Begin
+	PutMessage	--> WorldLightmapSetup
+	SetShader	World{:World}	[#shader: "World{:World}Buildings_Material", #texture2: "World{:World}BuildingsLightmap_Texture"]
+	SetShader	World{:World}	[#shader: "World{:World}Street_Material", #texture2: "World{:World}StreetLightmap_Texture"]
+WorldLightmapSetup_End
+
+WorldGeneralFinish_Begin
+	PutMessage	--> WorldGeneralFinish	
+	// Traffic
+	Evaluate	{:WorldTraffic}=TRUE	[#event: "WorldTrafficSetup"]
+	// Ambient style	
+	SetAmbientStyle	World{:World}	[#style: #World{:World}{:Setting}]		
+	// Restore some shaders
+	SetShader	World{:World}	[#shader: "*WorldMarker", #emissive: rgb(255,255,255)]
+	SetShader	World{:World}	[#shader: "Pickups_Material", #emissive: rgb(255,255,255)]
+	SetShader	World{:World}	[#shader: "Decals_Material", #emissive: rgb(255,255,255)]
+	SetShader	World{:World}	[#shader: "ImpactSmoke_Material", #emissive: rgb(255,255,255)]
+	SetShader	World{:World}	[#shader: "ImpactBurst_Material", #emissive: rgb(255,255,255)]
+	SetShader	World{:World}	[#shader: "ImpactSparks_Material", #emissive: rgb(255,255,255)]
+	SetShader	World{:World}	[#shader: "ImpactDebris_Material", #emissive: rgb(128,128,128)]
+	SetShader	World{:World}	[#shader: "Wireframe_Material", #emissive: rgb(255,255,255)]
+	// SPECIAL EFFECTS: Motion blur
+	AddScript	#system	[#script: "[PS] Motion Blur", #duplicate: FALSE, #data: [#member: "World{:World}", #camera: "Player1_Camera", #passes: 7]]
+	AddScript	#system	[#script: "[PS] Bloom", #duplicate: FALSE, #data: [#member: "World{:World}", #camera: "Player1_Camera", #template: #World{:World}{:Setting}, #skybox: TRUE]]
+	SetAntiAliasing	{:Sprite}	[#mode: gGame.AntiAliasing]	
+	// FPS Counter
+	AddScript		[#script: "[PS] FPSCounter", #data: [:]] 
+	// set index
+	// WORLD SPECIAL EFFECTS & GENERAL EFFECTS
+	Event	SetupWorld{:World}SpecialEffects
+	Event	SetupWorld{:World}Effects{:Effects}
+	// Always Pause
+	PauseGame	x	[#particles: FALSE, #animations: FALSE]
+	// Menu OR direct start
+	Evaluate	{:MenuStart}=FALSE	[#event: "FadeStartGame"]
+	Evaluate	{:MenuStart}=TRUE	[#event: "FadeStartIntro"]	
+	// update collision reports
+	CreateCollisionReport		[#nameA: gGame.vehicles[1].vehicle.proxy.name, #nameB: #all, #collisionDamage: TRUE]
+	// show sprite
+	SetSprite	{:Sprite}
+	// Stop updating
+	SetValue		[#ForceUpdate: FALSE]	
+WorldGeneralFinish_End
+
+WorldTrafficSetup_Begin
+	PutMessage	--> WorldTrafficSetup
+	AddScript		[#script: "[PS] Traffic Manager", #data: [#member: "World{:World}"]]
+	BuildWorldTraffic	x	x
+WorldTrafficSetup_End	
+
+WorldGeneralReset_Begin
+	// resetsprites & world
+	ResetWorld	World{:World}	
+WorldGeneralReset_End
+
+WorldCarMarkerUpdate_Begin
+	PutMessage	WorldCarMarkerUpdate
+	SetValue	gGame.WorldStartDummy	[#{:World}: "SafeHouse{:World}_Marker"]	
+WorldCarMarkerUpdate_End
+
+WorldBoatMarkerUpdate_Begin
+	PutMessage	WorldBoatMarkerUpdate
+	SetValue	gGame.WorldStartDummy	[#Jungle: "JungleFromCity_Marker"]	
+WorldBoatMarkerUpdate_End
+
+//--------------------------------------------------------
+// SKYBOXES
+//--------------------------------------------------------
+SkyboxInitialization_Begin
+	PutMessage	SkyboxInitialization
+	ResetWorld	Skyboxes{:Setting}
+	RemoveLod	Skyboxes{:Setting}
+	CreateTexture	Skyboxes{:Setting}	[#texture: "Skybox{:Setting}_Texture", #renderFormat: #rgba8888, #filtering: #lowfiltered]
+	CreateTexture	Skyboxes{:Setting}	[#texture: "SkyboxWorld{:Setting}_Texture", #renderFormat: #rgba8888, #filtering: #lowfiltered]
+	CreateTexture	Skyboxes{:Setting}	[#texture: "SkyboxGradient{:Setting}_Texture", #renderFormat: #rgba8888, #filtering: #lowfiltered]	
+	SetShader	Skyboxes{:Setting}	[#shader: "Skybox_Material", #texture1: "Skybox{:Setting}_Texture"]
+	SetShader	Skyboxes{:Setting}	[#shader: "SkyboxWorld_Material", #texture1: "SkyboxWorld{:Setting}_Texture"]
+	SetShader	Skyboxes{:Setting}	[#shader: "SkyboxOpaque_Material", #texture1: "Skybox{:Setting}_Texture"]
+	SetShader	Skyboxes{:Setting}	[#shader: "SkyBoxGradient_Material", #texture1: "SkyboxGradient{:Setting}_Texture"]
+SKyboxInitialization_End
+
+//--------------------------------------------------------
+// WORLD VEHICLE SETUP (PLAYER)
+//--------------------------------------------------------
+WorldVehicleSetup_Begin
+	PutMessage	WorldVehicleSetup
+	// Player vehicle (car, boat, helicopter and autobot)
+	Evaluate	"{:Vehicle}"="Car";"{:Car}"<>"Autobot"	[#event: "WorldCarSetup"]
+	Evaluate	"{:Vehicle}"="Car";"{:Car}"="Autobot"	[#event: "WorldAutobotSetup"]
+	Evaluate	"{:Vehicle}"="Boat"	[#event: "WorldBoatSetup"]
+	Evaluate	"{:Vehicle}"="Plane"	[#event: "WorldPlaneSetup"]
+	Evaluate	"{:Vehicle}"="Helicopter"	[#event: "WorldHelicopterSetup"]	
+	// Interface
+	Event	SetupInterface
+	// Minimap
+	Event	SetupMiniMap
+	Event	HideMiniMap
+	// Main Menu
+	Event	SetupMenu
+	// Printscreen
+	Evaluate	{:Local}=TRUE	[#event: "PrintScreen"]
+	// Finish up world (some functions which can only be done after the vehicle is build)
+	Event	WorldGeneralFinish	
+WorldVehicleSetup_End
+
+WorldCarSetup_Begin
+	PutMessage	--> WorldCarSetup	
+	// Advanced car
+	AddScript		[#script: "[PS] Advanced Car", #data: [#member: "World{:World}", #scriptName: "PlayerCar", #controller: #player, #states: {:PlayerStatesCar}, #camera: TRUE]]
+	AddScript		[#script: "[PS] Vehicle Shadow Caster", #data: [#member: "World{:World}", #light: "Sun", #tag: gGame.Vehicles.count]]
+	// Camera
+	Event	WorldCameraSetup
+	// Reflection
+	//AddScript		[#script: "[PS] Car Reflection", #data: [#member: "World{:World}", #sprite: 1]]	
+WorldCarSetup_End
+
+WorldBoatSetup_Begin
+	PutMessage	--> WorldBoatSetup	
+	AddScript		[#script: "[PS] Boat", #data: [#member: "World{:World}", #scriptName: "PlayerBoat", #controller: #player, #states: {:PlayerStatesBoat}, #camera: TRUE]]
+	// Camera
+	Event	WorldCameraSetup
+WorldBoatSetup_End
+
+WorldAutobotSetup_Begin
+	PutMessage	--> WorldAutobotSetup	
+	AddScript		[#script: "[PS] Autobot", #data: [#member: "World{:World}", #scriptName: "PlayerCar", #controller: #player, #states: {:PlayerStatesAutobot}, #camera: TRUE]]
+	// Camera
+	Event	WorldCameraSetup
+WorldAutobotSetup_End
+
+WorldPlaneSetup_Begin
+	PutMessage	--> WorldPlaneSetup	
+	AddScript		[#script: "[PS] Plane", #data: [#member: "World{:World}", #scriptName: "PlayerHelicopter", #controller: #player, #states: {:PlayerStatesHelicopter}, #camera: TRUE]]
+	// Camera
+	Event	WorldCameraSetup
+WorldPlaneSetup_End
+
+WorldHelicopterSetup_Begin
+	PutMessage	--> WorldHelicopterSetup	
+	AddScript		[#script: "[PS] Helicopter", #data: [#member: "World{:World}", #scriptName: "PlayerHelicopter", #controller: #player, #states: {:PlayerStatesHelicopter}, #camera: TRUE]]
+	// Camera
+	Event	WorldCameraSetup
+	// Other set
+	SetValue	gGame.Camera[1]	[#DefaultSet: #Apache]
+	UpdateCameraSet	#Apache
+WorldHelicopterSetup_End
+
+WorldCameraSetup_Begin
+	PutMessage	WorldCameraSetup
+	AddScript		[#script: "[PS] Camera", #data: [#member: "World{:World}", #target: gGame.Vehicles[1].general.tag]]
+	SetFog	World{:World}	[#camera: "Player1_Camera", #color: gGame.TrackInfo.FogColor, #range: gGame.TrackInfo.FogRange]
+	// Other set
+	SetValue	gGame.Camera[1]	[#DefaultSet: #{:Car}]
+	UpdateCameraSet	#{:Car}
+WorldCameraSetup_End
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// VEHICLE SWITCHES
+//-------------------------------------------------------------------------------------------------------------------------------------------
+SetupSwitchToCar_Begin
+	PutMessage	SetupSwitchToCar
+	Fade	World{:World}	[#time: 500, #type: #in, #event: "DeleteVehicleBuildCar"]]
+SetupSwitchToCar_End
+
+SetupSwitchToBoat_Begin
+	PutMessage	--> SetupSwitchToBoat
+	Evaluate	"{:World}"="Industrial"	[#event: "SetBoatToZodiac"]
+	Evaluate	"{:World}"<>"Industrial"	[#event: "SetBoatToSpeedBoat"]
+	Fade	World{:World}	[#time: 500, #type: #in, #event: "DeleteVehicleBuildBoat"]]
+SetupSwitchToBoat_End
+
+SetBoatToZodiac_Begin
+	PutMessage	--> SetBoatToZodiac
+	SetValue		[#boat: "Zodiac"]
+	UpdateBoatData	x	x
+SetBoatToZodiac_End
+
+SetBoatToSpeedBoat_Begin
+	PutMessage	--> SetBoatToSpeedBoat
+	SetValue		[#boat: "SpeedBoat"]
+	UpdateBoatData	x	x
+SetBoatToSpeedBoat_End
+
+SetupSwitchToHelicopter_Begin
+	PutMessage	--> SetupSwitchToHelicopter
+	Fade	World{:World}	[#time: 500, #type: #in, #event: "DeleteVehicleBuildHelicopter"]]
+SetupSwitchToHelicopter_End
+
+DeleteVehicleBuildCar_Begin
+	PutMessage	--> DeleteVehicleBuildCar
+	// Store value
+	SetValue		[#PreviousVehicle: "{:Vehicle}"]
+	Evaluate	"{:PreviousVehicle}"="Helicopter"	[#handler: "RestoreAndShowCurrentMiniMap"]
+	// Delete vehicle
+	DeleteVehicle		[#index: 1]
+	// Remove all vehicle markers
+	RemoveMarker	World{:World}	[#name: "{:World}BoatToCar_Marker"]
+	RemoveMarker	World{:World}	[#name: "{:World}HelicopterToCar_Marker"]
+	// Add marker to switch back to boat & heli
+	AddMarker	World{:World}	[#position:  "{:World}CarToBoat_Marker", #Type: #SwitchToBoat, #active: FALSE]
+	AddMarker	World{:World}	[#position:  "{:World}CarToHelicopter_Marker", #Type: #SwitchToHelicopter, #active: FALSE]
+	// Start dummy to build car & disable it	
+	SetValue	gGame.WorldStartDummy	[#{:World}: "{:World}CarFrom{:PreviousVehicle}_Marker"] 
+	DisableCurrentMarker	x	x
+	// Create script and add at correct position in scriptList
+	AddCarScript	x	x
+  	// Update interface
+	UpdateWeaponsData	x	x
+	// Set camera target
+	SetValue	gGame.Camera[1]	[#target: gGame.Vehicles[1].general.tag]
+	SetValue	gGame.Camera[1]	[#DefaultSet: #{:Car}]
+	UpdateCameraSet	#{:Car}
+	// Stop ambient, water & clouds (if the are playing or not)
+	StopSound	Ambient{:World}_SFX
+	StopSound	AmbientWater_SFX
+	StopSound	AmbientClouds_SFX
+	// Play default ambient (specific per world)
+	PlaySound	Ambient{:World}_SFX	[#priority: #top, #volume: 1.0, #loopcount: 0]
+	FadeSound	Ambient{:World}_SFX	[#fadeTime: 750, #fadeOut: FALSE])  
+	// Update world dummy (reset position)
+	SetValue	gGame.WorldStartDummy	[#{:World}: "SafeHouse{:World}_Marker"] 
+	// Set value
+	SetValue		[#Vehicle: "Car"]
+	SetValue		[#PreviousVehicle: #none]
+	// Fade
+	Fade	World{:World}	[#time: 500]	
+DeleteVehicleBuildCar_End
+
+DeleteVehicleBuildBoat_Begin
+	PutMessage	--> DeleteVehicleBuildBoat
+	// Delete vehicle
+	DeleteVehicle		[#index: 1]
+	// Remove all vehicle markers
+	RemoveMarker	World{:World}	[#name: "{:World}CarToBoat_Marker"]
+	RemoveMarker	World{:World}	[#name: "{:World}CarToHelicopter_Marker"]
+	// Add marker to switch back to car
+	AddMarker	World{:World}	[#position:  "{:World}BoatToCar_Marker", #Type: #SwitchToCar, #active: FALSE]
+	// Start dummy to build boat & disable it	
+	SetValue	gGame.WorldStartDummy	[#{:World}: "{:World}BoatFromCar_Marker"] 
+	DisableCurrentMarker	x	x
+	// Create script and add at correct position in scriptList
+	AddBoatScript	x	x
+  	// Update interface
+	UpdateWeaponsData	x	x
+	// Set camera target
+	SetValue	gGame.Camera[1]	[#target: gGame.Vehicles[1].general.tag]
+	SetValue	gGame.Camera[1]	[#DefaultSet: #Boat]
+	UpdateCameraSet	#Boat
+	// Stop ambient, water & clouds (if the are playing or not)
+	StopSound	Ambient{:World}_SFX
+	StopSound	AmbientWater_SFX
+	StopSound	AmbientClouds_SFX
+	// Play default ambient (specific per world)
+	PlaySound	AmbientWater_SFX	[#priority: #top, #volume: 1.0, #loopcount: 0]
+	FadeSound	AmbientWater_SFX	[#fadeTime: 750, #fadeOut: FALSE])  
+	// Update world dummy (reset position)
+	SetValue	gGame.WorldStartDummy	[#{:World}: "{:World}BoatToCar_Marker"] 
+	// Set value
+	SetValue		[#Vehicle: "Boat"]
+	// Fade
+	Fade	World{:World}	[#time: 500]	
+DeleteVehicleBuildBoat_End
+  
+DeleteVehicleBuildHelicopter_Begin
+	PutMessage	--> DeleteVehicleBuildHelicopter
+	// SoterHIde minimap stuff
+	StoreAndHideCurrentMiniMap	x	x  
+	// Delete vehicle
+	DeleteVehicle		[#index: 1]
+	// Remove all vehicle markers
+	RemoveMarker	World{:World}	[#name: "{:World}CarToBoat_Marker"]
+	RemoveMarker	World{:World}	[#name: "{:World}CarToHelicopter_Marker"]
+	// Add marker to switch back to car
+	AddMarker	World{:World}	[#position:  "{:World}HelicopterToCar_Marker", #Type: #SwitchToCar, #active: FALSE]
+	// Start dummy to build car & disable it	
+	SetValue	gGame.WorldStartDummy	[#{:World}: "{:World}HelicopterFromCar_Marker"] 
+	DisableCurrentMarker	x	x
+	// Create script and add at correct position in scriptList
+	AddHelicopterScript	x	x
+  	// Update interface
+	UpdateWeaponsData	x	x
+	// Set camera target
+	SetValue	gGame.Camera[1]	[#target: gGame.Vehicles[1].general.tag]
+	SetValue	gGame.Camera[1]	[#DefaultSet: #Apache]
+	UpdateCameraSet	#Apache
+	// Stop ambient, water & clouds (if the are playing or not)
+	StopSound	Ambient{:World}_SFX
+	StopSound	AmbientWater_SFX
+	StopSound	AmbientClouds_SFX
+	// Play default ambient (specific per world)
+	PlaySound	AmbientWater_SFX	[#priority: #top, #volume: 1.0, #loopcount: 0]
+	FadeSound	AmbientWater_SFX	[#fadeTime: 750, #fadeOut: FALSE])  
+	// Update world dummy (reset position)
+	SetValue	gGame.WorldStartDummy	[#{:World}: "{:World}HelicopterToCar_Marker"]
+	// Set value
+	SetValue		[#Vehicle: "Helicopter"]
+	// Fade
+	Fade	World{:World}	[#time: 500]	
+DeleteVehicleBuildHelicopter_End
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// WORLD SWITCHES
+//-------------------------------------------------------------------------------------------------------------------------------------------
+//------
+// CITY
+//------
+SetupCityEntrance_Begin
+	PutMessage	--> SetupCityEntrance (FADE)
+	Fade	World{:World}	[#time: 500, #type: #in, #event: "SetupCityEntranceActual"]]
+SetupCityEntrance_End	
+
+SetupCityEntranceActual_Begin
+	PutMessage	--> --> SetupCityEntrance
+	// Force Save
+	SaveData	x	x
+	// Reset currentWorld
+	Event	ResetCurrentWorld
+	// Import vehicles
+	Evaluate	gGame.VehiclesLoaded.set2=#ready	[#event: "ImportSet2WorldInitialization"]
+	Evaluate	gGame.VehiclesLoaded.set3=#ready	[#event: "ImportSet3WorldInitialization"]
+	// Setvalues
+	SetValue	gGame.WorldStartDummy	[#City: "CityFrom{:World}_Marker"]
+	SetValue		[#World: "City"]
+	SetValue		[#vehicle: "Car"]
+	// BuildWorld
+	Event	WorldInitialization	
+SetupCityEntranceActual_End
+
+//--------
+// DESERT
+//--------
+SetupDesertEntrance_Begin
+	PutMessage	--> SetupDesertEntrance (FADE)
+	Fade	World{:World}	[#time: 500, #type: #in, #event: "SetupDesertEntranceActual"]]
+SetupDesertEntrance_End	
+
+SetupDesertEntranceActual_Begin
+	PutMessage	--> SetupDesertEntrance
+	// Force Save
+	SaveData	x	x
+	// Reset currentWorld
+	Event	ResetCurrentWorld
+	// Import vehicles
+	Evaluate	gGame.VehiclesLoaded.set2=#ready	[#event: "ImportSet2WorldInitialization"]
+	Evaluate	gGame.VehiclesLoaded.set3=#ready	[#event: "ImportSet3WorldInitialization"]
+	// Setvalues
+	SetValue	gGame.WorldStartDummy	[#Desert: "DesertFrom{:World}_Marker"]
+	SetValue		[#World: "Desert"]
+	// BuildWorld
+	Event	WorldInitialization	
+SetupDesertEntranceActual_End
+
+//--------
+// JUNGLE
+//--------
+SetupJungleEntrance_Begin
+	PutMessage	--> SetupJungleEntrance (FADE)
+	Fade	World{:World}	[#time: 500, #type: #in, #event: "SetupJungleEntranceActual"]]
+SetupJungleEntrance_End	
+
+SetupJungleEntranceActual_Begin
+	PutMessage	--> SetupJungleEntrance
+	// Force Save
+	SaveData	x	x
+	// Reset currentWorld
+	Event	ResetCurrentWorld
+	// Import vehicles
+	Evaluate	gGame.VehiclesLoaded.set2=#ready	[#event: "ImportSet2WorldInitialization"]
+	Evaluate	gGame.VehiclesLoaded.set3=#ready	[#event: "ImportSet3WorldInitialization"]
+	// Setvalues
+	SetValue	gGame.WorldStartDummy	[#Jungle: "JungleFrom{:World}_Marker"]
+	SetValue		[#World: "Jungle"]
+	SetValue		[#Vehicle: "Boat"]
+	SetValue		[#Boat: "SpeedBoat"]
+	UpdateBoatData	x	x
+	// BuildWorld
+	Event	WorldInitialization	
+SetupJungleEntranceActual_End
+
+//-------
+// SNOW
+//-------
+SetupSnowEntrance_Begin
+	PutMessage	--> SetupSnowEntrance (FADE)
+	Fade	World{:World}	[#time: 500, #type: #in, #event: "SetupSnowEntranceActual"]]
+SetupSnowEntrance_End	
+
+SetupSnowEntranceActual_Begin
+	PutMessage	--> SetupSnowEntrance
+	// Force Save
+	SaveData	x	x
+	// Reset currentWorld
+	Event	ResetCurrentWorld
+	// Import vehicles
+	Evaluate	gGame.VehiclesLoaded.set2=#ready	[#event: "ImportSet2WorldInitialization"]
+	Evaluate	gGame.VehiclesLoaded.set3=#ready	[#event: "ImportSet3WorldInitialization"]
+	// Setvalues
+	SetValue	gGame.WorldStartDummy	[#Snow: "SnowFrom{:World}_Marker"]
+	SetValue		[#World: "Snow"]
+	// BuildWorld
+	Event	WorldInitialization	
+SetupSnowEntranceActual_End
+
+//------------
+// INDUSTRIAL
+//-----------
+SetupIndustrialEntrance_Begin
+	PutMessage	--> SetupIndustrialEntrance (FADE)
+	Fade	World{:World}	[#time: 500, #type: #in, #event: "SetupIndustrialEntranceActual"]]
+SetupIndustrialEntrance_End	
+
+SetupIndustrialEntranceActual_Begin
+	PutMessage	--> SetupIndustrialEntrance
+	// Force Save
+	SaveData	x	x
+	// Reset currentWorld
+	Event	ResetCurrentWorld
+	// Import vehicles
+	Evaluate	gGame.VehiclesLoaded.set2=#ready	[#event: "ImportSet2WorldInitialization"]
+	Evaluate	gGame.VehiclesLoaded.set3=#ready	[#event: "ImportSet3WorldInitialization"]
+	// Setvalues
+	SetValue	gGame.WorldStartDummy	[#Industrial: "IndustrialFrom{:World}_Marker"]
+	SetValue		[#World: "Industrial"]	
+	SetValue		[#Boat: "Zodiac"]
+	SetValue	gData.data.car	[#playerBoat: [#car: gGame.Boat, #skin: 1, #upgrades: gGame.Boat, #weapons: gGame.Boat, #personality: gGame.Boat, #settings: gGame.Boat]]
+	// BuildWorld
+	Event	WorldInitialization	
+SetupIndustrialEntranceActual_End
+
+//------------------------------------------------
+// IMPORT VEHICLES WORLD
+//------------------------------------------------
+ImportSet2WorldInitialization_Begin
+	PutMessage	ImportSet2WorldInitialization
+	// Start showing init update
+	SetValue		[#ForceUpdate: TRUE]
+	SetValue		[#ForceState: #loading]
+	Event	ImportVehicleSet2
+	SetValue		[#ForceUpdate: FALSE]
+ImportSet2WorldInitialization_End
+
+
+ImportSet3WorldInitialization_Begin
+	PutMessage	ImportSet3WorldInitialization
+	// Start showing init update
+	SetValue		[#ForceUpdate: TRUE]
+	SetValue		[#ForceState: #loading]
+	Event	ImportVehicleSet3
+	DeleteScript	#System	[#name: "Vehicle Manager"]
+	SetValue		[#ForceUpdate: FALSE]
+ImportSet3WorldInitialization_End
+
+//-------------------
+// RESET THE WORLD
+//-------------------
+ResetCurrentWorld_Begin
+	PutMessage	--> --> ResetCurrentWorld
+	// Reset sprites
+	ResetSprites	x	x
+	// Buttons & scripts
+	DeleteAllButtons	x	x
+	DeleteAllScripts	#Game
+	DeleteScript	#System	[#name: "BR4 Menu"]
+	DeleteScript	#System	[#name: "[PS] Bloom"]
+	DeleteScript	#System	[#name: "[PS] Motion Blur"]
+	DeleteScript	#System	[#name: "[PS] StageGrabber"]
+	// stop all sound
+	StopAllSound	x	x
+	StopRadioStream	x	x
+	// 3d members
+	ResetWorld	World{:World}
+	ResetWorld	Skyboxes
+	ResetWorld	Interface
+	ResetWorld	Menu
+	ResetWorld	MiniMap
+	// Reset load
+	SetValue	gGame.World{:World}Loaded	[#state: FALSE]
+	// Event reset values
+	Event	ResetChallengeValues
+ResetCurrentWorld_End
+
+//-----------------------------------------------------------
+// EVENTS FO CHECKING AVAILABILITY VEHICLES
+//-----------------------------------------------------------
+EvaluateVehicles_Begin
+	PutMessage	--> EvaluateVehicles
+	Evaluate	{:vehiclesDone}=TRUE	[#event: "ContinueTrackInitialization"]
+	Evaluate	{:vehiclesDone}=FALSE	[#event: "HoldTrackInitialization"]
+EvaluateVehicles_End
+
+ContinueTrackInitialization_Begin
+	PutMessage	--> --> ContinueTrackInitialization
+	// Handlers
+	ResetHoldForDownloadingCars
+	// Events
+	Event	ResetCurrentWorld
+	Event	TrackInitialization
+ContinueTrackInitialization_End
+
+HoldTrackInitialization_Begin
+	PutMessage	--> --> HoldTrackInitialization
+	DeleteAllButtons
+	SetupHoldForDownloadingCars	x	x
+	AddTrigger	{:vehiclesDone}=FALSE	[#event: "HoldWhileDownloadingCars", #runOnce: 0, #frameFreq: 1]	
+	AddTrigger	{:vehiclesDone}=TRUE	[#event: "ContinueTrackInitialization", #frameFreq: 1]	
+HoldTrackInitialization_End
+
+//-----------------------------------------------------------
+// KEYS
+//-----------------------------------------------------------
+BindWorldKeys_Begin
+	PutMessage	--> UnbindWorldKeys
+	BindKey		[#key: 53, #event: "PrepareEnterMainMenu", #once: TRUE]	
+	BindKey		[#key: "p", #event: "PrepareEnterMainMenu", #once: TRUE]	
+	BindKey		[#key: "m", #handler: "MuteGame", #once: FALSE]
+	// Cheats
+	Evaluate	{:CheatsAvailable}=TRUE	[#event: "EnableWorldCheats"]
+	Evaluate	{:CheatsOverride}=TRUE	[#event: "ReallyEnableCheats"]
+	// Teleport cheat
+	SetTeleportKeys	x	x
+BindWorldKeys_End
+
+UnbindWorldKeys_Begin
+	PutMessage	--> UnbindWorldKeys
+	UnBindKey		[#key: 53]
+	UnBindKey		[#key: "p"]
+	UnBindKey		[#key: "m"]
+	//Teleport cheat
+	UnBindKey		[#key: "1"]
+	UnBindKey		[#key: "2"]
+	UnBindKey		[#key: "3"]
+	UnBindKey		[#key: "4"]
+	UnBindKey		[#key: "5"]
+	Evaluate	{:CheatsAvailable}=TRUE	[#event: "DisableWorldCheats"]
+UnbindWorldKeys_End
+
+EnableCheats_Begin
+	//PutMessage	EnableCheats (CHEATS)
+	CheckCheatsControl	x	x
+EnableCheats_End
+
+ReallyEnableCheats_Begin
+	PutMessage	EnableCheats (CHEATS)
+	PlaySound	SpecialPickUp_SFX
+	SetValue		[#CheatsAvailable: TRUE]
+	Evaluate	"{:Scene}"="World"	[#event: "EnableWorldCheats"]
+	Evaluate	"{:Scene}"="Track"	[#event: "EnableTrackCheats"]
+ReallyEnableCheats_End
+
+EnableWorldCheats_Begin
+	PutMessage	--> EnableWorldCheats
+	// Other stuff
+	BindKey		[#key: "6", #handler: "UnlockAllTickets", #once: FALSE]
+	BindKey		[#key: "7", #handler: "WinCurrentTickets", #once: FALSE]
+	BindKey		[#key: "8", #handler: "WinCurrentHiddenPackages", #once: FALSE]
+	BindKey		[#key: "9", #handler: "UnlockCars", #once: FALSE]
+	BindKey		[#key: "0", #handler: "UnlockCheats", #once: FALSE]
+	BindKey		[#key: "y", #handler: "RemoveDoors", #once: FALSE]	
+	BindKey		[#key: "u", #handler: "WinSpecialMissions", #once: FALSE]
+	BindKey		[#key: "i", #handler: "ILikeMoney", #once: FALSE]
+EnableWorldCheats_End
+
+DisableWorldCheats_Begin
+	PutMessage	--> DisableWorldCheats
+	UnBindKey		[#key: "5"]
+	UnBindKey		[#key: "6"]
+	UnBindKey		[#key: "7"]
+	UnBindKey		[#key: "8"]
+	UnBindKey		[#key: "9"]
+	UnBindKey		[#key: "y"]	
+	UnBindKey		[#key: "u"]	
+	UnBindKey		[#key: "i"]	
+DisableWorldCheats_End
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// MARKERS
+//-------------------------------------------------------------------------------------------------------------------------------------------
+SetupWorldMarker_Begin
+	PutMessage	SetupWorldMarker
+	CreateTexture	WorldMarker	[#texture: "WorldMarker_Texture", #renderFormat: #rgba8888]
+	SetShader	WorldMarker	[#shader: "WorldMarker_Material", #texture1: "WorldMarker_Texture"]
+SetupWorldMarker_End
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// SLOWMOTION
+//-------------------------------------------------------------------------------------------------------------------------------------------
+ImpactTimeOn_Begin
+	PutMessage	ImpactTimeOn
+	ManipulateTime		[#targetTime: 0.1, #defaultStep: 0.2]
+	SetValue		[#SlowMo: TRUE]
+	SetValue	gSound	[#GeneralVolume: 0.5]
+	DelayEvent		[#delay: 5000, #name: "ImpactTimeOff", #event: "ImpactTimeOff"]	
+ImpactTimeOn_End
+
+ImpactTimeOff_Begin
+	PutMessage	ImpactTimeOff
+	ManipulateTime
+	SetValue	gSound	[#GeneralVolume: 1.0]	
+	SetValue		[#SlowMo: FALSE]
+	Evaluate	{:ImpactTime}=TRUE	[#event: "ShowSomeInterface"]
+ImpactTimeOff_End
+
+WorldMissionSlowMotion_Begin
+	// Exaclty the same only the delay in DelayEvent is slighlty longer
+	ManipulateTime		[#targetTime: 0.01, #defaultStep: 0.7]
+	SetValue		[#SlowMo: TRUE]
+	SetValue	gSound	[#GeneralVolume: 0.5]
+	DelayEvent		[#delay: 5750, #name: "ImpactTimeOff", #event: "ImpactTimeOff"]
+WorldMissionSlowMotion_End
+
+WorldMissionSlowMotion2_Begin
+	// Exaclty the same only the delay in DelayEvent is slighlty longer
+	ManipulateTime		[#targetTime: 0.01, #defaultStep: 0.7]
+	SetValue		[#SlowMo: TRUE]
+	SetValue	gSound	[#GeneralVolume: 0.5]
+	DelayEvent		[#delay: 7250, #name: "ImpactTimeOff", #event: "ImpactTimeOff"]
+WorldMissionSlowMotion2_End
+
+WorldMissionSlowMotion3_Begin
+	// Exaclty the same only the delay in DelayEvent is slighlty longer
+	ManipulateTime		[#targetTime: 0.01, #defaultStep: 0.7]
+	SetValue		[#SlowMo: TRUE]
+	SetValue	gSound	[#GeneralVolume: 0.5]
+	DelayEvent		[#delay: 8250, #name: "ImpactTimeOff", #event: "ImpactTimeOff"]
+WorldMissionSlowMotion3_End
+
+WorldMissionSlowMotionCashStash_Begin
+	// Exaclty the same only the delay in DelayEvent is slighlty longer
+	ManipulateTime		[#targetTime: 0.01, #defaultStep: 0.7]
+	SetValue		[#SlowMo: TRUE]
+	SetValue	gSound	[#GeneralVolume: 0.5]
+	DelayEvent		[#delay: 3250, #name: "ImpactTimeOff", #event: "ImpactTimeOff"]
+WorldMissionSlowMotionCashStash_End
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// MISC EVENTS
+//-------------------------------------------------------------------------------------------------------------------------------------------
+WorldFlashFade_Begin
+	PutMessage	--> WorldFlashFade
+	Fade	World{:World}	[#time: 250, #type: #out, #color: rgb(0, 0, 0)]
+	UpdateCameraSet	gGame[#{:Vehicle}]
+	SetValue	gGame.camera[1]	[#updateStates: TRUE]
+WorldFlashFade_End
+
+TrackFlashFade_Begin
+	PutMessage	--> TrackFlashFade
+	Fade	{:Assets}Assets	[#time: 250, #type: #out, #color: rgb(0, 0, 0)]
+	UpdateCameraSet	#{:Car}
+	SetValue	gGame.camera[1]	[#updateStates: TRUE]
+TrackFlashFade_End
+
+RestoreCamera_Begin
+	// Camera
+	SetValue	gGame.Camera[1]	[#state: #follow]
+	SetValue	gGame.Camera[1]	[#target: gGame.Vehicles[1].general.tag]
+	// World/Track
+	Event	ShowSomeInterface	
+RestoreCamera_End
+
+HideSomeInterface_Begin
+	// Interface
+	HideCurrentInterface	x	[#exclude: ["InterfaceOverlay"]]
+	Evaluate	"{:Scene}"="World"	[#Event: "HideMiniMap"]
+	// Overlay
+	SetModel	Interface	[#model: "InterfaceOverlay", #resource: "InterfaceOverlayNuclearDetonator"]	
+HideSomeInterface_End
+
+ShowSomeInterface_Begin
+	Event	RestoreOverlay
+	ShowCurrentInterface	x	x
+	Evaluate	"{:Scene}"="World"	[#event: "ShowMiniMap"]
+ShowSomeInterface_End
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// PRINTSCREEN
+//-------------------------------------------------------------------------------------------------------------------------------------------
+PrintScreen_Begin
+	PutMessage	--> PrintScreen
+	BindKey		[#key: "o", #handler: "PrintScreen", #once: FALSE]
+PrintScreen_End
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// CHEATS
+//-------------------------------------------------------------------------------------------------------------------------------------------
+CheatClearKeys_Begin
+	UnbindKey		[#key: "k"]	
+	UnbindKey		[#key: "l"]	
+CheatClearKeys_End
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// TELEPORT WORLD SWITCHES
+//-------------------------------------------------------------------------------------------------------------------------------------------
+//-----
+// CITY
+//-----
+TeleportToCity_Begin
+	PutMessage	--> TeleportToCity (FADE)
+	Fade	World{:World}	[#time: 500, #type: #in, #event: "TeleportToCityActual"]]	
+TeleportToCity_End
+	
+TeleportToCityActual_Begin
+	PutMessage	--> TeleportToCity
+	// Force Save
+	SaveData	x	x
+	// Reset currentWorld
+	Event	ResetCurrentWorld
+	// Setvalues
+	SetValue		[#vehicle: "Car"]
+	SetValue	gGame.WorldStartDummy	[#City: "SafeHouseCity_Marker"]
+	SetValue		[#World: "City"]
+	// BuildWorld
+	Event	WorldInitialization	
+TeleportToCityActual_End
+
+//--------
+// DESERT
+//--------
+TeleportToDesert_Begin
+	PutMessage	--> TeleportToDesert (FADE)
+	Fade	World{:World}	[#time: 500, #type: #in, #event: "TeleportToDesertActual"]]	
+TeleportToDesert_End
+
+TeleportToDesertActual_Begin
+	PutMessage	--> TeleportToDesert
+	// Force Save
+	SaveData	x	x
+	// Reset currentWorld
+	Event	ResetCurrentWorld
+	// Setvalues
+	SetValue		[#vehicle: "Car"]
+	SetValue	gGame.WorldStartDummy	[#Desert: "SafeHouseDesert_Marker"]
+	SetValue		[#World: "Desert"]	
+	// BuildWorld
+	Event	WorldInitialization	
+TeleportToDesertActual_End
+
+//--------
+// JUNGLE
+//--------
+TeleportToJungle_Begin
+	PutMessage	--> TeleportToJungle (FADE)
+	Fade	World{:World}	[#time: 500, #type: #in, #event: "TeleportToJungleActual"]]	
+TeleportToJungle_End
+
+TeleportToJungleActual_Begin
+	PutMessage	--> TeleportToJungle
+	// Force Save
+	SaveData	x	x
+	// Reset currentWorld
+	Event	ResetCurrentWorld
+	// Setvalues
+	SetValue		[#vehicle: "Car"]
+	SetValue	gGame.WorldStartDummy	[#Jungle: "SafeHouseJungle_Marker"]
+	SetValue		[#World: "Jungle"]
+	// BuildWorld
+	Event	WorldInitialization	
+TeleportToJungleActual_End
+
+//-------
+// SNOW
+//-------
+TeleportToSnow_Begin
+	PutMessage	--> TeleportToSnow (FADE)
+	Fade	World{:World}	[#time: 500, #type: #in, #event: "TeleportToSnowActual"]]	
+TeleportToSnow_End
+
+TeleportToSnowActual_Begin
+	PutMessage	--> TeleportToSnow
+	// Force Save
+	SaveData	x	x
+	// Reset currentWorld
+	Event	ResetCurrentWorld
+	// Setvalues
+	SetValue		[#vehicle: "Car"]
+	SetValue	gGame.WorldStartDummy	[#Snow: "SafeHouseSnow_Marker"]
+	SetValue		[#World: "Snow"]	
+	// BuildWorld
+	Event	WorldInitialization	
+TeleportToSnowActual_End
+
+//-------
+// Industrial
+//-------
+TeleportToIndustrial_Begin
+	PutMessage	--> TeleportToIndustrial (FADE)
+	Fade	World{:World}	[#time: 500, #type: #in, #event: "TeleportToIndustrialActual"]]	
+TeleportToIndustrial_End
+
+TeleportToIndustrialActual_Begin
+	PutMessage	--> TeleportToIndustrial
+	// Force Save
+	SaveData	x	x
+	// Reset currentWorld
+	Event	ResetCurrentWorld
+	// Setvalues
+	SetValue		[#vehicle: "Car"]
+	SetValue	gGame.WorldStartDummy	[#Industrial: "SafeHouseIndustrial_Marker"]
+	SetValue		[#World: "Industrial"]	
+	// BuildWorld
+	Event	WorldInitialization	
+TeleportToIndustrialActual_End

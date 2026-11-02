@@ -1,0 +1,127 @@
+Xtra list: 27 Xtra(s) used by this movie
+The Xtra files themselves are not stored inside the movie, only their names and download locations.
+
+1. INetUrl PPC Xtra
+   File:     INETURL.X32
+   Download: none (built into Director / Shockwave)
+
+2. NetFile PPC Xtra
+   File:     NETFILE.X32
+   Download: none (built into Director / Shockwave)
+
+3. NetLingo PPC Xtra
+   File:     Netlingo.x32
+   Download: none (built into Director / Shockwave)
+
+4. Script Agent.x32
+   File:     Script Agent.x32
+   Download: none (built into Director / Shockwave)
+   ID:       {9a60e1e1-5ca5-11d3-ae51-009027250b86}
+
+5. BMP Agent
+   File:     BMP Agent.x32
+   Download: none (built into Director / Shockwave)
+   ID:       {46f1135a-ac43-11d2-aba7-06063f000000}
+
+6. JPEG Agent
+   File:     JPEG Agent.x32
+   Download: none (built into Director / Shockwave)
+   ID:       {3892e30a-ac49-11d2-aba7-06063f000000}
+
+7. CoreAudioMix
+   File:     unknown
+   Download: http://download.macromedia.com/pub/shockwave11.5/xtras/CoreAudioMix
+
+8. AudioFilters
+   File:     AudioFilters.x32
+   Download: http://download.macromedia.com/pub/shockwave11.5/xtras/AudioFilters
+
+9. AudioMixer
+   File:     AudioMixer.x32
+   Download: http://download.macromedia.com/pub/shockwave11.5/xtras/AudioMixer
+   ID:       {a3a6df8f-e4a1-4efb-be4f-b5ddae86ff0e}
+
+10. TIFF Import Export
+   File:     TIFF Import Export.x32
+   Download: http://download.macromedia.com/pub/shockwave11.5/xtras/TIFFImportExport
+
+11. BitmapFilters
+   File:     BitmapFilters.x32
+   Download: http://download.macromedia.com/pub/shockwave11.5/xtras/BitmapFilters
+
+12. Flash Asset PPC
+   File:     Flash Asset.x32
+   Download: http://download.macromedia.com/pub/shockwave11.5/xtras/FlashAsset
+   ID:       {78e7e0d0-0a7f-11d1-ad8d-0800079f016c}
+
+13. Font Asset PPC
+   File:     Font Asset.x32
+   Download: http://download.macromedia.com/pub/shockwave11.5/xtras/FontAsset
+   ID:       {b75c0a03-b2a7-11d1-8ca6-444553540000}
+
+14. SWA Decompression PPC Xtra
+   File:     swadcmpr.x32
+   Download: http://download.macromedia.com/pub/shockwave11.5/xtras/SWA
+   ID:       {5a08cd40-535b-11d0-a8bb-00a0c9008a48}
+
+15. DirectSound.x32
+   File:     DirectSound.x32
+   Download: http://download.macromedia.com/pub/shockwave11.5/xtras/DirectSound
+
+16. Sound Control
+   File:     Sound Control.x32
+   Download: http://download.macromedia.com/pub/shockwave11.5/xtras/SoundControl
+   ID:       {d7d40f40-4aa3-11d3-8877-0090277204fa}
+
+17. TextAsset PPC
+   File:     Text Asset.x32
+   Download: http://download.macromedia.com/pub/shockwave11.5/xtras/TextAsset
+   ID:       {1c073ec6-e3db-11d0-bfb4-01059a206d9e}
+
+18. TextXtra PPC
+   File:     TextXtra.x32
+   Download: http://download.macromedia.com/pub/shockwave11.5/xtras/TextXtra
+   ID:       {431873e2-4b0d-11d1-9d04-00059a206d9e}
+
+19. Font Xtra PPC
+   File:     Font Xtra.x32
+   Download: http://download.macromedia.com/pub/shockwave11.5/xtras/FontXtra
+   ID:       {3d90bb80-af0a-11d1-8f9d-00a0c90868b1}
+
+20. Mix Services
+   File:     Mix Services.x32
+   Download: http://download.macromedia.com/pub/shockwave11.5/xtras/MixServices
+   ID:       {f3c0e046-33c0-11cf-b96e-080007160dc3}
+
+21. Shockwave 3d Asset Xtra
+   File:     Shockwave 3D Asset.x32
+   Download: http://download.macromedia.com/pub/shockwave11.5/xtras/Shockwave3dAsset
+   ID:       {f8bf17e1-88d4-11d3-989c-00a0c9902d25}
+
+22. PNG Import Export
+   File:     PNG Import Export.x32
+   Download: http://download.macromedia.com/pub/shockwave11.5/xtras/PNGImportExport
+   ID:       {670af81a-9795-11cf-9cd7-0800072f986b}
+
+23. Dynamiks
+   File:     Dynamiks.x32
+   Download: http://download.macromedia.com/pub/shockwave11.5/xtras/Dynamiks
+   ID:       {d205bc85-7311-41c7-8f08-17d314508ebc}
+
+24. Joystick.x32
+   File:     Joystick.x32
+   Download: none (built into Director / Shockwave)
+
+25. resX.x32
+   File:     resX.x32
+   Download: none (built into Director / Shockwave)
+
+26. SharpExport.x32
+   File:     SharpExport.x32
+   Download: none (built into Director / Shockwave)
+
+27. SWA Streaming PPC Xtra
+   File:     SWAStrm.x32
+   Download: http://download.macromedia.com/pub/shockwave11.5/xtras/SWA
+   ID:       {ac404223-000a-10ef-0000-0800072c6327}
+

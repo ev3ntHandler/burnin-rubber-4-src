@@ -1,0 +1,32 @@
+-- [Text] TrackCityEvents
+
+CityTextures_Begin
+	// Textures
+	CreateTexture	CityAssets	[#texture: "CityStreet_Texture"]
+	CreateTexture	CityAssets	[#texture: "CityBuildings_Texture"]
+	CreateTexture	CityAssets	[#texture: "CityTransparent_Texture", #renderFormat: #rgba8888]	
+	CreateTexture	CityAssets	[#texture: "Wall_Texture", #renderFormat: #rgba8888]
+	CreateTexture	CityAssets	[#texture: "WorldWaves{:Setting}_Texture", #renderFormat: #rgba8888]
+	CreateTexture	CityAssets	[#texture: "WorldSea{:Setting}_Texture", #filtering: #lowfiltered]
+	CreateTexture	CityAssets	[#texture: "WorldMisc_Texture"]
+	
+	// Set textures (shaders)
+	SetShader	CityAssets	[#shader: "CityStreet_Material", #texture1: "CityStreet_Texture"]
+	SetShader	CityAssets	[#shader: "CityBuildings_Material", #texture1: "CityBuildings_Texture"]
+	SetShader	CityAssets	[#shader: "CityTransparent_Material", #texture1: "CityTransparent_Texture"]
+	SetShader	CityAssets	[#shader: "CityOpaque_Material", #texture1: "CityTransparent_Texture"]
+	SetShader	CityAssets	[#shader: "CityCollision_Material", #texture1: "CityTransparent_Texture"]
+	SetShader	CityAssets	[#shader: "WorldMisc_Material", #texture1: "WorldMisc_Texture"]
+	SetShader	CityAssets	[#shader: "WorldSea_Material", #texture1: "WorldSea{:Setting}_Texture"]
+	SetShader	CityAssets	[#shader: "WorldWavesMaterial", #texture1: "WorldWaves{:Setting}_Texture"]
+	
+	// Transparent off for opaque
+	SetShader	CityAssets	[#shader: "CityOpaque_Material", #transparent: FALSE]
+	
+	// AmbientStyle
+	SetShader	CityAssets	[#shader: "CityBuildings_Material", #emissive: gData.data.ambientstyle[gGame.trackinfo.ambientStyle].emissive]
+	SetShader	CityAssets	[#shader: "CityOpaque_Material", #emissive: gData.data.ambientstyle[gGame.trackinfo.ambientStyle].emissive]
+	SetShader	CityAssets	[#shader: "CityTransparent_Material", #emissive: gData.data.ambientstyle[gGame.trackinfo.ambientStyle].emissive]
+	
+	
+CityTextures_End

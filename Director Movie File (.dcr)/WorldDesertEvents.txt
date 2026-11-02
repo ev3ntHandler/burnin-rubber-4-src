@@ -1,0 +1,184 @@
+-- [Text] WorldDesertEvents
+
+//--------------------------------------------------------
+// World{:World} SPECFIFIC SETUP & RESET
+//--------------------------------------------------------
+SetupWorldDesert_Begin
+	PutMessage	--> SetupWorldDesert
+	// ModelList
+	SetValue		[#WorldModelList: {:WorldModels}.duplicate()]
+	AddToList	gGame.WorldModelList	[#value: "Sea"]
+	// Additional textures & shader sets
+	Evaluate	"{:Setting}"="Night"	[#Event: "WorldDesertAdditiveTextures"]	
+	CreateTexture	World{:World}	[#texture: "WorldSea{:Setting}_Texture"]
+	SetShader	World{:World}	[#shader: "WorldDesertSea_Material", #texture1: "WorldSea{:Setting}_Texture"]
+	// Skybox
+	Event	SkyboxInitialization
+	SetSkybox	World{:World}	[#skybox: "SkyboxDesert"]	
+SetupWorldDesert_End
+
+SetupWorldDesertSpecialEffects_Begin
+	PutMessage	SetupWorldDesertSpecialEffects	
+	AddToScroller	World{:World}	[#shader: "WorldDesertSea_Material", #position: vector(-0.001, -0.001, 0.0)]	
+SetupWorldDesertSpecialEffects_End
+
+SetupWorldDesertEffectsLow_Begin
+	PutMessage	SetupWorldDesertEffectsLow
+	SetShader	World{:World}	[#shader: "WorldDesertMisc_Material", #texture3: "None"]
+	TurnOffVehicleEffects	x	x
+	WorldTrafficLightsOff	x	x
+SetupWorldDesertEffectsLow_End
+
+SetupWorldDesertEffectsMedium_Begin
+	PutMessage	SetupWorldDesertEffectsMedium
+	SetShader	World{:World}	[#shader: "WorldDesertMisc_Material", #texture3: "None"]
+	TurnOnVehicleEffects	x	x
+	WorldTrafficLightsOff	x	x
+SetupWorldDesertEffectsMedium_End
+
+SetupWorldDesertEffectsHigh_Begin
+	PutMessage	SetupWorldDesertEffectsHigh
+	Evaluate	"{:Setting}"="Night"	[#Event: "WorldDesertAdditive"]
+	TurnOnVehicleEffects	x	x
+	WorldTrafficLightsOn	x	x
+SetupWorldDesertEffectsHigh_End
+
+WorldDesertAdditiveTextures_Begin
+	CreateTexture	World{:World}	[#texture: "WorldMiscAdditive_Texture", #filtering: #high, #renderFormat: #rgba5650]
+WorldDesertAdditiveTextures_End
+
+WorldDesertAdditive_Begin
+	SetShader	World{:World}	[#shader: "WorldDesertMisc_Material", #texture3: "WorldMiscAdditive_Texture", #textureMode3: #none, #blendFunction3: #add]
+WorldDesertAdditive_End
+
+//--------------------------------------------------------
+// World{:World} TILE SPECIFIC EVENTS
+//--------------------------------------------------------
+02_03_WorldDesert_Begin
+	PutMessage	--> --> 02_03_WorldDesert (UpdateStartDummy)	
+02_03_WorldDesert_End
+
+DesertUpdateToSafeHouseMarker_Begin
+	PutMessage	--> --> DesertUpdateToSafeHouseMarker
+	SetValue	gGame.WorldStartDummy	[#Desert: "SafeHouseDesert_Marker"]
+DesertUpdateToSafeHouseMarker_End
+
+//--------------------------------------------------------
+// TRAFFIC
+//--------------------------------------------------------
+WorldDesertTraffic01_Begin
+	PutMessage	--> WorldDesertTraffic01
+	// RIGHT
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #right1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #ArmoredTruck, #direction: #right2, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Shopper, #direction: #right2, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Yup, #direction: #right1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #PoliceTraffic, #direction: #right2, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #PoliceTraffic, #direction: #right2, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #right1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Yup, #direction: #right1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Shopper, #direction: #right2, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #right1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Truck, #direction: #right1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Truck, #direction: #right1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Truck, #direction: #right2, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #right1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #PoliceTraffic, #direction: #right2, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #right1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Shopper, #direction: #right2, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #right1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #ArmoredTruck, #direction: #right1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #PoliceTraffic, #direction: #right1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Shopper, #direction: #right1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Yup, #direction: #right2, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #right1, #skin: 2]
+	// LEFT
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #left1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Shopper, #direction: #left2, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Yup, #direction: #left1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Truck, #direction: #left1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #PoliceTraffic, #direction: #left2, #skin: 1]	
+	Buildtraffic	World{:World}	[#type: #PoliceTraffic, #direction: #left2, #skin: 1]	
+	Buildtraffic	World{:World}	[#type: #PoliceTraffic, #direction: #left1, #skin: 1]	
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Truck, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Shopper, #direction: #left2, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #left1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Truck, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Shopper, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #ArmoredTruck, #direction: #left2, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #left2, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #PoliceTraffic, #direction: #left1, #skin: 1]	
+	Buildtraffic	World{:World}	[#type: #PoliceTraffic, #direction: #left2, #skin: 1]	
+	Buildtraffic	World{:World}	[#type: #Yup, #direction: #left1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #PoliceTraffic, #direction: #left2, #skin: 1]	
+	Buildtraffic	World{:World}	[#type: #Truck, #direction: #left2, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Truck, #direction: #left1, #skin: 2]
+WorldDesertTraffic01_End
+
+//--------------------------------------------------------
+// NUCLEAR DETONATORS
+//--------------------------------------------------------
+NuclearDetonatorDesert1_Begin
+	PutMessage	--> NuclearDetonatorDesert1
+	// Std detonator
+	Event	NuclearDetonator
+	// set camera
+	SetValue	gGame.Camera[1]	[#state: #mimic]
+	SetValue	gGame.Camera[1]	[#target: "NuclearDetonatorDesert1_Camera"]
+	// DelayEvent to restore camera
+	DelayEvent		[#delay: 6000, #name: "RestoreCamera", #event: "RestoreCamera"]
+	// AddToList
+	AddToList	gGame.UPNuclearDetonators	[#value: "NuclearDetonatorDesert1", #override: TRUE]
+	CheckNuclearDetonators	x	x
+NuclearDetonatorDesert1_End
+
+NuclearDetonatorDesert2_Begin
+	PutMessage	--> NuclearDetonatorDesert2
+	// Std detonator
+	Event	NuclearDetonator
+	// set camera
+	SetValue	gGame.Camera[1]	[#state: #mimic]
+	SetValue	gGame.Camera[1]	[#target: "NuclearDetonatorDesert2_Camera"]
+	// DelayEvent to restore camera
+	DelayEvent		[#delay: 6000, #name: "RestoreCamera", #event: "RestoreCamera"]
+	// AddToList
+	AddToList	gGame.UPNuclearDetonators	[#value: "NuclearDetonatorDesert2", #override: TRUE]
+	CheckNuclearDetonators	x	x
+NuclearDetonatorDesert2_End
+
+NuclearDetonatorDesert3_Begin
+	PutMessage	--> NuclearDetonatorDesert3
+	// Std detonator
+	Event	NuclearDetonator
+	// set camera
+	SetValue	gGame.Camera[1]	[#state: #mimic]
+	SetValue	gGame.Camera[1]	[#target: "NuclearDetonatorDesert3_Camera"]
+	// DelayEvent to restore camera
+	DelayEvent		[#delay: 6000, #name: "RestoreCamera", #event: "RestoreCamera"]
+	// AddToList
+	AddToList	gGame.UPNuclearDetonators	[#value: "NuclearDetonatorDesert3", #override: TRUE]
+	CheckNuclearDetonators	x	x
+NuclearDetonatorDesert3_End
+
+//--------------------------------------------------------
+// LANDMARK
+//--------------------------------------------------------
+LandMarkDesert_Begin
+	PutMessage	--> LandMarkDesert
+	// Sound
+	PlaySound	SpecialPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #LandmarkInformationTitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #LandmarkInformation]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World{:World}"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Do it
+	SetModel	World{:World}	[#model: "07_03_landmarkdesert_1_object", #resource: "landmarkdesertdestroyed_object", #shader: "WorldDesertMisc_Material"] 
+	AddToList	gGame.UPLandMarks	[#value: "LandMarkDesert_Object", #override: TRUE]
+	SaveData	x	x
+	CheckAllLandMarks	x	x
+LandMarkDesert_End

@@ -1,0 +1,698 @@
+-- [Text] WorldMissionEvents
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// WORLDMISSION EVENTS
+//-------------------------------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------
+// GENERAL
+//------------------------------------------------
+WorldMissionInProgress_Begin
+	PutMessage	--> WorldMissionInProgress
+WorldMissionInProgress_End
+
+RestoreMissionItem_Begin
+	PutMessage	RestoreMissionItem
+	RestoreMissionItem	x	x
+RestoreMissionItem_End
+
+//------------------------------------------------
+// GENERAL RAMPAGE
+//------------------------------------------------
+DestroyObjectRampage_Begin
+	PutMessage	--> DestroyObjectRampage
+	DestroyObjectRampage	x	x
+DestroyObjectRampage_End
+
+ResetRampage_Begin
+	PutMessage	--> ResetRampage
+	ResetRampage
+	// Reset triggers
+	SetValue	gData	[#Triggers: []]
+	// RemoveTimer
+	RemoveTimer		[#timer: #Timer]
+	// Slowmo
+	Event	WorldMissionSlowMotion
+ResetRampage_End
+
+//------------------------------------------------
+// GENERAL TIMETRIAL
+//------------------------------------------------
+HideStatusStartTimeTrial_Begin
+	// Status
+	Event	HideStatus
+	// Setup 
+	SetupTimeTrial	x	x
+	// Timer
+	AddTimer	Timer	[#value: "Timer", #time: gGame.timeTrial.trackinfo.target, #state: #down, #limit: 0]	
+	// Trigger
+	AddTrigger	{:Timer} <= 11000	[#event: "CountDownWarningTriggers", #frameFreq: 5]
+	AddTrigger	{:Timer}<=0	[#event: "ResetTimeTrial", #frameFreq: 5]
+HideStatusStartTimeTrial_End
+
+NextMarkerTimeTrial_Begin
+	PutMessage	--> NextMarkerTimeTrial
+	NextMarkerTimeTrial
+NextMarkerTimeTrial_End
+
+ResetTimeTrial_Begin
+	PutMessage	--> ResetTimeTrial
+	ResetTimeTrial	x	x
+	// Reset triggers
+	SetValue	gSystem	[#billboardList: [:]]
+	SetValue	gData	[#Triggers: []]
+	// RemoveTimer
+	RemoveTimer		[#timer: #Timer]
+	// Slowmo
+	Event	WorldMissionSlowMotion
+ResetTimeTrial_End
+
+//------------------------------------------------
+// GENERAL DEMOLITION
+//------------------------------------------------
+NextMarkerDemolition_Begin
+	PutMessage	--> NextMarkerDemolition
+	NextMarkerDemolition	x	x
+NextMarkerDemolition_End
+
+ResetDemolition_Begin
+	PutMessage	--> ResetDemolition
+	ResetDemolition
+	// Reset triggers
+	SetValue	gData	[#Triggers: []]
+	// RemoveTimer
+	RemoveTimer		[#timer: #Timer]
+	// Slowmo
+	Event	WorldMissionSlowMotion
+ResetDemolition_End
+
+//------------------------------------------------------------------------------------------------------------------------------------------------
+// WORLDS
+//------------------------------------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------
+// CITY
+//------------------------------------------------
+// RAMPAGE
+//----------
+RampageCity1_Begin
+	PutMessage	--> RampageCity1
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #RampageCity1Title]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #RampageCity1Goal]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]	
+	// Setup 
+	SetupRampage
+	// Timer
+	//AddTimer	Timer	[#value: "Timer", #time: 3500, #state: #down, #limit: 0]	
+	AddTimer	Timer	[#value: "Timer", #time: gGame.Rampage.trackinfo.target, #state: #down, #limit: 0]	
+	// Trigger
+	AddTrigger	{:Timer} <= 11000	[#event: "CountDownWarningTriggers", #frameFreq: 5]
+	AddTrigger	{:Timer}<=0	[#event: "ResetRampage", #frameFreq: 5]
+	// SlowMo
+	Event	WorldMissionSlowMotion
+RampageCity1_End
+
+//------------
+// TIMETRIALS
+//------------
+TimeTrialCityA_Begin
+	PutMessage	--> TimeTrialCityA
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #TimeTrialCityATitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #TimeTrialCityAGoal]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Setup 
+	SetupTimeTrial	x	x	
+	// Timer
+	AddTimer	Timer	[#value: "Timer", #time: gGame.timeTrial.trackinfo.target, #state: #down, #limit: 0]	
+	// Trigger
+	AddTrigger	{:Timer} <= 11000	[#event: "CountDownWarningTriggers", #frameFreq: 5]
+	AddTrigger	{:Timer}<=0	[#event: "ResetTimeTrial", #frameFreq: 5]
+	// SlowMo
+	Event	WorldMissionSlowMotion
+TimeTrialCityA_End
+
+//--------------
+// DEMOLITIONS
+//--------------
+DemolitionCityA_Begin
+	PutMessage	--> DemolitionCity
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #DemolitionCityATitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #DemolitionCityAGoal]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]	
+	// Setup 
+	SetupDemolition
+	// Timer
+	//AddTimer	Timer	[#value: "Timer", #time: 3500, #state: #down, #limit: 0]	
+	AddTimer	Timer	[#value: "Timer", #time: gGame.demolition.trackinfo.target, #state: #down, #limit: 0]	
+	// Trigger
+	AddTrigger	{:Timer} <= 11000	[#event: "CountDownWarningTriggers", #frameFreq: 5]
+	AddTrigger	{:Timer}<=0	[#event: "ResetDemolition", #frameFreq: 5]
+	// SlowMo
+	Event	WorldMissionSlowMotion
+DemolitionCityA_End
+
+
+//------------------------------------------------
+// DESERT
+//------------------------------------------------
+// RAMPAGE
+//----------
+RampageDesert1_Begin
+	PutMessage	--> RampageDesert1
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #RampageDesert1Title]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #RampageDesert1Goal]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]	
+	// Setup 
+	SetupRampage	x	x
+	// Timer
+	//AddTimer	Timer	[#value: "Timer", #time: 3500, #state: #down, #limit: 0]	
+	AddTimer	Timer	[#value: "Timer", #time: gGame.Rampage.trackinfo.target, #state: #down, #limit: 0]	
+	// Trigger
+	AddTrigger	{:Timer} <= 11000	[#event: "CountDownWarningTriggers", #frameFreq: 5]
+	AddTrigger	{:Timer}<=0	[#event: "ResetRampage", #frameFreq: 5]
+	// SlowMo
+	Event	WorldMissionSlowMotion
+RampageDesert1_End
+
+//------------
+// TIMETRIALS
+//------------
+TimeTrialDesert_Begin
+	PutMessage	--> TimeTrialDesert
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #TimeTrialDesertTitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #TimeTrialDesertGoal]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Setup 
+	SetupTimeTrial	x	x
+	// Timer
+	AddTimer	Timer	[#value: "Timer", #time: gGame.timeTrial.trackinfo.target, #state: #down, #limit: 0]	
+	// Trigger
+	AddTrigger	{:Timer} <= 11000	[#event: "CountDownWarningTriggers", #frameFreq: 5]
+	AddTrigger	{:Timer}<=0	[#event: "ResetTimeTrial", #frameFreq: 5]
+	// SlowMo
+	Event	WorldMissionSlowMotion
+TimeTrialDesert_End
+
+//--------------
+// DEMOLITIONS
+//--------------
+DemolitionDesert_Begin
+	PutMessage	--> DemolitionDesert
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #DemolitionDesertTitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #DemolitionDesertGoal]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]	
+	// Setup 
+	SetupDemolition	x	x
+	// Timer
+	AddTimer	Timer	[#value: "Timer", #time: gGame.demolition.trackinfo.target, #state: #down, #limit: 0]	
+	// Trigger
+	AddTrigger	{:Timer} <= 11000	[#event: "CountDownWarningTriggers", #frameFreq: 5]
+	AddTrigger	{:Timer}<=0	[#event: "ResetDemolition", #frameFreq: 5]
+	// SlowMo
+	Event	WorldMissionSlowMotion
+DemolitionDesert_End
+
+//------------------------------------------------
+// JUNGLE
+//------------------------------------------------
+// RAMPAGE
+//----------
+RampageJungle1_Begin
+	PutMessage	--> RampageJungle1
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #RampageJungle1Title]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #RampageJungle1Goal]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]	
+	// Setup 
+	SetupRampage	x	x
+	// Timer
+	//AddTimer	Timer	[#value: "Timer", #time: 3500, #state: #down, #limit: 0]	
+	AddTimer	Timer	[#value: "Timer", #time: gGame.Rampage.trackinfo.target, #state: #down, #limit: 0]	
+	// Trigger
+	AddTrigger	{:Timer} <= 11000	[#event: "CountDownWarningTriggers", #frameFreq: 5]
+	AddTrigger	{:Timer}<=0	[#event: "ResetRampage", #frameFreq: 5]
+	// SlowMo
+	Event	WorldMissionSlowMotion
+RampageJungle1_End
+
+//------------
+// TIMETRIALS
+//------------
+TimeTrialJungleA_Begin
+	PutMessage	--> TimeTrialJungleA
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #TimeTrialJungleATitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #TimeTrialJungleAGoal]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Setup 
+	SetupTimeTrial	x	x
+	// Timer
+	AddTimer	Timer	[#value: "Timer", #time: gGame.timeTrial.trackinfo.target, #state: #down, #limit: 0]	
+	// Trigger
+	AddTrigger	{:Timer} <= 11000	[#event: "CountDownWarningTriggers", #frameFreq: 5]
+	AddTrigger	{:Timer}<=0	[#event: "ResetTimeTrial", #frameFreq: 5]
+	// SlowMo
+	Event	WorldMissionSlowMotion
+TimeTrialJungleA_End
+
+TimeTrialJungleB_Begin
+	PutMessage	--> TimeTrialJungleB
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #TimeTrialJungleBTitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #TimeTrialJungleBGoal]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Setup 
+	SetupTimeTrial	x	x
+	// Timer
+	AddTimer	Timer	[#value: "Timer", #time: gGame.timeTrial.trackinfo.target, #state: #down, #limit: 0]	
+	// Trigger
+	AddTrigger	{:Timer} <= 11000	[#event: "CountDownWarningTriggers", #frameFreq: 5]
+	AddTrigger	{:Timer}<=0	[#event: "ResetTimeTrial", #frameFreq: 5]
+	// SlowMo
+	Event	WorldMissionSlowMotion
+TimeTrialJungleB_End
+
+//--------------
+// DEMOLITIONS
+//--------------
+DemolitionJungleA_Begin
+	PutMessage	--> DemolitionJungleA
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #DemolitionJungleATitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #DemolitionJungleAGoal]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]	
+	// Setup 
+	SetupDemolition	x	x
+	// Timer
+	AddTimer	Timer	[#value: "Timer", #time: gGame.demolition.trackinfo.target, #state: #down, #limit: 0]	
+	// Trigger
+	AddTrigger	{:Timer} <= 11000	[#event: "CountDownWarningTriggers", #frameFreq: 5]
+	AddTrigger	{:Timer}<=0	[#event: "ResetDemolition", #frameFreq: 5]
+	// SlowMo
+	Event	WorldMissionSlowMotion
+DemolitionJungleA_End
+
+//------------------------------------------------
+// SNOW
+//------------------------------------------------
+// RAMPAGE
+//----------
+RampageSnow1_Begin
+	PutMessage	--> RampageSnow1
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #RampageSnow1Title]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #RampageSnow1Goal]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]	
+	// Setup 
+	SetupRampage	x	x
+	// Timer
+	//AddTimer	Timer	[#value: "Timer", #time: 3500, #state: #down, #limit: 0]	
+	AddTimer	Timer	[#value: "Timer", #time: gGame.Rampage.trackinfo.target, #state: #down, #limit: 0]	
+	// Trigger
+	AddTrigger	{:Timer} <= 11000	[#event: "CountDownWarningTriggers", #frameFreq: 5]
+	AddTrigger	{:Timer}<=0	[#event: "ResetRampage", #frameFreq: 5]
+	// SlowMo
+	Event	WorldMissionSlowMotion
+RampageSnow1_End
+
+//------------
+// TIMETRIALS
+//------------
+TimeTrialSnow_Begin
+	PutMessage	--> TimeTrialSnow
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #TimeTrialSnowTitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #TimeTrialSnowGoal]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Setup 
+	SetupTimeTrial	x	x
+	// Timer
+	AddTimer	Timer	[#value: "Timer", #time: gGame.timeTrial.trackinfo.target, #state: #down, #limit: 0]	
+	// Trigger
+	AddTrigger	{:Timer} <= 11000	[#event: "CountDownWarningTriggers", #frameFreq: 5]
+	AddTrigger	{:Timer}<=0	[#event: "ResetTimeTrial", #frameFreq: 5]
+	// SlowMo
+	Event	WorldMissionSlowMotion
+TimeTrialSnow_End
+
+//--------------
+// DEMOLITIONS
+//--------------
+DemolitionSnow_Begin
+	PutMessage	--> DemolitionSnow
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #DemolitionSnowTitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #DemolitionSnowGoal]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]	
+	// Setup 
+	SetupDemolition	x	x
+	// Timer
+	AddTimer	Timer	[#value: "Timer", #time: gGame.demolition.trackinfo.target, #state: #down, #limit: 0]	
+	// Trigger
+	AddTrigger	{:Timer} <= 11000	[#event: "CountDownWarningTriggers", #frameFreq: 5]
+	AddTrigger	{:Timer}<=0	[#event: "ResetDemolition", #frameFreq: 5]
+	// SlowMo
+	Event	WorldMissionSlowMotion
+DemolitionSnow_End
+
+//------------------------------------------------
+// INDUSTRIAL
+//------------------------------------------------
+//------------------------------------------------
+// INDUSTRIAL ONLY LIMITATIONS
+//------------------------------------------------
+ChallengeOnlyByCar_Begin
+	PutMessage	ChallengeOnlyByCar
+	// Sound
+	PlaySound	InformationPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #ChallengeOnlyTitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #ChallengeOnlyByCar]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]	
+	DelayEvent		[#delay: {:StatusDelay}, #name: "ChallengeOnlyByRestoreItem", #event: "ChallengeOnlyByRestoreItem"]
+ChallengeOnlyByCar_End
+
+ChallengeOnlyByBoat_Begin
+	PutMessage	ChallengeOnlyByBoat
+	// Sound
+	PlaySound	InformationPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #ChallengeOnlyTitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #ChallengeOnlyByBoat]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	DelayEvent		[#delay: {:StatusDelay}, #name: "ChallengeOnlyByRestoreItem", #event: "ChallengeOnlyByRestoreItem"]
+ChallengeOnlyByBoat_End
+
+ChallengeOnlyByHelicopter_Begin
+	PutMessage	ChallengeOnlyByHelicopter
+	// Sound
+	PlaySound	InformationPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #ChallengeOnlyTitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #ChallengeOnlyByHelicopter]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	DelayEvent		[#delay: {:StatusDelay}, #name: "ChallengeOnlyByRestoreItem", #event: "ChallengeOnlyByRestoreItem"]
+ChallengeOnlyByHelicopter_End
+
+ChallengeOnlyByRestoreItem_Begin
+	PutMessage	ChallengeOnlyByRestoreItem
+	RestoreMissionItem	x	x
+ChallengeOnlyByRestoreItem_End
+
+//------------
+// TIMETRIALS
+//------------
+TimeTrialIndustrialA_Begin
+	PutMessage	--> TimeTrialIndustrialA (Car)
+	Evaluate	"{:Vehicle}"="Car"	[#event: "ActualTimeTrialIndustrialA"]
+	Evaluate	"{:Vehicle}"<>"Car"	[#event: "ChallengeOnlyByCar"]	
+TimeTrialIndustrialA_End
+
+TimeTrialIndustrialB_Begin
+	PutMessage	--> TimeTrialIndustrialB (Boat)
+	Evaluate	"{:Vehicle}"="Boat"	[#event: "ActualTimeTrialIndustrialB"]
+	Evaluate	"{:Vehicle}"<>"Boat"	[#event: "ChallengeOnlyByBoat"]	
+TimeTrialIndustrialB_End
+
+TimeTrialIndustrialC_Begin
+	PutMessage	--> TimeTrialIndustrialC (Helicopter)
+	Evaluate	"{:Vehicle}"="Helicopter"	[#event: "ActualTimeTrialIndustrialC"]
+	Evaluate	"{:Vehicle}"<>"Helicopter"	[#event: "ChallengeOnlyByHelicopter"]	
+TimeTrialIndustrialC_End
+
+ActualTimeTrialIndustrialA_Begin
+	PutMessage	--> ActualTimeTrialIndustrialA (Car)
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #TimeTrialIndustrialATitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #TimeTrialIndustrialAGoal]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Setup 
+	SetupTimeTrial	x	x
+	// Timer
+	AddTimer	Timer	[#value: "Timer", #time: gGame.timeTrial.trackinfo.target, #state: #down, #limit: 0]	
+	// Trigger
+	AddTrigger	{:Timer} <= 11000	[#event: "CountDownWarningTriggers", #frameFreq: 5]
+	AddTrigger	{:Timer}<=0	[#event: "ResetTimeTrial", #frameFreq: 5]
+	// SlowMo
+	Event	WorldMissionSlowMotion
+ActualTimeTrialIndustrialA_End
+
+ActualTimeTrialIndustrialB_Begin
+	PutMessage	--> ActualTimeTrialIndustrialB (Boat)
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #TimeTrialIndustrialBTitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #TimeTrialIndustrialBGoal]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Setup 
+	SetupTimeTrial	x	x
+	// Timer
+	AddTimer	Timer	[#value: "Timer", #time: gGame.timeTrial.trackinfo.target, #state: #down, #limit: 0]	
+	// Trigger
+	AddTrigger	{:Timer} <= 11000	[#event: "CountDownWarningTriggers", #frameFreq: 5]
+	AddTrigger	{:Timer}<=0	[#event: "ResetTimeTrial", #frameFreq: 5]
+	// SlowMo
+	Event	WorldMissionSlowMotion
+ActualTimeTrialIndustrialB_End
+
+ActualTimeTrialIndustrialC_Begin
+	PutMessage	--> ActualTimeTrialIndustrialC (Helicopter)
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #TimeTrialIndustrialCTitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #TimeTrialIndustrialCGoal]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Setup 
+	SetupTimeTrial	x	x
+	// Timer
+	AddTimer	Timer	[#value: "Timer", #time: gGame.timeTrial.trackinfo.target, #state: #down, #limit: 0]	
+	// Trigger
+	AddTrigger	{:Timer} <= 11000	[#event: "CountDownWarningTriggers", #frameFreq: 5]
+	AddTrigger	{:Timer}<=0	[#event: "ResetTimeTrial", #frameFreq: 5]
+	// SlowMo
+	Event	WorldMissionSlowMotion
+ActualTimeTrialIndustrialC_End
+
+//----------
+// RAMPAGE
+//----------
+RampageIndustrialA_Begin
+	PutMessage	--> RampageIndustrialA (Car)
+	Evaluate	"{:Vehicle}"="Car"	[#event: "ActualRampageIndustrialA"]
+	Evaluate	"{:Vehicle}"<>"Car"	[#event: "ChallengeOnlyByCar"]	
+RampageIndustrialA_End
+
+RampageIndustrialB_Begin
+	PutMessage	--> RampageIndustrialB (Boat)
+	Evaluate	"{:Vehicle}"="Boat"	[#event: "ActualRampageIndustrialB"]
+	Evaluate	"{:Vehicle}"<>"Boat"	[#event: "ChallengeOnlyByBoat"]	
+RampageIndustrialB_End
+
+RampageIndustrialC_Begin
+	PutMessage	--> RampageIndustrialC (Helicopter)
+	Evaluate	"{:Vehicle}"="Helicopter"	[#event: "ActualRampageIndustrialC"]
+	Evaluate	"{:Vehicle}"<>"Helicopter"	[#event: "ChallengeOnlyByHelicopter"]	
+RampageIndustrialC_End
+
+ActualRampageIndustrialA_Begin
+	PutMessage	--> ActualRampageIndustrialA (Car)
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #RampageIndustrialATitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #RampageIndustrialAGoal]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]	
+	// Setup 
+	SetupRampage	x	x
+	// Timer
+	//AddTimer	Timer	[#value: "Timer", #time: 3500, #state: #down, #limit: 0]	
+	AddTimer	Timer	[#value: "Timer", #time: gGame.Rampage.trackinfo.target, #state: #down, #limit: 0]	
+	// Trigger
+	AddTrigger	{:Timer} <= 11000	[#event: "CountDownWarningTriggers", #frameFreq: 5]
+	AddTrigger	{:Timer}<=0	[#event: "ResetRampage", #frameFreq: 5]
+	// SlowMo
+	Event	WorldMissionSlowMotion
+ActualRampageIndustrialA_End
+
+ActualRampageIndustrialB_Begin
+	PutMessage	--> ActualRampageIndustrialB (Boat)
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #RampageIndustrialBTitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #RampageIndustrialBGoal]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]	
+	// Setup 
+	SetupRampage	x	x
+	// Timer
+	//AddTimer	Timer	[#value: "Timer", #time: 3500, #state: #down, #limit: 0]	
+	AddTimer	Timer	[#value: "Timer", #time: gGame.Rampage.trackinfo.target, #state: #down, #limit: 0]	
+	// Trigger
+	AddTrigger	{:Timer} <= 11000	[#event: "CountDownWarningTriggers", #frameFreq: 5]
+	AddTrigger	{:Timer}<=0	[#event: "ResetRampage", #frameFreq: 5]
+	// SlowMo
+	Event	WorldMissionSlowMotion
+ActualRampageIndustrialB_End
+
+ActualRampageIndustrialC_Begin
+	PutMessage	--> ActualRampageIndustrialC (Car)
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #RampageIndustrialCTitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #RampageIndustrialCGoal]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]	
+	// Setup 
+	SetupRampage	x	x
+	// Timer
+	//AddTimer	Timer	[#value: "Timer", #time: 3500, #state: #down, #limit: 0]	
+	AddTimer	Timer	[#value: "Timer", #time: gGame.Rampage.trackinfo.target, #state: #down, #limit: 0]	
+	// Trigger
+	AddTrigger	{:Timer} <= 11000	[#event: "CountDownWarningTriggers", #frameFreq: 5]
+	AddTrigger	{:Timer}<=0	[#event: "ResetRampage", #frameFreq: 5]
+	// SlowMo
+	Event	WorldMissionSlowMotion
+ActualRampageIndustrialC_End
+
+//--------------
+// DEMOLITIONS
+//--------------
+DemolitionIndustrialA_Begin
+	PutMessage	--> DemolitionIndustrialA (Car)
+	Evaluate	"{:Vehicle}"="Car"	[#event: "ActualDemolitionIndustrialA"]
+	Evaluate	"{:Vehicle}"<>"Car"	[#event: "ChallengeOnlyByCar"]	
+DemolitionIndustrialA_End
+
+DemolitionIndustrialB_Begin
+	PutMessage	--> DemolitionIndustrialB (Boat)
+	Evaluate	"{:Vehicle}"="Boat"	[#event: "ActualDemolitionIndustrialB"]
+	Evaluate	"{:Vehicle}"<>"Boat"	[#event: "ChallengeOnlyByBoat"]	
+DemolitionIndustrialB_End
+
+DemolitionIndustrialC_Begin
+	PutMessage	--> DemolitionIndustrialC (Helicopter)
+	Evaluate	"{:Vehicle}"="Helicopter"	[#event: "ActualDemolitionIndustrialC"]
+	Evaluate	"{:Vehicle}"<>"Helicopter"	[#event: "ChallengeOnlyByHelicopter"]	
+DemolitionIndustrialC_End
+
+ActualDemolitionIndustrialA_Begin
+	PutMessage	--> ActualDemolitionIndustrialA (Car)
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #DemolitionIndustrialATitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #DemolitionIndustrialAGoal]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]	
+	// Setup 
+	SetupDemolition	x	x
+	// Timer
+	AddTimer	Timer	[#value: "Timer", #time: gGame.demolition.trackinfo.target, #state: #down, #limit: 0]	
+	// Trigger
+	AddTrigger	{:Timer} <= 11000	[#event: "CountDownWarningTriggers", #frameFreq: 5]
+	AddTrigger	{:Timer}<=0	[#event: "ResetDemolition", #frameFreq: 5]
+	// SlowMo
+	Event	WorldMissionSlowMotion
+ActualDemolitionIndustrialA_End
+
+ActualDemolitionIndustrialB_Begin
+	PutMessage	--> ActualDemolitionIndustrialB (Boat)
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #DemolitionIndustrialBTitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #DemolitionIndustrialBGoal]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]	
+	// Setup 
+	SetupDemolition	x	x
+	// Timer
+	AddTimer	Timer	[#value: "Timer", #time: gGame.demolition.trackinfo.target, #state: #down, #limit: 0]	
+	// Trigger
+	AddTrigger	{:Timer} <= 11000	[#event: "CountDownWarningTriggers", #frameFreq: 5]
+	AddTrigger	{:Timer}<=0	[#event: "ResetDemolition", #frameFreq: 5]
+	// SlowMo
+	Event	WorldMissionSlowMotion
+ActualDemolitionIndustrialB_End
+
+ActualDemolitionIndustrialC_Begin
+	PutMessage	--> ActualDemolitionIndustrialC (Helicopter)
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #DemolitionIndustrialCTitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #DemolitionIndustrialCGoal]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]	
+	// Setup 
+	SetupDemolition	x	x
+	// Timer
+	AddTimer	Timer	[#value: "Timer", #time: gGame.demolition.trackinfo.target, #state: #down, #limit: 0]	
+	// Trigger
+	AddTrigger	{:Timer} <= 11000	[#event: "CountDownWarningTriggers", #frameFreq: 5]
+	AddTrigger	{:Timer}<=0	[#event: "ResetDemolition", #frameFreq: 5]
+	// SlowMo
+	Event	WorldMissionSlowMotion
+ActualDemolitionIndustrialC_End

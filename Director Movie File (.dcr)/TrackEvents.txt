@@ -1,0 +1,1105 @@
+-- [Text] TrackEvents
+
+//--------------------------------------------------------
+// Setup Track
+//--------------------------------------------------------
+SetupTrack_Begin
+	PutMessage	SetupTrack
+	//-----------------------------------------------------------------------------
+	// Start showing init update
+	//-----------------------------------------------------------------------------
+	SetValue		[#ForceUpdate: TRUE]
+	SetValue		[#ForceState: #initializing]
+	UpdateTagsInitializingGame	x	x
+	//-----------------------------------------------------------------------------
+	// Remove from new List
+	//-----------------------------------------------------------------------------
+	RemoveFromNew	x	x
+	//-----------------------------------------------------------------------------
+	// Scene!
+	//-----------------------------------------------------------------------------
+	SetValue		[#Scene: "Track"]
+	//-----------------------------------------------------------------------------
+	// Update track info & data & SW Trophies
+	//-----------------------------------------------------------------------------
+	UpdateTrackInfo	x	x
+	GetChallengeType	x	x
+	GetTicket	x	x
+	//-----------------------------------------------------------------------------
+	// Setup challenge (do this first as it can adjust AI amount and such)
+	//-----------------------------------------------------------------------------
+	SetValue		[#Assets: gGame.TrackInfo.Assets]
+	SetValue		[#Challenge: gGame.TrackInfo.GameMode]
+	SetValue		[#AIFriendlyFire: gGame.TrackInfo.AIFriendlyFire]
+	SetValue		[#Vehicle: gGame.TrackInfo.Vehicle]
+	UpdateVehicleType	x	x
+	//-----------------------------------------------------------------------------
+	// Build sprite & add values
+	//-----------------------------------------------------------------------------
+	CreateSprite	{:Assets}Assets	[#channel: 1, #default3dScripts: TRUE]
+	AddValue		[#name: "Member", #value: member("{:Assets}Assets")]
+	AddValue		[#name: "Sprite", #value: sprite(1)]
+	//-----------------------------------------------------------------------------
+	// Setup objects, pickups & debris
+	//-----------------------------------------------------------------------------
+	Event	SetupObjects
+	Event	SetupDebris
+	Event	SetupPickups	
+	//-----------------------------------------------------------------------------
+	// Clone objects, pickups and debris
+	//-----------------------------------------------------------------------------
+	CloneModel	{:Assets}Assets	[#SourceMember: "Objects", #lod: FALSE, #delete: TRUE]
+	CloneModel	{:Assets}Assets	[#SourceMember: "Debris",   #lod: FALSE, #delete: TRUE]
+	CloneModel	{:Assets}Assets	[#SourceMember: "Pickups", #lod: FALSE, #delete: TRUE]
+	//-----------------------------------------------------------------------------
+	// Init specific challenge
+	//-----------------------------------------------------------------------------
+	Event	Setup{:Challenge}Challenge
+	//-----------------------------------------------------------------------------
+	// Build track & skybox
+	//-----------------------------------------------------------------------------
+	Event	{:Assets}Textures
+	Evaluate	{:DailyChallenge}=TRUE	[#event: gGame.TrackInfo.Reference&"Build"]
+	Evaluate	{:DailyChallenge}=FALSE	[#event: "{:Track}Build"]
+	Event	SkyboxInitialization
+	//-----------------------------------------------------------------------------
+	// Scripts
+	//-----------------------------------------------------------------------------
+	Event	ChallengeScripts
+	//-----------------------------------------------------------------------------
+	// Ambient style & reset some shaders
+	//-----------------------------------------------------------------------------
+	SetAmbientStyle	{:Assets}Assets	[#style: gGame.trackinfo.ambientStyle]
+	SetShader	{:Assets}Assets	[#shader: "Pickups_Material", #emissive: rgb(255,255,255)]
+	SetShader	{:Assets}Assets	[#shader: "Arrows_Material", #emissive: rgb(255,255,255)]
+	SetShader	{:Assets}Assets	[#shader: "Crosses_Material", #emissive: rgb(255,255,255)]
+	SetShader	{:Assets}Assets	[#shader: "Finish_Material", #emissive: rgb(255,255,255)]
+	SetShader	{:Assets}Assets	[#shader: "Decals_Material", #emissive: rgb(255,255,255)]
+	SetShader	{:Assets}Assets	[#shader: "ImpactSmoke_Material", #emissive: rgb(255,255,255)]
+	SetShader	{:Assets}Assets	[#shader: "ImpactBurst_Material", #emissive: rgb(255,255,255)]
+	SetShader	{:Assets}Assets	[#shader: "ImpactSparks_Material", #emissive: rgb(255,255,255)]
+	SetShader	{:Assets}Assets	[#shader: "ImpactDebris_Material", #emissive: rgb(128,128,128)]
+	//-----------------------------------------------------------------------------
+	// Effects (skybox, scroller, particles, bloom, etc.)
+	//-----------------------------------------------------------------------------
+	SetSkybox	{:Assets}Assets	[#skybox: gGame.TrackInfo.Skybox]	
+	AddToScroller	{:Assets}Assets	[#shader: "Arrows_Material", #time: 150, #position: vector(0.25, 0.0, 0.0)]
+	AddToScroller	{:Assets}Assets	[#shader: "Finish_Material", #time: 30, #position: vector(-0.01, 0.0, 0.0)]
+	AddScript	#System	[#script: "[PS] Motion Blur", #data: [#member: "{:Assets}Assets", #camera: "Player1_Camera", #passes: 7]]
+	AddScript	#System	[#script: "[PS] Bloom", #data: [#member: "{:Assets}Assets", #camera: "Player1_Camera", #template: gGame.TrackInfo.Bloom, #skybox: TRUE]]
+	//-----------------------------------------------------------------------------
+	// Overlay hack
+	//-----------------------------------------------------------------------------
+	SetVisible	Interface	[#model: "InterfaceOverlay", #state: TRUE, #parent: "World"]
+	//-----------------------------------------------------------------------------
+	// Starttime
+	//-----------------------------------------------------------------------------
+	SetStartTime	x	x	
+	//-----------------------------------------------------------------------------
+	// TEMP: CHEATS	
+	//-----------------------------------------------------------------------------
+	//UnlockAllTickets	x	x
+	//WinCurrentTickets	x	x
+	//-----------------------------------------------------------------------------
+	// Fade to show challenge
+	//-----------------------------------------------------------------------------
+	Fade	{:Assets}Assets	[#hold: 500, #time: 750, #type: #out, #event: "DelayShowChallenge"]
+	//-----------------------------------------------------------------------------
+	// show sprite
+	//-----------------------------------------------------------------------------
+	SetSprite	{:Sprite}
+	SetValue		[#ForceUpdate: FALSE]
+	//Event	CountDownGo	
+SetupTrack_End
+
+//--------------------------------------------------------
+// Player & AI Scripts
+//--------------------------------------------------------
+ChallengeScripts_Begin
+	PutMessage	--> ChallengeScripts
+	// Player(s)
+	Iterate	{:Players}	[#event: "ChallengePlayer{:Vehicle}Scripts"]
+	Evaluate	#{:Effects}=#low	[#handler: "TurnOffVehicleEffects"]
+	// AI(s)
+	SetValue		[#AI: gGame.TrackInfo.Enemies.count]
+	//SetValue		[#AI: 0]
+	SetValue		[#AIVehicle: "{:Vehicle}"]
+	Evaluate	"{:Track}"="SpecialMissionConvoy"	[#event: "AIVehicleSpecialMissionConvoy"]
+	Evaluate	"{:Track}"="BossEnd"	[#event: "AIVehicleBossEnd"]	
+	Iterate	{:AI}	[#event: "ChallengeAI{:AIVehicle}Scripts"]
+	// Camera
+	AddScript		[#script: "[PS] Camera", #data: [#member: "{:Assets}Assets", #target: gGame.Vehicles[1].general.tag]]
+	SetFog	World{:World}	[#camera: "Player1_Camera", #color: gGame.TrackInfo.FogColor, #range: gGame.TrackInfo.FogRange]
+	// UpdateCamera
+	SetValue	gGame.Camera[1]	[#DefaultSet: symbol(gGame[#{:Vehicle}])]
+	UpdateCameraSet	gGame[#{:Vehicle}]	
+	// Interface
+	Event	SetupInterface		
+ChallengeScripts_End
+
+AIVehicleSpecialMissionConvoy_Begin
+	PutMessage	--> --> AIVehicleSpecialMissionConvoy
+	SetValue		[#AIVehicle: "Car"]
+AIVehicleSpecialMissionConvoy_End
+
+AIVehicleBossEnd_Begin
+	PutMessage	--> --> AIVehicleBossEnd
+	SetValue		[#AIVehicle: "Autobot"]
+AIVehicleBossEnd_End
+
+//--------------------------------------------------------
+// Player
+//--------------------------------------------------------
+ChallengePlayerCarScripts_Begin
+	PutMessage	ChallengePlayerCarScripts
+	Evaluate	"{:Car}"="Autobot"	[#event: "BuildAutobotScript"]
+	Evaluate	"{:Car}"<>"Autobot"	[#event: "BuildCarScript"]	
+ChallengePlayerCarScripts_End
+
+BuildCarScript_Begin
+	PutMessage	BuildCarScript
+	AddScript	{:Assets}Assets	[#script: "[PS] Advanced Car", #data: [#member: "{:Assets}Assets", #scriptName: "PlayerCar", #controller: #player, #states: {:PlayerStatesCar}]]	
+	AddScript	{:Assets}Assets	[#script: "[PS] Vehicle Shadow Caster", #data: [#member: "{:Assets}Assets", #light: "Sun", #tag: gGame.Vehicles.count]]
+BuildCarScript_End
+
+BuildAutobotScript_Begin
+	PutMessage	BuildAutobotScript
+	AddScript	{:Assets}Assets	[#script: "[PS] Autobot", #data: [#member: "{:Assets}Assets", #scriptName: "PlayerCar", #controller: #player, #states: {:PlayerStatesAutobot}]]
+	AddScript	{:Assets}Assets	[#script: "[PS] Vehicle Shadow Caster", #data: [#member: "{:Assets}Assets", #light: "Sun", #tag: gGame.Vehicles.count]]
+BuildAutobotScript_End
+
+ChallengePlayerBoatScripts_Begin
+	PutMessage	ChallengePlayerBoatScripts
+	// Hardcode hack
+	SetValue		[#Boat: "SpeedBoat"]
+	AddScript	{:Assets}Assets	[#script: "[PS] Boat", #data: [#member: "{:Assets}Assets", #scriptName: "PlayerBoat", #controller: #player, #states: {:PlayerStatesBoat}]]
+ChallengePlayerBoatScripts_End
+
+ChallengePlayerHelicopterScripts_Begin
+	PutMessage	ChallengePlayerHelicopterScripts
+	AddScript	{:Assets}Assets	[#script: "[PS] Helicopter Track", #data: [#member: "{:Assets}Assets", #scriptName: "PlayerHelicopter", #controller: #player, #states: {:PlayerStatesHelicopter}]]
+ChallengePlayerHelicopterScripts_End
+
+ChallengePlayerPlaneScripts_Begin
+	PutMessage	ChallengePlayerPlaneScripts
+	AddScript	{:Assets}Assets	[#script: "[PS] Plane Track", #data: [#member: "{:Assets}Assets", #scriptName: "PlayerPlane", #controller: #player, #states: {:PlayerStatesPlane}]]
+ChallengePlayerPlaneScripts_End
+
+//--------------------------------------------------------
+// AI
+//--------------------------------------------------------
+ChallengeAICarScripts_Begin
+	PutMessage	ChallengeAICarScripts
+	AddScript	{:Assets}Assets	[#script: "[PS] Advanced Car", #data: [#member: "{:Assets}Assets", #scriptName: "AICar{:Iteration}", #controller: #AI, #states: {:AIStatesCar}]]
+	AddScript	{:Assets}Assets	[#script: "[PS] Vehicle Shadow Caster", #data: [#member: "{:Assets}Assets", #light: "Sun", #tag: gGame.Vehicles.count]]
+ChallengeAICarScripts_End
+
+ChallengeAIAutobotScripts_Begin
+	PutMessage	ChallengeAIAutobotScripts
+	AddScript	{:Assets}Assets	[#script: "[PS] Autobot", #data: [#member: "{:Assets}Assets", #scriptName: "AICar{:Iteration}", #controller: #AI, #states: {:AIStatesAutobot}]]
+	AddScript	{:Assets}Assets	[#script: "[PS] Vehicle Shadow Caster", #data: [#member: "{:Assets}Assets", #light: "Sun", #tag: gGame.Vehicles.count]]
+ChallengeAIAutobotScripts_End
+
+ChallengeAIBoatScripts_Begin
+	PutMessage	ChallengeAIBoatScripts
+	AddScript	{:Assets}Assets	[#script: "[PS] Boat", #data: [#member: "{:Assets}Assets", #scriptName: "AIBoat{:Iteration}", #controller: #AI, #states: {:AIStatesBoat}]]
+ChallengeAIBoatScripts_End
+
+ChallengeAIPlaneScripts_Begin
+	PutMessage	ChallengeAIPlaneScripts
+	AddScript	{:Assets}Assets	[#script: "[PS] Plane Track", #data: [#member: "{:Assets}Assets", #scriptName: "AIPlane{:Iteration}", #controller: #AI, #states: {:AIStatesPlane}]]
+ChallengeAIPlaneScripts_End
+
+//--------------------------------------------------------
+// CHALLENGE SETUP
+//--------------------------------------------------------
+SetupBattleChallenge_Begin
+	PutMessage	--> SetupBattleChallenge (FINISH FIRST!)
+	// Values
+	SetValue		[#input: FALSE]
+	SetValue		[#RaceState: #pending]
+	SetValue		[#AIWeaponsActive: FALSE]
+	// Triggers
+	AddTrigger	gGame.Vehicles[1].race.state = #Finished;gGame.Vehicles[1].race.position = 1	[#event: "EndChallengeVictory", #frameFreq: 5]	
+	AddTrigger	gGame.Vehicles[1].race.state = #Finished;gGame.Vehicles[1].race.position > 1	[#event: "EndChallengeDefeat", #frameFreq: 5]		
+SetupBattleChallenge_End
+
+SetupDestroyChallenge_Begin
+	PutMessage	--> SetupDestroyChallenge (DESTROY ENEMIES)
+	// Values
+	SetValue		[#input: FALSE]
+	SetValue		[#RaceState: #pending]
+	SetValue		[#AIWeaponsActive: FALSE]
+	// Triggers
+	AddTrigger	{:AIsKilled}>={:AIsBuild}	[#event: "EndChallengeVictory", #frameFreq: 5]
+	AddTrigger	{:Timer}<=0	[#event: "EndChallengeDefeat", #frameFreq: 5]
+	// if player or AI finishes
+	AddTrigger	{:PlayersFinished}>0	[#event: "EndChallengeDefeat", #frameFreq: 5]
+	AddTrigger	{:AIsFinished}>0	[#event: "EndChallengeDefeat", #frameFreq: 5]
+SetupDestroyChallenge_End
+
+SetupTrialChallenge_Begin
+	PutMessage	--> SetupTrialChallenge (FINISH IN TIME)
+	// Values
+	SetValue		[#input: FALSE]
+	SetValue		[#RaceState: #pending]
+	SetValue		[#AIWeaponsActive: FALSE]
+	// Triggers
+	AddTrigger	{:Timer}>0;gGame.Vehicles[1].race.state=#Finished	[#event: "EndChallengeVictory", #frameFreq: 5]
+	AddTrigger	{:Timer}<=0	[#event: "EndChallengeDefeat", #frameFreq: 5]
+SetupTrialChallenge_End
+
+//--------------------------------------------------------
+// START CHALLENGE
+//--------------------------------------------------------
+// Delay & show challenge
+//--------------------------------------------------------
+DelayShowChallenge_Begin
+	PutMessage	--> DelayShowChallenge
+	// Delay Event
+	DelayEvent		[#delay: 1000, #event: "ShowChallenge"]
+DelayShowChallenge_End
+
+ShowChallenge_Begin
+	PutMessage	--> ShowChallenge
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #ChallengeTitle, #text: #{:Track}Title]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #ChallengeBody, #text: #{:Track}Goal]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE]
+	// Sound
+	//PlaySound	Start_Jingle
+	// Delay next event
+	DelayEvent		[#delay: 4750, #event: "HideChallenge"]
+ShowChallenge_End
+
+HideChallenge_Begin
+	PutMessage	--> HideChallenge
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: FALSE]
+	DelayEvent		[#delay: 1000, #event: "StartCountDown"]
+HideChallenge_End
+
+//--------------------------------------------------------
+// Countdown
+//--------------------------------------------------------
+StartCountDown_Begin
+	PutMessage	StartCountDown
+	AddTimer	CountDown	[#value: "CountDown", #time: 3000, #state: #down, #limit: 0]	
+	Event	CountDown3
+	AddTrigger	{:CountDown} <= 2000	[#event: "CountDown2"]
+	AddTrigger	{:CountDown} <= 1000	[#event: "CountDown1"]
+	AddTrigger	{:CountDown} <= 0	[#event: "CountDownGo"]
+StartCountDown_End
+
+CountDown3_Begin
+	PutMessage	--> CountDown3
+	SetVisible	Interface	[#model: "InterfaceCountDown", #state: TRUE]
+	SetModel	Interface	[#model: "InterfaceCountDown", #resource: "InterfaceNumbersWhite3"]
+	PlaySound	Countdown_SFX	[#override: TRUE]
+CountDown3_End
+
+CountDown2_Begin
+	PutMessage	--> CountDown2
+	SetModel	Interface	[#model: "InterfaceCountDown", #resource: "InterfaceNumbersWhite2"]
+	PlaySound	Countdown_SFX	[#override: TRUE]
+CountDown2_End
+
+CountDown1_Begin
+	PutMessage	--> CountDown1
+	SetModel	Interface	[#model: "InterfaceCountDown", #resource: "InterfaceNumbersWhite1"]
+	PlaySound	Countdown_SFX	[#override: TRUE]
+CountDown1_End
+
+CountDownGo_Begin
+	PutMessage	--> CountDownGo
+	SetModel	Interface	[#model: "InterfaceCountDown", #resource: "InterfaceCountDownGo"]	
+	Event	ShowCurrentInterface
+	Event	Start{:Challenge}Challenge
+	//Evaluate	{:CheatsAvailable}=TRUE	[#event: "AddQuickEndCheats"]
+	PlaySound	CountDownGo_SFX
+	// Music
+	SetRadioStream	x	[#Radio: "FungiFM", #Track: gGame.TrackInfo.music]
+	PlayRadioStream	x	x
+	//FadeRadioStream	x	[#type: #in, #Time: 750]
+	//PlaySound	Mp3Player	[#priority: #top, #loopCount: 0, #volume: 0.4]	
+	//FadeSound	Mp3Player	[#fadeTime: 750, #fadeOut: FALSE]	
+	// Sound
+	PlaySound	Ambient{:World}_SFX	[#priority: #top, #volume: 1.0, #loopcount: 0]	
+	FadeSound	Ambient{:World}_SFX	[#fadeTime: 750, #fadeOut: FALSE]
+	Evaluate	"{:Track}"="SpecialMissionSpeedBoat"	[#event: "SetAmbientWater"]
+	Evaluate	"{:Track}"="SpecialMissionCoastGuard"	[#event: "SetAmbientWater"]
+	Evaluate	"{:Track}"="SpecialMissionStealth"	[#event: "SetAmbientWater"]
+CountDownGo_End
+
+SetAmbientWater_Begin
+	StopSound	Ambient{:World}_SFX
+	PlaySound	AmbientWater_SFX	[#priority: #top, #volume: 1.0, #loopcount: 0]	
+	FadeSound	AmbientWater_SFX	[#fadeTime: 750, #fadeOut: FALSE]
+SetAmbientWater_End
+
+HideCountDown_Begin	
+	PutMessage	HideCountDown
+	SetVisible	Interface	[#model: "InterfaceCountDown", #state: FALSE]
+HideCountDown_End
+
+ShowCurrentInterface_Begin
+	PutMessage	--> --> ShowCurrentInterface
+	ShowCurrentInterface
+	Evaluate	"{:Scene}"="World"	[#event: "ShowMiniMap"]
+	Evaluate	"{:Scene}"="Track"	[#event: "AddTrackKeys"]
+ShowCurrentInterface_End
+
+HideCurrentInterface_Begin
+	PutMessage	--> --> HideCurrentInterface
+	HideCurrentInterface
+	Evaluate	"{:Scene}"="World"	[#event: "HideMiniMap"]
+	UnbindKey		[#key: 53]
+	UnbindKey		[#key: "p"]
+	UnbindKey		[#key: "m"]
+	Evaluate	{:CheatsAvailable}=TRUE	[#event: "DisableTrackCheats"]
+HideCurrentInterface_End
+
+AddTrackKeys_Begin
+	PutMessage	--> AddTrackKeys
+	BindKey		[#key: 53, #handler: "PauseGame", #once: TRUE]
+	BindKey		[#key: "p", #handler: "PauseGame", #once: TRUE]
+	BindKey		[#key: "m", #handler: "MuteGame", #once: FALSE]
+	// Cheats
+	Evaluate	{:CheatsAvailable}=TRUE	[#event: "EnableTrackCheats"]
+	// Printscreen
+	BindKey		[#key: "o", #handler: "PrintScreen", #once: FALSE]
+AddTrackKeys_End
+
+EnableTrackCheats_Begin
+	PutMessage	--> EnableTrackCheats
+	BindKey		[#key: "k", #event: "EndChallengeVictory", #once: TRUE]
+	BindKey		[#key: "l", #event: "EndChallengeDefeat", #once: TRUE]	
+EnableTrackCheats_End
+
+DisableTrackCheats_Begin
+	PutMessage	--> DisableTrackCheats
+	UnbindKey		[#key: "k"]
+	UnbindKey		[#key: "l"]
+DisableTrackCheats_End
+
+//--------------------------------------------------------
+// Start the actual challenge
+//--------------------------------------------------------
+StartBattleChallenge_Begin
+	PutMessage	--> StartBattleChallenge
+	DelayEvent		[#delay: 2000, #event: "HideCountDown"]	
+	SetValue		[#RaceState: #racing]
+	SetValue		[#input: TRUE]
+	AddTimer	Timer	[#value: "Timer"]
+	DelayEvent		[#delay: {:DelayAIWeapons}, #event: "SetAIWeaponsActive"]
+StartBattleChallenge_End
+
+StartDestroyChallenge_Begin
+	PutMessage	--> StartDestroyChallenge
+	DelayEvent		[#delay: 2000, #event: "HideCountDown"]	
+	SetValue		[#RaceState: #racing]
+	SetValue		[#input: TRUE]
+	AddTimer	Timer	[#value: "Timer", #time: gGame.TrackInfo.Target, #state: #down, #limit: 0]
+	AddTrigger	{:Timer} <= 11000	[#event: "CountDownWarningTriggers", #frameFreq: 5]
+	DelayEvent		[#delay: {:DelayAIWeapons}, #event: "SetAIWeaponsActive"]
+StartDestroyChallenge_End
+
+StartTrialChallenge_Begin
+	PutMessage	--> StartTrialChallenge
+	DelayEvent		[#delay: 2000, #event: "HideCountDown"]	
+	SetValue		[#RaceState: #racing]
+	SetValue		[#input: TRUE]
+	AddTimer	Timer	[#value: "Timer", #time: gGame.TrackInfo.Target, #state: #down]
+	AddTrigger	{:Timer} <= 11000	[#event: "CountDownWarningTriggers", #frameFreq: 5]
+	DelayEvent		[#delay: {:DelayAIWeapons}, #event: "SetAIWeaponsActive"]
+StartTrialChallenge_End
+
+SetAIWeaponsActive_Begin
+	PutMessage	--> SetAIWeaponsActive
+	SetValue		[#AIWeaponsActive: TRUE]
+SetAIWeaponsActive_End
+
+//--------------------------------------------------------
+// END CHALLENGE
+//--------------------------------------------------------
+// Victory
+//--------------------------------------------------------
+EndChallengeVictory_Begin
+	PutMessage	--> EndChallengeVictory
+	// Before removing the timer check prestige (add to prestige list)
+	Evaluate	{:DailyChallenge}=TRUE	[#handler: "StoreDailyChallengeTime"]
+	CheckPrestige	x	x	
+	// Clear & Set
+	FinishAllCars	x	x
+	RemoveTimer		[#timer: #Timer]
+	AddValue		[#name: "RaceResult", #value: #Victory]
+	SetValue	gData	[#Triggers: []]
+	// UnbindKeys
+	UnbindKey		[#key: 53]
+	UnbindKey		[#key: "p"]
+	UnbindKey		[#key: "m"]
+	// Cheats
+	Evaluate	{:CheatsAvailable}=TRUE	[#event: "DisableTrackCheats"]
+	// add to list
+	Evaluate	#{:ChallengeType}=#normal	[#event: "AddToChallengeList"]
+	//Evaluate	#{:ChallengeType}=#specialMission	[#event: "AddToSpecialMissionList"]
+	// Interface
+	HideCurrentInterface
+	Event	ShowChallengeFinish
+	// End
+	DelayEvent		[#delay: 3000, #event: "EndChallenge"]
+	// UpdateTotalTime
+	UpdateStatisticsTotalTime	x	x
+	// Sound
+	//StopAllSound
+	SetVolumeRadioStream	x	[#volume: 50]
+	//SetSound	MP3Player	[#volume: .2]
+	StopPlayerMixer	x	x
+EndChallengeVictory_End
+
+AddToChallengeList_Begin
+	PutMessage	--> AddToChallengeList
+	AddToList	gGame.UpChallengesCompleted	[#value: "{:Track}", #override: TRUE]
+	CheckForPrimaryCheat	x	x
+AddToChallengeList_End
+
+AddToSpecialMissionList_Begin
+	PutMessage	--> AddToSpecialMissionList
+	AddToList	gGame.UPSpecialMissionsCompleted	[#value: "{:Track}", #override: TRUE]
+	CheckForSecondaryCheat	x	x
+AddToSpecialMissionList_End
+
+//--------------------------------------------------------
+// Defeat
+//--------------------------------------------------------
+EndChallengeDefeat_Begin
+	PutMessage	--> EndChallengeDefeat
+	// Clear & Set
+	FinishAllCars	x	x
+	Evaluate	{:DailyChallenge}=TRUE	[#handler: "StoreDailyChallengeTime"]
+	RemoveTimer		[#timer: #Timer]
+	AddValue		[#name: "RaceResult", #value: #Defeat]
+	SetValue	gData	[#Triggers: []]
+	// UnbindKeys
+	UnbindKey		[#key: 53]
+	UnbindKey		[#key: "p"]
+	UnbindKey		[#key: "m"]
+	// Cheats
+	Evaluate	{:CheatsAvailable}=TRUE	[#event: "DisableTrackCheats"]
+	// Interface
+	HideCurrentInterface
+	Event	ShowChallengeFinish
+	// End
+	DelayEvent		[#delay: 3000, #event: "EndChallenge"]
+	// UpdateTotalTime
+	UpdateStatisticsTotalTime
+	// Sound
+	//StopAllSound
+	SetVolumeRadioStream	x	[#volume: 50]
+	//SetSound	MP3Player	[#volume: .2]
+	StopPlayerMixer	x	x
+EndChallengeDefeat_End
+
+//--------------------------------------------------------
+// Finish
+//--------------------------------------------------------
+ShowChallengeFinish_Begin
+	PutMessage	--> ShowChallengeFinish
+	PlaySound	Finished_SFX
+	SetVisible	Interface	[#model: "Finished", #state: TRUE]
+	SetVisible	Interface	[#model: "InterfaceOverlay", #state: TRUE]
+	DelayEvent		[#delay: 2000, #event: "HideChallengeFinish"]
+ShowChallengeFinish_End
+
+HideChallengeFinish_Begin
+	PutMessage	--> HideChallengeFinish
+	SetVisible	Interface	[#model: "Finished", #state: FALSE]
+HideChallengeFinish_End
+
+//--------------------------------------------------------
+// End
+//--------------------------------------------------------
+EndChallenge_Begin
+	PutMessage	--> --> EndChallenge	
+	// Values
+	SetValue		[#RaceState: #Finished]	
+	// Other values
+	SetValue	gData	[#Triggers: []]
+	// Show correct text
+	Event	EndChallenge{:ChallengeType}
+	Evaluate	#{:RaceResult}=#Victory	[#event: "ShowResultsVictory"]
+	Evaluate	#{:RaceResult}=#Defeat	[#event: "ShowResultsDefeat"]
+	// Show correct button models
+	SetModel	Interface	[#model: "LeftButton", #resource: "RetryButton", #shader: "GreyInterface_Material"]
+	SetModel	Interface	[#model: "CenterButton", #resource: "SubmitScoreButton", #shader: "GreyInterface_Material"]
+	// Create buttons
+	CreateButton	Interface	[#model: "LeftButton", #Event: "FadeRetryChallenge", #effect: #shaderRollover, #shaders: ["GreyInterface_Material", "Interface_Material"]]
+	CreateButton	Interface	[#model: "CenterButton", #Event: "FadeSubmitHighscore", #effect: #shaderRollover, #shaders: ["GreyInterface_Material", "Interface_Material"]]
+	Event	HideResultsCenterButton
+	// Update & check trophies
+	CheckAndUpdateTrophies	x	x
+EndChallenge_End
+
+//--------------------------------------------------------
+// Normal
+//--------------------------------------------------------
+EndChallengeNormal_Begin
+	PutMessage	--> EndChallengeNormal
+	// Show/hide
+	SetVisible	Interface	[#model: ["Results", "Misc"], #state: TRUE]
+	SetVisible	Interface	[#model: ["TotalCost", "ResultResultGoalStamp", "ResultResultPrestigeStamp", "Pause"], #state: FALSE]
+	// Tickets
+	UpdateTickets
+	// Set ticket
+	SetModel	Interface	[#model: "ResultsTicketBigEvent", #resource: "{:Ticket}"]
+	// Trackname
+	CreateTextTexture	Interface	[#tag: #ResultsTicketBigHeaderText, #style: #ResultsTrackName, #text: #{:Track}Title]
+	// Goal
+	CreateTextTexture	Interface	[#tag: #ResultsTicketBigGoalText, #style: #ResultsGoal, #text: #GameModeGoal{:Challenge}]
+	// Prestige	
+	CreatePrestigeTextTexture	x	x
+	// Reward (name only)
+	CreateTextTexture	Interface	[#tag: #ResultsTicketBigRewardText, #style: #ResultsPrizeMoney]
+	// Cash bonus (name only)
+	CreateTextTexture	Interface	[#tag: #ResultsTicketBigCashBonusText, #style: #ResultsCashBonus]
+	// Total (name only)
+	CreateTextTexture	Interface	[#tag: #ResultsTicketBigTotalText, #style: #ResultsTotal]
+	// Show monieees!
+	UpdateChallengeNormalMoney	x	x
+	// Hidden package & completed
+	UpdateHiddenPackageAndCompleted	x	x
+	// Reward(s)
+	UpdateRewards	x	x
+	// Buttons 
+	SetModel	Interface	[#model: "RightButton", #resource: "ContinueButton", #shader: "GreyInterface_Material"]
+	CreateButton	Interface	[#model: "RightButton", #Event: "ContinueToTicketOffice", #effect: #shaderRollover, #shaders: ["GreyInterface_Material", "Interface_Material"]]
+EndChallengeNormal_End
+
+//--------------------------------------------------------
+// Special Mission
+//--------------------------------------------------------
+EndChallengeSpecialMission_Begin
+	PutMessage	--> EndChallengeSpecialMission
+	SetVisible	Interface	[#model: ["SpecialMission", "Misc"], #state: TRUE]
+	SetVisible	Interface	[#model: ["TotalCost", "SpecialMissionResultStamp", "Pause"], #state: FALSE]
+	Evaluate	{:DailyChallenge}=TRUE	[#event: "UpdateDialyChallengeHeader"]
+	// Tickets
+	UpdateTickets	x	x
+	// Show SpecialMission data
+	SetValue		[#SpecialMission: "{:Track}"]
+	Event	UpdateAndShowSpecialMission
+EndChallengeSpecialMission_End
+
+UpdateAndShowSpecialMission_Begin
+	PutMessage	--> UpdateAndShowSpecialMission
+	// Trackname
+	CreateTextTexture	Interface	[#tag: #SpecialMissionHeaderText, #style: #SpecialMissionTrackName, #text: #{:SpecialMission}Title]
+	// Description
+	CreateTextTexture	Interface	[#tag: #SpecialMissionDescriptionText, #style: #SpecialMissionDescription, #text: #{:SpecialMission}Story]
+	// Goal (name & text)
+	CreateTextTexture	Interface	[#tag: #SpecialMissionGoalHeaderText, #style: #SpecialMissionGoal]
+	CreateTextTexture	Interface	[#tag: #SpecialMissionGoalText, #style: #SpecialMissionGoal2, #text: #{:SpecialMission}Mission]
+	// Reward (name only)
+	CreateTextTexture	Interface	[#tag: #SpecialMissionRewardHeaderText, #style: #SpecialMissionReward]
+	// Special
+	CreateTextTexture	Interface	[#tag: #SpecialMissionUnlockHeaderText, #style: #SpecialMissionSpecial]
+	// Dynamic reward & special
+	// Show monieees!
+	UpdateChallengeSpecialMissionMoney		[#unlock: TRUE]
+	// Reward(s)
+	UpdateSpecialMissionRewards	x	x
+	// Buttons
+	SetModel	Interface	[#model: "RightButton", #resource: "NextButton", #shader: "GreyInterface_Material"]
+	CreateButton	Interface	[#model: "RightButton", #Event: "FadeReturnToWorld", #effect: #shaderRollover, #shaders: ["GreyInterface_Material", "Interface_Material"]]	
+UpdateAndShowSpecialMission_End
+
+UpdateDialyChallengeHeader_Begin
+	PutMessage	UpdateDialyChallengeHeader
+	SetModel	Interface	[#model: "SpecialMissionHeader", #resource: "DailyChallengeHeader"]
+UpdateDialyChallengeHeader_End
+
+//--------------------------------------------------------
+// Show Results
+//--------------------------------------------------------
+// Victory
+//--------------------------------------------------------
+ShowResultsVictory_Begin
+	PutMessage	--> ShowResultsVictory
+	PlaySound	TrialSucces_SFX	
+	SetVisible	Interface	[#model: "CenterButton", #state: TRUE, #parent: "Buttons"]
+	DelayEvent		[#delay: 1500, #event: "ShowResultsVictoryStamp{:ChallengeType}"]
+	Evaluate	{:Prestige}=TRUE	[Event: "DelayVictoryPrestigeStamp"]	
+ShowResultsVictory_End
+
+DelayVictoryPrestigeStamp_Begin
+	DelayEvent		[#delay: 2000, #event: "ShowResultsPrestigeStamp{:ChallengeType}"]
+DelayVictoryPrestigeStamp_End
+
+ShowResultsVictoryStampNormal_Begin
+	PutMessage	--> ShowResultsVictoryStampNormal
+	PlaySound	Stamp_SFX	[#override: TRUE]
+	SetModel	Interface	[#model: "ResultResultGoalStamp", #resource: "StampCleared"]
+	SetVisible	Interface	[#model: "ResultResultGoalStamp", #state: TRUE, #parent: "ResultsTicketBig"]
+ShowResultsVictoryStampNormal_End
+
+ShowResultsPrestigeStampNormal_Begin
+	PutMessage	--> ShowResultsVictoryStampNormal
+	PlaySound	Stamp_SFX	[#override: TRUE]
+	SetModel	Interface	[#model: "ResultResultPrestigeStamp", #resource: "StampCleared"]
+	SetVisible	Interface	[#model: "ResultResultPrestigeStamp", #state: TRUE, #parent: "ResultsTicketBig"]
+ShowResultsPrestigeStampNormal_End
+
+ShowResultsVictoryStampSpecialMission_Begin
+	PutMessage	--> ShowResultsVictoryStampSpecialMission
+	PlaySound	Stamp_SFX
+	SetModel	Interface	[#model: "SpecialMissionResultStamp", #resource: "StampCleared"]
+	SetVisible	Interface	[#model: "SpecialMissionResultStamp", #state: TRUE, #parent: "SpecialMision"]
+ShowResultsVictoryStampSpecialMission_End
+
+//--------------------------------------------------------
+// Defeat
+//--------------------------------------------------------
+ShowResultsDefeat_Begin
+	PutMessage	--> ShowResultsDefeat
+	PlaySound	TrialFailure_SFX	
+	SetVisible	Interface	[#model: "CenterButton", #state: FALSE]
+	DelayEvent		[#delay: 1500, #event: "ShowResultsDefeatStamp{:ChallengeType}"]
+ShowResultsDefeat_End
+
+ShowResultsDefeatStampNormal_Begin
+	PutMessage	--> ShowResultsDefeatStamp
+	PlaySound	Stamp_SFX
+	SetModel	Interface	[#model: "ResultResultGoalStamp", #resource: "StampFailed"]
+	SetVisible	Interface	[#model: "ResultResultGoalStamp", #state: TRUE, #parent: "ResultsTicketBig"]
+ShowResultsDefeatStampNormal_End
+
+ShowResultsDefeatStampSpecialMission_Begin
+	PutMessage	--> ShowResultsDefeatStamp
+	PlaySound	Stamp_SFX
+	SetModel	Interface	[#model: "SpecialMissionResultStamp", #resource: "StampFailed"]
+	SetVisible	Interface	[#model: "SpecialMissionResultStamp", #state: TRUE, #parent: "SpecialMission"]
+ShowResultsDefeatStampSpecialMission_End
+
+//--------------------------------------------------------
+// ContinueToTicketOffice
+//--------------------------------------------------------
+ContinueToTicketOffice_Begin
+	PutMessage	ContinueToTicketOffice
+	// Main Value
+	AddValue		[#name: "CurrentAssets", #value: "{:Assets}Assets"]
+	// Show/Hide
+	SetVisible	Interface	[#model: "Results", #state: FALSE]
+	SetVisible	Interface	[#model: "TicketMaster", #state: TRUE]
+	SetVisible	Interface	[#model: "TicketMasterTicketBig", #state: FALSE]
+	SetVisible	Interface	[#model: "CenterButton", #state: TRUE]
+	// Setup TicketOffice
+	SetupTicketMaster	x	x
+	// Show correct button models
+	SetModel	Interface	[#model: "LeftButton", #resource: "BackButton", #shader: "GreyInterface_Material"]
+	SetModel	Interface	[#model: "CenterButton", #resource: "ReturnToWorldButton", #shader: "GreyInterface_Material"]
+	SetModel	Interface	[#model: "RightButton", #resource: "StartButton", #shader: "GreyInterface_Material"]
+	// Create buttons
+	CreateButton	Interface	[#model: "LeftButton", #Event: "BackToResults", #effect: #shaderRollover, #shaders: ["GreyInterface_Material", "Interface_Material"]]
+	CreateButton	Interface	[#model: "CenterButton", #Event: "FadeReturnToWorld", #effect: #shaderRollover, #shaders: ["GreyInterface_Material", "Interface_Material"]]
+	DeleteButton	Interface	[#model: "RightButton"]
+	//CreateButton	Interface	[#model: "RightButton", #Event: "FadeNewChallenge", #effect: #shaderRollover, #shaders: ["GreyInterface_Material", "Interface_Material"]]
+ContinueToTicketOffice_End
+
+//--------------------------------------------------------
+// BackToResults
+//--------------------------------------------------------
+BackToResults_Begin
+	// Show/Hide
+	SetVisible	Interface	[#model: "Results", #state: TRUE]
+	SetVisible	Interface	[#model: "TicketMaster", #state: FALSE]
+	Event	HideResultsCenterButton
+	//Evaluate	#{:RaceResult}=#Defeat	[#Event: "HideResultsCenterButton"]
+	// Show correct button models
+	SetModel	Interface	[#model: "LeftButton", #resource: "RetryButton", #shader: "GreyInterface_Material"]
+	SetModel	Interface	[#model: "CenterButton", #resource: "SubmitScoreButton", #shader: "GreyInterface_Material"]
+	SetModel	Interface	[#model: "RightButton", #resource: "ContinueButton", #shader: "GreyInterface_Material"]
+	// Create buttons
+	CreateButton	Interface	[#model: "LeftButton", #Event: "FadeRetryChallenge", #effect: #shaderRollover, #shaders: ["GreyInterface_Material", "Interface_Material"]]
+	CreateButton	Interface	[#model: "CenterButton", #Event: "FadeSubmitHighscore", #effect: #shaderRollover, #shaders: ["GreyInterface_Material", "Interface_Material"]]
+	CreateButton	Interface	[#model: "RightButton", #Event: "ContinueToTicketOffice", #effect: #shaderRollover, #shaders: ["GreyInterface_Material", "Interface_Material"]]
+	
+BackToResults_End
+
+HideResultsCenterButton_Begin
+	SetVisible	Interface	[#model: "CenterButton", #state: FALSE]
+HideResultsCenterButton_End
+
+//--------------------------------------------------------
+// New
+//--------------------------------------------------------
+FadeNewChallenge_Begin
+	PutMessage	--> FadeNewChallenge
+	Event	HideCurrentInterface	
+	Fade	{:CurrentAssets}	[#time: 500, #type: #in, #event: "NewChallenge"]
+FadeNewChallenge_End
+
+NewChallenge_Begin
+	PutMessage	--> --> NewChallenge
+	// Remove value
+	RemoveValue		[#name: "CurrentAssets"]	
+	// Reset sprites
+	ResetSprites		[#start: 1, #end: 10]
+	// Buttons & scripts
+	DeleteAllButtons
+	DeleteAllScripts	#Game
+	// Clear cheats
+	Event	CheatClearKeys
+	// stop all sound
+	StopAllSound	x	x
+	StopRadioStream	x	x
+	// 3d members
+	ResetWorld	{:Assets}Assets
+	ResetWorld	Skyboxes
+	ResetWorld	Interface
+	// DeleteScript
+	DeleteScript	#System	[#name: "[PS] Bloom"]
+	DeleteScript	#System	[#name: "[PS] Motion Blur"]
+	DeleteScript	#System	[#name: "[PS] StageGrabber"]
+	// EventTracking
+	EventTracking
+	// (Re)Set values
+	Event	ResetChallengeValues
+	// set scene & run it
+	Event	TrackInitialization	
+NewChallenge_End
+
+//--------------------------------------------------------
+// Retry
+//--------------------------------------------------------
+FadeRetryChallenge_Begin
+	PutMessage	--> FadeRetryChallenge
+	DeleteAllButtons	x	x
+	Event	HideCurrentInterface
+	Fade	{:Assets}Assets	[#time: 500, #type: #in, #event: "RetryChallenge"]
+FadeRetryChallenge_End
+
+RetryChallenge_Begin
+	PutMessage	--> --> RetryChallenge
+	// Reset sprites
+	ResetSprites		[#start: 1, #end: 10]
+	// Buttons & scripts
+	DeleteAllScripts	#Game
+	// Clear cheats
+	Event	CheatClearKeys
+	// stop all sound
+	StopAllSound	x	x
+	StopRadioStream	x	x
+	// 3d members
+	ResetWorld	{:Assets}Assets
+	ResetWorld	Skyboxes
+	ResetWorld	Interface
+	// DeleteScript
+	DeleteScript	#System	[#name: "[PS] Bloom"]
+	DeleteScript	#System	[#name: "[PS] Motion Blur"]
+	DeleteScript	#System	[#name: "[PS] StageGrabber"]
+	// EventTracking
+	EventTracking
+	// (Re)Set values
+	Event	ResetChallengeValues
+	// set scene & run it
+	Event	TrackInitialization	
+RetryChallenge_End
+
+//--------------------------------------------------------
+// Return
+//--------------------------------------------------------
+FadeReturnToWorld_Begin
+	PutMessage	--> FadeReturnToWorld
+	DeleteAllButtons	x	x
+	Event	HideCurrentInterface
+	Fade	{:Assets}Assets	[#time: 500, #type: #in, #event: "ReturnToWorld"]
+FadeReturnToWorld_End
+
+ReturnToWorld_Begin
+	PutMessage	--> --> ReturnToWorld
+	// Reset sprites
+	ResetSprites		[#start: 1, #end: 10]
+	// Buttons & scripts
+	DeleteAllScripts	#Game
+	// Clear cheats
+	Event	CheatClearKeys
+	// stop all sound
+	StopAllSound	x	x
+	StopRadioStream	x	x
+	// 3d members
+	ResetWorld	{:Assets}Assets
+	ResetWorld	Skyboxes
+	ResetWorld	Interface
+	// DeleteScript
+	DeleteScript	#System	[#name: "[PS] Bloom"]
+	DeleteScript	#System	[#name: "[PS] Motion Blur"]
+	DeleteScript	#System	[#name: "[PS] StageGrabber"]
+	// EventTracking
+	EventTracking
+	// (Re)Set values
+	SetValue		[#DailyChallenge: FALSE]
+	Event	ResetChallengeValues
+	// set scene & run it
+	SetValue		[#Scene: "World"]
+	CheckWhereToGo	x	x
+	Event	WorldInitialization	
+ReturnToWorld_End
+
+//--------------------------------------------------------
+// Submit
+//--------------------------------------------------------
+FadeSubmitHighscore_Begin
+	PutMessage	--> FadeSubmitHighscore
+	DeleteAllButtons	x	x
+	Event	HideCurrentInterface
+	Fade	{:Assets}Assets	[#time: 500, #type: #in, #event: "SubmitHighscore"]
+FadeSubmitHighscore_End
+
+SubmitHighscore_Begin
+	PutMessage	--> --> SubmitHighscore
+	// SetValues
+	Evaluate	{:DailyChallenge}=FALSE	[#event: "SetNormalSWValues"]
+	Evaluate	{:DailyChallenge}=TRUE	[#event: "SetDailySWValues"]
+	// Reset sprites
+	ResetSprites		[#start: 1, #end: 10]
+	// Buttons & scripts
+	DeleteAllScripts	#Game
+	// Clear cheats
+	Event	CheatClearKeys
+	// stop all sound
+	StopAllSound	x	x
+	StopRadioStream	x	x
+	// 3d members
+	ResetWorld	{:Assets}Assets
+	ResetWorld	Skyboxes
+	ResetWorld	Interface
+	// (Re)Set values
+	SetValue		[#DailyChallenge: FALSE]
+	Event	ResetChallengeValues
+	// set scene & run it
+	SetValue		[#Scene: "World"]
+	CheckWhereToGo	x	x
+	// Hub value
+	SetValue		[#ReturnFromHub: TRUE]
+	// Special Event
+	Event	ResetValuesForHub
+	// Submit highscore
+	SWSubmitHighscore	x	x
+SubmitHighscore_End
+
+SetNormalSWValues_Begin
+	PutMessage	SetNormalSWValues
+	SetValue	gGame	[#SWHighscoreID: "br4_hs"]
+	SetValue	gGame	[#SWHighscoreTitle: gData.data.text[symbol(gGame.Track&"Title")]]
+	SetValue	gGame	[#SWScoreDescription: "points"]
+	// Store money
+	SWStoreHighscore	x	[#highscore: {:Money}]
+SetNormalSWValues_End
+
+SetDailySWValues_Begin
+	PutMessage	SetDailySWValues
+	SetValue	gGame	[#SWHighscoreID: "br4_daily"]
+	SetValue	gGame	[#SWHighscoreTitle: "BR4: Daily Challenge"]
+	SetValue	gGame	[#SWScoreDescription: "milliseconds"]
+	// Store time :S
+	SWStoreHighscore	x	[#highscore: gGame.Vehicles[1].race.time]
+SetDailySWValues_End
+
+//--------------------------------------------------------
+// Reset
+//--------------------------------------------------------
+ResetChallengeValues_Begin
+	//------------------------------------------------------
+	PutMessage	--> ResetChallengeValues
+	//------------------------------------------------------
+	SetValue	gGame	[#rootList: []]
+	SetValue	gGame	[#DecoList: []]
+	SetValue	gGame	[#StaticRBList: []]
+	SetValue	gGame	[#DynamicRBList: []]
+	SetValue	gGame	[#LinkedMembers: []]
+	SetValue	gGame	[#FloorList: []]
+	SetValue	gGame	[#WaypointList: [:]]
+	SetValue	gGame	[#Checkpoints: [:]]
+	SetValue	gGame	[#TimerList: [:]]
+	SetValue	gGame	[#TimeOutList: []]
+	SetValue	gGame	[#collisionReports: [:]]	
+	SetValue	gGame	[#ParticleList: []]	
+	SetValue	gGame	[#startPositions: [:]]	
+	SetValue	gGame	[#SlowMo: FALSE]
+	SetValue	gGame	[#TimeMP: 1.0]	
+	SetValue	gGame	[#InShop: FALSE]	
+	SetValue	gSystem	[#handlerList: []]
+	SetValue	gSystem	[#ScrollerList: [:]]
+	SetValue	gSound	[#GeneralVolume: 1.0]	
+	//------------------------------------------------------
+	// ai & build & finish props
+	//------------------------------------------------------
+	SetValue		[#AI: 0]
+	SetValue		[#PlayersBuild: 0]
+	SetValue		[#PlayersFinished: 0]
+	SetValue		[#PlayersKilled: 0]
+	SetValue		[#AIsBuild: 0]
+	SetValue		[#AIsFinished: 0]
+	SetValue		[#AIsKilled: 0]
+	SetValue		[#TotalWaypoints: 0]
+	//------------------------------------------------------
+	// Remove values
+	//------------------------------------------------------
+	RemoveValue		[#name: "Sprite"]
+	RemoveValue		[#name: "Member"]
+	RemoveValue		[#name: "RaceResult"]
+	RemoveValue		[#name: "Timer"]
+	RemoveValue		[#name: "PickupsInitialized"]
+	RemoveValue		[#name: "ObjectsInitialized"]
+	//------------------------------------------------------
+	// Other
+	//------------------------------------------------------
+	ClearTimeOutList	x	x
+	//------------------------------------------------------
+	// loading
+	//------------------------------------------------------
+	//SetValue		[#SharedLoaded: [#state: FALSE, #cast: "Shared", #loc: "Libs/Shared.cct"]]
+	SetValue		[#AssetsCityLoaded: [#state: FALSE, #cast: "Assets", #loc: "Assets/CityAssets.cct"]]
+	SetValue		[#AssetsDesertLoaded: [#state: FALSE, #cast: "Assets", #loc: "Assets/DesertAssets.cct"]]
+	SetValue		[#AssetsSnowLoaded: [#state: FALSE, #cast: "Assets", #loc: "Assets/SnowAssets.cct"]]
+	SetValue		[#AssetsJungleLoaded: [#state: FALSE, #cast: "Assets", #loc: "Assets/JungleAssets.cct"]]
+ResetChallengeValues_End
+
+ResetValuesForHub_Begin
+	PutMessage	--> ResetValuesForHub
+	//------------------------------------------------------
+	// casts
+	//------------------------------------------------------
+	SetValue		[#SharedLoaded: [#state: FALSE, #cast: "Shared", #loc: "Libs/Shared.cct"]]
+	SetValue		[#AssetsCityLoaded: [#state: FALSE, #cast: "Assets", #loc: "Assets/CityAssets.cct"]]
+	SetValue		[#AssetsDesertLoaded: [#state: FALSE, #cast: "Assets", #loc: "Assets/DesertAssets.cct"]]
+	SetValue		[#AssetsSnowLoaded: [#state: FALSE, #cast: "Assets", #loc: "Assets/SnowAssets.cct"]]
+	SetValue		[#AssetsJungleLoaded: [#state: FALSE, #cast: "Assets", #loc: "Assets/JungleAssets.cct"]]
+	//------------------------------------------------------
+	// Set vehicles states
+	//------------------------------------------------------
+	SetVehicleStatesToFalse	x	x
+	SetValue		[#VehiclesLoaded: [#set1: #none, #set2: #none, #set3: #none]]
+ResetValuesForHub_End
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// Pause
+//-------------------------------------------------------------------------------------------------------------------------------------------
+PauseGame_Begin
+	PutMessage	--> PauseGame
+	StopPlayerMixer	x	x
+	Event	PauseGame{:Scene}
+PauseGame_End
+
+UnpauseGame_Begin
+	PutMessage	--> UnpauseGame
+	StartPlayerMixer	x	x
+	Event	UnPauseGame{:Scene}
+UnpauseGame_End
+
+PauseGameWorld_Begin
+	PutMessage	--> PauseGameWorld
+	Event	UnbindWorldKeys
+PauseGameWorld_End
+
+PauseGameTrack_Begin
+	PutMessage	--> PauseGameTrack
+	// Pause streaming audio
+	//PauseRadioStream	x	x
+	DeleteAndForceStartRadioStream	x	x
+	// Textures for current mission
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #ChallengeTitle, #text: #{:Track}Title]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #ChallengeBody, #text: #{:Track}Goal]
+	// Show/hide
+	HideCurrentInterface
+	SetVisible	Interface	[#model: ["Misc", "InterfaceStatus"], #state: TRUE]
+	SetVisible	Interface	[#model: "Pause, #state: TRUE, #parent: "Misc"]
+	SetVisible	Interface	[#model: ["Tickets", "TotalCost", "Money"], #state: FALSE]
+	// Set models
+	SetModel	Interface	[#model: "LeftButton", #resource: "RetryButton", #shader: "GreyInterface_Material"]
+	SetModel	Interface	[#model: "CenterButton", #resource: "ResumeButton", #shader: "GreyInterface_Material"]
+	SetModel	Interface	[#model: "RightButton", #resource: "QuitButton", #shader: "GreyInterface_Material"]
+	// Buttons (Retry, resume, quit)
+	CreateButton	Interface	[#model: "LeftButton", #event: #PauseEndChallengeRetry, #effect: #shaderRollover, #shaders: ["GreyInterface_Material", "Interface_Material"]]
+	CreateButton	Interface	[#model: "CenterButton", #handler: "PauseGame", #effect: #shaderRollover, #shaders: ["GreyInterface_Material", "Interface_Material"]]
+	CreateButton	Interface	[#model: "RightButton", #event: #PauseEndChallengeNext, #effect: #shaderRollover, #shaders: ["GreyInterface_Material", "Interface_Material"]]
+	// UnbindKeys
+	UnbindKey		[#key: 53]
+	UnbindKey		[#key: "p"]
+	UnbindKey		[#key: "m"]	
+	// Cheats
+	Evaluate	{:CheatsAvailable}=TRUE	[#event: "DisableTrackCheats"]
+PauseGameTrack_End
+
+UnPauseGameWorld_Begin
+	PutMessage	--> UnPauseGameWorld
+	Event	BindWorldKeys
+UnPauseGameWorld_End
+
+UnPauseGameTrack_Begin
+	PutMessage	--> UnPauseGameTrack
+	// Continue streaming audio
+	//ContinueRadioStream	x	x
+	DeleteAndForceStartRadioStream	x	x
+	Event	ShowCurrentInterface
+	SetVisible	Interface	[#model: ["Misc", "InterfaceStatus"], #state: FALSE]
+UnPauseGameTrack_End
+
+//--------------------------------------------------------
+// ChallengeEnd & Retry
+//--------------------------------------------------------
+PauseEndChallengeNext_Begin
+	PutMessage	--> PauseEndChallengeNext
+	SetValue	gData	[#Triggers: []]
+	PauseGame
+	SetValue	gGame	[#TimeOutList: []]
+	ClearTimeOutList	x	x
+	SaveData	x	x
+	Event	FadeReturnToWorld
+PauseEndChallengeNext_End
+
+PauseEndChallengeRetry_Begin
+	PutMessage	--> PauseEndChallengeRetry
+	SetValue	gData	[#Triggers: []]
+	PauseGame
+	SetValue	gGame	[#TimeOutList: []]
+	ClearTimeOutList	x	x
+	SaveData	x	x
+	Event	FadeRetryChallenge
+PauseEndChallengeRetry_End
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// MISC CHALLENGE EVENTS
+//-------------------------------------------------------------------------------------------------------------------------------------------
+CountDownWarningTriggers_Begin
+	AddTrigger	{:Timer} <= 10000	[#event: "PlayCountDownWarning"]
+	AddTrigger	{:Timer} <= 9000	[#event: "PlayCountDownWarning"]
+	AddTrigger	{:Timer} <= 8000	[#event: "PlayCountDownWarning"]
+	AddTrigger	{:Timer} <= 7000	[#event: "PlayCountDownWarning"]
+	AddTrigger	{:Timer} <= 6000	[#event: "PlayCountDownWarning"]
+	AddTrigger	{:Timer} <= 5000	[#event: "PlayCountDownWarning"]
+	AddTrigger	{:Timer} <= 4000	[#event: "PlayCountDownWarning"]
+	AddTrigger	{:Timer} <= 3000	[#event: "PlayCountDownWarning"]
+	AddTrigger	{:Timer} <= 2000	[#event: "PlayCountDownWarning"]
+	AddTrigger	{:Timer} <= 1000	[#event: "PlayCountDownWarning"]
+CountDownWarningTriggers_End
+
+PlayCountDownWarning_Begin
+	PlaySound	CountDownWarning_SFX	[#override: TRUE]
+PlayCountDownWarning_End
+
+StartLine_Begin
+	//PutMessage	--> StartLine
+StartLine_End
+
+FinishLine_Begin
+	PutMessage	--> FinishLine
+	SetValue	gGame.Vehicles.{:CurrentVehicle}.race	[#state: #Finished]
+	SetValue	gGame.Vehicles.{:CurrentVehicle}.race	[#time: {:Timer}]
+	FinishCurrentVehicle
+	MiniCalculator		[#value: #{:CurrentController}sFinished, #add: 1]
+FinishLine_End
+
+CheckpointLine_Begin
+	//PutMessage	--> CheckpointLine	
+CheckpointLine_End

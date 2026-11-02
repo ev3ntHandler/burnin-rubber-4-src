@@ -1,0 +1,277 @@
+-- [Text] WorldCityEvents
+
+//--------------------------------------------------------
+// WORLD SPECFIFIC SETUP & RESET
+//--------------------------------------------------------
+SetupWorldCity_Begin
+	PutMessage	--> SetupWorldCity
+	// ModelList
+	SetValue		[#WorldModelList: {:WorldModels}.duplicate()]
+	AddToList	gGame.WorldModelList	[#value: "Sea"]
+	AddToList	gGame.WorldModelList	[#value: "Waves"]
+	
+	// Additional textures & shader sets
+	CreateTexture	World{:World}	[#texture: "WorldSea{:Setting}_Texture"]
+	CreateTexture	World{:World}	[#texture: "WorldWaves{:Setting}_Texture", #renderFormat: #rgba8888]
+	SetShader	World{:World}	[#shader: "WorldCitySea_Material", #texture1: "WorldSea{:Setting}_Texture"]
+	SetShader	World{:World}	[#shader: "WorldCityWaves_Material", #texture1: "WorldWaves{:Setting}_Texture"]	
+	
+	Evaluate	"{:Setting}"="Night"	[#event: "WorldCityAdditiveTextures"]	
+	
+	// Skybox
+	Event	SkyboxInitialization
+	SetSkybox	World{:World}	[#skybox: "SkyboxCity"]	
+SetupWorldCity_End
+
+SetupWorldCitySpecialEffects_Begin
+	PutMessage	SetupWorldCitySpecialEffects	
+	AddToScroller	World{:World}	[#shader: "WorldCitySea_Material", #position: vector(-0.001, -0.001, 0.0)]	
+SetupWorldCitySpecialEffects_End
+
+SetupWorldCityEffectsLow_Begin
+	PutMessage	SetupWorldCityEffectsLow
+	SetShader	World{:World}	[#shader: "WorldCityBuildings_Material", #texture3: "None"]
+	SetShader	World{:World}	[#shader: "WorldCityMisc_Material", #texture3: "None"]
+	TurnOffVehicleEffects	x	x
+	WorldTrafficLightsOff	x	x
+SetupWorldCityEffectsLow_End
+
+SetupWorldCityEffectsMedium_Begin
+	PutMessage	SetupWorldCityEffectsMedium
+	SetShader	World{:World}	[#shader: "WorldCityBuildings_Material", #texture3: "None"]
+	SetShader	World{:World}	[#shader: "WorldCityMisc_Material", #texture3: "None"]
+	TurnOnVehicleEffects	x	x
+	WorldTrafficLightsOff	x	x
+SetupWorldCityEffectsMedium_End
+
+SetupWorldCityEffectsHigh_Begin
+	PutMessage	SetupWorldCityEffectsHigh
+	Evaluate	"{:Setting}"="Night"	[#event: "WorldCityAdditive"]
+	TurnOnVehicleEffects	x	x
+	WorldTrafficLightsOn	x	x
+SetupWorldCityEffectsHigh_End
+
+WorldCityAdditiveTextures_Begin
+	CreateTexture	World{:World}	[#texture: "WorldBuildingsAdditive_Texture", #filtering: #high, #renderFormat: #rgba5650]
+	CreateTexture	World{:World}	[#texture: "WorldMiscAdditive_Texture", #filtering: #high, #renderFormat: #rgba5650]
+WorldCityAdditiveTextures_End
+
+WorldCityAdditive_Begin
+	PutMessage	WORLDCITYADDITIVE
+	SetShader	World{:World}	[#shader: "WorldCityBuildings_Material", #texture3: "WorldBuildingsAdditive_Texture", #textureMode3: #none, #blendFunction3: #add]
+	SetShader	World{:World}	[#shader: "WorldCityMisc_Material", #texture3: "WorldMiscAdditive_Texture", #textureMode3: #none, #blendFunction3: #add]
+WorldCityAdditive_End
+
+//--------------------------------------------------------
+// WORLD TILE SPECIFIC EVENTS
+//--------------------------------------------------------
+06_03_WorldCity_Begin
+	PutMessage	--> --> 06_03_WorldCity (CityToDesertDoor)
+	CheckCityToDesertDoor	x	x
+06_03_WorldCity_End
+
+07_07_WorldCity_Begin
+	PutMessage	--> --> 07_07_WorldCity (CityToJungleDoor)
+	CheckCityToJungleDoor	x	x
+07_07_WorldCity_End
+
+05_10_WorldCity_Begin
+	PutMessage	--> --> 05_10_WorldCity (CityToSnowDoor)
+	CheckCityToSnowDoor	x	x
+05_10_WorldCity_End
+
+CityUpdateToSafeHouseMarker_Begin
+	PutMessage	--> --> --> CityUpdateToSafeHouseMarker
+	SetValue	gGame.WorldStartDummy	[#City: "SafeHouseCity_Marker"]
+CityUpdateToSafeHouseMarker_End
+
+//--------------------------------------------------------
+// TRAFFIC
+//--------------------------------------------------------
+WorldCityTraffic01_Begin
+	PutMessage	--> --> WorldCityTraffic01
+	// LEFT
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #left1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Shopper, #direction: #left2, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #PoliceTraffic, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Bus, #direction: #left2, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #TaxiTraffic, #direction: #left2, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Truck, #direction: #left1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #PoliceTraffic, #direction: #left1, #skin: 1]	
+	Buildtraffic	World{:World}	[#type: #TaxiTraffic, #direction: #left2, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Yup, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #ArmoredTruck, #direction: #left2, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #PoliceTraffic, #direction: #left1, #skin: 1]	
+	Buildtraffic	World{:World}	[#type: #TaxiTraffic, #direction: #left2, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Yup, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Truck, #direction: #left1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #PoliceTraffic, #direction: #left1, #skin: 1]	
+	Buildtraffic	World{:World}	[#type: #TaxiTraffic, #direction: #left2, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #TaxiTraffic, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #TaxiTraffic, #direction: #left2, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Yup, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #left2, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #PoliceTraffic, #direction: #left1, #skin: 1]	
+WorldCityTraffic01_End
+
+WorldCityTraffic02_Begin
+	PutMessage	--> --> WorldCityTraffic02
+	// RIGHT
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #right1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Shopper, #direction: #right2, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Bus, #direction: #right1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #TaxiTraffic, #direction: #right2, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #TaxiTraffic, #direction: #right1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Yup, #direction: #right1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Truck, #direction: #right2, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #PoliceTraffic, #direction: #right1, #skin: 1]	
+	Buildtraffic	World{:World}	[#type: #TaxiTraffic, #direction: #right2, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #right1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Shopper, #direction: #right2, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Yup, #direction: #right1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #TaxiTraffic, #direction: #right2, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Truck, #direction: #right2, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Yup, #direction: #right1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #PoliceTraffic, #direction: #right1, #skin: 1]	
+	Buildtraffic	World{:World}	[#type: #TaxiTraffic, #direction: #right2, #skin: 1]
+WorldCityTraffic02_End
+
+WorldCityTraffic03_Begin
+	PutMessage	--> --> WorldCityTraffic03
+	// RIGHT
+	Buildtraffic	World{:World}	[#type: #ArmoredTruck, #direction: #right1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Shopper, #direction: #right2, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Shopper, #direction: #right1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #TaxiTraffic, #direction: #right1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #TaxiTraffic, #direction: #right2, #skin: 1]	
+	Buildtraffic	World{:World}	[#type: #PoliceTraffic, #direction: #right1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Yup, #direction: #right1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #TaxiTraffic, #direction: #right1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #TaxiTraffic, #direction: #right2, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #right1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Yup, #direction: #right2, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #TaxiTraffic, #direction: #right2, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #PoliceTraffic, #direction: #right2, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Yup, #direction: #right1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #right1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Truck, #direction: #right1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #TaxiTraffic, #direction: #right2, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #TaxiTraffic, #direction: #right1, #skin: 1]
+	//left
+	Buildtraffic	World{:World}	[#type: #ArmoredTruck, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #TaxiTraffic, #direction: #left2, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #TaxiTraffic, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Yup, #direction: #left2, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Shopper, #direction: #left2, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #TaxiTraffic, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #TaxiTraffic, #direction: #left2, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Shopper, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Yup, #direction: #left1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #TaxiTraffic, #direction: #left2, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #PoliceTraffic, #direction: #left1, #skin: 1]	
+	Buildtraffic	World{:World}	[#type: #Yup, #direction: #left2, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Truck, #direction: #left1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Yup, #direction: #left2, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Shopper, #direction: #left2, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #PoliceTraffic, #direction: #left1, #skin: 1]	
+	Buildtraffic	World{:World}	[#type: #TaxiTraffic, #direction: #left2, #skin: 1]
+WorldCityTraffic03_End
+
+WorldCityTraffic04_Begin
+	PutMessage	--> --> WorldCityTraffic04
+	// RIGHT
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #right1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Truck, #direction: #right1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Bus, #direction: #right2, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #ArmoredTruck, #direction: #right2, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #TaxiTraffic, #direction: #right1, #skin: 1]
+	// LEFT
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #left1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Truck, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Truck, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #TaxiTraffic, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Bus, #direction: #left2, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Truck, #direction: #left1, #skin: 2]
+WorldCityTraffic04_End
+
+WorldCityTraffic05_Begin
+	PutMessage	--> WorldCityTraffic05
+	// RIGHT
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #right1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #TaxiTraffic, #direction: #right1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Shopper, #direction: #right2, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #PoliceTraffic, #direction: #right1, #skin: 1]	
+	// LEFT
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #left1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #TaxiTraffic, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #TaxiTraffic, #direction: #left2, #skin: 1]	
+	Buildtraffic	World{:World}	[#type: #Shopper, #direction: #left2, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Yup, #direction: #left1, #skin: 2]
+WorldCityTraffic05_End
+
+//--------------------------------------------------------
+// NUCLEAR DETONATORS
+//--------------------------------------------------------
+NuclearDetonatorCity1_Begin
+	PutMessage	--> NuclearDetonatorCity1
+	// Std detonator
+	Event	NuclearDetonator
+	// set camera
+	SetValue	gGame.Camera[1]	[#state: #mimic]
+	SetValue	gGame.Camera[1]	[#target: "NuclearDetonatorCity1_Camera"]
+	// DelayEvent to restore camera
+	DelayEvent		[#delay: 6000, #name: "RestoreCamera", #event: "RestoreCamera"]
+	// AddToList
+	AddToList	gGame.UPNuclearDetonators	[#value: "NuclearDetonatorCity1", #override: TRUE]
+	CheckNuclearDetonators	x	x
+NuclearDetonatorCity1_End
+
+NuclearDetonatorCity2_Begin
+	PutMessage	--> NuclearDetonatorCity2
+	// Std detonator
+	Event	NuclearDetonator
+	// set camera
+	SetValue	gGame.Camera[1]	[#state: #mimic]
+	SetValue	gGame.Camera[1]	[#target: "NuclearDetonatorCity2_Camera"]
+	// DelayEvent to restore camera
+	DelayEvent		[#delay: 6000, #name: "RestoreCamera", #event: "RestoreCamera"]
+	// AddToList
+	AddToList	gGame.UPNuclearDetonators	[#value: "NuclearDetonatorCity2", #override: TRUE]
+	CheckNuclearDetonators	x	x
+NuclearDetonatorCity2_End
+
+NuclearDetonatorCity3_Begin
+	PutMessage	--> NuclearDetonatorCity3
+	// Std detonator
+	Event	NuclearDetonator
+	// set camera
+	SetValue	gGame.Camera[1]	[#state: #mimic]
+	SetValue	gGame.Camera[1]	[#target: "NuclearDetonatorCity3_Camera"]
+	// DelayEvent to restore camera
+	DelayEvent		[#delay: 6000, #name: "RestoreCamera", #event: "RestoreCamera"]
+	// AddToList
+	AddToList	gGame.UPNuclearDetonators	[#value: "NuclearDetonatorCity3", #override: TRUE]	
+	CheckNuclearDetonators	x	x
+NuclearDetonatorCity3_End
+
+//--------------------------------------------------------
+// LANDMARK
+//--------------------------------------------------------
+LandMarkCity_Begin
+	PutMessage	--> LandMarkCity
+	// Sound
+	PlaySound	SpecialPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #LandmarkInformationTitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #LandmarkInformation]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Do it
+	SetModel	World{:World}	[#model: "02_07_landmarkcity_1_object", #resource: "landmarkcitydestroyed_object", #shader: "WorldCityMisc_Material"] 
+	AddToList	gGame.UPLandMarks	[#value: "LandMarkCity_Object", #override: TRUE]
+	SaveData	x	x
+	CheckAllLandMarks	x	x
+LandMarkCity_End

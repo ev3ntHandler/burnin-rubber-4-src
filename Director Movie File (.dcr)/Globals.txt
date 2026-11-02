@@ -1,0 +1,319 @@
+-- [Text] Globals
+
+//----------------------------------------------------------------------
+// General
+//----------------------------------------------------------------------
+Name	Burnin Rubber 4
+Version	2.2
+PrefFile	XBR4GOTYData.txt
+
+//----------------------------------------------------------------------
+// Framerate
+//----------------------------------------------------------------------
+Tempo	32.0
+FrameRate	#limit
+
+//----------------------------------------------------------------------
+// Fullscreen & resolution (Switch with CTRL+F)
+//----------------------------------------------------------------------
+//Fullscreen	TRUE
+//Resolution	[1920,1080]
+
+//----------------------------------------------------------------------
+// Options
+//----------------------------------------------------------------------
+Lightmaps	TRUE
+Bloom	TRUE
+AntiAliasing	#none
+Effects	#medium
+
+//----------------------------------------------------------------------
+// Audio
+//----------------------------------------------------------------------
+Sound	TRUE
+SFX	TRUE
+Music	TRUE
+EffectsVolume	1.0
+MusicVolume	0.0
+
+//----------------------------------------------------------------------
+// Camera (default settings for when camera is build)
+//----------------------------------------------------------------------
+CameraSet	#Car
+CameraStates	[#ShowHideRoots, #BackWardsView]
+
+//----------------------------------------------------------------------
+// Scene (Splash, World, Track)
+//----------------------------------------------------------------------
+Scene	Splash
+
+//-------------------------------------------------------------------------------------------
+// WORLD (City, Desert, Jungle, Snow, Industrial)
+//-------------------------------------------------------------------------------------------
+World	City
+WorldModels	["Buildings", "Street", "Misc", "Transparent", "Opaque", "InvisibleWall"]
+WorldModelList	[]
+WorldTraffic	TRUE
+WorldTrafficLights	[#City: TRUE, #Desert: FALSE, #Jungle: TRUE, #Snow: FALSE, #Industrial: FALSE]
+
+//----------------------------------------------------------------------
+// Track
+//----------------------------------------------------------------------
+Assets	City
+Track	OperationSandStorm1
+//Track	SpecialMissionAC130
+
+//----------------------------------------------------------------------
+// Challenge
+//----------------------------------------------------------------------
+Challenge	Battle
+ChallengeType	#normal
+SpecialMission	#none
+Ticket	Ticket1
+RaceState	#Racing
+
+//----------------------------------------------------------------------
+// Vehicle & type
+//----------------------------------------------------------------------
+Vehicle	Car
+PreviousVehicle	#none
+
+Car	Bullet350
+Boat	SpeedBoat
+Plane	Spitfire
+Helicopter	Apache
+
+AvailableCars	["Tank", "Taxi", "Rebel", "Bullet350", "ViceV80", "Fennek", "Hound", "PetiteXs", "PhaserGti", "Police", "Rally7", "BigTruck", "Sunstorm", "MonsterTruck", "Autobot"]  
+AvailableBoats	["SpeedBoat", "PoliceBoat", "Zodiac", "Stealth"]
+AvailablePlanes	["F22", "Apache", "Spitfire", "AC130"]
+AvailableTraffic	["Bus", "PoliceTraffic", "Shopper", "TaxiTraffic", "Transporter", "Truck", "Yup", "ArmoredTruck"]
+
+ShadowScale	[#Tank: 16.5,#Taxi: 11.21614,#Rebel: 10.47961,#Bullet350: 9.0876,#ViceV80: 9.006658,#Fennek: 10.06649,#Hound: 10.17914,#PetiteXs: 7.078663,#PhaserGti: 9.581443,#Police: 11.21614,#Rally7: 9.280262,#BigTruck: 16.74802,#Sunstorm: 10.06979,#MonsterTruck: 9.41555,#AutoBot:4.0]
+
+//-----------------------------
+// States (_Markers last!)
+//-----------------------------
+PlayerStatesCar	[#update_Waypoints, #update_KeyInput, #update_CarEffects, #update_CarSound, #update_Weapons, #update_LightManager, #update_Damage, #update_Items, #update_Markers]
+PlayerStatesBoat	[#update_Waypoints, #update_KeyInput, #update_BoatEffects, #update_BoatSound, #update_Weapons, #update_LightManager, #update_Damage,#update_Items, #update_Markers]
+PlayerStatesPlane	[#update_Waypoints, #update_KeyInput, #update_PlaneEffects, #update_PlaneSound, #update_Weapons, #update_Damage, #update_Items, #update_Markers]
+PlayerStatesHelicopter	[#update_Waypoints, #update_KeyInput, #update_HelicopterEffects, #update_HelicopterSound, #update_Weapons, #update_Damage, #update_Items, #update_Markers]
+PlayerStatesAutobot	[#update_Waypoints, #update_KeyInput, #update_AutobotEffects, #update_AutobotSound, #update_Weapons, #update_LightManager, #update_Damage, #update_Items, #update_Markers]
+
+AIStatesCar	[#update_Waypoints, #update_AutoRace, #update_AutoFight, #update_CarEffects, #update_CarSoundAI, #update_Weapons, #update_LightManager, #update_Damage]
+AIStatesBoat	[#update_Waypoints, #update_AutoRace, #update_AutoFight, #update_BoatEffects, #update_BoatSoundAI, #update_Weapons, #update_LightManager, #update_Damage]
+AIStatesPlane	[#update_Waypoints, #update_AutoFly, #update_AutoFight, #update_PlaneEffects, #update_PlaneSoundAI, #update_Weapons, #update_Damage]
+AIStatesHelicopter	[]
+AIStatesAutobot	[#update_Waypoints, #update_AutoRace, #update_AutoFight, #update_AutobotEffects, #update_AutobotSound, #update_Weapons, #update_LightManager, #update_Damage]
+
+//----------------------------------------------------------------------
+// Shops
+//----------------------------------------------------------------------
+CurrentShop	#TicketMaster
+InShop	FALSE
+
+//-----------------
+// SafeHouse
+//-----------------
+
+//-----------------
+// Tune Shop prizes
+//-----------------
+EngineCost	10000
+ArmorCost	10000
+HandlingCost	10000
+PrimaryCost	15000
+SecondaryCost	25000
+
+//------------------
+// Spray Shop prizes
+//------------------
+SkinCost1	5000
+SkinCost2	10000
+SkinCost3	15000
+SkinCost4	25000
+
+//------------------
+// Weapon shop
+//------------------
+WSPrimWeapons	["MachineGun", "DualMachineGun", "MiniGun", "DualMiniGun", "FlameThrower", "Laser"]
+WSSecWeapons	["RocketPod", "GrenadeDeployer", "GrenadeLauncher", "MineDeployer", "NitroBoost", "AirstrikeLauncher"]
+
+//-----------------------------
+//Upgrades (engine: [kmh, acceleration gain, deceleration gain])
+//-----------------------------
+HealthUpgrade	50
+EngineUpgrade	[3, .001, .006]
+HandlingUpgrade	0.05
+
+//-----------------------------
+//Pickups
+//-----------------------------
+NitroDuration	5500
+NitroBoost	35
+NitroOverride	FALSE
+Cash	1000
+CashStash	50000
+StatusDuration	2500
+
+//----------------------------------------------------------------------
+// Other
+//----------------------------------------------------------------------
+StatusDelay	5500
+DelayAIWeapons	3500
+StoredMissionItem	[]
+
+//----------------------------------------------------------------------
+// Input
+//----------------------------------------------------------------------
+PlayerInput1	#keys
+PlayerKeys1	[#forward: 126 , #backward: 125, #left: 123, #right: 124, #brake: "Shift", #action1: "z", #action2: "x",  #action3: " ", #backwardCam: "c", #lights: "l", #horn: "h", #leftStrafe: "a", #rightStrafe: "d"]
+PlayerJoystick1	[:]
+
+//----------------------------------------------------------------------
+// Logistics
+//----------------------------------------------------------------------
+Players	1
+PlayersBuild	0
+PlayersKilled	0
+
+PlayerWeapons1	TRUE
+PlayerWeaponsActive1	TRUE
+
+AI	0
+AIsBuild	0
+AIsKilled	0
+
+AIWeapons	TRUE
+AIWeaponsActive	FALSE
+AIFriendlyFire	TRUE
+
+RaceRubberOn	-22
+RaceRubberOff	-1
+RaceSpeedBoost	25
+RaceAccBoost	0.03
+
+AIVehicle	Car
+
+HideWeapons	["Tank", "Autobot", "Apache", "Spitfire", "F22", "AC130"]
+
+//----------------------------------------------------------------------
+// Menu
+//----------------------------------------------------------------------
+MenuStart	TRUE
+NewGame	TRUE
+
+//----------------------------------------------------------------------
+// Messages
+//----------------------------------------------------------------------
+FirstTicket	TRUE
+FirstTicketDisplayed	FALSE
+WelcomeMessage	TRUE
+WelcomeMessageDisplayed	FALSE
+TankMessage	FALSE
+TankMessageDisplayed	FALSE
+
+//----------------------------------------------------------------------
+// User data
+//----------------------------------------------------------------------
+UserName	Shockwave
+Money	50000
+
+//----------------------------------------------------------------------
+// Daily Challenge
+//----------------------------------------------------------------------
+DailyChallenge	FALSE
+DailyChallengeSW1	"000000"
+DailyChallengeDay	1
+DailyChallengeState	#new
+DailyChallengeLastTime	#none
+
+//----------------------------------------------------------------------
+// User progress
+//----------------------------------------------------------------------
+UPTickets	[]
+UPBossTickets	[]
+
+UPChallenges	[]
+UPChallengesNew	[]
+UPChallengesCompleted	[]
+UPChallengesPrestige	[]
+UPSpecialMissionsCompleted	[]
+
+UpRampagesCompleted	[]
+UpDemolitionsCompleted	[]
+UpTimeTrialsCompleted	[]
+
+UPCars	["Bullet350", "PhaserGti"]
+//UPCars	["Tank", "Taxi", "Rebel", "Bullet350", "ViceV80", "Fennek", "Hound", "PetiteXs", "PhaserGti", "Police", "Rally7", "BigTruck", "Sunstorm", "MonsterTruck", "Autobot"]  
+
+UPCashStashes	[]
+UPLandMarks	[]
+UPNuclearDetonators	[]
+UPHiddenPackages	[]
+UPSpecialPickups	[]
+
+UPTrophies	[#WheelsOnFire: 0, #SecretAgent: 0, #KingOfTheGarage: 0, #TheTreasureHunter: 0, #BillionDollarMan: 0]
+UPStatistics	[#money: 0, #totalTime: 0, #ticketsCompleted: [0, 36], #specialMissionsCompleted: [0, 13], #carsWrecked: 0, #enemiesWrecked: 0, #carsUnlocked: [0, 15], #hiddenPackagesFound: [0, 36], #timeTrialsCompleted: [0, 8], #rampagesCompleted: [0, 7], #demolitionsCompleted: [0, 7], #nuclearDetonators: [0, 15], #landMarks: [0, 5]]
+
+UPUnlockableCheats	[]
+
+//----------------------------------------------------------------------
+// Trophies & Statistics
+//----------------------------------------------------------------------
+SWTrophies	[#CarsWrecked: 0, #CarsTotalled: 0, #RoadRaceWon: 0, #AllPackages: 0, #AllVehicles: 0, #BoatChallenge: 0, #PlaneChallenge: 0, #Score: 0, #UpgradePurchased: 0, #PaintPurchased: 0, #WeaponPurchased: 0, #Explosion: 0]
+SWGameTrophies	[#CarsWrecked: 0, #CarsTotalled: 0, #RoadRaceWon: 0, #AllPackages: 0, #AllVehicles: 0, #BoatChallenge: 0, #PlaneChallenge: 0, #Score: 0, #UpgradePurchased: 0, #PaintPurchased: 0, #WeaponPurchased: 0, #Explosion: 0]
+ReturnFromHub	FALSE
+
+//----------------------------------------------------------------------
+// Loading & Initializing 
+//----------------------------------------------------------------------
+// Shared cast
+SharedLoaded	[#state: FALSE, #cast: "Shared", #loc: "Shared/Shared.cct"]
+
+// World grid sizes and starttiles
+WorldGrids	[#city: [10, 12], #desert: [9, 11], #snow: [7, 14], #Jungle: [10,12], #Industrial: [12,9]]
+WorldStartTile	[#city: [5, 4], #desert: [2, 3], #snow: [2, 14], #Jungle: [4, 5], #Industrial: [1,1]]
+
+// Start dummies
+WorldStartDummy	[#city: "CityFromDesert_Marker", #desert: "SafeHouseDesert_Marker", #snow: "SafeHouseSnow_Marker", #Jungle: "SafeHouseJungle_Marker", #Industrial: "SafeHouseIndustrial_Marker"]
+//WorldStartDummy	[#city: "WeaponShopCity_Marker", #desert: "SafeHouseDesert_Marker", #snow: "SafeHouseSnow_Marker", #Jungle: "SafeHouseJungle_Marker", #Industrial: "IndustrialCarToHelicopter_Marker"]
+
+// Worlds
+WorldCityLoaded	[#state: FALSE, #cast: "World", #loc: "Worlds/WorldCity.cct"]
+WorldDesertLoaded	[#state: FALSE, #cast: "World", #loc: "Worlds/WorldDesert.cct"]
+WorldSnowLoaded	[#state: FALSE, #cast: "World", #loc: "Worlds/WorldSnow.cct"]
+WorldJungleLoaded	[#state: FALSE, #cast: "World", #loc: "Worlds/WorldJungle.cct"]
+WorldIndustrialLoaded	[#state: FALSE, #cast: "World", #loc: "Worlds/WorldIndustrial.cct"]
+
+// Assets casts
+AssetsCityLoaded	[#state: FALSE, #cast: "Assets", #loc: "Assets/CityAssets.cct"]
+AssetsDesertLoaded	[#state: FALSE, #cast: "Assets", #loc: "Assets/DesertAssets.cct"]
+AssetsSnowLoaded	[#state: FALSE, #cast: "Assets", #loc: "Assets/SnowAssets.cct"]
+AssetsJungleLoaded	[#state: FALSE, #cast: "Assets", #loc: "Assets/JungleAssets.cct"]
+
+// Vehicle vars
+VehiclesLoaded	[#set1: #none, #set2: #none, #set3: #none]
+
+//----------------------------------------------------------------------
+// Debugging
+//----------------------------------------------------------------------
+LocalSave	TRUE
+DeleteData	FALSE
+LockEscape	TRUE
+FpsCounter	FALSE
+CarHelpers	FALSE
+CPHelpers	FALSE
+WPHelpers	FALSE
+MHelpers	FALSE
+InvisibleWalls	FALSE
+BoundingBox	FALSE
+InitOnly	FALSE
+NoHub	FALSE
+Cheat	FALSE
+PlaneHelpers	FALSE
+GameLoaded	FALSE
+CheatsAvailable	FALSE
+CheatsOverride	FALSE
+EventTrackingVar	FALSE
+SamSites	TRUE
+MountedGuns	TRUE

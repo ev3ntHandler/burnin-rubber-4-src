@@ -1,0 +1,197 @@
+-- [Text] PickupEvents
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// PICKUPS
+//-------------------------------------------------------------------------------------------------------------------------------------------
+//---------
+// OVERLAY
+//---------
+RestoreOverlay_Begin
+	PutMessage	RestoreOverlay
+	SetModel	Interface	[#model: "InterfaceOverlay", #resource: "InterfaceOverlayDeFreeze"]	
+RestoreOverlay_End
+
+//-------
+// NITRO
+//-------
+Nitro_Begin
+	PutMessage	Nitro
+	PlaySound	NitroPickup_SFX	[#override: TRUE]
+	//SetValue		[#NitroCheat: TRUE]
+	SetValue		[#NitroOverride: TRUE]
+	SetValue	gGame.Vehicles[#{:CurrentVehicle}].vehicle	[#nitro: TRUE]
+	SetValue	gGame.Camera[1]	[#fov: 75.0]
+	DelayEvent		[#delay: {:NitroDuration}, #name: "NitroOff", #event: "NitroOff"]
+	// Overlay
+	SetModel	Interface	[#model: "InterfaceOverlay", #resource: "InterfaceOverlayNitro"]
+Nitro_End
+
+NitroOff_Begin
+	PutMessage	NitroOff
+	// HACK!
+	//SetValue		[#NitroCheat: FALSE]
+	SetValue		[#NitroOverride: FALSE]
+	SetValue	gGame.Vehicles[1].vehicle	[#nitro: FALSE]
+	SetValue	gGame.Camera[1]	[#fov: 55.0]
+	Event	RestoreOverlay
+NitroOff_End
+
+//--------
+// REPAIR
+//--------
+Repair_Begin
+	PutMessage	Repair
+	PlaySound	RepairPickUp_SFX	[#override: TRUE]
+	SetValue	gGame.Vehicles[#{:CurrentVehicle}].vehicle	[#health: gGame.Vehicles[#{:CurrentVehicle}].general.data.personality.health]
+Repair_End
+
+//-------------
+// DETONATOR
+//-------------
+Detonator_Begin
+	PutMessage	Detonator
+	PlaySound	DetonatorPickUp_SFX	[#override: TRUE]
+	// SlowMotion
+	Event	ImpactTimeOn
+	// Blow stuff up
+	Detonate	x	x
+	// Hide & show some stuff 
+	Evaluate	{:ImpactTime}=TRUE	[#event: "HideSomeInterface"]
+Detonator_End
+
+//---------------------
+// NUCLEARDETONATOR
+//---------------------
+NuclearDetonator_Begin
+	PutMessage	Detonator
+	PlaySound	NuclearDetonatorPickup_SFX	[#override: TRUE]
+	// SlowMotion
+	Event	ImpactTimeOn
+	// Blow stuff up
+	Detonate	x	x
+	// Interface
+	HideCurrentInterface	x	[#exclude: ["InterfaceOverlay"]]
+	Evaluate	"{:Scene}"="World"	[#Event: "HideMiniMap"]
+	// Overlay
+	SetModel	Interface	[#model: "InterfaceOverlay", #resource: "InterfaceOverlayNuclearDetonator"]
+	// Save
+	SaveData	x	x
+NuclearDetonator_End
+
+//-----------------
+// HIDDENPACKAGE
+//-----------------
+HiddenPackage_Begin
+	PutMessage	HiddenPackage
+	// Sound
+	PlaySound	SpecialPickUp_SFX	[#override: TRUE]
+	// Add to list
+	AddToList	gGame.UPHiddenPackages	[#value: "{:Track}", #override: TRUE]
+	// Check all hidden packages
+	CheckAllHiddenPackages	x	x
+HiddenPackage_End
+
+//------
+// CASH
+//------
+Cash_Begin
+	PutMessage	Cash
+	PlaySound	CashPickUp_SFX	[#override: TRUE]
+	MiniCalculator	gGame.Vehicles[#{:CurrentVehicle}].race	[#value: #score, #add: {:Cash}]
+Cash_End
+
+CashWorld_Begin
+	PutMessage	Cash
+	PlaySound	CashPickUp_SFX	[#override: TRUE]
+	MiniCalculator		[#value: #Money, #add: {:Cash}]
+	UpdateMoney	x	x	
+CashWorld_End
+
+//-------
+// AMMO
+//-------
+Ammo_Begin
+	PutMessage	Ammo
+	PlaySound	AmmoPickup_SFX	[#override: TRUE]
+	RestoreAmmo
+Ammo_End
+
+//---------
+// TROPHY
+//---------
+Trophy_Begin
+	PutMessage	Trophy (UNLIMITED NITRO)
+	// Sound
+	PlaySound	TrophyPickUp_SFX	[#override: TRUE]
+	AddToList	gGame.UPUnlockableCheats	[#value: #UnlimitedNitro, #override: TRUE]
+	SaveData	x	x	
+Trophy_End
+
+//---------------
+// BOSS TICKETS
+//---------------
+TicketBoss1_Begin
+	PutMessage	--> TicketBoss1
+	PlaySound	TicketPickup_SFX	[#override:TRUE]
+	AddToList	gGame.UPBossTickets	[#value: "TicketBoss1", #override: TRUE]
+	AddToList	gGame.UPChallengesNew	[#value: "TicketBoss1", #override: TRUE]
+	SaveData	x	x
+	UpdateTickets
+TicketBoss1_End
+
+TicketBoss2_Begin
+	PutMessage	--> TicketBoss2
+	PlaySound	TicketPickup_SFX	[#override:TRUE]
+	AddToList	gGame.UPBossTickets	[#value: "TicketBoss2", #override: TRUE]
+	AddToList	gGame.UPChallengesNew	[#value: "TicketBoss2", #override: TRUE]
+	SaveData	x	x
+	UpdateTickets
+TicketBoss2_End
+
+TicketBoss3_Begin
+	PutMessage	--> TicketBoss3
+	PlaySound	TicketPickup_SFX	[#override:TRUE]
+	AddToList	gGame.UPBossTickets	[#value: "TicketBoss3", #override: TRUE]
+	AddToList	gGame.UPChallengesNew	[#value: "TicketBoss3", #override: TRUE]
+	SaveData	x	x
+	UpdateTickets
+TicketBoss3_End
+
+TicketBoss4_Begin
+	PutMessage	--> TicketBoss4
+	PlaySound	TicketPickup_SFX	[#override:TRUE]
+	AddToList	gGame.UPBossTickets	[#value: "TicketBoss4", #override: TRUE]
+	AddToList	gGame.UPChallengesNew	[#value: "TicketBoss4", #override: TRUE]
+	SaveData	x	x
+	UpdateTickets
+TicketBoss4_End
+
+//---------
+// TICKETS
+//---------
+Ticket_Begin
+	PutMessage	--> Ticket
+	PlaySound	TicketPickup_SFX	[#override:TRUE]
+	AddToList	gGame.UPTickets	[#value: "{:CollectedTicket}", #override: TRUE]
+	AddToList	gGame.UPChallengesNew	[#value: "{:CollectedTicket}", #override: TRUE]
+	SaveData	x	x
+	UpdateTickets	x	x
+Ticket_End
+
+FirstTicket_Begin
+	PutMessage	--> FirstTicket
+	// Sound
+	PlaySound	Status_SFX	[#override:TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #TicketInformationTitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #TicketInformation]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: 4000, #name: "HideStatus", #event: "HideStatus"]	
+	// value
+	SetValue		[#FirstTicket: FALSE]
+	SetValue		[#FirstTicketDisplayed: TRUE]
+	// Slowmo
+	Event	WorldMissionSlowMotion
+FirstTicket_End

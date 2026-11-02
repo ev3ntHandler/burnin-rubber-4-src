@@ -1,0 +1,63 @@
+-- [Text] PrePublishLoadingArray
+
+//----------------------------------------------
+// INTERNAL (always for preloader)
+//----------------------------------------------
+\Data\Internal\3d\	[#cast: "Internal"]
+\Data\Internal\Audio\	[#cast: "Internal"]
+\Data\Internal\Textures\	[#cast: "Internal"]
+
+//----------------------------------------------
+// GENERAL EVENTS AND DATA
+//----------------------------------------------
+\Data\Globals.txt	[#cast: "Internal"]
+\Data\Events.txt	[#cast: "Internal"]
+\Data\Shared\SharedData.txt	[#cast: "Internal"]
+\Data\Shared\SharedEvents.txt	[#cast: "Internal"]
+
+//----------------------------------------------
+// WORLD (and world related), TRACK AND MENU
+//----------------------------------------------
+\Data\WorldEvents.txt	[#cast: "Internal"]
+\Data\WorldShopEvents.txt	[#cast: "Internal"]
+\Data\WorldStatusEvents.txt	[#cast: "Internal"]
+\Data\WorldMissionEvents.txt	[#cast: "Internal"]
+\Data\PickupEvents.txt	[#cast: "Internal"]
+\Data\TrackEvents.txt	[#cast: "Internal"]
+\Data\MenuEvents.txt	[#cast: "Internal"]
+
+//----------------------------------------------
+// SEPERATE WORLDS (DATA & EVENTS)
+//----------------------------------------------
+\Data\World\City\WorldCityData.txt	[#cast: "Internal"]
+\Data\World\City\WorldCityEvents.txt	[#cast: "Internal"]
+\Data\World\Desert\WorldDesertData.txt	[#cast: "Internal"]
+\Data\World\Desert\WorldDesertEvents.txt	[#cast: "Internal"]
+\Data\World\Industrial\WorldIndustrialData.txt	[#cast: "Internal"]
+\Data\World\Industrial\WorldIndustrialEvents.txt	[#cast: "Internal"]
+\Data\World\Jungle\WorldJungleData.txt	[#cast: "Internal"]
+\Data\World\Jungle\WorldJungleEvents.txt	[#cast: "Internal"]
+\Data\World\Snow\WorldSnowData.txt	[#cast: "Internal"]
+\Data\World\Snow\WorldSnowEvents.txt	[#cast: "Internal"]
+\Data\World\City\WorldCityData.txt	[#cast: "Internal"]
+\Data\World\City\WorldCityEvents.txt	[#cast: "Internal"]
+
+//----------------------------------------------
+// VEHICLES EVENTS AND DATA
+//----------------------------------------------
+\Data\Vehicles\VehiclesEvents.txt	[#cast: "Internal"]
+\Data\Vehicles\VehiclesData.txt	[#cast: "Internal"]
+
+//----------------------------------------------
+// TRACKINFO
+//----------------------------------------------
+\Data\Shared\Data\TrackInfo.txt	[#cast: "Internal"]
+
+//----------------------------------------------
+// TRACKS
+//----------------------------------------------
+\Data\Track\City\Data\	[#cast: "Internal"]
+\Data\Track\Desert\Data\	[#cast: "Internal"]
+\Data\Track\Jungle\Data\	[#cast: "Internal"]
+\Data\Track\Snow\Data\	[#cast: "Internal"]
+

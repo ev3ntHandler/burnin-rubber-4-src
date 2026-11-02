@@ -1,0 +1,3 @@
+-- [Text] GameVersion
+
+[#version: #BR4GOTYV2_1]

@@ -1,0 +1,444 @@
+-- [Text] WorldShopEvents
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// SHOPS
+//-------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------
+// GENERAL
+//--------------------------------------
+// ENTER, EXIT SHOP (AND SAFEHOUSE)
+//--------------------------------------
+EnterShop_Begin
+	PutMessage	EnterShop
+	// Sound
+	PlaySound	Marker_SFX	[#override: TRUE]
+	// Hide Status if necessary
+	Event	HideStatus
+	// no input
+	SetValue		[#input: FALSE]
+	// in shop
+	SetValue		[#inShop: TRUE]
+	// Hold car & Show/Hide interface
+	HoldCarForShop	x	x
+	Event	HideCurrentInterface
+	// set camera
+	UpdateCameraSet	#MimicHard
+	SetValue	gGame.Camera[1]	[#state: #mimic]
+	SetValue	gGame.Camera[1]	[#target: "{:CurrentMarker}_Camera"]
+	// (Un)bind esc
+	Event	UnbindWorldKeys
+	// Flash Fade
+	Fade	World{:World}	[#time: 250, #type: #out]
+EnterShop_End
+ 
+ExitShop_Begin
+	PutMessage	ExitShop
+	// Hold car & Show/Hide interface
+	SetVisible	Interface	[#model: "InterfaceOverlayPause", #state: TRUE]
+	AddToFader	Interface	[#model: "InterfaceOverlayPause", #fade: 100, #start: 0, #time: 600.0]
+	DelayEvent		[#delay: 750, #event: "ClosingUpShop"]
+	SetVisible	Interface	[#model: ["{:CurrentShop}", "Misc"], #state: FALSE]
+	ReleaseCarFromShop	x	x
+	ResetCurrentShop	x	x
+	// Camera
+	UpdateCameraSet	#{:Car}
+	SetValue	gGame.Camera[1]	[#state: #follow]
+	SetValue	gGame.Camera[1]	[#target: gGame.Vehicles[1].general.tag]
+	SetValue		[#CurrentMarker: #none]
+	// Bind Keys
+	Event	BindWorldKeys
+	// Force Save
+	SaveData	x	x
+	// Flash Fade
+	Fade	World{:World}	[#time: 250, #type: #out]	
+ExitShop_End
+
+ExitSafeHouse_Begin
+	PutMessage	ExitSafeHouse
+	// Hold car & Show/Hide interface
+	SetVisible	Interface	[#model: "InterfaceOverlayPause", #state: TRUE]
+	AddToFader	Interface	[#model: "InterfaceOverlayPause", #fade: 100, #start: 0, #time: 600.0]
+	DelayEvent		[#delay: 750, #event: "ClosingUpShop"]
+	SetVisible	Interface	[#model: ["{:CurrentShop}", "Misc"], #state: FALSE]
+	ReleaseCarFromShop	x	x
+	// Camera
+	UpdateCameraSet	#{:Car}
+	SetValue	gGame.Camera[1]	[#state: #follow]
+	SetValue	gGame.Camera[1]	[#target: gGame.Vehicles[1].general.tag]
+	SetValue		[#CurrentMarker: #none]
+	// BindKeys
+	Event	BindWorldKeys
+	// Force Save
+	SaveData	x	x
+	// Flash Fade
+	Fade	World{:World}	[#time: 250, #type: #out]	
+ExitSafeHouse_End
+
+ClosingUpShop_Begin
+	SetVisible	Interface	[#model: "InterfaceOverlayPause", #state: FALSE]
+	Event	ShowCurrentInterface
+	SetValue		[#input: TRUE]
+	SetValue		[#inShop: FALSE]	
+ClosingUpShop_End
+
+//--------------------------------------
+// SAFEHOUSE
+//--------------------------------------
+SetupSafeHouse_Begin
+	PutMessage	SetupSafeHouse (FADE)
+	// no input
+	SetValue		[#input: FALSE]
+	//Show/Hide interface
+	Event	HideCurrentInterface
+	// Fade
+	Fade	World{:World}	[#time: 250, #type: #in, #event: "EnterSafeHouse"]]
+SetupSafeHouse_End	
+
+EnterSafeHouse_Begin
+	PutMessage	EnterSafeHouse
+	// Hold car
+	HoldCarForShop	x	x
+	// set camera
+	UpdateCameraSet	#MimicHard
+	SetValue	gGame.Camera[1]	[#state: #mimic]
+	// (Un)bind esc
+	Event	UnbindWorldKeys	
+	// Value
+	SetValue		[#currentShop: #Safehouse]
+	// Show
+	SetVisible	Interface	[#model: ["Safehouse", "Misc"], #state: TRUE]
+	SetVisible	Interface	[#model: ["Tickets", "Money"], #state: TRUE, #parent: "Misc"]
+	SetVisible	Interface	[#model: ["TotalCost", "Pause", "CenterButton", "SafehouseTicketBig"], #state: FALSE]
+	// Set buttons
+	SetModel	Interface	[#model: "LeftButton", #resource: "ExitButton", #shader: "GreyInterface_Material"]
+	SetModel	Interface	[#model: "RightButton", #resource: "SelectButton", #shader: "GreyInterface_Material"]
+	// Create buttons
+	CreateButton	Interface	[#model: "LeftButton", #event: "RestoreVehicleSafeHouse", #effect: #shaderRollover, #shaders: ["GreyInterface_Material", "Interface_Material"]]
+	CreateButton	Interface	[#model: "RightButton", #event: "FadeResetSafehouse", #effect: #shaderRollover, #shaders: ["GreyInterface_Material", "Interface_Material"]]
+	// show sprite
+	SetSprite	{:Sprite}	[#visible:FALSE]
+	// Evaluate Safehouse
+	Event	EvaluateSafeHouse
+EnterSafeHouse_End	
+
+EvaluateSafeHouse_Begin
+	PutMessage	EvaluateSafeHouse
+	// Clear Triggers
+	SetValue	gData	[#Triggers: []]
+	// What to do...
+	Evaluate	gGame.VehiclesLoaded.set2=#done	[#event: "ContinueEnterSafeHouse"]
+	Evaluate	gGame.VehiclesLoaded.set2=#ready	[#event: "ImportSet2SafeHouse"]
+	Evaluate	gGame.VehiclesLoaded.set2=#loading	[#event: "LoadSet2SafeHouse"]		
+EvaluateSafeHouse_End
+
+LoadSet2SafeHouse_Begin
+	PutMessage	LoadSet2SafeHouse
+	SetupProgressLoader	x	x
+	AddTrigger	gGame.VehiclesLoaded.set2=#loading	[#handler: "UpdateProgressLoader", #runOnce: 0, #frameFreq: 1]
+	AddTrigger	gGame.VehiclesLoaded.set2=#ready	[#event: "EvaluateSafeHouse", #handler: "ResetProgressLoader", #runOnce: 1, #frameFreq: 1]
+LoadSet2SafeHouse_End
+
+ImportSet2SafeHouse_Begin
+	PutMessage	SafeHouseImportSet2AndContinue
+	// Start showing init update
+	SetValue		[#ForceUpdate: TRUE]
+	SetValue		[#ForceState: #loading]
+	Event	ImportVehicleSet2
+	SetValue		[#ForceUpdate: FALSE]
+	Event	EvaluateSafeHouse	
+ImportSet2SafeHouse_End
+
+ContinueEnterSafeHouse_Begin
+	PutMessage	--> ContinueSetupSafeHouse
+	SetupSafehouse	x	x
+	Fade	World{:World}	[#time: 500, #type: #out]
+	SetSprite	{:Sprite}
+ContinueEnterSafeHouse_End
+
+RestoreVehicleSafeHouse_Begin
+	PutMessage	--> RestoreVehicleSafeHouse
+	RestoreVehicleSafeHouse	x	x
+	Event	FadeResetSafehouse
+RestoreVehicleSafeHouse_End
+
+FadeResetSafehouse_Begin
+	PutMessage	--> FadeResetSafehouse
+	Fade	World{:World}	[#time: 500, #type: #in, #handler: "ResetSafeHouse"]]	
+FadeResetSafehouse_End
+
+//--------------------------------------
+// TICKETMASTER
+//--------------------------------------
+SetupTicketMaster_Begin
+	PutMessage	--> SetupTicketMaster
+	// Enter shop
+	Event	EnterShop
+	// Camera
+	UpdateShopCamera	x	x
+	// Value
+	SetValue		[#currentShop: #TicketMaster]
+	// Show
+	SetVisible	Interface	[#model: ["TicketMaster", "Misc"], #state: TRUE]
+	SetVisible	Interface	[#model: ["Tickets", "Money"], #state: TRUE, #parent: "Misc"]
+	SetVisible	Interface	[#model: ["TotalCost", "Pause", "CenterButton", "TicketMasterTicketBig"], #state: FALSE]
+	// Set buttons
+	SetModel	Interface	[#model: "LeftButton", #resource: "ExitButton", #shader: "GreyInterface_Material"]
+	SetModel	Interface	[#model: "RightButton", #resource: "StartButton", #shader: "GreyInterface_Material"]
+	// Create buttons
+	CreateButton	Interface	[#model: "LeftButton", #event: "ExitShop", #effect: #shaderRollover, #shaders: ["GreyInterface_Material", "Interface_Material" ]]
+	// Handler
+	SetupTicketMaster	x	x
+SetupTicketMaster_End
+
+FadeTrackInitialization_Begin
+	PutMessage	--> FadeTrackInitialization
+	Fade	World{:World}	[#time: 500, #type: #in, #event: ["ResetCurrentWorld", "EvaluateTrackInitialization"]]
+FadeTrackInitialization_End
+
+EvaluateTrackInitialization_Begin
+	PutMessage	EvaluateTrackInitialization
+	// Clear Triggers
+	SetValue	gData	[#Triggers: []]
+	// What to do...
+	Evaluate	gGame.VehiclesLoaded.set2=#done;gGame.VehiclesLoaded.set3=#done	[#event: "TrackInitialization"]
+	Evaluate	gGame.VehiclesLoaded.set2=#done;gGame.VehiclesLoaded.set3=#ready	[#event: "ImportSet3TrackInitialization"]
+	Evaluate	gGame.VehiclesLoaded.set2=#done;gGame.VehiclesLoaded.set3=#loading	[#event: "LoadSet3TrackInitialization"]
+	Evaluate	gGame.VehiclesLoaded.set2=#ready	[#event: "ImportSet2TrackInitialization"]
+	Evaluate	gGame.VehiclesLoaded.set2=#loading	[#event: "LoadSet2TrackInitialization"]	
+EvaluateTrackInitialization_End
+
+LoadSet2TrackInitialization_Begin
+	PutMessage	LoadSet2TrackInitialization
+	SetupProgressLoader	x	x	
+	AddTrigger	gGame.VehiclesLoaded.set2=#loading	[#handler: "UpdateProgressLoader", #runOnce: 0, #frameFreq: 1]
+	AddTrigger	gGame.VehiclesLoaded.set2=#ready	[#event: "EvaluateTrackInitialization", #handler: "ResetProgressLoader", #runOnce: 1, #frameFreq: 1]
+LoadSet2TrackInitialization_End
+
+ImportSet2TrackInitialization_Begin
+	PutMessage	ImportSet2TrackInitialization
+	// Start showing init update
+	SetValue		[#ForceUpdate: TRUE]
+	SetValue		[#ForceState: #loading]
+	Event	ImportVehicleSet2
+	SetValue		[#ForceUpdate: FALSE]
+	Event	EvaluateTrackInitialization	
+ImportSet2TrackInitialization_End
+
+LoadSet3TrackInitialization_Begin
+	PutMessage	LoadSet3TrackInitialization
+	SetupProgressLoader	x	x	
+	AddTrigger	gGame.VehiclesLoaded.set3=#loading	[#handler: "UpdateProgressLoader", #runOnce: 0, #frameFreq: 1]
+	AddTrigger	gGame.VehiclesLoaded.set3=#ready	[#event: "EvaluateTrackInitialization", #handler: "ResetProgressLoader", #runOnce: 1, #frameFreq: 1]
+LoadSet3TrackInitialization_End
+
+ImportSet3TrackInitialization_Begin
+	PutMessage	ImportSet3TrackInitialization
+	// Start showing init update
+	SetValue		[#ForceUpdate: TRUE]
+	SetValue		[#ForceState: #loading]
+	Event	ImportVehicleSet3
+	DeleteScript	#System	[#name: "Vehicle Manager"]
+	SetValue		[#ForceUpdate: FALSE]
+	Event	EvaluateTrackInitialization
+ImportSet3TrackInitialization_End
+
+//--------------------------------------
+// WEAPONSHOP
+//--------------------------------------
+SetupWeaponShop_Begin
+	PutMessage	--> SetupWeaponShop
+	Evaluate	"{:Car}"<>"Autobot";"{:Car}"<>"Tank"	[#event: "WeaponShopAvailable"]
+	Evaluate	"{:Car}"="Autobot"	[#event: "WeaponShopUnavailable"]
+	Evaluate	"{:Car}"="Tank"	[#event: "WeaponShopUnavailable"]
+SetupWeaponShop_End
+
+WeaponShopUnavailable_Begin
+	PutMessage	--> --> ShowWeaponShopUnavailable
+	// Sound
+	PlaySound	Status_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #WeaponShopUnavailableTitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #WeaponShopUnavailable]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+WeaponShopUnavailable_End
+
+WeaponShopAvailable_Begin
+	PutMessage	--> --> WeaponShopAvailable
+	// Enter shop
+	Event	EnterShop
+	// Camera
+	UpdateShopCamera	x	x
+	// Value
+	SetValue		[#currentShop: #WeaponShop]
+	// Show
+	SetVisible	Interface	[#model: ["WeaponShop", "Misc"], #state: TRUE]
+	SetVisible	Interface	[#model: ["TotalCost", "Tickets", "Money"], #state: TRUE, #parent: "Misc"]
+	SetVisible	Interface	[#model: ["Pause", "CenterButton", "TicketMasterTicketBig"], #state: FALSE]
+	// Set buttons
+	SetModel	Interface	[#model: "LeftButton", #resource: "ExitButton", #shader: "GreyInterface_Material"]
+	SetModel	Interface	[#model: "RightButton", #resource: "BuyButton", #shader: "GreyInterface_Material"]
+	// Create buttons
+	CreateButton	Interface	[#model: "LeftButton", #event: "ExitShop", #effect: #shaderRollover, #shaders: ["GreyInterface_Material", "Interface_Material"]]
+	// Handler
+	SetupWeaponShop	x	x
+WeaponShopAvailable_End
+
+//--------------------------------------
+// SPRAYSHOP
+//--------------------------------------
+SetupSprayShop_Begin
+	PutMessage	--> SetupSprayShop
+	// Enter shop
+	Event	EnterShop
+	// Camera
+	UpdateShopCamera	x	x
+	// Value
+	SetValue		[#currentShop: #SprayShop]
+	// Show
+	SetVisible	Interface	[#model: ["SprayShop", "Misc"], #state: TRUE]
+	SetVisible	Interface	[#model: ["TotalCost", "Tickets", "Money"], #state: TRUE, #parent: "Misc"]
+	SetVisible	Interface	[#model: ["Pause", "CenterButton", "TicketMasterTicketBig"], #state: FALSE]
+	// Set buttons
+	SetModel	Interface	[#model: "LeftButton", #resource: "ExitButton", #shader: "GreyInterface_Material"]
+	SetModel	Interface	[#model: "RightButton", #resource: "BuyButton", #shader: "GreyInterface_Material"]
+	// Create buttons
+	CreateButton	Interface	[#model: "LeftButton", #event: "ExitShop", #effect: #shaderRollover, #shaders: ["GreyInterface_Material", "Interface_Material"]]
+	// Handler
+	SetupSprayShop	x	x
+SetupSprayShop_End
+
+//--------------------------------------
+// TUNESHOP
+//--------------------------------------
+SetupTuneShop_Begin
+	PutMessage	--> SetupTuneShop
+	// Enter shop
+	Event	EnterShop
+	// Camera
+	UpdateShopCamera	x	x
+	// Value
+	SetValue		[#currentShop: #TuneShop]
+	// Show
+	SetVisible	Interface	[#model: ["TuneShop", "Misc"], #state: TRUE]
+	SetVisible	Interface	[#model: ["TotalCost", "Tickets", "Money"], #state: TRUE, #parent: "Misc"]
+	SetVisible	Interface	[#model: ["Pause", "CenterButton", "TicketMasterTicketBig"], #state: FALSE]
+	// Set buttons
+	SetModel	Interface	[#model: "LeftButton", #resource: "ExitButton", #shader: "GreyInterface_Material"]
+	SetModel	Interface	[#model: "RightButton", #resource: "BuyButton", #shader: "GreyInterface_Material"]
+	// Create buttons
+	CreateButton	Interface	[#model: "LeftButton", #event: "ExitShop", #effect: #shaderRollover, #shaders: ["GreyInterface_Material", "Interface_Material"]]
+	// Handler
+	SetupTuneShop	x	x
+SetupTuneShop_End
+
+//--------------------------------------
+// SPECIAL MISSION
+//--------------------------------------
+SetupSpecialMission_Begin
+	PutMessage	--> SetupSpecialMission (CHECK REQUIREMENTS)
+	CheckSpecialMissionRequirements	x	x
+SetupSpecialMission_End
+
+EnterSpecialMission_Begin
+	PutMessage	--> EnterSpecialMission
+	// Enter shop
+	Event	EnterShop
+	// Value
+	SetValue		[#currentShop: #SpecialMission]
+	// Show
+	SetVisible	Interface	[#model: ["SpecialMission", "Misc"], #state: TRUE]
+	SetVisible	Interface	[#model: ["Tickets", "Money"], #state: TRUE, #parent: "Misc"]
+	SetVisible	Interface	[#model: ["Pause", "CenterButton", "TotalCost", "SpecialMissionResultStamp"], #state: FALSE]
+	// Set buttons
+	SetModel	Interface	[#model: "LeftButton", #resource: "ExitButton", #shader: "GreyInterface_Material"]
+	SetModel	Interface	[#model: "RightButton", #resource: "AcceptButton", #shader: "GreyInterface_Material"]
+	// Create buttons
+	CreateButton	Interface	[#model: "LeftButton", #event: "ExitShop", #effect: #shaderRollover, #shaders: ["GreyInterface_Material", "Interface_Material"]]
+	CreateButton	Interface	[#model: "RightButton", #event: "FadeTrackInitialization", #effect: #shaderRollover, #shaders: ["GreyInterface_Material", "Interface_Material"]]
+	// Actually setup the special mission
+	SetupSpecialMission	x	x
+EnterSpecialMission_End
+
+ShowSpecialMission_Begin
+	PutMessage	--> ShowSpecialMission
+	// Trackname
+	CreateTextTexture	Interface	[#tag: #SpecialMissionHeaderText, #style: #SpecialMissionTrackName, #text: #{:Track}Title]
+	// Description
+	CreateTextTexture	Interface	[#tag: #SpecialMissionDescriptionText, #style: #SpecialMissionDescription, #text: #{:Track}Story]
+	// Goal (name & text)
+	CreateTextTexture	Interface	[#tag: #SpecialMissionGoalHeaderText, #style: #SpecialMissionGoal]
+	CreateTextTexture	Interface	[#tag: #SpecialMissionGoalText, #style: #SpecialMissionGoal2, #text: #{:Track}Mission]
+	// Reward (name only)
+	CreateTextTexture	Interface	[#tag: #SpecialMissionRewardHeaderText, #style: #SpecialMissionReward]
+	// Special
+	CreateTextTexture	Interface	[#tag: #SpecialMissionUnlockHeaderText, #style: #SpecialMissionSpecial]	
+	UpdateChallengeSpecialMissionMoney		[#unlock: FALSE]
+ShowSpecialMission_End
+ 
+//--------------------------------------
+// DAILY CHALLENGE
+//--------------------------------------
+SetupDailyChallenge_Begin
+	PutMessage	--> SetupDailyChallenge
+	// Enter shop
+	Event	EnterShop
+	// Value
+	SetValue		[#currentShop: #DailyChallenge]
+	// Show
+	SetVisible	Interface	[#model: ["DailyChallenge", "Misc"], #state: TRUE]
+	SetVisible	Interface	[#model: ["Tickets", "Money"], #state: TRUE, #parent: "Misc"]
+	SetVisible	Interface	[#model: ["Pause", "CenterButton", "TotalCost"], #state: FALSE]
+	//, "DailyChallengeResultStamp"
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #DailyChallengeHeaderText, #style: #SpecialMissionTrackName, #text: #DailyChallengeTitle]
+	CreateTextTexture	Interface	[#tag: #DailyChallengeDescriptionText, #style: #SpecialMissionDescription, #text: #DailyChallengeStory]
+	CreateTextTexture	Interface	[#tag: #DailyChallengeGoalHeaderText, #style: #SpecialMissionGoal]
+	CreateTextTexture	Interface	[#tag: #DailyChallengeGoalText, #style: #SpecialMissionGoal2, #text: #DailyChallengeMission]
+	CreateTextTexture	Interface	[#tag: #DailyChallengeRewardHeaderText, #style: #SpecialMissionReward]
+	CreateTextTexture	Interface	[#tag: #DailyChallengeUnlockHeaderText, #style: #SpecialMissionSpecial]	
+	// SetStamp
+	SetModel	Interface	[#model: "DailyChallengeResultStamp", #resource: "Stamp{:DailyChallengeState}"]
+	// Update reward & time
+	SetupDailyChallenge	x	x
+	// Set buttons
+	SetModel	Interface	[#model: "LeftButton", #resource: "ExitButton", #shader: "GreyInterface_Material"]
+	SetModel	Interface	[#model: "RightButton", #resource: "AcceptButton", #shader: "GreyInterface_Material"]
+	// Create buttons
+	CreateButton	Interface	[#model: "LeftButton", #event: "ExitShop", #effect: #shaderRollover, #shaders: ["GreyInterface_Material", "Interface_Material"]]
+	CreateButton	Interface	[#model: "RightButton", #event: "ConfirmDailyChallenge", #effect: #shaderRollover, #shaders: ["GreyInterface_Material", "Interface_Material"]]
+SetupDailyChallenge_End
+
+ConfirmDailyChallenge_Begin
+	PutMessage	--> ConfirmDailyChallenge
+	ConfirmDailyChallenge	x	x
+	Event	FadeTrackInitialization
+ConfirmDailyChallenge_End
+ 
+//--------------------------------------
+// BOSS END
+//--------------------------------------
+SetupBossEnd_Begin
+	PutMessage	--> SetupBossEnd
+	// Enter shop
+	Event	EnterShop
+	// Value
+	SetValue		[#currentShop: #SpecialMission]
+	// Show
+	SetVisible	Interface	[#model: ["SpecialMission", "Misc"], #state: TRUE]
+	SetVisible	Interface	[#model: ["Tickets", "Money"], #state: TRUE, #parent: "Misc"]
+	SetVisible	Interface	[#model: ["Pause", "CenterButton", "TotalCost", "SpecialMissionResultStamp"], #state: FALSE]
+	// Set buttons
+	SetModel	Interface	[#model: "LeftButton", #resource: "ExitButton", #shader: "GreyInterface_Material"]
+	SetModel	Interface	[#model: "RightButton", #resource: "AcceptButton", #shader: "GreyInterface_Material"]
+	// Create buttons
+	CreateButton	Interface	[#model: "LeftButton", #event: "ExitShop", #effect: #shaderRollover, #shaders: ["GreyInterface_Material", "Interface_Material"]]
+	CreateButton	Interface	[#model: "RightButton", #event: "FadeTrackInitialization", #effect: #shaderRollover, #shaders: ["GreyInterface_Material", "Interface_Material"]]
+	// Actually setup the special mission
+	SetupSpecialMission	x	x
+SetupBossEnd_End
+
+
+

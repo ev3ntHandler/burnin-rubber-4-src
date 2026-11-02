@@ -1,0 +1,237 @@
+-- [Text] Events
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// GAME INITIALIZATION
+//-------------------------------------------------------------------------------------------------------------------------------------------
+GameInitialization_Begin
+	PutMessage	GameInitialization
+	GoTo		[#marker: "Game"]
+	LoadData	x	x
+	LoadDataBR3	x	x
+	SetStartTime	x	x
+	//SetValue		[#debug: TRUE]
+	
+	//-----------------------------------------------------
+	// FOR FUCKS SAKE
+	//-----------------------------------------------------
+	UpdateTrackInfo
+	SetValue		[#Assets: gGame.TrackInfo.Assets]
+	//-----------------------------------------------------
+	Event	{:Scene}Initialization
+GameInitialization_End
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// SPLASH INITIALIZATION
+//-------------------------------------------------------------------------------------------------------------------------------------------
+SplashInitialization_Begin
+	PutMessage	SplashInitialization	
+	SetValue		[#ReturnEvent: "SplashInitialization"]
+	Evaluate	gGame.SharedLoaded.State=TRUE	[#event: "SetupSplash"]
+	Evaluate	gGame.SharedLoaded.State=FALSE	[#event: "PreloadShared"]	
+	SetValue		[#ReturnEvent: #none]
+SplashInitialization_End
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// WORLD INITIALIZATION
+//-------------------------------------------------------------------------------------------------------------------------------------------
+WorldInitialization_Begin
+	PutMessage	WorldInitialization
+	SetStartTime	x	x
+	SetValue		[#ReturnEvent: "WorldInitialization"]
+	Evaluate	gGame.SharedLoaded.State=TRUE;gGame.World{:World}Loaded.State=TRUE	[#event: "SetupWorld"]
+	Evaluate	gGame.SharedLoaded.State=TRUE;gGame.World{:World}Loaded.State=FALSE	[#event: "PreloadWorld"]
+	Evaluate	gGame.SharedLoaded.State=FALSE	[#event: "PreloadShared"]
+	SetValue		[#ReturnEvent: #none]
+WorldInitialization_End
+ 
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// TRACK INITIALIZATION
+//-------------------------------------------------------------------------------------------------------------------------------------------
+TrackInitialization_Begin
+	PutMessage	TrackInitialization
+	SetValue		[#ReturnEvent: "TrackInitialization"]
+	Evaluate	gGame.SharedLoaded.State=TRUE;gGame.Assets{:Assets}Loaded.State=TRUE	[#event: "SetupTrack"]
+	Evaluate	gGame.SharedLoaded.State=TRUE;gGame.Assets{:Assets}Loaded.State=FALSE	[#event: "PreloadTrack"]
+	Evaluate	gGame.SharedLoaded.State=FALSE	[#event: "PreloadShared"]
+	SetValue		[#ReturnEvent: #none]
+TrackInitialization_End
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// (PRE)LOADING
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// Shared
+//-------------------------------------------------------------------------------------------------------------------------------------------
+PreloadShared_Begin
+	PutMessage	--> PreloadShared
+	Evaluate	{:local}=TRUE	[#event: "PreloadSharedOffline"]
+	Evaluate	{:local}=FALSE	[#event: "PreloadSharedOnline"]
+PreloadShared_End
+
+PreloadSharedOffline_Begin
+	PutMessage	--> PreloadSharedOffline
+	SetValue		[#ForceUpdate: TRUE]
+	UpdateTagsLoadingAssets	x	x
+	Load	\Data\Shared\SharedLoadingArray.txt
+	SetValue	gGame.SharedLoaded	[#State: TRUE]
+	SetValue		[#ForceUpdate: FALSE]
+	Event	{:ReturnEvent}
+PreloadSharedOffline_End
+
+PreloadSharedOnline_Begin
+	PutMessage	--> PreloadSharedOnline
+	PreloadCast		[#data: #SharedLoaded, #event: #{:ReturnEvent}]
+	UpdateTagsLoadingAssets	x	x
+PreloadSharedOnline_End
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// World
+//-------------------------------------------------------------------------------------------------------------------------------------------
+PreloadWorld_Begin
+	PutMessage	--> PreloadWorld
+	Evaluate	{:local}=TRUE	[#event: "PreloadWorldOffline"]
+	Evaluate	{:local}=FALSE	[#event: "PreloadWorldOnline"]
+PreloadWorld_End
+
+PreloadWorldOffline_Begin
+	PutMessage	--> PreloadWorldOffline
+	SetValue		[#ForceUpdate: TRUE]
+	UpdateTagsLoadingWorld	x	x
+	Load	\Data\World\{:World}\World{:World}LoadingArray.txt	
+	SetValue	gGame.World{:World}Loaded	[#State: TRUE]
+	SetValue		[#ForceUpdate: FALSE]
+	Event	{:ReturnEvent}
+PreloadWorldOffline_End
+
+PreloadWorldOnline_Begin
+	PutMessage	--> PreloadWorldOnline
+	PreloadCast		[#data: #World{:World}Loaded, #event: #{:ReturnEvent}]
+	UpdateTagsLoadingWorld	x	x
+PreloadWorldOnline_End
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// Track & offline car load for direct access to challenges
+//-------------------------------------------------------------------------------------------------------------------------------------------
+PreloadTrack_Begin
+	PutMessage	--> PreloadTrack
+	Evaluate	{:local}=TRUE	[#event: "PreloadTrackOffline"]	
+	Evaluate	{:local}=FALSE	[#event: "PreloadTrackOnline"]
+PreloadTrack_End
+	
+PreloadTrackOffline_Begin
+	PutMessage	--> PreloadTrackOffline
+	SetValue		[#ForceUpdate: TRUE]
+	UpdateTagsLoadingTrack	x	x
+	Load	\Data\Track\{:Assets}\Track{:Assets}LoadingArray.txt		
+	//--------------------------------------------------------
+	// We force load the vehicles & textures here as well
+	//--------------------------------------------------------
+	Load	\Data\World\Shared\WorldTexturesLoadingArray.txt	
+	Load	\Data\Vehicles\VehiclesLoadingArray2.txt	
+	//--------------------------------------------------------	
+	SetValue	gGame.Assets{:Assets}Loaded	[#State: TRUE]
+	SetValue		[#ForceUpdate: FALSE]
+	Event	{:ReturnEvent}
+PreloadTrackOffline_End
+
+PreloadTrackOnline_Begin
+	PutMessage	--> PreloadTrackOnline
+	AuthorVehicleLoading	x	x
+	PreloadCast		[#data: #Assets{:Assets}Loaded, #event: #{:ReturnEvent}]
+	UpdateTagsLoadingTrack	x	x
+PreloadTrackOnline_End
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// SPLASH EVENTS
+//-------------------------------------------------------------------------------------------------------------------------------------------
+SetupSplash_Begin
+	PutMessage	--> SetupSplash
+	// Textures & shaders
+	CreateTexture	Splash	[#texture: "SplashShockwave_Texture",#renderFormat: #rgba8888, #filtering: #lowFiltered, #nearFiltering: FALSE]
+	CreateTexture	Splash	[#texture: "SplashXform_Texture",#renderFormat: #rgba8888, #filtering: #lowFiltered, #nearFiltering: FALSE]
+	// Visibilities
+	SetVisible	Splash	[#model: ["SplashShockwave", "SplashXform"], #state: FALSE]
+	// Create 
+	CreateSprite	Splash	[#channel: 1]
+	AddValue		[#name: "Member", #value: member("Splash")]
+	AddValue		[#name: "Sprite", #value: sprite(1)]
+	// Camera
+	SetActiveCamera		[#camera: "Splash_Camera"]
+	SetCamera	Splash	[#cameraName: "Splash_Camera", #projection: #orthographic, #orthoHeight: 450.0,  #rect: rect(0, 0, {:StageSize}[1], {:StageSize}[2]), #clearAtRender: FALSE]
+	// Shockwave splash & delay splash xform
+	Event	FadeToSplashXform	
+	//DelayEvent		[#delay: 4000, #event: "FadeToSplashXform"]
+	// Set Sprite
+	SetSprite	{:Sprite}	[#size: {:StageSize}, #loc: point({:StageSize}[1]*.5, {:StageSize}[2]*.5)]	
+SetupSplash_End
+
+ResetSplash_Begin
+	PutMessage	--> ResetSplash
+	// Reset sprites
+	ResetSprites	x	x
+	// Buttons & scripts
+	DeleteAllButtons
+	DeleteAllScripts	#Game
+	// 3d memberstrack
+	ResetWorld	Splash
+	// Remove values
+	RemoveValue		[#name: "Sprite"]
+	RemoveValue		[#name: "Member"]
+	// do next (THIS DIFFERS PER GAME)
+	Event	WorldInitialization
+ResetSplash_End
+
+//------------
+// Shockwave
+//------------
+FadeToSplashShockwave_Begin
+	PutMessage	--> --> FadeToSplashShockwave
+	// Visible
+	SetVisible	Splash	[#model: "SplashShockwave", #state: TRUE]
+	// Button
+	CreateButton	Splash	[#model: "SplashShockwaveLogo", #handler: "OpenShockwaveSite"]
+	// Fade
+	Fade	Splash	[#time: 750, #type: #out, #event: ""]
+	// Delay fade out
+	DelayEvent		[#delay: 3000, #event: "FadeOutSplashShockwave"]
+FadeToSplashShockwave_End
+
+FadeOutSplashShockwave_Begin
+	PutMessage	--> --> FadeOutSplashShockwave
+	// Button
+	DeleteButton		[#model: "SplashShockwaveLogo"]
+	// Fadeout
+	Fade	Splash	[#time: 300, #type: #in, #event: "HideSplashShockwave"]
+FadeOutSplashShockwave_End
+
+HideSplashShockwave_Begin
+	PutMessage	--> --> HideSplashShockwave
+	// Visible
+	SetVisible	Splash	[#model: "SplashShockwave", #state: FALSE]
+HideSplashShockwave_End
+
+//-------
+// Xform
+//-------
+FadeToSplashXform_Begin
+	PutMessage	--> --> FadeToSplashXform
+	// Visible
+	SetVisible	Splash	[#model: "SplashXform", #state: TRUE]
+	// Fade
+	Fade	Splash	[#time: 750, #type: #out, #event: ""]
+	// Delay
+	DelayEvent		[#delay: 3000, #event: "FadeOutSplashXform"]
+FadeToSplashXform_End
+
+FadeOutSplashXform_Begin
+	PutMessage	--> --> FadeOutSplashXform
+	// Fadeout
+	Fade	Splash	[#time: 300, #type: #in, #event: "HideSplashXform"]
+FadeOutSplashXform_End
+
+HideSplashXform_Begin
+	PutMessage	--> --> HideSplashXform
+	// Visible
+	SetVisible	Splash	[#model: "SplashXform", #state: FALSE]
+	// ResetSplash ( & do dock!)
+	Event	ResetSplash
+HideSplashXform_End

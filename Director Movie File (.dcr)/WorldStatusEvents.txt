@@ -1,0 +1,673 @@
+-- [Text] WorldStatusEvents
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// MISC STATUS
+//-------------------------------------------------------------------------------------------------------------------------------------------
+SkipStatus_Begin
+	Event	ImpactTimeOff
+	Event	HideStatus	
+SkipStatus_End
+
+HideStatus_Begin
+	PutMessage	--> HideStatus
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: FALSE]
+HideStatus_End
+
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// TANK MESSAGE
+//-------------------------------------------------------------------------------------------------------------------------------------------
+DelayTankMessage_Begin
+	PutMessage	--> DelayTankMessage	
+	Evaluate	{:GameLoaded}=TRUE	[#event: "DelayTankMessage2"]
+	Evaluate	{:GameLoaded}=FALSE	[#event: "DelayTankMessage1"]	
+DelayTankMessage_End
+
+DelayTankMessage1_Begin
+	DelayEvent		[#delay: 8000, #name: "TankMessage", #event: "TankMessage"]	
+DelayTankMessage1_End
+
+DelayTankMessage2_Begin
+	DelayEvent		[#delay: 10000, #name: "TankMessage", #event: "TankMessage"]	
+DelayTankMessage2_End
+
+TankMessage_Begin
+	PutMessage	--> --> TankMessage
+	// Sound
+	PlaySound	Status_SFX	[#override:TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #TankInformationTitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #TankInformation]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]	
+	// Value
+	SetValue		[#TankMessage: TRUE]
+	SetValue		[#TankMessageDisplayed: TRUE]
+	// Save
+	SaveData	x	x
+	// Slowmo
+	Event	WorldMissionSlowMotion
+	// Skip shit
+	BindKey		[#key: " ", #event: "SkipStatus"]
+TankMessage_End
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// INFO
+//-------------------------------------------------------------------------------------------------------------------------------------------
+SafeHouseInformation_Begin
+	PutMessage	--> SafeHouseInformation
+	// Sound
+	PlaySound	InformationPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #SafeHouseInformationTitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #SafeHouseInformation]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Slowmo
+	Event	WorldMissionSlowMotion
+	// Skip shit
+	BindKey		[#key: " ", #event: "SkipStatus"]
+SafeHouseInformation_End
+
+SprayShopInformation_Begin
+	PutMessage	--> SprayShopInformation
+	// Sound
+	PlaySound	InformationPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #SprayShopInformationTitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #SprayShopInformation]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Slowmo
+	Event	WorldMissionSlowMotion
+	// Skip shit
+	BindKey		[#key: " ", #event: "SkipStatus"]
+SprayShopInformation_End
+
+TuneShopInformation_Begin
+	PutMessage	--> TuneShopInformation
+	// Sound
+	PlaySound	InformationPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #TuneShopInformationTitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #TuneShopInformation]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Slowmo
+	Event	WorldMissionSlowMotion
+	// Skip shit
+	BindKey		[#key: " ", #event: "SkipStatus"]
+TuneShopInformation_End
+
+WeaponShopInformation_Begin
+	PutMessage	--> WeaponShopInformation
+	// Sound
+	PlaySound	InformationPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #WeaponShopInformationTitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #WeaponShopInformation]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Slowmo
+	Event	WorldMissionSlowMotion
+	// Skip shit
+	BindKey		[#key: " ", #event: "SkipStatus"]
+WeaponShopInformation_End
+
+TicketMasterInformation_Begin
+	PutMessage	--> TicketMasterInformation
+	// Sound
+	PlaySound	InformationPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #TicketMasterInformationTitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #TicketMasterInformation]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Slowmo
+	Event	WorldMissionSlowMotion
+	// Skip shit
+	BindKey		[#key: " ", #event: "SkipStatus"]
+TicketMasterInformation_End
+
+HiddenPackageInformation_Begin
+	PutMessage	--> HiddenPackageInformation
+	// Sound
+	PlaySound	InformationPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #InformationDefaultTitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #HiddenPackageInformation]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Slowmo
+	Event	WorldMissionSlowMotion
+	// Skip shit
+	BindKey		[#key: " ", #event: "SkipStatus"]
+HiddenPackageInformation_End
+
+DemolitionInformation_Begin
+	PutMessage	--> DemolitionInformation
+	// Sound
+	PlaySound	InformationPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #DemolitionInformationTitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #DemolitionInformation]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Slowmo
+	Event	WorldMissionSlowMotion
+	// Skip shit
+	BindKey		[#key: " ", #event: "SkipStatus"]
+DemolitionInformation_End
+
+RampageInformation_Begin
+	PutMessage	--> RampageInformation
+	// Sound
+	PlaySound	InformationPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #RampageInformationTitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #RampageInformation]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Slowmo
+	Event	WorldMissionSlowMotion
+	// Skip shit
+	BindKey		[#key: " ", #event: "SkipStatus"]
+RampageInformation_End
+
+HelicopterInformation_Begin
+	PutMessage	--> HelicopterInformation
+	// Sound
+	PlaySound	InformationPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #HelicopterInformationTitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #HelicopterInformation]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Slowmo
+	Event	WorldMissionSlowMotion
+	// Skip shit
+	BindKey		[#key: " ", #event: "SkipStatus"]
+HelicopterInformation_End
+
+CityInformation_Begin
+	PutMessage	--> CityInformation
+	// Sound
+	PlaySound	InformationPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #CityInformationTitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #CityInformation]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Slowmo
+	Event	WorldMissionSlowMotion
+	// Skip shit
+	BindKey		[#key: " ", #event: "SkipStatus"]
+CityInformation_End
+
+DesertInformation_Begin
+	PutMessage	--> DesertInformation
+	// Sound
+	PlaySound	InformationPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #DesertInformationTitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #DesertInformation]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Slowmo
+	Event	WorldMissionSlowMotion
+	// Skip shit
+	BindKey		[#key: " ", #event: "SkipStatus"]
+DesertInformation_End
+
+JungleInformation_Begin
+	PutMessage	--> JungleInformation
+	// Sound
+	PlaySound	InformationPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #JungleInformationTitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #JungleInformation]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Slowmo
+	Event	WorldMissionSlowMotion
+	// Skip shit
+	BindKey		[#key: " ", #event: "SkipStatus"]
+JungleInformation_End
+
+SnowInformation_Begin
+	PutMessage	--> SnowInformation
+	// Sound
+	PlaySound	InformationPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #SnowInformationTitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #SnowInformation]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Slowmo
+	Event	WorldMissionSlowMotion
+	// Skip shit
+	BindKey		[#key: " ", #event: "SkipStatus"]
+SnowInformation_End
+
+IndustrialInformation_Begin
+	PutMessage	--> IndustrialInformation
+	// Sound
+	PlaySound	InformationPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #IndustrialInformationTitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #IndustrialInformation]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Slowmo
+	Event	WorldMissionSlowMotion
+	// Skip shit
+	BindKey		[#key: " ", #event: "SkipStatus"]
+IndustrialInformation_End
+
+DelayWelcomeInformation_Begin
+	PutMessage	--> DelayWelcomeInformation	
+	Evaluate	{:NewGame}=FALSE	[#event: "DelayWelcomeInformation2"]
+	Evaluate	{:NewGame}=TRUE	[#event: "DelayWelcomeInformation1"]	
+DelayWelcomeInformation_End
+
+DelayWelcomeInformation1_Begin
+	DelayEvent		[#delay: 1500, #event: "WelcomeInformation"]
+DelayWelcomeInformation1_End
+
+DelayWelcomeInformation2_Begin
+	DelayEvent		[#delay: 1500, #event: "WelcomeInformation2"]
+DelayWelcomeInformation2_End
+
+WelcomeInformation_Begin
+	PutMessage	--> WelcomeInformation
+	// Sound
+	PlaySound	InformationPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #WelcomeInformationTitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #WelcomeInformation]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: 7000, #name: "HideStatus", #event: "HideStatus"]
+	// Setvalue	
+	SetValue		[#WelcomeMessage: FALSE]
+	// Slowmo
+	Event	WorldMissionSlowMotion2	
+	// Skip shit
+	BindKey		[#key: " ", #event: "SkipStatus"]
+WelcomeInformation_End
+
+WelcomeInformation2_Begin
+	PutMessage	--> WelcomeInformation2
+	// Sound
+	PlaySound	InformationPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #WelcomeInformationTitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #WelcomeInformation2]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: 8000, #name: "HideStatus", #event: "HideStatus"]
+	// Setvalue	
+	SetValue		[#WelcomeMessage: FALSE]	
+	// Slowmo
+	Event	WorldMissionSlowMotion3
+	// Skip shit
+	BindKey		[#key: " ", #event: "SkipStatus"]
+WelcomeInformation2_End
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// INTEL
+//-------------------------------------------------------------------------------------------------------------------------------------------
+IntelCity1_Begin
+	PutMessage	--> IntelCity1
+	// Sound
+	PlaySound	SpecialPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #IntelCity1Title]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #IntelCity1]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Slowmo
+	Event	WorldMissionSlowMotion
+IntelCity1_End
+
+IntelCity2_Begin
+	PutMessage	--> IntelCity2
+	// Sound
+	PlaySound	SpecialPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #IntelCity2Title]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #IntelCity2]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Slowmo
+	Event	WorldMissionSlowMotion
+IntelCity2_End
+
+IntelCity3_Begin
+	PutMessage	--> IntelCity3
+	// Sound
+	PlaySound	SpecialPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #IntelCity3Title]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #IntelCity3]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]	
+	// Slowmo
+	Event	WorldMissionSlowMotion
+IntelCity3_End
+
+IntelCity4_Begin
+	PutMessage	--> IntelCity4
+	// Sound
+	PlaySound	SpecialPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #IntelCity4Title]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #IntelCity4]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Slowmo
+	Event	WorldMissionSlowMotion
+IntelCity4_End
+
+IntelDesert1_Begin
+	PutMessage	--> IntelDesert1
+	// Sound
+	PlaySound	SpecialPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #IntelDesert1Title]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #IntelDesert1]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Slowmo
+	Event	WorldMissionSlowMotion
+IntelDesert1_End
+
+IntelDesert2_Begin
+	PutMessage	--> IntelDesert2
+	// Sound
+	PlaySound	SpecialPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #IntelDesert2Title]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #IntelDesert2]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Slowmo
+	Event	WorldMissionSlowMotion
+IntelDesert2_End
+
+IntelDesert3_Begin
+	PutMessage	--> IntelDesert3
+	// Sound
+	PlaySound	SpecialPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #IntelDesert3Title]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #IntelDesert3]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Slowmo
+	Event	WorldMissionSlowMotion
+IntelDesert3_End
+
+IntelDesert4_Begin
+	PutMessage	--> IntelDesert4
+	// Sound
+	PlaySound	SpecialPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #IntelDesert4Title]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #IntelDesert4]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Slowmo
+	Event	WorldMissionSlowMotion
+IntelDesert4_End
+
+IntelSnow1_Begin
+	PutMessage	--> IntelSnow1
+	// Sound
+	PlaySound	SpecialPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #IntelSnow1Title]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #IntelSnow1]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Slowmo
+	Event	WorldMissionSlowMotion
+IntelSnow1_End
+
+IntelSnow2_Begin
+	PutMessage	--> IntelSnow2
+	// Sound
+	PlaySound	SpecialPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #IntelSnow2Title]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #IntelSnow2]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Slowmo
+	Event	WorldMissionSlowMotion
+IntelSnow2_End
+
+IntelSnow3_Begin
+	PutMessage	--> IntelSnow3
+	// Sound
+	PlaySound	SpecialPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #IntelSnow3Title]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #IntelSnow3]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Slowmo
+	Event	WorldMissionSlowMotion
+IntelSnow3_End
+
+IntelSnow4_Begin
+	PutMessage	--> IntelSnow4
+	// Sound
+	PlaySound	SpecialPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #IntelSnow4Title]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #IntelSnow4]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Slowmo
+	Event	WorldMissionSlowMotion
+IntelSnow4_End
+
+IntelJungle1_Begin
+	PutMessage	--> IntelJungle1
+	// Sound
+	PlaySound	SpecialPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #IntelJungle1Title]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #IntelJungle1]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Slowmo
+	Event	WorldMissionSlowMotion
+IntelJungle1_End
+
+IntelJungle2_Begin
+	PutMessage	--> IntelJungle2
+	// Sound
+	PlaySound	SpecialPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #IntelJungle2Title]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #IntelJungle2]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Slowmo
+	Event	WorldMissionSlowMotion
+IntelJungle2_End
+
+IntelJungle3_Begin
+	PutMessage	--> IntelJungle3
+	// Sound
+	PlaySound	SpecialPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #IntelJungle3Title]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #IntelJungle3]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Slowmo
+	Event	WorldMissionSlowMotion
+IntelJungle3_End
+
+IntelJungle4_Begin
+	PutMessage	--> IntelJungle4
+	// Sound
+	PlaySound	SpecialPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #IntelJungle4Title]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #IntelJungle4]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Slowmo
+	Event	WorldMissionSlowMotion
+IntelJungle4_End
+
+IntelIndustrial1_Begin
+	PutMessage	--> IntelIndustrial1
+	// Sound
+	PlaySound	SpecialPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #IntelIndustrial1Title]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #IntelIndustrial1]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Slowmo
+	Event	WorldMissionSlowMotion
+IntelIndustrial1_End
+
+IntelIndustrial2_Begin
+	PutMessage	--> IntelIndustrial2
+	// Sound
+	PlaySound	SpecialPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #IntelIndustrial2Title]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #IntelIndustrial2]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Slowmo
+	Event	WorldMissionSlowMotion
+IntelIndustrial2_End
+
+IntelIndustrial3_Begin
+	PutMessage	--> IntelIndustrial3
+	// Sound
+	PlaySound	SpecialPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #IntelIndustrial3Title]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #IntelIndustrial3]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Slowmo
+	Event	WorldMissionSlowMotion
+IntelIndustrial3_End
+
+IntelIndustrial4_Begin
+	PutMessage	--> IntelIndustrial4
+	// Sound
+	PlaySound	SpecialPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #IntelIndustrial4Title]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #IntelIndustrial4]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Slowmo
+	Event	WorldMissionSlowMotion
+IntelIndustrial4_End
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// CASHSTASH
+//-------------------------------------------------------------------------------------------------------------------------------------------
+CashStash_Begin
+	PutMessage	--> CashStash
+	// Sound
+	PlaySound	CashStashPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #CashStashInformationTitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #CashStashInformation]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World"]
+	// Delay next event
+	DelayEvent		[#delay: 3000, #name: "HideStatus", #event: "HideStatus"]	
+	// Do it	
+	AddToList	gGame.UPCashStashes	[#value: "{:CollectedItem}", #override: TRUE]
+	MiniCalculator		[#value: #Money, #add: {:CashStash}]
+	SaveData	x	x
+	UpdateMoney	x	x
+	// Slowmo
+	Event	WorldMissionSlowMotionCashStash
+CashStash_End

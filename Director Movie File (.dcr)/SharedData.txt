@@ -1,0 +1,1194 @@
+-- [Text] SharedData
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// Text
+//-------------------------------------------------------------------------------------------------------------------------------------------
+Text_Begin
+	
+	//------------------------
+	// Preloader
+	//------------------------
+	PreLoaderLoadingText	LOADING...
+	PreLoaderFooterLine1Text	BURNIN' RUBBER 4 (C) 2010 GAME CREATED BY XFORM.
+	PreLoaderFooterLine2Text	ALL RIGHTS RESERVED.
+	
+	//------------------------
+	// Stats
+	//------------------------
+	StatsHeaderText	Stats
+	Stats1	Money owned
+	Stats2	Total time played
+	Stats3	Tickets completed
+	Stats4	Special missions
+	Stats5	Cars wrecked
+	Stats6	Enemies wrecked
+	Stats7	Cars unlocked
+	Stats8	Hidden packages found
+	Stats9	Time trials completed
+	Stats10	Rampages completed
+	Stats11	Demolitions completed
+	Stats12	Nuclear detonators
+	Stats13	Landmarks found
+	
+	//------------------------
+	// Trophies
+	//------------------------
+	TrophiesHeaderText	Achievements
+	TrophyHeader1	Wheels On Fire
+	TrophySub1	COMPLETE ALL TICKETS
+	TrophyHeader2	Secret Agent
+	TrophySub2	COMPLETE ALL SPECIAL MISSIONS
+	TrophyHeader3	King Of The Garage
+	TrophySub3	UNLOCK ALL VEHICLES
+	TrophyHeader4	The Treasure Hunter
+	TrophySub4	FIND ALL HIDDEN  PACKAGES
+	TrophyHeader5	Billion Dollar Man
+	TrophySub5	OWN ONE BILLION DOLLARS
+	
+	//------------------------
+	// Options	
+	//------------------------
+	OptionsSFXText	SOUND
+	OptionsEffectsText	EFFECTS
+	OptionsLightmapsText	LIGHTMAPS
+	OptionsBloomText	BLOOM
+	OptionsOn	ON
+	OptionsOff	OFF
+	
+	//------------------------
+	// OverwritePopup
+	//------------------------
+	OverwritePopupLine1	overwrite saved game?
+	OverwritePopupLine2	Warning!
+	OverwritePopupLine3	NO ENTRY
+	OverwritePopupMain	If you continue, you will overwrite your existing saved game.
+	OverwritePopupLeftButton	Cancel
+	OverwritePopupRightButton	Accept
+	
+	//------------------------
+	// General
+	//------------------------
+	MoneyText	0
+	Finished	Finished
+	QuitButtonText    QUIT
+
+	//------------------------
+	// Challenges
+	//------------------------
+	GameModeGoalBattle	Finish   first!
+	GameModeGoalDestroy	Destroy   all   targets!
+	GameModeGoalTrial	Beat   the   clock!
+	
+	//------------------------
+	// Prestige
+	//------------------------
+	PrestigeChallenge	FINISH   UNDER
+	
+	//------------------------
+	// Results (challenges)
+	//------------------------
+	ResultsTicketBigRewardText	PRIZE   MONEY
+	ResultsTicketBigCashBonusText	CASH   BONUS
+	ResultsTicketBigTotalText	TOTAL
+	ResultsUnlockText	NEW CAR UNLOCKED! CHECK YOUR SAFEHOUSE!
+	
+	//------------------------
+	// Results (special mission)
+	//------------------------
+	SpecialMissionGoalHeaderText	MISSION:
+	SpecialMissionRewardHeaderText	REWARD:
+	SpecialMissionUnlockHeaderText	SPECIAL:
+	SpecialMissionAlreadyUnlocked	Special already available
+	SpecialMissionUnlockSpecialMission	Unlocks a new special mission
+	SpecialMissionUnlockArea	Opens a new area
+	SpecialMissionUnlockCar	Unlocks a new car
+	SpecialMissionTank	Want your own tank? Play BR3!
+	
+	//------------------------
+	// Shops
+	//------------------------
+	TotalCostHeaderText	TOTAL COST
+	WeaponShopPrimaryWeaponsText	PRIMARY
+	WeaponShopSecondaryWeaponsText	SECONDARY
+	SafeHouseCarStatsText	STATISTICS
+	NoCharge	NO CHARGE!
+	
+	//------------------------
+	// Limitations
+	//------------------------
+	ChallengeOnlyTitle	Challenge - Problem
+	ChallengeOnlyByCar	This challenge can only be played by car.
+	ChallengeOnlyByBoat	This challenge can only be played by boat.
+	ChallengeOnlyByHelicopter	This challenge can only be played by helicopter.
+	
+	//------------------------
+	// TimeTrials
+	//------------------------
+	TimeTrialCityATitle	Time Trial - The City
+	TimeTrialCityAGoal	Complete the City Time Trial before the counter reaches zero!  Follow the markers on your minimap! The reward is $15,000!  Go!!!
+	TimeTrialCityASucces	Success! You completed the City Time Trial! You get $15,000! Good job!
+	TimeTrialCityADefeat	You failed to complete the Time Trial before time ran out! Learn your way around and try again!
+	
+	TimeTrialDesertTitle	Time Trial - Big Rock
+	TimeTrialDesertGoal	Complete the Big Rock Time Trial before the counter reaches zero! Follow the markers on your minimap! The reward is $15,000! Go!!!
+	TimeTrialDesertSucces	Success! You completed the Big Rock Time Trial! You get $15,000! Nice!
+	TimeTrialDesertDefeat	You failed to complete the Time Trial before time ran out! Try again, you can do it!
+	
+	TimeTrialSnowTitle	Time Trial - Snow Peak
+	TimeTrialSnowGoal	Complete the Snow Peak Time Trial before the counter reaches zero! Follow the markers on your minimap! The reward is $15,000! Go!!!
+	TimeTrialSnowSucces	Success! You completed the Snow Peak Time Trial! You get $15,000! DonÂ´t spend it all in one place!
+	TimeTrialSnowDefeat	You failed to complete the Time Trial before time ran out! Come back later to try again!
+	
+	TimeTrialJungleATitle	Time Trial - Around The Island
+	TimeTrialJungleAGoal	Complete the Around The Island Time Trial before the counter reaches zero! Follow the markers on your minimap! The reward is $15,000! Go!!!
+	TimeTrialJungleASucces	Success! You completed the Around The Island Time Trial! You get $15,000! Not bad!
+	TimeTrialJungleADefeat	You failed to complete the Time Trial before time ran out! Try again!
+
+	TimeTrialJungleBTitle	Time Trial - The Jungle
+	TimeTrialJungleBGoal	Complete the Jungle Time Trial before the counter reaches zero! Follow the markers on your minimap! The reward is $15,000! Go!!!
+	TimeTrialJungleBSucces	Success! You completed the Jungle Time Trial! You get $15,000! More money to burn!
+	TimeTrialJungleBDefeat	You failed to complete the Time Trial before time ran out! You can do better than that!
+	
+	TimeTrialIndustrialATitle	Time Trial - The Docks By Car
+	TimeTrialIndustrialAGoal	Complete the The Docks By Car Time Trial before the counter reaches zero! Follow the markers on your minimap! The reward is $15,000! Go!!!
+	TimeTrialIndustrialASucces	Success! You completed the The Docks By Car Time Trial! You get $15,000! Not bad!
+	TimeTrialIndustrialADefeat	You failed to complete the Time Trial before time ran out! Try again!
+	
+	TimeTrialIndustrialBTitle	Time Trial - The Docks By Boat
+	TimeTrialIndustrialBGoal	Complete the The Docks By Boat Time Trial before the counter reaches zero! Follow the markers on your minimap! The reward is $15,000! Go!!!
+	TimeTrialIndustrialBSucces	Success! You completed the The Docks By Boat Time Trial! You get $15,000! Not bad!
+	TimeTrialIndustrialBDefeat	You failed to complete the Time Trial before time ran out! Try again!
+	
+	TimeTrialIndustrialCTitle	Time Trial - The Docks By Helicopter
+	TimeTrialIndustrialCGoal	Complete the The Docks By Helicopter Time Trial before the counter reaches zero! Follow the markers on your minimap! The reward is $15,000! Go!!!
+	TimeTrialIndustrialCSucces	Success! You completed the The Docks By Helicopter Time Trial! You get $15,000! Not bad!
+	TimeTrialIndustrialCDefeat	You failed to complete the Time Trial before time ran out! Try again!
+	
+	//------------------------
+	// Demolitions
+	//------------------------
+	DemolitionCityATitle	Demolition - The City
+	DemolitionCityAGoal	Deliver C4 packages to the red dots marked on your minimap before the timer reaches zero! The reward is $15,000! Go!!!
+	DemolitionCityASucces	Success! You did it! You get $15,000! Complete all demolitions for a special prize!
+	DemolitionCityADefeat	You failed to deliver the C4 on time! Try again later!
+	
+	DemolitionDesertTitle	Demolition - Big Rock
+	DemolitionDesertGoal	Deliver C4 packages to the red dots marked on your minimap before the timer reaches zero! The reward is $15,000! Go!!!
+	DemolitionDesertSucces	Success! You did it! You get $15,000! Nice!
+	DemolitionDesertDefeat	You failed to deliver the C4 on time! Bad luck!
+	
+	DemolitionSnowTitle	Demolition - Snow Peak
+	DemolitionSnowGoal	Deliver C4 packages to the red dots marked on your minimap before the timer reaches zero! The reward is $15,000! Go!!!
+	DemolitionSnowSucces	Success! You did it! You get $15,000! Good job!
+	DemolitionSnowDefeat	You failed to deliver the C4 on time! Come back later to try again!
+	
+	DemolitionJungleATitle	Demolition - The Jungle
+	DemolitionJungleAGoal	Deliver C4 packages to the red dots marked on your minimap before the timer reaches zero! The reward is $15,000! Go!!!
+	DemolitionJungleASucces	Success! You did it! You get $15,000! Great!
+	DemolitionJungleADefeat	You failed to deliver the C4 on time! Too bad!
+	
+	DemolitionIndustrialATitle	Demolition - The Docks
+	DemolitionIndustrialAGoal	Deliver C4 packages to the red dots marked on your minimap before the timer reaches zero! The reward is $15,000! Go!!!
+	DemolitionIndustrialASucces	Success! You did it! You get $15,000! Great!
+	DemolitionIndustrialADefeat	You failed to deliver the C4 on time! Too bad!
+	
+	DemolitionIndustrialBTitle	Demolition - The Docks
+	DemolitionIndustrialBGoal	Deliver C4 packages to the red dots marked on your minimap before the timer reaches zero! The reward is $15,000! Go!!!
+	DemolitionIndustrialBSucces	Success! You did it! You get $15,000! Great!
+	DemolitionIndustrialBDefeat	You failed to deliver the C4 on time! Too bad!
+	
+	DemolitionIndustrialCTitle	Demolition - The Docks
+	DemolitionIndustrialCGoal	Deliver C4 packages to the red dots marked on your minimap before the timer reaches zero! The reward is $15,000! Go!!!
+	DemolitionIndustrialCSucces	Success! You did it! You get $15,000! Great!
+	DemolitionIndustrialCDefeat	You failed to deliver the C4 on time! Too bad!
+	
+	//-----------------------
+	// Rampages
+	//------------------------
+	RampageCity1Title	Rampage - Taxi Mayhem
+	RampageCity1Goal	Destroy 15 Taxis before the timer reaches zero! They are marked on your minimap. The reward is $15,000! Go!!!
+	RampageCity1Succes	Success! You did it! You get $15,000! You can put that money to good use!
+	RampageCity1Defeat	You failed to destroy 15 Taxis in time! Check your minimap to find them!
+	
+	RampageDesert1Title	Rampage - Ammo Crate Catastrophe
+	RampageDesert1Goal	Destroy 40 Ammo Crates before the timer reaches zero! The reward is $15,000! Go!!!
+	RampageDesert1Succes	Success! You did it! You get $15,000! ThatÂ´s not bad!
+	RampageDesert1Defeat	You failed to destroy 40 Ammo Crates in time! Better luck next time!
+
+	RampageSnow1Title	Rampage - Red Barrel Blow Up
+	RampageSnow1Goal	Destroy 25 Red Barrels before the timer reaches zero! The reward is $15,000! Go!!!
+	RampageSnow1Succes	Success! You did it! You get $15,000! Great job!
+	RampageSnow1Defeat	You failed to destroy 25 Red Barrels in time! Bad luck!
+
+	RampageJungle1Title	Rampage - Gas Tank Terror
+	RampageJungle1Goal	Destroy 10 Gas Tanks before the timer reaches zero! The reward is $15,000! Go!!!
+	RampageJungle1Succes	Success! You did it! You get $15,000! Good work!
+	RampageJungle1Defeat	You failed to destroy 10 Gas Tanks in time! Try again!
+	
+	RampageIndustrialATitle	Rampage - Red Barrel Blow Up
+	RampageIndustrialAGoal	Destroy 30 Red Barrels before the timer reaches zero! The reward is $15,000! Go!!!
+	RampageIndustrialASucces	Success! You did it! You get $15,000! Good work!
+	RampageIndustrialADefeat	You failed to destroy 30 Red Barrels in time! Try again!
+	
+	RampageIndustrialBTitle	Rampage - Sea Mine Savior
+	RampageIndustrialBGoal	Destroy 20 Sea Mines before the timer reaches zero! The reward is $15,000! Go!!!
+	RampageIndustrialBSucces	Success! You did it! You get $15,000! Good work!
+	RampageIndustrialBDefeat	You failed to destroy 20 Sea Mines in time! Try again!
+
+	RampageIndustrialCTitle	Rampage - Uncle SAM Site
+	RampageIndustrialCGoal	Destroy 5 SAM Sites before the timer reaches zero! The reward is $15,000! Go!!!
+	RampageIndustrialCSucces	Success! You did it! You get $15,000! Good work!
+	RampageIndustrialCDefeat	You failed to destroy 5 SAM Sites in time! Try again!
+	
+	//------------------------
+	// Information
+	//------------------------
+	InformationDefaultTitle	Information
+	SafeHouseInformationTitle	Information - Safe House
+	SafeHouseInformation	View and select the vehicles you have unlocked here. Come back here regularly to save your progress!
+	TicketMasterInformationTitle	Information - Ticket Office
+	TicketMasterInformation	To play new challenges, you need to collect Tickets and Boss Tickets. Tickets are scattered around the world! Find some, and come back here to play them!
+	SprayShopInformationTitle	Information - Spray Shop
+	SprayShopInformation	Choose a hot new paint job for your car here. As always, this comes at a price.
+	TuneShopInformationTitle	Information - Tune Shop
+	TuneShopInformation	Here you can tune the performance of your car and increase the amount of ammo you can carry!
+	WeaponShopInformationTitle	Information - Weapon Shop	
+	WeaponShopInformation	Press the Z and X keys to use your primary and secondary weapons. If you have enough money, you can buy the coolest weapons for your cars here!
+	HelicopterInformationTitle	Information - Helicopter
+	HelicopterInformation	Fly the helicopter using the ARROW keys. Press SPACE to fly up and SHIFT to fly down. Search and destroy like normal! Watch out for SAM Sites!
+
+	//------------------------
+	// Ticket information
+	//------------------------
+	TicketInformationTitle	Information - Ticket
+	TicketInformation	You've found a Ticket! Now, let's drive to the Ticket Office (the round yellow icon on your minimap) to start a Challenge! Or, drive to the Daily Challenge (the yellow star icon) to try today's daily race.
+	
+	//------------------------
+	// Cash stash information
+	//------------------------
+	CashStashInformationTitle	Information - Cash Stash
+	CashStashInformation	You've found a hidden Cash Stash and received $50,000! Find them all!
+	
+	//------------------------
+	// Landmark information
+	//------------------------
+	LandmarkInformationTitle	Information - Landmark
+	LandmarkInformation	You've revealed a Burnin' Rubber 4 Landmark! Find one in each area!
+	
+	//------------------------
+	// Tank information
+	//------------------------
+	TankInformationTitle	Information - Tank
+	TankInformation	Thanks for playing and finishing Burnin' Rubber 3! As a reward the Tank is available in your Safe House!
+	
+	//-----------------------------
+	// World challenges information
+	//-----------------------------
+	TimeTrialInformationTitle	Information - Time Trial	
+	TimeTrialInformation	Pick up the special Time Trial icons that are scattered around the world to test your racing skills!
+	DemolitionInformationTitle	Information - Demolition	
+	DemolitionInformation	Pick up the special Demolition icons that are scattered around the world for an explosive challenge!
+	RampageInformationTitle	Information - Rampage	
+	RampageInformation	Pick up the special Rampage icons for an adrenaline-pumping challenge!
+
+	//--------------------------
+	// Weapon shop unavailable
+	//--------------------------
+	WeaponShopUnavailableTitle	Weapon Shop - Problem
+	WeaponShopUnavailable	You cannot change the weapons setup for this vehicle.
+	
+	//------------------------------------------------------------------------------------
+	// If a player has not met the requirements for a special mission, we should display...
+	//------------------------------------------------------------------------------------
+	SpecialMissionUnavailableTitle	Special Mission - Problem
+	// As a texts, the SpecialMissionNameRequirements should be displayed (see below)
+
+	//------------------------
+	// Welcome information
+	//------------------------
+	WelcomeInformationTitle	Welcome to BR4 - Game of the Year Edition!
+	WelcomeInformation	Complete all challenges to become the ultimate racing mercenary! Unlock and pimp out lots of cars, become filthy rich, and uncover all hidden secrets!
+	WelcomeInformation2	Welcome back! Make sure to check out The Docks, show the world your skills in the Daily Challenge or impress yourself with the new Prestige target time for each ticket challenge! Watch out for the police and mounted weapons!
+
+	//------------------------
+	// Worlds information
+	//------------------------
+	CityInformationTitle	Information - The City
+	CityInformation	The fastest and most explosive place on earth! First, drive to your Safe House, which is marked with a Blue House Icon on your minimap. Use the Arrow Keys to steer and Shift to drift.
+	DesertInformationTitle	Information - Big Rock
+	DesertInformation	Welcome to Big Rock! Be sure to explore the abandoned military base to the south!
+	SnowInformationTitle	Information - Snow Peak
+	SnowInformation	Welcome to Snow Peak! Watch out for avalanches! Use of explosives is prohibited!
+	JungleInformationTitle	Information - The Jungle
+	JungleInformation	Welcome to the Jungle! It gets worse here every day. Don't forget to visit the oil rig by boat!
+	IndustrialInformationTitle	Information - The Docks
+	IndustrialInformation	Welcome to the The Docks! Explore this world by car, boat and... helicopter! There are time trials, demolitions and rampages for each vehicle!
+	
+	//------------------------
+	// Intel
+	//------------------------
+	IntelDefaultTitle	Intel
+	IntelDefault	Intel
+	IntelCity1Title	Intel - Unlock Special Vehicle
+	IntelCity1	Players that have completed Burnin' Rubber 3 have an explosive advantage in this game!
+	IntelCity2Title	Intel - Time Trials
+	IntelCity2	Complete all Time Trials in the game to get Tune Shop upgrades for free!
+	IntelCity3Title	Intel - Ramps
+	IntelCity3	Try to find ramps that take you to the tops of buildings to find secret items!
+	IntelCity4Title	Intel - End Boss
+	IntelCity4	Find and clear all Tickets to reveal the End Boss mission!
+	IntelDesert1Title	Intel - Ticket Challenges
+	IntelDesert1	Clear all Tickets in the game to unlock unlimited Primary Weapon ammo!
+	IntelDesert2Title	Intel - Rampages
+	IntelDesert2	Complete all Rampage challenges to get Spray Shop paint jobs for free!
+	IntelDesert3Title	Intel - Cash Stashes
+	IntelDesert3	Try to find all hidden Cash Stashes. There are quite a few in each area! You can put the money to good use in the shops.
+	IntelDesert4Title	Intel - Burnin' Rubber 4
+	IntelDesert4	The official tribute to Burnin' Rubber 3.
+	IntelSnow1Title	Intel - Hidden Packages
+	IntelSnow1	There are Hidden Packages to be found on every track that you play at the Ticket Office! Collect them all to get a special bonus!
+	IntelSnow2Title	Intel - Demolitions
+	IntelSnow2	Complete all Demolition challenges to get Weapon Shop items for free!
+	IntelSnow3Title	Intel - Nuclear Detonators
+	IntelSnow3	There are special Nuclear Detonators scattered around the world. Just pick them up for a real BOOOOM! Can you find them all?
+	IntelSnow4Title	Intel - Credits
+	IntelSnow4	Burnin' Rubber 4 was created by Xform in 2010.
+	IntelJungle1Title	Intel - Special Missions
+	IntelJungle1	Complete all Special Missions in the game to unlock unlimited Secondary Weapon ammo!
+	IntelJungle2Title	Intel - Nuclear Detonators
+	IntelJungle2	Collect all Nuclear Detonators to enhance the Armor on all your cars!
+	IntelJungle3Title	Intel - Landmarks
+	IntelJungle3	If you have revealed a Burnin' Rubber 4 Landmark in all 5 areas, you can use the 1, 2, 3, 4 and 5 keys to teleport to each Safe House!
+	IntelJungle4Title	Intel - Trophy
+	IntelJungle4	A keyboard key might speed things up permanently if you have found the trophy!
+	IntelIndustrial1Title	Intel - Prestige
+	IntelIndustrial1	Show your mad Burnin' Rubber skills in finishing each challenge under its prestige time!
+	IntelIndustrial2Title	Intel - Daily Challenges
+	IntelIndustrial2	Come back for a new challenge each day! Can you achieve eternal glory as number 1 in the high score listing?
+	IntelIndustrial3Title	Intel - Mounted weapons
+	IntelIndustrial3	Chances are you already encountered the new mounted weapons. Very dangerous, but destroying them can be worth the risk!
+	IntelIndustrial4Title	Intel - Armored traffic
+	IntelIndustrial4	Traffic can be armed nowadays! Don't provoke the police or the armored truck! It can be worth it though...
+	
+	//------------------------
+	// Daily challenge
+	//------------------------
+	DailyChallengeTitle	Daily Challenge
+	DailyChallengeStory	Push your skills to the max in this daily challenge! There is a different challenge each day!
+	DailyChallengeGoal	Push your skills to the max in this daily challenge! Finish first!
+	DailyChallengeMission	Finish first!
+	DailyChallengeGoalHeaderText	CHALLENGE:
+	DailyChallengeRewardHeaderText	REWARD:
+	DailyChallengeUnlockHeaderText	LAST TIME:
+	DailyChallengeNotPlayed	NOT AVAILABLE
+
+	//------------------------
+	// Special Missions
+	//------------------------
+	SpecialMissionBridgeTitle	The Bridge Trial
+	SpecialMissionBridgeStory	Push your driving skills to the max in this explosive bridge challenge! Clearing this mission will unlock the Big Rock area and a new car!
+	SpecialMissionBridgeGoal	Push your driving skills to the max in this explosive bridge challenge! Finish before time runs out!
+	SpecialMissionBridgeMission	Finish before time runs out!
+	SpecialMissionBridgeRequirements	This Special Mission will unlock the Big Rock area and a new car! You need to have cleared 3 Tickets before starting this Special Mission! Check the top right of the screen.
+
+	SpecialMissionTunnelTitle	The Tunnel Trial
+	SpecialMissionTunnelStory	Are you fast enough to finish this tunnel track before time runs out? Clearing this mission will unlock the Snow Peak area and a new car!
+	SpecialMissionTunnelGoal	Are you fast enough to finish this tunnel track before time runs out? Finish before time runs out!
+	SpecialMissionTunnelMission	Finish before time runs out!
+	SpecialMissionTunnelRequirements	This Special Mission will unlock the Snow Peak area and a new car! You need to have cleared 7 Tickets before starting this Special Mission! Check the top right of the screen.
+	
+	SpecialMissionDockTitle	The Dock Trial
+	SpecialMissionDockStory	Make your way through this sandy obstacle course before time runs out. Clearing this mission will unlock the Jungle area and a new car!
+	SpecialMissionDockGoal	Make your way through this sandy obstacle course before time runs out. Finish before time runs out!
+	SpecialMissionDockMission	Finish before time runs out!
+	SpecialMissionDockRequirements	This Special Mission will unlock the Jungle area and a new car! You need to have cleared 10 Tickets before starting this Special Mission! Check the top right of the screen.
+
+	SpecialMissionConvoyTitle	Convoy
+	SpecialMissionConvoyStory	It's payback time! Fly a Coyote helicopter and destroy a convoy of tanks! Clearing this mission will unlock the next Special Mission.
+	SpecialMissionConvoyGoal	Watch out for SAM sites! Use the ARROW KEYS to STEER, use SHIFT to BRAKE! Destroy 3 tanks before time runs out!
+	SpecialMissionConvoyMission	Destroy 3 tanks before time runs out!
+	SpecialMissionConvoyRequirements	You need to have cleared 5 Tickets before starting this Special Mission!
+	
+	SpecialMissionDogfightTitle	Dogfight
+	SpecialMissionDogfightStory	Roam the skies in a dogfight! Take down 3 bogies before time runs out. Clearing this mission will unlock the next Special Mission.
+	SpecialMissionDogfightGoal	Use the ARROW KEYS to STEER, use SHIFT to BRAKE! Destroy all 3 bogies before time runs out!
+	SpecialMissionDogfightMission	Destroy 3 bogies before time runs out!
+	SpecialMissionDogfightRequirements	You need to have cleared 7 Tickets before starting this Special Mission!
+	
+	SpecialMissionAC130Title	Angel Of Death
+	SpecialMissionAC130Story	Fly a jet and destroy the monster of all airplanes! Beware: its armor is very tough! Clearing this mission will unlock a new car!
+	SpecialMissionAC130Goal	Use the ARROW KEYS to STEER, use SHIFT to BRAKE! Destroy the bomber before time runs out!
+	SpecialMissionAC130Mission	Destroy the bomber before time runs out!
+	SpecialMissionAC130Requirements	This Special Mission will unlock a new car! You need to have cleared 9 Tickets before starting this Special Mission!
+	
+	SpecialMissionSpeedBoatTitle	The Great Powerboat Race
+	SpecialMissionSpeedBoatStory	Have you ever wanted to race in a superfast powerboat? Well, here's your chance! Clearing this mission will unlock the next Special Mission.
+	SpecialMissionSpeedBoatGoal	Stay ahead of the competition and watch out for SEA MINES! Finish first to win the race!
+	SpecialMissionSpeedBoatMission	Finish first to win the race!
+	SpecialMissionSpeedBoatRequirements	You need to have cleared 12 Tickets before starting this Special Mission!
+	
+	SpecialMissionCoastGuardTitle	Outrun The Coast Guard
+	SpecialMissionCoastGuardStory	The coast guard is on your tail! Try to shake them off! Clearing this mission will unlock the next Special Mission.
+	SpecialMissionCoastGuardGoal	Don't crash into the rocks! Watch out for those SEA MINES! Finish first to make your getaway!
+	SpecialMissionCoastGuardMission	Finish first to make your getaway!
+	SpecialMissionCoastGuardRequirements	This Special Mission will unlock a new car! You need to have cleared 14 Tickets before starting this Special Mission!
+	
+	SpecialMissionStealthTitle	Operation Stealth
+	SpecialMissionStealthStory	Take out these extreme hard targets! Warning! They are armed to the teeth! Clearing this mission will unlock a new car!
+	SpecialMissionStealthGoal	Take out these extreme hard targets! Warning! They are armed to the teeth! Destroy all three targets before time runs out!
+	SpecialMissionStealthMission	Destroy all three targets before time runs out!
+	SpecialMissionStealthRequirements	This Special Mission will unlock a new car! You need to have cleared 16 Tickets before starting this Special Mission!
+		
+	SpecialMissionTaxiTitle	Taxi Battle
+	SpecialMissionTaxiStory	Your tour of destruction upset the local cabbies. Show them who's boss. Clearing this mission will unlock a new car!
+	SpecialMissionTaxiGoal	Your tour of destruction upset the local cabbies. Show them who's boss. Finish first to win the race!
+	SpecialMissionTaxiMission	Finish first to win the race!
+	SpecialMissionTaxiRequirements	This Special Mission will unlock a new car! You need to have cleared 1 Ticket before starting this Special Mission! Check the top right of the screen.
+	
+	SpecialMissionPoliceTitle	Police Battle
+	SpecialMissionPoliceStory	The cops are on to you! Shake them off before they blow you away! Clearing this mission will unlock a new car!
+	SpecialMissionPoliceGoal	The cops are on to you! Shake them off before they blow you away! Finish first to win the race!
+	SpecialMissionPoliceMission	Finish first to win the race!
+	SpecialMissionPoliceRequirements	This Special Mission will unlock a new car! You need to have cleared 2 Tickets before starting this Special Mission! Check the top right of the screen.
+
+	SpecialMissionTankTitle	Tank Busting
+	SpecialMissionTankStory	In this area, there are 3 snow tanks out to get you! They are extremely tough so hit them with everything you've got!
+	SpecialMissionTankGoal	There are 3 tanks out to get you! Destroy all three targets before time runs out!
+	SpecialMissionTankMission	Destroy all three targets before time runs out!
+	SpecialMissionTankRequirements	You need to have cleared 15 Tickets before starting this Special Mission!
+	
+	//------------------------
+	// Boss End
+	//------------------------
+	BossEndTitle	The End
+	BossEndStory	Congratulations! You've managed to make it this far! Can you clear this final stage to beat the game?
+	BossEndGoal	This is it! Clear this final stage to beat the game! Destroy the robot to unlock it!
+	BossEndMission	Destroy the robot before time runs out!
+	BossEndRequirements	You need to have cleared 36 Tickets before starting this challenge!
+	
+	//------------------------
+	// Event Challenges
+	//------------------------
+	StreetLife1Title	Easy Street
+	StreetLife1Goal	You should be able to win if you give it your best. Remember, use Shift to drift through corners. Finish first!
+	
+	StreetLife2Title	The Hard Way
+	StreetLife2Goal	These opponents are packing some more heat. Don't let them get too close or they'll get you. Finish first!
+
+	RoadWarrior1Title	Road Of Destiny
+	RoadWarrior1Goal	Explore the sides of the road to find hidden ramps and pickups. Finish first!
+
+	RoadWarrior2Title	Path Of Destruction
+	RoadWarrior2Goal	Be sure to finish off the competition when they get in your way! Finish first!
+
+	RushHour1Title	Speed
+	RushHour1Goal	Keep up with the competition. Try to set the sharpest time possible for this track. Finish first!
+
+	RushHour2Title	Traffic Jam
+	RushHour2Goal	Make your way through the city as fast as you can, without the help of ammo and repair pickups. Finish first!
+
+	UrbanChaos1Title	Neighborhood Brawl
+	UrbanChaos1Goal	This city is under siege! Be sure to bring enough weapons to teach your opponents a lesson. Finish first!
+
+	UrbanChaos2Title	Inner City Warzone
+	UrbanChaos2Goal	This track is a real warzone! You're defintely going to have some trouble taking down these red speedsters. Finish first!
+	
+	OperationSandStorm1Title	Bite The Dust
+	OperationSandStorm1Goal	Get ready for this blazing hot desert race. If you keep an eye out for nitro pickups, you might have a chance. Finish first!
+
+	OperationSandStorm2Title	Eye Of The Storm
+	OperationSandStorm2Goal	You need to drive like crazy to stay ahead of these green guys. Finish first!
+
+	AreaOne1Title	Perimeter Rally
+	AreaOne1Goal	Show these guys who's best when it comes down to pure driving skills. Finish first!
+
+	AreaOne2Title	Restricted
+	AreaOne2Goal	Nothing beats a good tour of destruction on a hot day! Finish first!
+	
+	HardBoiled1Title	Tequila Gunfight
+	HardBoiled1Goal	Don't forget to bring some proper firepower to this race. You'll need it. Finish first!
+
+	HardBoiled2Title	Reloaded
+	HardBoiled2Goal	Bring your fastest racing car to this desert challenge. Finish first!
+	
+	RedCanyon1Title	The Great Gorge
+	RedCanyon1Goal	Beware of some big explosions in this mountain race. Finish first!
+
+	RedCanyon2Title	Desert Truckers
+	RedCanyon2Goal	The caltrops could cause some real fireworks! Once you steer clear of the trucks, you'll be fine. Finish first!
+	
+	Blizzard1Title	Frost
+	Blizzard1Goal	Try your luck in the snow against three blazing-fast red rally cars! Finish first!
+
+	Blizzard2Title	Storm
+	Blizzard2Goal	Now let's see how you cope without the ammo and repair pickups on the track. Finish first!
+
+	Flake1Title	Snow Trail
+	Flake1Goal	Have fun on this crazy mountain track! Finish first!
+
+	Flake2Title	Tracks
+	Flake2Goal	Revisit the Flake track for an even harder challenge. Watch out for those mines and caltrops! Finish first!
+	
+	MountDoom1Title	One Way Ticket
+	MountDoom1Goal	Bring the fastest car you have to compete in this thrilling climb up Mount Doom! Finish first!
+
+	MountDoom2Title	Back To Mount Doom
+	MountDoom2Goal	You need to climb the mountain once more, this time facing three vicious trucks! Finish first!
+
+	Avalanche1Title	Avalanche Part 1
+	Avalanche1Goal	Prepare yourself for a big battle in the snow. Finish first!
+
+	Avalanche2Title	Avalanche Part 2
+	Avalanche2Goal	More snow mayhem! This time, try to avoid those caltrops! Finish first!
+	
+	SuperOffroad1Title	Offroad
+	SuperOffroad1Goal	Try this offroad drive through the jungle for a change! You might get your feet wet! Finish first!
+
+	SuperOffroad2Title	Offroad Extreme
+	SuperOffroad2Goal	More offroad action, only harder! Finish first!
+
+	ClubBaja1Title	Day At The Beach
+	ClubBaja1Goal	You will have to keep the pedal to the metal in this tropical beach race! Finish first!
+
+	ClubBaja2Title	Baja Imperial
+	ClubBaja2Goal	Same race as before, only now the competition has faster cars! Finish first!
+	
+	MudRace1Title	Dirt Road
+	MudRace1Goal	What a great day for a drive. If you aren't fast enough, you risk burning your behind! Finish first!
+
+	MudRace2Title	Mud Mania
+	MudRace2Goal	If you enjoy driving through caltrops, this is the track for you! You'd better outrun those trucks! Finish first!
+	
+	Vulcano1Title	Outbreak
+	Vulcano1Goal	Welcome to this first taste of hell! Warning: Now is not the time to be too trigger-happy. Finish first!
+
+	Vulcano2Title	Inferno
+	Vulcano2Goal	Haven't had enough? Try the Volcano track again-- now it's even harder. Finish first!
+	
+	//------------------------
+	// Boss Challenges
+	//------------------------
+	BossCityTitle	Miami Boulevard
+	BossCityGoal	Get ready for a hot pursuit! Destroy Don before time runs out! His car is low, so adjust your aim! The winner takes his ViceV80!
+
+	BossDesertTitle	Route 66
+	BossDesertGoal	Destroy Russell before time runs out! He's got a very tough truck, so hit him with everything you've got. Watch out for those mines!
+
+	BossSnowTitle	Summit
+	BossSnowGoal	The Fox has special armor plating that makes it almost impossible to destroy! And it's fast, too! Destroy Arnold before time runs out!
+	
+	BossJungleTitle	Monster Mayhem
+	BossJungleGoal	If you want to be the next owner of that monster truck, destroy Big Pete before time runs out! Luckily, he's not a very good driver!	
+Text_End
+
+TextStyle_Begin
+	//---------------------
+	// Preloader
+	//---------------------
+	PreloaderLoading	[#fontSize: 18, #align: #center, #color: #white, #fontStyle: #bold, #filters:[]]
+	PreLoaderFooter	[#fontSize: 9, #align: #center, #color: #white, #fontStyle: #bold, #filters:[]]	
+	PreLoaderPercentage	[#font: #Bebas, #fontSize: 14, #align: #left, #fontStyle: #bold, #color: #white, #kerning: 1, #filters: [#PreloaderDropShadow]]
+	
+	//---------------------
+	// Money
+	//---------------------
+	Money	[#font: #Bebas, #fontSize: 24, #align: #right, #color: #white, #fontStyle: #bold, #resize: TRUE, #filters:[]]
+	
+	//---------------------	
+	// Status (MISC)
+	//---------------------
+	StatusTitle	[#font: #Bebas, #fontSize: 24, #align: #center, #color: #white, #resize: TRUE, #filters:[]]
+	StatusBody	[#font: #ArialBlack, #fontSize: 16, #align: #center, #color: #black, #wrap: TRUE, #alignV: FALSE, #filters:[]]
+	
+	//---------------------
+	// Status (Challenges)
+	//---------------------
+	ChallengeTitle	[#font: #Bebas, #fontSize: 24, #align: #center, #color: #white, #resize: TRUE, #filters:[]]
+	ChallengeBody	[#font: #ArialBlack, #fontSize: 16, #align: #center, #color: #black, #wrap: TRUE, #alignV: FALSE, #filters:[]]
+	
+	//---------------------
+	// Results
+	//---------------------
+	ResultsTrackName	[#font: #Bebas, #fontSize: 32, #align: #left, #color: #BrownLight, #resize: TRUE, #filters:[]]
+	ResultsGoal	[#font: #Bebas, #fontSize:20, #align: #left, #color: #black, #wrap: TRUE, #filters:[]]
+	ResultsPrizeMoney	[#font: #Bebas, #fontSize: 20, #align: #left, #color: #black, #resize: TRUE, #filters:[]]
+	ResultsCashBonus	[#font: #Bebas, #fontSize: 20, #align: #left, #color: #black, #resize: TRUE, #filters:[]]
+	ResultsTotal	[#font: #Bebas, #fontSize: 20, #align: #left, #color: #black, #resize: TRUE, #filters:[]]
+	ResultsTotalMoney	[#font: #Bebas, #fontSize: 40, #align: #right, #color: #red, #resize: TRUE, #filters:[]]
+	UnlockedNewCar	[#font: #Bebas, #fontSize: 36, #align: #center, #color: #White, #resize: TRUE, #filters:[]]
+	
+	//------------------------
+	// Results Special Mission
+	//------------------------
+	SpecialMissionTrackName	[#font: #Bebas, #fontSize: 18, #align: #left, #color: #Black, #resize: TRUE, #filters:[]]
+	SpecialMissionDescription	[#font: #ArialBlack, #fontSize: 14, #align: #left, #fontStyle: #bold, #color: #Black, #Wrap: TRUE, #alignV: FALSE, #filters:[]]
+	SpecialMissionGoal	[#font: #Bebas, #fontSize: 18, #align: #left, #color: #Black, #resize: TRUE, #filters:[]]
+	SpecialMissionGoal2	[#font: #ArialBlack, #fontSize: 16, #align: #left, #color: #Red, #resize: TRUE, #filters:[]]
+	SpecialMissionReward	[#font: #Bebas, #fontSize: 18, #align: #left, #color: #Black, #resize: TRUE, #filters:[]]
+	SpecialMissionReward2	[#font: #ArialBlack, #fontSize: 16, #align: #left, #color: #Red, #resize: TRUE, #filters:[]]
+	SpecialMissionSpecial	[#font: #Bebas, #fontSize: 18, #align: #left, #color: #Black, #resize: TRUE, #filters:[]]
+	SpecialMissionSpecial2	[#font: #ArialBlack, #fontSize: 16, #align: #left, #color: #Red, #resize: TRUE, #filters:[]]
+	
+	//---------------------
+	// Mini
+	//---------------------
+	MiniResultsTrackName	[#font: #Bebas, #fontSize: 18, #align: #left, #color: #BrownLight, #resize: TRUE, #filters:[]]
+	MiniResultsGoal	[#font: #Bebas, #fontSize: 16, #align: #left, #color: #red, #wrap: TRUE, #alignV: FALSE, #filters:[]]
+	MiniResultsPrizeMoney	[#font: #Bebas, #fontSize: 30, #align: #right, #color: #red, #resize: TRUE, #filters:[]]
+	
+	//---------------------
+	// Shops
+	//---------------------
+	SteakShop	[#font: #Steak, #fontSize: 36, #align: #left, #color: #BrownLight, #resize: TRUE, #filters:[]]
+	SteakShop2	[#font: #Steak, #fontSize: 24, #align: #left, #color: #BrownLight, #resize: TRUE, #filters:[]]
+	ShopPrize	[#font: #Bebas, #fontSize: 16, #align: #left, #color: #white, #resize: TRUE, #filters:[#ShopShadow, #ShopGlow]]
+	ShopName	[#font: #Bebas, #fontSize: 16, #align: #left, #color: #white, #resize: TRUE, #filters:[#ShopShadow, #ShopGlow]]
+	SteakWeaponShop	[#font: #Steak, #fontSize: 14, #align: #center, #color: #BrownLight, #resize: TRUE, #filters:[]]
+	SafeHouseStatistics	[#font: #Steak, #fontSize: 28, #align: #left, #color: #BrownLight, #resize: TRUE, #filters:[]]
+	
+	//---------------------
+	// Total costs
+	//---------------------
+	TotalCostsSteakShop	[#font: #Steak, #fontSize: 28, #align: #right, #color: #BrownLight, #resize: TRUE, #filters:[]]
+	TotalCosts	[#font: #Bebas, #fontSize: 40, #align: #right, #color: #Black, #resize: TRUE, #filters:[]]	
+TextStyle_End
+
+TextFont_Begin
+	Bebas	Bebas *
+	Steak	STEAK *
+	ArialBlack	Arial Bold *
+TextFont_End
+
+TextColor_Begin
+	Black	rgb(0, 0, 0)
+	White	rgb(255, 255, 255)
+	Red	rgb(168, 33, 29)
+	BrownLight	rgb(227, 217, 190)
+	
+TextColor_End
+
+TextFilters_Begin
+	ShopShadow	[#DropShadowFilter: [#distance: 2, #angle: 305, #color: rgb(0,0,0), #blurX:1, #blurY:1, #strengthPercent: 65]]
+	ShopGlow	[#glowFilter: [#BlurX:5, #BlurY:5, #quality:2, #color:color(0,0,0), #strengthPercent: 100]]
+	PreloaderDropShadow	[#DropShadowFilter: [#distance: 2, #angle: 305, #color: rgb(0,0,0), #blurX:1, #blurY:1, #strengthPercent: 65]]
+TextFilters_End
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// AmbientStyle
+//-------------------------------------------------------------------------------------------------------------------------------------------
+AmbientStyle_Begin
+	//---------------------
+	// Default
+	//---------------------
+	Default	[#light: "Default", #position: vector(100, 100, 100), #lightColor: rgb(255, 255, 255), #emissive: rgb(0, 0, 0)]
+	
+	//---------------------
+	// Worlds
+	//---------------------	
+	// NIGHT
+	WorldCityNight	[#light: "Sun", #position: vector(2900.0, -1600, 2500.0), #lightColor: rgb(109, 106, 130), #ambientColor: rgb(41, 37, 44), #emissive: rgb(25,25,25)]
+	WorldDesertNight	[#light: "Sun", #position: vector(3500.0, -1300, 3500.0), #lightColor: rgb(183, 113,  86), #ambientColor: rgb(42, 25, 15), #emissive: rgb(20,20,20)]
+	WorldJungleNight	[#light: "Sun", #position: vector(-800.0,  -800, 1600.0), #lightColor: rgb(139, 132, 161), #ambientColor: rgb(46, 59, 64), #emissive: rgb(25,25,25)]
+	WorldSnowNight	[#light: "Sun", #position: vector(2200.0, -1500, 1000.0), #lightColor: rgb(137, 164, 209), #ambientColor: rgb(42, 68,120), #emissive: rgb(20,20,20)]
+	WorldIndustrialNight	[#light: "Sun", #position: vector(3800.0, -1200, 2000.0), #lightColor: rgb(205, 144,  92), #ambientColor: rgb(34, 25, 15), #emissive: rgb(25,25,25)]
+	
+	// DAY
+	WorldCityDay	[#light: "Sun", #position: vector(2000.0, -1500, 3500.0), #lightColor: rgb(255, 255, 255), #ambientColor: rgb(0, 0, 0), #emissive: rgb(89,107,145)]
+	WorldDesertDay	[#light: "Sun", #position: vector(1500.0, -1300, 3500.0), #lightColor: rgb(254, 250, 225), #ambientColor: rgb(0, 0, 0), #emissive: rgb(160, 150, 138)]
+	WorldJungleDay	[#light: "Sun", #position: vector(2000.0, -1500, 3500.0), #lightColor: rgb(231, 228, 221), #ambientColor: rgb(0, 0, 0), #emissive: rgb(133, 123, 96)]
+	WorldSnowDay	[#light: "Sun", #position: vector(1500.0, -1300, 3500.0), #lightColor: rgb(215, 230, 237), #ambientColor: rgb(0, 0, 0), #emissive: rgb(133, 151, 171)]
+	WorldIndustrialDay	[#light: "Sun", #position: vector(2000.0, -1500, 3500.0), #lightColor: rgb(255, 255, 255), #ambientColor: rgb(0, 0, 0), #emissive: rgb(89,107,145)]
+	
+	//---------------------
+	// Tracks
+	//---------------------
+	TrackDark	[#light: "Sun", #position: vector(1500.0, -1300, 3500.0), #lightColor: rgb(0, 0, 0), #ambientColor: rgb(10, 20, 50), #emissive: rgb(0,0,0)]
+	TrackMedium	[#light: "Sun", #position: vector(1500.0, -1125, 1580.0), #lightColor: rgb(215, 230, 237), #ambientColor: rgb(133, 151, 171), #emissive: rgb(0,0,0)]
+	TrackLight	[#light: "Sun", #position: vector(1500.0, -1300, 3500.0), #lightColor: rgb(215, 230, 237), #ambientColor: rgb(200, 200, 200), #emissive: rgb(0,0,0)]
+	TrackCity	[#light: "Sun", #position: vector(1500.0, -1300, 3500.0), #lightColor: rgb(255, 255, 255), #ambientColor: rgb(130, 109, 76), #emissive: rgb(0,0,0)]
+	TrackDesert	[#light: "Sun", #position: vector(1500.0, -1300, 3500.0), #lightColor: rgb(215, 230, 237), #ambientColor: rgb(146, 120, 88), #emissive: rgb(0,0,0)]
+	TrackSnow	[#light: "Sun", #position: vector(1500.0, -1300, 3500.0), #lightColor: rgb(200, 200, 200), #ambientColor: rgb(91, 82, 72), #emissive: rgb(0,0,0)]
+	TrackJungle	[#light: "Sun", #position: vector(1500.0, -1300, 3500.0), #lightColor: rgb(215, 230, 237), #ambientColor: rgb(104, 98, 72), #emissive: rgb(0,0,0)]
+	TrackBossEnd	[#light: "Sun", #position: vector(1500.0, -1300, 3500.0), #lightColor: rgb(255, 255, 255), #ambientColor: rgb(73, 80, 83), #emissive: rgb(0,0,0)]
+	TrackFull	[#light: "Sun", #position: vector(1500.0, -1300, 3500.0), #lightColor: rgb(255, 255, 255), #ambientColor: rgb(255, 255, 255), #emissive: rgb(0,0,0)]
+AmbientStyle_End
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// Camera Sets
+//-------------------------------------------------------------------------------------------------------------------------------------------
+Camera_Begin
+	//---------------------
+	// Default
+	//---------------------
+	Default	[#Fov: 55.0, #nearClip: 1.0, #farClip: 500, #PosSpeed: 0.65, #RotSpeed: 0.13, #IntSpeed: 25, #UpDownLock: TRUE, #offset: vector(0.0, -5.5, 1.55), #rotation: vector(82.0, 0.0, 0.0), #position: vector()]
+	Car	[#Fov: 55.0, #nearClip: 1.0, #farClip: 500, #PosSpeed: 0.65, #RotSpeed: 0.13, #IntSpeed: 25, #UpDownLock: TRUE, #offset: vector(0.0, -5.5, 1.55), #rotation: vector(82.0, 0.0, 0.0), #position: vector()]
+	Boat	[#Fov: 55.0, #nearClip: 1.0, #farClip: 500, #PosSpeed: 0.65, #RotSpeed: 0.13, #IntSpeed: 25, #UpDownLock: TRUE, #offset: vector(0.0, -5.5, 1.55), #rotation: vector(82.0, 0.0, 0.0), #position: vector()]
+	Helicopter	[#Fov: 55.0, #nearClip: 1.0, #farClip: 1500, #PosSpeed: 0.65, #RotSpeed: 0.13, #IntSpeed: 25, #UpDownLock: FALSE, #offset: vector(0.0, -12.0, 5.0), #rotation: vector(72.0, 0.0, 0.0), #position: vector()]
+	
+	//---------------------
+	// Mimic
+	//---------------------
+	MimicHard	[#Fov: 60.0, #nearClip: 1.0, #farClip: 1000, #PosSpeed: 0.65, #RotSpeed: 0.13, #IntSpeed: 100, #UpDownLock: TRUE, #offset: vector(0.0, 0.0, 0.0), #rotation: vector(0.0, 0.0, 0.0), #position: vector()]
+	MimicSoft	[#Fov: 60.0, #nearClip: 1.0, #farClip: 1000, #PosSpeed: 0.65, #RotSpeed: 0.13, #IntSpeed: 25, #UpDownLock: TRUE, #offset: vector(0.0, 0.0, 0.0), #rotation: vector(0.0, 0.0, 0.0), #position: vector()]
+	
+	//---------------------
+	// Cars
+	//---------------------
+	Tank	[#Fov: 55.0, #nearClip: 1.0, #farClip: 500, #PosSpeed: 0.65, #RotSpeed: 0.13, #IntSpeed: 25, #UpDownLock: TRUE, #offset: vector(0.0, -7.5, 2.55), #rotation: vector(82.0, 0.0, 0.0), #position: vector()]
+	Taxi	[#Fov: 55.0, #nearClip: 1.0, #farClip: 500, #PosSpeed: 0.65, #RotSpeed: 0.13, #IntSpeed: 25, #UpDownLock: TRUE, #offset: vector(0.0, -5.5, 1.55), #rotation: vector(82.0, 0.0, 0.0), #position: vector()]
+	Rebel	[#Fov: 55.0, #nearClip: 1.0, #farClip: 500, #PosSpeed: 0.65, #RotSpeed: 0.13, #IntSpeed: 25, #UpDownLock: TRUE, #offset: vector(0.0, -5.5, 1.55), #rotation: vector(82.0, 0.0, 0.0), #position: vector()]
+	Bullet350	[#Fov: 55.0, #nearClip: 1.0, #farClip: 500, #PosSpeed: 0.65, #RotSpeed: 0.13, #IntSpeed: 25, #UpDownLock: TRUE, #offset: vector(0.0, -5.5, 1.55), #rotation: vector(82.0, 0.0, 0.0), #position: vector()]
+	ViceV80	[#Fov: 55.0, #nearClip: 1.0, #farClip: 500, #PosSpeed: 0.65, #RotSpeed: 0.13, #IntSpeed: 25, #UpDownLock: TRUE, #offset: vector(0.0, -5.5, 1.55), #rotation: vector(82.0, 0.0, 0.0), #position: vector()]
+	Fennek	[#Fov: 55.0, #nearClip: 1.0, #farClip: 500, #PosSpeed: 0.65, #RotSpeed: 0.13, #IntSpeed: 25, #UpDownLock: TRUE, #offset: vector(0.0, -5.5, 1.55), #rotation: vector(82.0, 0.0, 0.0), #position: vector()]
+	Hound	[#Fov: 55.0, #nearClip: 1.0, #farClip: 500, #PosSpeed: 0.65, #RotSpeed: 0.13, #IntSpeed: 25, #UpDownLock: TRUE, #offset: vector(0.0, -5.5, 1.55), #rotation: vector(82.0, 0.0, 0.0), #position: vector()]
+	PetiteXs	[#Fov: 55.0, #nearClip: 1.0, #farClip: 500, #PosSpeed: 0.65, #RotSpeed: 0.13, #IntSpeed: 25, #UpDownLock: TRUE, #offset: vector(0.0, -5.5, 1.55), #rotation: vector(82.0, 0.0, 0.0), #position: vector()]
+	PhaserGti	[#Fov: 55.0, #nearClip: 1.0, #farClip: 500, #PosSpeed: 0.65, #RotSpeed: 0.13, #IntSpeed: 25, #UpDownLock: TRUE, #offset: vector(0.0, -5.5, 1.55), #rotation: vector(82.0, 0.0, 0.0), #position: vector()]
+	Police	[#Fov: 55.0, #nearClip: 1.0, #farClip: 500, #PosSpeed: 0.65, #RotSpeed: 0.13, #IntSpeed: 25, #UpDownLock: TRUE, #offset: vector(0.0, -5.5, 1.55), #rotation: vector(82.0, 0.0, 0.0), #position: vector()]
+	Rally7	[#Fov: 55.0, #nearClip: 1.0, #farClip: 500, #PosSpeed: 0.65, #RotSpeed: 0.13, #IntSpeed: 25, #UpDownLock: TRUE, #offset: vector(0.0, -5.5, 1.55), #rotation: vector(82.0, 0.0, 0.0), #position: vector()]
+	BigTruck	[#Fov: 55.0, #nearClip: 1.0, #farClip: 500, #PosSpeed: 0.65, #RotSpeed: 0.13, #IntSpeed: 25, #UpDownLock: TRUE, #UpDownLock: TRUE, #offset: vector(0.0, -9.5, 2.55), #rotation: vector(82.0, 0.0, 0.0), #position: vector()]
+	Sunstorm	[#Fov: 55.0, #nearClip: 1.0, #farClip: 500, #PosSpeed: 0.65, #RotSpeed: 0.13, #IntSpeed: 25, #UpDownLock: TRUE, #offset: vector(0.0, -5.5, 1.55), #rotation: vector(82.0, 0.0, 0.0), #position: vector()]
+	MonsterTruck	[#Fov: 55.0, #nearClip: 1.0, #farClip: 500, #PosSpeed: 0.65, #RotSpeed: 0.13, #IntSpeed: 25, #UpDownLock: TRUE, #offset: vector(0.0, -6.5, 1.55), #rotation: vector(82.0, 0.0, 0.0), #position: vector()]
+	Autobot	[#Fov: 55.0, #nearClip: 1.0, #farClip: 500, #PosSpeed: 0.65, #RotSpeed: 0.13, #IntSpeed: 25, #offset: vector(0.0, -4.5, 2.00), #rotation: vector(82.0, 0.0, 0.0), #position: vector()]
+	
+	//---------------------
+	// Boats
+	//---------------------
+	SpeedBoat	[#Fov: 55.0, #nearClip: 1.0, #farClip: 500, #PosSpeed: 0.65, #RotSpeed: 0.13, #IntSpeed: 25, #UpDownLock: TRUE, #offset: vector(0.0, -5.5, 1.55), #rotation: vector(82.0, 0.0, 0.0), #position: vector()]
+	PoliceBoat	[#Fov: 55.0, #nearClip: 1.0, #farClip: 500, #PosSpeed: 0.65, #RotSpeed: 0.13, #IntSpeed: 25, #UpDownLock: TRUE, #offset: vector(0.0, -5.5, 1.55), #rotation: vector(82.0, 0.0, 0.0), #position: vector()]
+	Zodiac	[#Fov: 55.0, #nearClip: 1.0, #farClip: 500, #PosSpeed: 0.65, #RotSpeed: 0.13, #IntSpeed: 25, #UpDownLock: TRUE, #offset: vector(0.0, -5.5, 1.55), #rotation: vector(82.0, 0.0, 0.0), #position: vector()]
+	Stealth	[#Fov: 55.0, #nearClip: 1.0, #farClip: 500, #PosSpeed: 0.65, #RotSpeed: 0.13, #IntSpeed: 25, #UpDownLock: TRUE, #offset: vector(0.0, -5.5, 1.55), #rotation: vector(82.0, 0.0, 0.0), #position: vector()]
+	
+	//---------------------
+	// Planes
+	//---------------------
+	Apache	[#Fov: 55.0, #nearClip: 1.0, #farClip: 1500, #PosSpeed: 0.65, #RotSpeed: 0.13, #IntSpeed: 25, #UpDownLock: FALSE, #offset: vector(0.0, -12.0, 5.0), #rotation: vector(72.0, 0.0, 0.0), #position: vector()]
+	Spitfire	[#Fov: 55.0, #nearClip: 1.0, #farClip: 500, #PosSpeed: 0.65, #RotSpeed: 0.13, #IntSpeed: 25, #UpDownLock: FALSE, #offset: vector(0.0, -9.0, 2.0), #rotation: vector(82.0, 0.0, 0.0), #position: vector()]
+	F22	[#Fov: 55.0, #nearClip: 1.0, #farClip: 500, #PosSpeed: 0.65, #RotSpeed: 0.13, #IntSpeed: 25, #UpDownLock: FALSE, #offset: vector(0.0, -9.0, 2.0), #rotation: vector(82.0, 0.0, 0.0), #position: vector()]
+	AC130	[#Fov: 55.0, #nearClip: 1.0, #farClip: 500, #PosSpeed: 0.65, #RotSpeed: 0.13, #IntSpeed: 25, #UpDownLock: FALSE, #offset: vector(0.0, -40.0, 2.0), #rotation: vector(82.0, 0.0, 0.0), #position: vector()]
+	
+	//---------------------
+	// Specials
+	//---------------------
+	ExplodingCar	[#Fov: 65.0, #nearClip: 1.0, #farClip: 500, #PosSpeed: 0.65, #RotSpeed: 0.13, #IntSpeed: 25, #UpDownLock: TRUE, #offset: vector(0.0, -10.5, 2.55), #rotation: vector(75.0, 0.0, 0.0), #position: vector()]
+	Backwards	[#Fov: 55.0, #nearClip: 1.0, #farClip: 500, #PosSpeed: 0.85, #RotSpeed: 0.25,  #IntSpeed: 100, #UpDownLock: TRUE, #offset: vector(0.0, 5.5, 2.0), #rotation: vector(82.0, 0.0, 180.0), #position: vector()]
+	Backwards2	[#Fov: 55.0, #nearClip: 1.0, #farClip: 500, #PosSpeed: 0.85, #RotSpeed: 0.25,  #IntSpeed: 100, #UpDownLock: TRUE, #offset: vector(0.0, 11.0, 2.0), #rotation: vector(82.0, 0.0, 180.0), #position: vector()]
+	
+	//---------------------
+	// Compass settings
+	//---------------------
+	CNorth	[#Fov: 55.0, #nearClip: 1.0, #farClip: 500, #PosSpeed: 0.5, #RotSpeed: 0.0325, #IntSpeed: 25, #UpDownLock: TRUE, #offset: vector(0.0, -8.0, 0.6), #rotation: vector(77.0, 0.0, 0.0), #position: vector()]
+	CSouth	[#Fov: 55.0, #nearClip: 1.0, #farClip: 500, #PosSpeed: 0.5, #RotSpeed: 0.0325, #IntSpeed: 25, #UpDownLock: TRUE, #offset: vector(0.0, 12.0, 0.8), #rotation: vector(77.0, 0.0, 180.0), #position: vector()]
+	CWest	[#Fov: 55.0, #nearClip: 1.0, #farClip: 500, #PosSpeed: 0.5, #RotSpeed: 0.0325, #IntSpeed: 25, #UpDownLock: TRUE, #offset: vector(8.0, 0.0, 0.6), #rotation: vector(77.0, 0.0, 90.0), #position: vector()]
+	CEast	[#Fov: 55.0, #nearClip: 1.0, #farClip: 500, #PosSpeed: 0.5, #RotSpeed: 0.0325, #IntSpeed: 25, #UpDownLock: TRUE, #offset: vector(-8.0, 0.0, 0.6), #rotation: vector(77.0, 0.0, -90.0), #position: vector()]
+	
+	//---------------------
+	// Menu
+	//---------------------
+	Menu	[#Fov: 35.0, #nearClip: 1.0, #farClip: 1000, #PosSpeed: 0.85, #RotSpeed: 0.25,  #IntSpeed: 25, #UpDownLock: TRUE, #offset: vector(0.0, -5.5, 804.0), #rotation: vector(0.0, 0.0, 0.0), #position: vector()]
+	Main	[#Fov: 35.0, #nearClip: 1.0, #farClip: 1000, #PosSpeed: 0.85, #RotSpeed: 0.85,  #IntSpeed: 25, #UpDownLock: TRUE, #offset: vector(0.0, -5.5, 640.0), #rotation: vector(0.0, 0.0, 0.0), #position: vector()]
+Camera_End
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// Texture sets
+//-------------------------------------------------------------------------------------------------------------------------------------------
+Texture_Begin
+	//---------------------
+	// Default
+	//---------------------
+	Default	[#brightness: -20, #contrast: 35, #saturation: -100, #hue: 0]
+Texture_End
+
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// Bloom
+//-------------------------------------------------------------------------------------------------------------------------------------------
+Bloom_Begin
+	//---------------------
+	// Default
+	//---------------------
+	Default	[#colorFilter: [#brightness: -55, #contrast: 35, #saturation: 30, #hue: 0], #blur: [#BlurX: 5, #BlurY: 5, #quality: 3], #intensity: 25]	
+	
+	//---------------------
+	// Standard
+	//---------------------
+	Light	[#colorFilter: [#brightness: -100, #contrast: -50, #saturation: -70, #hue: 0], #blur: [#BlurX: 4, #BlurY: 4, #quality: 3], #intensity: 10]
+	Medium	[#colorFilter: [#brightness: -15, #contrast: 10, #saturation: -30, #hue: 0], #blur: [#BlurX: 5, #BlurY: 5, #quality: 2], #intensity: 25]
+	Heavy	[#colorFilter: [#brightness: -15, #contrast: 20, #saturation: -30, #hue: 0], #blur: [#BlurX: 5, #BlurY: 5, #quality: 2], #intensity: 35]
+	
+	//---------------------
+	// Worlds
+	//---------------------
+	WorldCityNight	[#colorFilter: [#brightness: -55, #contrast: 25, #saturation: 25, #hue: 0], #blur: [#blurX: 7, #blurY: 5, #quality: 2], #intensity: 55]
+	WorldSnowNight	[#colorFilter: [#brightness: -85, #contrast: 55, #saturation: 0, #hue: 0], #blur: [#blurX: 5, #blurY: 10, #quality: 2], #intensity: 45]
+	WorldDesertNight	[#colorFilter: [#brightness: -85, #contrast: 35, #saturation: 0, #hue: 0], #blur: [#blurX: 5, #blurY: 10, #quality: 2], #intensity: 45]
+	WorldJungleNight	[#colorFilter: [#brightness: -35, #contrast: 0, #saturation: 35, #hue: 0], #blur: [#blurX: 5, #blurY: 10, #quality: 2], #intensity: 45]
+	WorldIndustrialNight	[#colorFilter: [#brightness: -25, #contrast: 45, #saturation: 0, #hue: 0], #blur: [#blurX: 3, #blurY: 5, #quality: 2], #intensity: 45]
+	
+	WorldCityDay	[#colorFilter: [#brightness: -55, #contrast: 25, #saturation: 25, #hue: 0], #blur: [#blurX: 7, #blurY: 5, #quality: 2], #intensity: 35]
+	WorldSnowDay	[#colorFilter: [#brightness: -85, #contrast: 35, #saturation: 0, #hue: 0], #blur: [#blurX: 5, #blurY: 10, #quality: 2], #intensity: 25]
+	WorldDesertDay	[#colorFilter: [#brightness: -85, #contrast: 35, #saturation: 0, #hue: 0], #blur: [#blurX: 5, #blurY: 10, #quality: 2], #intensity: 35]
+	WorldJungleDay	[#colorFilter: [#brightness: -35, #contrast: 0, #saturation: 35, #hue: 0], #blur: [#blurX: 5, #blurY: 10, #quality: 2], #intensity: 25]
+	WorldIndustrialDay	[#colorFilter: [#brightness: -25, #contrast: 45, #saturation: 0, #hue: 0], #blur: [#blurX: 3, #blurY: 5, #quality: 2], #intensity: 25]	
+Bloom_End
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// Lensflares
+//-------------------------------------------------------------------------------------------------------------------------------------------
+Lensflare_Begin
+	//---------------------
+	// Default
+	//---------------------
+	Default	[#DefaultFlare1, #DefaultFlare2, #DefaultFlare3, #DefaultFlare4, #DefaultFlare5, #DefaultFlare6]
+Lensflare_End
+
+Flares_Begin
+	//---------------------
+	// Default lensflare
+	//---------------------
+	DefaultFlare1	[#texture: "Lensflare3_Texture", #offset: 1.0, #size: 7.5, #color: rgb(255, 255, 255)]
+	DefaultFlare2	[#texture: "Lensflare5_Texture", #offset: 1.0, #size: 3.5, #color: rgb(255, 255, 255)]
+	DefaultFlare3	[#texture: "Lensflare4_Texture", #offset: 0.4, #size: 1.5, #color: rgb(255, 255, 255)]
+	DefaultFlare4	[#texture: "Lensflare5_Texture", #offset: 0.1, #size: 2.0, #color: rgb(255, 255, 255)]
+	DefaultFlare5	[#texture: "Lensflare4_Texture", #offset: -0.4, #size: 3.0, #color: rgb(255, 255, 255)]
+	DefaultFlare6	[#texture: "Lensflare2_Texture", #offset: -1.0, #size: 3.0, #color: rgb(255, 255, 255)]
+	//---------------------
+	// Other lensflares
+	//---------------------
+	
+Flares_End
+
+//------------------------------------------------------------------------------------------------------------------------------------------------
+// Objects ([#mass: #static, #type: #default, #health: #infinite, #score: 0, #script: #none, #sound: #none, #dieOnCollision: FALSE, #onDeath: #none])
+//------------------------------------------------------------------------------------------------------------------------------------------------
+Objects_Begin
+	// ------------
+	// Objects
+	// ------------
+	AdSign_Object	[#mass: 500.0, #type: #metal]
+	AmmoCrateExplosive_Object	[#mass: 1000.0, #type: #wood, #health: 20, #OnDeath: #AmmoCrateExplosive]
+	ArrowsLeft_Object	[#mass: #static, #type: #metal]
+	ArrowsRight_Object	[#mass: #static, #type: #metal]
+	Barrel_Object	[#mass: 800.0, #type: #wood, #health: 10, #dieOnCollision: TRUE, #onDeath: #Barrel]
+	Bridge_Object	[#mass: #static, #type: #wood]
+	CarTyre_Object	[#mass: #300.0, #type: #plastic]
+	CitySafeHouseDoor_Object	[#mass: #static, #type: #metal]
+	ContainerRed_Object	[#mass: #static, #type: #metal]
+	ContainerYellow_Object	[#mass: #static, #type: #metal]
+	ContainerYellow2_Object	[#mass: #static, #type: #metal]
+	ContainerYellowRamp_Object	[#mass: #static, #type: #metal]
+	CrateBig_Object	[#mass: 2000.0, #type: #wood, #health: 15, #dieOnCollision: TRUE, #onDeath: #CrateBig]
+	CrateBigExplosive_Object	[#mass: 2000.0, #type: #wood, #health: 15, #dieOnCollision: TRUE, #onDeath: #CrateBigExplosive] 
+	CrateSmall_Object	[#mass: 1000.0, #type: #wood, #health: 5, #dieOnCollision: TRUE, #onDeath: #CrateSmall]	
+	CrateSmallExplosive_Object	[#mass: 1000.0, #type: #wood, #health: 5, #dieOnCollision: TRUE, #onDeath: #CrateSmallExplosive]
+	Crosses_Object	[#mass: #static, #type: #metal]
+	DesertSafeHouseDoor_Object	[#mass: #static, #type: #metal]
+	DirectionArrows_Object	[#mass: #static, #type: #concrete]
+	Dumpster_Object	[#mass: 1000.0, #type: #metal]
+	Fence_Object	[#mass: #static, #type: #wood]
+	FinishText_Object	[#mass: #static, #type: #metal]
+	Flag_Object	[#mass: #static, #type: #wood]
+	GarbageBag_Object	[#mass: 180.0, #type: #plastic]
+	GasTankExplosive_Object	[#mass: #static, #type: #metal, #health: 30, #onDeath: #GasTankExplosive]
+	HayStack_Object	[#mass: 200.0, #health: 10, #dieOnCollision: TRUE, #onDeath: #HayStack]
+	JungleSafeHouseDoor_Object	[#mass: #static, #type: #metal]	
+	LandMarkCity_Object	[#mass: #static, #type: #concrete, #health: 300, #onDeath: #LandMarkCity, #handler: "CheckLandMarkCity"]
+	LandMarkSnow_Object	[#mass: #static, #type: #concrete, #health: 300, #onDeath: #LandMarkSnow, #handler: "CheckLandMarkSnow"]
+	LandMarkJungle_Object	[#mass: #static, #type: #concrete, #health: 300, #onDeath: #LandMarkJungle, #handler: "CheckLandMarkJungle"]
+	LandMarkDesert_Object	[#mass: #static, #type: #concrete, #health: 300, #onDeath: #LandMarkDesert, #handler: "CheckLandMarkDesert"]
+	LandMarkIndustrial_Object	[#mass: #static, #type: #concrete, #health: 300, #onDeath: #LandMarkIndustrial, #handler: "CheckLandMarkIndustrial"]
+	LandMarkCityDestroyed_Object	[#mass: #static, #type: #concrete]
+	LandMarkSnowDestroyed_Object	[#mass: #static, #type: #concrete]
+	LandMarkJungleDestroyed_Object	[#mass: #static, #type: #concrete]
+	LandMarkDesertDestroyed_Object	[#mass: #static, #type: #concrete]
+	LogBig_Object	[#mass: 6000.0, #type: #wood]
+	LogSmall_Object	[#mass: 3000.0, #type: #wood]
+	MailBox_Object	[#mass: 1000.0, #type: #metal]
+	MountedGun_Object	[#mass: #static, #type: #metal, #health: 40, #script: "[PS] Mounted Gun", #onDeath: #MountedGun]
+	OilDrumExplosive_Object	[#mass: 900.0, #type: #metal, #health: 10, #dieOnCollision: TRUE, #onDeath: #OilDrumExplosive]
+	OilDrumNormal_Object	[#mass: 900.0, #type: #metal]
+	Pallet_Object	[#mass: 1000.0, #type: #wood, #health: 10, #dieOnCollision: TRUE, #onDeath: #Pallet]
+	ParkingMeter_Object	[#mass: 1000.0, #type: #metal]
+	PhoneBooth_Object	[#mass: 3000.0, #type: #metal]
+	PowerCablesHorizontal_Object	[#mass: 5000.0, #type: #wood]
+	PowerCablesVertical_Object	[#mass: 5000.0, #type: #wood]
+	Pylon_Object	[#mass: 50.0, #type: #plastic]
+	RampBig_Object	[#mass: #static, #type: #metal]
+	RampMetalBig_Object	[#mass: #static, #type: #metal]
+	RampMetalSmall_Object	[#mass: #static, #type: #metal]
+	RampWoodBig_Object	[#mass: #static, #type: #wood]
+	RampWoodSmall_Object	[#mass: #static, #type: #wood]
+	RoadBlockArrows_Object	[#mass: #static, #type: #concrete]
+	RoadBlockArrowsBig_Object	[#mass: #static, #type: #concrete]
+	RoadBlockConcrete_Object	[#mass: #static, #type: #concrete]
+	Rock1_Object	[#mass: #static, #type: #concrete]
+	Rock2_Object	[#mass: #static, #type: #concrete]
+	Rock3_Object	[#mass: #static, #type: #concrete]
+	Rock4_Object	[#mass: #static, #type: #concrete]	
+	SamSite_Object	[#mass: #static, #type: #metal, #health: 40, #script: "[PS] Sam Site", #onDeath: #SamSite]
+	Sand_Object	[#mass: #static]
+	SandBag_Object	[#mass: 500.0, #health: 5, #dieOnCollision: TRUE, #onDeath: #SandBag]
+	SeaAdvertisement1_Object	[#mass: #static, #type: #wood]
+	SeaAdvertisement2_Object	[#mass: #static, #type: #wood]
+	SeaAdvertisement3_Object	[#mass: #static, #type: #wood]
+	SeaBouyRed_Object	[#mass: #static, #type: #metal]
+	SeaBouyGreen_Object	[#mass: #static, #type: #metal]
+	SeaContainerRed1_Object	[#mass: #static, #type: #metal]
+	SeaContainerRed2_Object	[#mass: #static, #type: #metal]
+	SeaFlag_Object	[#mass: #static, #type: #wood]
+	SeaMineExplosive_Object	[#mass: #static, #type: #metal, #health: 10, #dieOnCollision: TRUE, #onDeath: #SeaMineExplosive]
+	SeaOilDrum_Object	[#mass: #static, #type: #metal]	
+	SeaOilDrumExplosive_Object	[#mass: #static, #type: #metal, #health: 10, #dieOnCollision: TRUE, #onDeath: #SeaOilDrumExplosive]	
+	SeaRamp1_Object	[#mass: #static, #type: #wood]
+	SeaRamp2_Object	[#mass: #static, #type: #wood]
+	SheetBig_Object	[#mass: 400.0, #type: #metal]
+	SheetSmall_Object	[#mass: 200.0, #type: #metal]
+	SignSafeHouse_Object	[#mass: #static, #type: #metal]
+	SignSprayShop_Object	[#mass: #static, #type: #metal]
+	SignTicketMaster_Object	[#mass: #static, #type: #metal]
+	SignTuneShop_Object	[#mass: #static, #type: #metal]
+	SignWeaponShop_Object	[#mass: #static, #type: #metal]	
+	SignDirectionCity_Object	[#mass: #static, #type: #metal]
+	SignDirectionDesert_Object	[#mass: #static, #type: #metal]
+	SignDirectionJungle_Object	[#mass: #static, #type: #metal]
+	SignDirectionSnow_Object	[#mass: #static, #type: #metal]
+	SignWelcomeCity_Object	[#mass: #static, #type: #metal]
+	SignWelcomeDesert_Object	[#mass: #static, #type: #metal]
+	SignWelcomeJungle_Object	[#mass: #static, #type: #metal]
+	SignWelcomeSnow_Object	[#mass: #static, #type: #metal]
+	SnowSafeHouseDoor_Object	[#mass: #static, #type: #metal]
+	SpeedBoat_Object	[#mass: #static, #type: #metal]	
+	StopSign_Object	[#mass: 800.0, #type: #wood, #health: 10, #dieOnCollision: TRUE, #onDeath: #StopSign]	
+	StorageCrate_Object	[#mass: 5000.0, #type: #wood]
+	TruckExplosive_Object	[#mass: 10000.0, #type: #metal, #health: 50, #onDeath: #TruckExplosive]
+	TruckTankerExplosive_Object	[#mass: 15000.0, #type: #metal, #health: 50, #onDeath: #TruckTankerExplosive]
+	VendingMachine_Object	[#mass: 2000.0, #type: #metal, #health: 20, #onDeath: #VendingMachine]
+	
+	// ------------
+	// Traffic
+	// ------------
+	Shopper	[#mass: 2500, #health: 20, #type: #metal, #onDeath: #DefaultTraffic]
+	Transporter	[#mass: 5500, #health: 25, #type: #metal, #onDeath: #DefaultTraffic]
+	Bus	[#mass: 15000, #health: 40, #type: #metal, #onDeath: #DefaultTraffic]
+	Truck	[#mass: 22000, #health: 40, #type: #metal, #onDeath: #DefaultTraffic]
+	Yup	[#mass: 5500, #health: 30, #type: #metal, #onDeath: #DefaultTraffic]
+	TaxiTraffic	[#mass: 5500, #health: 25, #type: #metal, #onDeath: #DefaultTraffic]
+	PoliceTraffic	[#mass: 5500, #health: 30, #type: #metal, #script: "[PS] Police Car", #onDeath: #DefaultTraffic]
+	ArmoredTruck	[#mass: 10000, #health: 90, #type: #metal, #script: "[PS] Armored Truck", #onDeath: #ArmoredTruckTraffic]
+	
+Objects_End
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// ObjectsEffects ([#particles: [], #specialParticles: [], #effect: [], #script: [], #handler: [], #event: [], #sound: [] ]) = #onDeath
+//-------------------------------------------------------------------------------------------------------------------------------------------
+ObjectsEffects_Begin
+	AmmoCrateExplosive	[#effect: [#explosion]]
+	Barrel	[#particles: [#DustExplosion, #DebrisWood], #effect: #delete, #sound: "CrateExplode_SFX"]
+	CrateBig	[#particles: [#DustExplosion, #DebrisWood], #effect: #delete, #sound: "CrateExplode_SFX"]
+	CrateBigExplosive	[#effect: [#explosion, #delete], #sound: "CrateExplode_SFX"]
+	CrateSmall	[#particles: [#DustExplosion, #DebrisWood], #effect: #delete, #sound: "CrateExplode_SFX"]
+	CrateSmallExplosive	[#effect: [#explosion, #delete], #sound: "CrateExplode_SFX"]
+	GasTankExplosive	[#effect: [#explosion]]
+	HayStack	[#particles: #DustExplosion, #effect: #delete, #sound: ""]
+	LandMarkCity	[#effect: [#explosion], #event: "LandMarkCity"]
+	LandMarkDesert	[#effect: [#explosion], #event: "LandMarkDesert"]
+	LandMarkJungle	[#effect: [#explosion], #event: "LandMarkJungle"]
+	LandMarkSnow	[#effect: [#explosion], #event: "LandMarkSnow"]	
+	LandMarkIndustrial	[#effect: [#explosion], #event: "LandMarkIndustrial"]
+	MountedGun	[#effect: [#explosion], #handler: #MountedWeaponSpawnItem]
+	OilDrumExplosive	[#effect: [#explosion]]
+	Pallet	[#particles: [#DustExplosion, #DebrisWood], #effect: #delete, #sound: "CrateExplode_SFX"]
+	SamSite	[#effect: [#explosion], #handler: #MountedWeaponSpawnItem]
+	SandBag	[#particles: #DustExplosion, #effect: #delete, #sound: ""]
+	SeaMineExplosive	[#effect: [#explosion, #delete]]
+	SeaOilDrumExplosive	[#effect: [#explosion, #delete]]
+	StopSign	[#particles: [#DustExplosion, #DebrisWood], #effect: #delete, #sound: "CrateExplode_SFX"]
+	TruckExplosive	[#effect: [#explosion]]
+	TruckTankerExplosive	[#effect: [#explosion]]
+	VendingMachine	[#effect: [#explosion]]
+	DefaultTraffic	[#effect: [#explosion], #handler: #TrafficSpawnItem]
+	ArmoredTruckTraffic	[#effect: [#explosion], #handler: #ArmoredTruckSpawnItem]
+ObjectsEffects_End
+
+ObjectsEffectsAreaDamage_Begin
+	Default	[#Damage: 10.0, #minDistance: 5.0, #maxDistance: 10.0]
+	AmmoCrateExplosive	[#Damage: 15.0, #minDistance: 3.0, #maxDistance: 12.0]
+	CrateBigExplosive		[#Damage: 15.0, #minDistance: 5.0, #maxDistance: 15.0]
+	CrateSmallExplosive	[#Damage: 10.0, #minDistance: 2.0, #maxDistance: 10.0]
+	GasTankExplosive	[#Damage: 30.0, #minDistance: 8.0, #maxDistance: 20.0]
+	OilDrumExplosive	[#Damage: 10.0, #minDistance: 2.0, #maxDistance: 10.0]
+	SamSite	[#Damage: 30.0, #minDistance: 8.0, #maxDistance: 20.0]
+	SeaMineExplosive	[#Damage: 30.0, #minDistance: 8.0, #maxDistance: 20.0]
+	SeaOilDrumExplosive	[#Damage: 10.0, #minDistance: 2.0, #maxDistance: 10.0]
+	TruckExplosive	[#Damage: 30.0, #minDistance: 8.0, #maxDistance: 20.0]
+	TruckTankerExplosive	[#Damage: 30.0, #minDistance: 8.0, #maxDistance: 20.0]
+	VendingMachine	[#Damage: 10.0, #minDistance: 2.0, #maxDistance: 10.0]
+	DefaultTraffic	[#Damage: 20.0, #minDistance: 5.0, #maxDistance: 10.0]
+	ArmoredTruckTraffic	[#Damage: 30.0, #minDistance: 8.0, #maxDistance: 20.0]
+ObjectsEffectsAreaDamage_End
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// Particles
+//-------------------------------------------------------------------------------------------------------------------------------------------
+Particles_Begin
+	EngineSmoke	[#amount: 45, #lifeTime: 750.0, #minSpeed: 0.5, #maxSpeed: 2.0, #sizeStart: 1.3, #sizeEnd: 2.2, #angle: 45.0, #texture: "Smoke_Texture"]
+	GrenadeSmoke	[#amount: 45, #lifeTime: 750.0, #minSpeed: 0.5, #maxSpeed: 1.5, #sizeStart: 0.5, #sizeEnd: 2.0, #angle: 40.0, #colorStart: rgb(255, 255, 255), #colorEnd: rgb(0, 0, 0), #gravity: vector(0.0, 0.0, 0.20), #texture: "GrenadeSmoke_Texture"]
+	
+	Wheel1	[#amount: 75, #lifeTime: 650.0, #minSpeed: 1.0, #maxSpeed: 3.0, #sizeStart: 0.8, #sizeEnd: 2.7, #distribution: #gaussian, #angle: 65.0, #gravity: vector(0.0, 0.0, -0.05), #texture: "PartSlipSmoke1_Texture"]
+	Wheel2	[#amount: 75, #lifeTime: 650.0, #minSpeed: 1.0, #maxSpeed: 3.0, #sizeStart: 1.2, #sizeEnd: 3.1, #distribution: #gaussian, #angle: 65.0, #gravity: vector(0.0, 0.0, -0.05), #texture: "PartSlipSmoke2_Texture"]
+	Wheel3	[#amount: 75, #lifeTime: 650.0, #minSpeed: 1.0, #maxSpeed: 3.0, #sizeStart: 0.8, #sizeEnd: 2.7, #distribution: #gaussian, #angle: 65.0, #gravity: vector(0.0, 0.0, -0.05), #texture: "PartSlipSmoke3_Texture"]
+	Wheel4	[#amount: 75, #lifeTime: 650.0, #minSpeed: 1.0, #maxSpeed: 3.0, #sizeStart: 1.2, #sizeEnd: 3.1, #distribution: #gaussian, #angle: 65.0, #gravity: vector(0.0, 0.0, -0.05), #texture: "PartSlipSmoke4_Texture"]
+	
+	Shells1	[#amount: 60, #lifeTime: 1500.0, #minSpeed: 2.0, #maxSpeed: 6.0, #sizeStart: 0.15, #sizeEnd: 0.15, #blendEnd: 100.0, #distribution: #gaussian, #angle: 3.0, #gravity: vector(0.0, 0.0, -0.4), #texture: "PartShell1_Texture"]
+	Shells2	[#amount: 60, #lifeTime: 1500.0, #minSpeed: 2.0, #maxSpeed: 6.0, #sizeStart: 0.15, #sizeEnd: 0.15, #blendEnd: 100.0, #distribution: #gaussian, #angle: 3.0, #gravity: vector(0.0, 0.0, -0.4), #texture: "PartShell2_Texture"]
+	
+	Water1	[#amount: 100, #lifeTime: 1000.0, #minSpeed: 4.0, #maxSpeed: 6.0, #sizeStart: 2.0, #sizeEnd: 4.0, #distribution: #linear, #angle: 10.0, #gravity: vector(0.0, 0.0, -1.0), #texture: "PartWaterSplash1_Texture"]
+	Water2	[#amount: 100, #lifeTime: 1000.0, #minSpeed: 4.0, #maxSpeed: 6.0, #sizeStart: 2.0, #sizeEnd: 4.0, #distribution: #linear, #angle: 10.0, #gravity: vector(0.0, 0.0, -1.0), #texture: "PartWaterSplash2_Texture"]
+	
+	SmokeExplosion	[#amount: 10, #lifeTime: 2000.0, #minSpeed: 10.0, #maxSpeed: 10.0, #sizeStart: 3.0, #sizeEnd:8.0, #colorEnd: rgb(128, 128, 128), #angle: 90.0, #drag: 10.0, #mode: #burst, #loop: FALSE, #texture: "Smoke_Texture"]
+	
+	DustExplosion	[#amount: 3, #lifeTime: 2000.0, #minSpeed: 10.0, #maxSpeed: 12.0, #sizeStart: 5.0, #sizeEnd: 8.0, #colorEnd: rgb(128, 128, 128), #angle: 90.0, #drag: 10.0, #mode: #burst, #loop: FALSE, #texture: "PartDustExplosion_Texture"]
+	DebrisWood	[#amount: 4, #lifeTime: 2000.0, #minSpeed: 10.0, #maxSpeed: 15.0, #sizeStart: 3.0, #sizeEnd: 4.0, #colorEnd: rgb(128, 128, 128), #angle: 90.0, #drag: 7.0, #mode: #burst, #loop: FALSE, #gravity: vector(0.0, 0.0, -0.4), #texture: "PartDebrisWood_Texture"]
+	
+	LaserTrail	[#amount: 45, #lifeTime: 750.0, #minSpeed: 0.5, #maxSpeed: 2.0, #sizeStart: 0.5, #sizeEnd: 1.5, #angle: 45.0, #texture: "PartLaserHit_Texture"]
+	
+	SamLaunch	[#amount: 5, #lifeTime: 2000.0000, #minSpeed: 10, #maxSpeed: 15, #SizeStart: 5, #SizeEnd: 5, #colorStart: color( 255, 255, 255 ), #colorEnd: color( 0, 0, 0 ), #angle: 120, #drag: 10.0000, #mode: #burst, #loop: 0, #texture: "PartSamLaunch_Texture"]
+	
+Particles_End
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// SpecialParticles
+//-------------------------------------------------------------------------------------------------------------------------------------------
+SpecialParticles_Begin
+SpecialParticles_End
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// WeatherStyle (environment effects)
+//-------------------------------------------------------------------------------------------------------------------------------------------
+Weather_Begin
+	Default	[:]
+	Jungle	[#effect: [#rain], #rainStyle: #Jungle]
+	Snow	[#effect: [#snow], #snowStyle: #Snow]	
+Weather_End
+
+
+//---------------------------------------------
+// Rain
+//---------------------------------------------
+RainStyle_Begin
+	Default	[:]
+	Default2	[#layers: 1, #layerDistance: 10, #cameraOffset: 100, #layerStyles: #default]
+	//Jungle	[#layers: 5, #layerDistance: 100, #layerStyles: [#layer1, #layer2, #layer3, #layer4, #layer5], #cameraOffset: 100, #fieldOfView: 55.0]
+	Jungle	[#layers: 3, #layerDistance: 150, #layerStyles: [#layer1, #layer2, #layer3], #cameraOffset: 150, #fieldOfView: 55.0]
+RainStyle_End
+
+RainLayers_Begin
+	Default	[#texture: "Rain_Texture", #textureScrolling: vector(0.1, 0.1, 0.0), #textureScale: [2.0, 1.0], #emissive: rgb(255, 255, 255), #blend: 100.0, #defaultXRotation: -25, #defaultZRotation: 15]
+	// Jungle
+	Layer1	[#texture: "Rain_Texture", #textureScrolling: vector(0.001, 0.03, 0.0), #textureScale: [1.5, 0.75], #emissive: rgb(255, 255, 255), #blend: 60.0, #defaultXRotation: -20, #defaultZRotation: 5]
+	Layer2	[#texture: "Rain_Texture", #textureScrolling: vector(0.001, 0.03, 0.0), #textureScale: [2.0, 1.0], #emissive: rgb(255, 255, 255), #blend: 40.0,  #defaultXRotation: -15, #defaultZRotation: 4]
+	Layer3	[#texture: "Rain_Texture", #textureScrolling: vector(0.001, 0.03, 0.0), #textureScale: [2.0, 1.0], #emissive: rgb(255, 255, 255), #blend: 20.0,  #defaultXRotation: -10, #defaultZRotation: 3]
+	
+	//Layer1	[#texture: "Rain_Texture", #textureScrolling: vector(0.1, 0.1, 0.0), #textureScale: [1.0, 0.5], #emissive: rgb(20, 20, 20), #blend: 100.0, #defaultXRotation: -20, #defaultZRotation: 5]
+	//Layer2	[#texture: "Rain_Texture", #textureScrolling: vector(0.1, 0.1, 0.0), #textureScale: [2.0, 1.0], #emissive: rgb(40, 40, 40), #blend: 80.0,  #defaultXRotation: -15, #defaultZRotation: 4]
+	//Layer3	[#texture: "Rain_Texture", #textureScrolling: vector(0.1, 0.1, 0.0), #textureScale: [2.0, 1.0], #emissive: rgb(60, 60, 60), #blend: 60.0,  #defaultXRotation: -10, #defaultZRotation: 3]
+	//Layer4	[#texture: "Rain_Texture", #textureScrolling: vector(0.1, 0.1, 0.0), #textureScale: [2.0, 1.0], #emissive: rgb(80, 80, 80), #blend: 40.0,  #defaultXRotation: -5, #defaultZRotation: 2]
+	//Layer5	[#texture: "Rain_Texture", #textureScrolling: vector(0.1, 0.1, 0.0), #textureScale: [2.0, 1.0], #emissive: rgb(100, 100, 100), #blend: 20.0,  #defaultXRotation: 0,  #defaultZRotation: 1]
+RainLayers_End
+
+RainWaypoints_Begin
+	Default	[]
+RainWaypoints_End
+
+//---------------------------------------------
+// Snow
+//---------------------------------------------
+SnowStyle_Begin
+	Default	[:]
+	Default2	[#layers: 1, #layerDistance: 10, #cameraOffset: 100, #layerStyles: #default]
+	//Jungle	[#layers: 5, #layerDistance: 100, #layerStyles: [#layer1, #layer2, #layer3, #layer4, #layer5], #cameraOffset: 100, #fieldOfView: 55.0]
+	Snow	[#layers: 5, #layerDistance: 150, #layerStyles: [#layer1, #layer2, #layer3, #layer4, #layer5], #cameraOffset: 150, #fieldOfView: 55.0]
+SnowStyle_End
+
+SnowLayers_Begin
+	Default	[#texture: "Snow_Texture", #textureScrolling: vector(0.1, 0.1, 0.0), #textureScale: [2.0, 1.0], #emissive: rgb(255, 255, 255), #blend: 100.0, #defaultXRotation: -25, #defaultZRotation: 15]
+	// Jungle
+	//Layer1	[#texture: "Snow_Texture", #textureScrolling: vector(0.001, 0.03, 0.0), #textureScale: [1.5, 0.75], #emissive: rgb(255, 255, 255), #blend: 60.0, #defaultXRotation: -20, #defaultZRotation: 5]
+	//Layer2	[#texture: "Snow_Texture", #textureScrolling: vector(0.001, 0.03, 0.0), #textureScale: [2.0, 1.0], #emissive: rgb(255, 255, 255), #blend: 40.0,  #defaultXRotation: -15, #defaultZRotation: 4]
+	//Layer3	[#texture: "Snow_Texture", #textureScrolling: vector(0.001, 0.03, 0.0), #textureScale: [2.0, 1.0], #emissive: rgb(255, 255, 255), #blend: 20.0,  #defaultXRotation: -10, #defaultZRotation: 3]
+	
+	Layer1	[#texture: "Snow_Texture", #textureScrolling: vector(0.001, 0.03, 0.0), #textureScale: [1.5, 0.75], #emissive: rgb(255, 255, 255), #blend: 20.0, #defaultXRotation: -20, #defaultZRotation: 5]
+	Layer2	[#texture: "Snow_Texture", #textureScrolling: vector(0.001, 0.03, 0.0), #textureScale: [2.0, 1.0],  #emissive: rgb(255, 255, 255), #blend: 40.0,  #defaultXRotation: -15, #defaultZRotation: 4]
+	Layer3	[#texture: "Snow_Texture", #textureScrolling: vector(0.001, 0.03, 0.0), #textureScale: [2.0, 1.0],  #emissive: rgb(255, 255, 255), #blend: 60.0,  #defaultXRotation: -10, #defaultZRotation: 3]
+	Layer4	[#texture: "Snow_Texture", #textureScrolling: vector(0.001, 0.03, 0.0), #textureScale: [2.0, 1.0],  #emissive: rgb(255, 255, 255), #blend: 80.0,  #defaultXRotation: -5, #defaultZRotation: 2]
+	Layer5	[#texture: "Snow_Texture", #textureScrolling: vector(0.001, 0.03, 0.0), #textureScale: [2.0, 1.0],  #emissive: rgb(255, 255, 255), #blend: 100.0,  #defaultXRotation: 0,  #defaultZRotation: 1]
+SnowLayers_End
+
+SnowWaypoints_Begin
+	Default	[]
+SnowWaypoints_End
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+//Weapons
+// Damage explanation
+//#damage = normal damage. Linear list with 2 entries (min/max). Damage is random value between min/max
+//#areadamage = area damage. Linear list with 3 entries (min/max/distance). Damage is random value between min/max. At max distance the damage is low
+// closer to the source damage is higher (linear).
+//-------------------------------------------------------------------------------------------------------------------------------------------
+PrimaryWeapons_Begin
+	Default	[#name: "None", #location: [0], cost: 0]
+	NoPrimary	[#name: "NO PRIMARY WEAPON", #location: [0], cost: 0]
+	MachineGun	[#name: "MACHINE GUN", #location: [1], #cost: 10000, #ammo: 99, #rof: 8, #accuracy: 1.0, #damage: [2, 4]]
+	DualMachineGun	[#name: "DUAL MACHINE GUN", #location: [1], #cost: 20000, #ammo: 99, #rof: 8, #accuracy: 1.0, #damage: [2, 4]]
+	MiniGun	[#name: "MINI GUN", #location: [1], #cost: 35000, #ammo: 99, #rof: 14, #accuracy: 1.0, #damage: [2, 4], #chargeTime: 0.5]
+	DualMiniGun	[#name: "DUAL MINI GUN", #location: [1], #cost: 70000, #ammo: 99, #rof: 14, #accuracy: 1.0, #damage: [2, 4], #chargeTime: 0.5]
+	
+	// FLAMETHROWER
+	// rof = ammo PER FRAME
+	// damage = amount of damage to be dealt per frame (if we hit something)
+	FlameThrower	[#name: "FLAMETHROWER" , #location: [1], #cost: 80000, #ammo: 99, #rof: 0.25, #damage: 2.0]
+	
+	// LASER
+	// rof = ammo PER FRAME
+	// chargeTime is amount of frames to reach max damage PLEASE NOTE the REAL chargeTime = chargeTIme - 20
+	// 20 is default so you can blast lasers by pressing the button rapidly
+	// PS. I know about the quick press to shoot without it costing the right amount of ammo. I am not going to change it!
+	Laser	[#name: "LASER", #location: [1], #cost: 100000, #ammo: 99, #rof: 0.60, #chargeTime: 60, #damage: [0, 15]]
+	
+PrimaryWeapons_End
+
+Primary2Weapons_Begin
+	// AC130
+	AC130AutoGun1	[#name: "AUTO GUN", #location: [1], #cost: 35000, #ammo: 99, #rof: 14, #accuracy: 1.0, #damage: [2, 5], #chargeTime: 0.5]
+Primary2Weapons_End
+
+Primary3Weapons_Begin
+	// xAC130
+	AC130AutoGun2	[#name: "AUTO GUN", #location: [1], #cost: 35000, #ammo: 99, #rof: 14, #accuracy: 1.0, #damage: [2, 5], #chargeTime: 0.5]
+Primary3Weapons_End
+	
+SecondaryWeapons_Begin
+	Default	[#name: "None", #location: [0], cost: 0]
+	//[#damage: 10, #minDistance: 5, #maxDistance: 10]
+	NoSecondary	[#name: "NO SECONDARY WEAPON", #location: [0], cost: 0]
+	RocketPod	[#name: "ROCKET POD", #location: [3,4], #cost: 50000, #ammo: 12, #rof: 3, #accuracy: 1.0, #damage: [20, 40], #areaDamage: [#Damage: 25.0, #minDistance: 3.0, #maxDistance: 12.0]]
+	MineDeployer	[#name: "MINE LAYER", #location: [2], #cost: 60000, #ammo: 5, #rof: 1, #accuracy: 1.0, #range: 4.0, #damage: [25, 35], #areaDamage: [#Damage: 30.0, #minDistance: 3.0, #maxDistance: 8.0]]
+	GrenadeDeployer	[#name: "CALTROP", #location: [2], #cost: 70000, #ammo: 20, #rof: 1, #accuracy: 1.0, #range: 4.0, #damage: [20, 30], #areaDamage: [#Damage: 15.0, #minDistance: 3.0, #maxDistance: 6.0]]
+	GrenadeLauncher	[#name: "GRENADE LAUNCHER", #location: [1], #cost: 85000, #ammo: 8, #rof: 1, #accuracy: 1.0, #damage: [30, 40], #areaDamage: [#Damage: 30.0, #minDistance: 3.0, #maxDistance: 12.0]]
+	NitroBoost	[#name: "NITRO BOOST", #location: [2], #cost: 100000, #ammo: 99, #rof: 1.8, #accuracy: 1.0, #damage: [0, 0], #areaDamage: [#Damage: 0.0, #minDistance: 0.0, #maxDistance: 0.0]]
+	AirstrikeLauncher	[#name: "AIRSTRIKE", #location: [1], #cost: 200000, #ammo: 3, #rof: 1, #accuracy: 1.0, #damage: [30, 50], #areaDamage: [#Damage: 30.0, #minDistance: 3.0, #maxDistance: 15.0]]
+	//Tank	
+	MainGun	[#name: "MAIN GUN", #location: [1], #cost: 0, #ammo: 5, #rof: 1, #accuracy: 1.0, #damage: [20, 40], #areaDamage: [#Damage: 50.0, #minDistance: 4.0, #maxDistance: 15.0]]
+	
+	//--------------------
+	//OLD
+	//--------------------
+	//RocketPod	[#name: "ROCKET POD", #location: [3,4], #cost: 50000, #ammo: 12, #rof: 3, #accuracy: 1.0, #damage: [20, 40], #areaDamage: [10, 30, 12]]
+	//MineDeployer	[#name: "MINE LAYER", #location: [2], #cost: 60000, #ammo: 5, #rof: 1, #accuracy: 1.0, #range: 3.0, #damage: [25, 35], #areaDamage: [5, 30, 8]]
+	//GrenadeDeployer	[#name: "CALTROP", #location: [2], #cost: 70000, #ammo: 20, #rof: 1, #accuracy: 1.0, #range: 3.0, #damage: [20, 30], #areaDamage: [5, 25, 6]]
+	//GrenadeLauncher	[#name: "GRENADE LAUNCHER", #location: [1], #cost: 85000, #ammo: 8, #rof: 1, #accuracy: 1.0, #damage: [30, 40], #areaDamage:[15, 25, 12]]
+	//NitroBoost	[#name: "NITRO BOOST", #location: [2], #cost: 100000, #ammo: 99, #rof: 1.8, #accuracy: 1.0, #damage: [0, 0], #areaDamage: [0, 0, 0]]
+	//AirstrikeLauncher	[#name: "AIRSTRIKE", #location: [1], #cost: 200000, #ammo: 3, #rof: 1, #accuracy: 1.0, #damage: [30, 50], #areaDamage: [10, 50, 15]]
+	//Tank
+	//MainGun	[#name: "MAIN GUN", #location: [1], #cost: 0, #ammo: 5, #rof: 1, #accuracy: 1.0, #damage: [20, 40], #areaDamage: [15, 40, 15]]
+
+SecondaryWeapons_End	

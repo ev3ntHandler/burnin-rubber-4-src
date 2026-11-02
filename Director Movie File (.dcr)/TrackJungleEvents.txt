@@ -1,0 +1,33 @@
+-- [Text] TrackJungleEvents
+
+JungleTextures_Begin
+	CreateTexture	JungleAssets	[#texture: "JungleStreet_Texture"]
+	CreateTexture	JungleAssets	[#texture: "JungleBuildings_Texture"]
+	CreateTexture	JungleAssets	[#texture: "JungleTransparent_Texture", #renderFormat: #rgba8888]
+	CreateTexture	JungleAssets	[#texture: "WorldWaves{:Setting}_Texture", #renderFormat: #rgba8888]
+	CreateTexture	JungleAssets	[#texture: "WorldSea{:Setting}_Texture"]
+	CreateTexture	JungleAssets	[#texture: "Wall_Texture", #renderFormat: #rgba8888]
+	CreateTexture	JungleAssets	[#texture: "WorldMisc_Texture"]
+	CreateTexture	JungleAssets	[#texture: "JungleOilRig_Texture"]
+	SetShader	JungleAssets	[#shader: "Misc_Material", #texture1: "WorldMisc_Texture"]
+	
+	// Set textures (shaders)
+	SetShader	JungleAssets	[#shader: "JungleStreet_Material", #texture1: "JungleStreet_Texture"]
+	SetShader	JungleAssets	[#shader: "JungleBuildings_Material", #texture1: "JungleBuildings_Texture"]
+	SetShader	JungleAssets	[#shader: "JungleTransparent_Material", #texture1: "JungleTransparent_Texture"]
+	SetShader	JungleAssets	[#shader: "JungleOpaque_Material", #texture1: "JungleTransparent_Texture"]
+	SetShader	JungleAssets	[#shader: "JungleCollision_Material", #texture1: "JungleTransparent_Texture"]
+	SetShader	JungleAssets	[#shader: "JungleOilRig_Material", #texture1: "JungleOilRig_Texture"]
+	SetShader	JungleAssets	[#shader: "WorldMisc_Material", #texture1: "WorldMisc_Texture"]
+	SetShader	JungleAssets	[#shader: "WorldSea_Material", #texture1: "WorldSea{:Setting}_Texture"]
+	SetShader	JungleAssets	[#shader: "WorldWaves_Material", #texture1: "WorldWaves{:Setting}_Texture"]
+	
+	// Transparent off for opaque
+	SetShader	JungleAssets	[#shader: "JungleOpaque_Material", #transparent: FALSE]
+	
+	// AmbientStyle
+	SetShader	JungleAssets	[#shader: "JungleBuildings_Material", #emissive: gData.data.ambientstyle[gGame.trackinfo.ambientStyle].emissive]
+	SetShader	JungleAssets	[#shader: "JungleOpaque_Material", #emissive: gData.data.ambientstyle[gGame.trackinfo.ambientStyle].emissive]
+	SetShader	JungleAssets	[#shader: "JungleTransparent_Material", #emissive: gData.data.ambientstyle[gGame.trackinfo.ambientStyle].emissive]
+		
+JungleTextures_End

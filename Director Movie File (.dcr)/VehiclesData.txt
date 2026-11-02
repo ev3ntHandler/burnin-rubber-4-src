@@ -1,0 +1,788 @@
+-- [Text] VehiclesData
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// Vehicles Loading Data
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// Adding and loading new or extra vehicles is very simple.
+// If the model & texture list are empty we download default models and textures, based upon the name of the vehicle
+// I.e. Bullet.w3d, BulletSkin1_Texture, BulletSkin2_Texture, etc.
+// if extra textures or models need to be downloaded then add them to the list, see the plane example
+//-------------------------------------------------------------------------------------------------------------------------------------------
+VehiclesLoadingData_Begin
+	//------------------------------------------------
+	// Cars
+	//------------------------------------------------
+	Tank	[#state: FALSE, #loc: "Vehicles/Cars/", #model: [], #texture: [], #amount: 4]
+	Taxi	[#state: FALSE, #loc: "Vehicles/Cars/", #model: [], #texture: [], #amount: 4]
+	Rebel	[#state: FALSE, #loc: "Vehicles/Cars/", #model: [], #texture: [], #amount: 4]
+	Bullet350	[#state: FALSE, #loc: "Vehicles/Cars/", #model: [], #texture: [], #amount: 4]
+	ViceV80	[#state: FALSE, #loc: "Vehicles/Cars/", #model: [], #texture: [], #amount: 4]
+	Fennek	[#state: FALSE, #loc: "Vehicles/Cars/", #model: [], #texture: [], #amount: 4]
+	Hound	[#state: FALSE, #loc: "Vehicles/Cars/", #model: [], #texture: [], #amount: 4]
+	PetiteXs	[#state: FALSE, #loc: "Vehicles/Cars/", #model: [], #texture: [], #amount: 4]
+	PhaserGti	[#state: FALSE, #loc: "Vehicles/Cars/", #model: [], #texture: [], #amount: 4]
+	Police	[#state: FALSE, #loc: "Vehicles/Cars/", #model: [], #texture: [], #amount: 4]
+	Rally7	[#state: FALSE, #loc: "Vehicles/Cars/", #model: [], #texture: [], #amount: 4]
+	BigTruck	[#state: FALSE, #loc: "Vehicles/Cars/", #model: [], #texture: [], #amount: 4]
+	Sunstorm	[#state: FALSE, #loc: "Vehicles/Cars/", #model: [], #texture: [], #amount: 4]
+	Autobot	[#state: FALSE, #loc: "Vehicles/Cars/", #model: [], #texture: [], #amount: 4]
+	MonsterTruck	[#state: FALSE, #loc: "Vehicles/Cars/", #model: [], #texture: [], #amount: 4]
+	//------------------------------------------------
+	// Boats
+	//------------------------------------------------
+	SpeedBoat	[#state: FALSE, #loc: "Vehicles/Boats/", #model: [], #texture: ["SpeedBoatWake_Texture.png"], #amount: 2]
+	PoliceBoat	[#state: FALSE, #loc: "Vehicles/Boats/", #model: [], #texture: ["PoliceBoatWake_Texture.png"], #amount: 1]
+	Stealth	[#state: FALSE, #loc: "Vehicles/Boats/", #model: [], #texture: ["StealthWake_Texture.png"], #amount: 1]
+	Zodiac	[#state: FALSE, #loc: "Vehicles/Boats/", #model: [], #texture: ["ZodiacWake_Texture.png"], #amount: 1]
+	//------------------------------------------------
+	// Planes
+	//------------------------------------------------
+	F22	[#state: FALSE, #loc: "Vehicles/Planes/", #model: [], #texture: ["F22Engine_Texture.jpg"], #amount: 1]
+	Apache	[#state: FALSE, #loc: "Vehicles/Planes/", #model: [], #texture: ["ApacheRotor_Texture.png", "ApacheRotor2_Texture.png"], #amount: 1]
+	Spitfire	[#state: FALSE, #loc: "Vehicles/Planes/", #model: [], #texture: ["SpitfireRotor_Texture.png"], #amount: 2]
+	AC130	[#state: FALSE, #loc: "Vehicles/Planes/", #model: [], #texture: ["AC130Rotor_Texture.png"], #amount: 1]
+	//------------------------------------------------
+	// Traffic
+	//------------------------------------------------
+	Bus	[#state: FALSE, #loc: "Vehicles/Traffic/", #model: [], #texture: [], #amount: 2]
+	Truck	[#state: FALSE, #loc: "Vehicles/Traffic/", #model: [], #texture: [], #amount: 2]
+	Yup	[#state: FALSE, #loc: "Vehicles/Traffic/", #model: [], #texture: [], #amount: 2]
+	Shopper	[#state: FALSE, #loc: "Vehicles/Traffic/", #model: [], #texture: [], #amount: 2]
+	TaxiTraffic	[#state: FALSE, #loc: "Vehicles/Traffic/", #model: [], #texture: [], #amount: 2]
+	Transporter	[#state: FALSE, #loc: "Vehicles/Traffic/", #model: [], #texture: [], #amount: 2]
+	PoliceTraffic	[#state: FALSE, #loc: "Vehicles/Traffic/", #model: [], #texture: ["PoliceSiren_Texture.jpg"], #amount: 2]
+	ArmoredTruck	[#state: FALSE, #loc: "Vehicles/Traffic/", #model: [], #texture: ["ArmoredTruckSiren_Texture.jpg"], #amount: 1]	
+VehiclesLoadingData_End
+
+VehiclesLoadingDataSource_Begin
+	//------------------------------------------------
+	// Cars
+	//------------------------------------------------
+	Tank	[#state: FALSE, #loc: "Vehicles/Cars/", #model: [], #texture: [], #amount: 4]
+	Taxi	[#state: FALSE, #loc: "Vehicles/Cars/", #model: [], #texture: [], #amount: 4]
+	Rebel	[#state: FALSE, #loc: "Vehicles/Cars/", #model: [], #texture: [], #amount: 4]
+	Bullet350	[#state: FALSE, #loc: "Vehicles/Cars/", #model: [], #texture: [], #amount: 4]
+	ViceV80	[#state: FALSE, #loc: "Vehicles/Cars/", #model: [], #texture: [], #amount: 4]
+	Fennek	[#state: FALSE, #loc: "Vehicles/Cars/", #model: [], #texture: [], #amount: 4]
+	Hound	[#state: FALSE, #loc: "Vehicles/Cars/", #model: [], #texture: [], #amount: 4]
+	PetiteXs	[#state: FALSE, #loc: "Vehicles/Cars/", #model: [], #texture: [], #amount: 4]
+	PhaserGti	[#state: FALSE, #loc: "Vehicles/Cars/", #model: [], #texture: [], #amount: 4]
+	Police	[#state: FALSE, #loc: "Vehicles/Cars/", #model: [], #texture: [], #amount: 4]
+	Rally7	[#state: FALSE, #loc: "Vehicles/Cars/", #model: [], #texture: [], #amount: 4]
+	BigTruck	[#state: FALSE, #loc: "Vehicles/Cars/", #model: [], #texture: [], #amount: 4]
+	Sunstorm	[#state: FALSE, #loc: "Vehicles/Cars/", #model: [], #texture: [], #amount: 4]
+	Autobot	[#state: FALSE, #loc: "Vehicles/Cars/", #model: [], #texture: [], #amount: 4]
+	MonsterTruck	[#state: FALSE, #loc: "Vehicles/Cars/", #model: [], #texture: [], #amount: 4]
+	//------------------------------------------------
+	// Boats
+	//------------------------------------------------
+	SpeedBoat	[#state: FALSE, #loc: "Vehicles/Boats/", #model: [], #texture: ["SpeedBoatWake_Texture.png"], #amount: 2]
+	PoliceBoat	[#state: FALSE, #loc: "Vehicles/Boats/", #model: [], #texture: ["PoliceBoatWake_Texture.png"], #amount: 1]
+	Stealth	[#state: FALSE, #loc: "Vehicles/Boats/", #model: [], #texture: ["StealthWake_Texture.png"], #amount: 1]
+	Zodiac	[#state: FALSE, #loc: "Vehicles/Boats/", #model: [], #texture: ["ZodiacWake_Texture.png"], #amount: 1]
+	//------------------------------------------------
+	// Planes
+	//------------------------------------------------
+	F22	[#state: FALSE, #loc: "Vehicles/Planes/", #model: [], #texture: ["F22Engine_Texture.jpg"], #amount: 1]
+	Apache	[#state: FALSE, #loc: "Vehicles/Planes/", #model: [], #texture: ["ApacheRotor_Texture.png", "ApacheRotor2_Texture.png"], #amount: 1]
+	Spitfire	[#state: FALSE, #loc: "Vehicles/Planes/", #model: [], #texture: ["SpitfireRotor_Texture.png"], #amount: 2]
+	AC130	[#state: FALSE, #loc: "Vehicles/Planes/", #model: [], #texture: ["AC130Rotor_Texture.png"], #amount: 1]
+	//------------------------------------------------
+	// Traffic
+	//------------------------------------------------
+	Bus	[#state: FALSE, #loc: "Vehicles/Traffic/", #model: [], #texture: [], #amount: 2]
+	Truck	[#state: FALSE, #loc: "Vehicles/Traffic/", #model: [], #texture: [], #amount: 2]
+	Yup	[#state: FALSE, #loc: "Vehicles/Traffic/", #model: [], #texture: [], #amount: 2]
+	Shopper	[#state: FALSE, #loc: "Vehicles/Traffic/", #model: [], #texture: [], #amount: 2]
+	TaxiTraffic	[#state: FALSE, #loc: "Vehicles/Traffic/", #model: [], #texture: [], #amount: 2]
+	Transporter	[#state: FALSE, #loc: "Vehicles/Traffic/", #model: [], #texture: [], #amount: 2]
+	PoliceTraffic	[#state: FALSE, #loc: "Vehicles/Traffic/", #model: [], #texture: ["PoliceSiren_Texture.jpg"], #amount: 2]
+	ArmoredTruck	[#state: FALSE, #loc: "Vehicles/Traffic/", #model: [], #texture: ["ArmoredTruckSiren_Texture.jpg"], #amount: 1]	
+VehiclesLoadingDataSource_End
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// Cars
+//-------------------------------------------------------------------------------------------------------------------------------------------
+Car_Begin
+	// PLAYER MAIN
+	// Default car
+	PlayerCar	[#car: gGame.Car, #skin: 1, #upgrades: gGame.Car, #weapons: gGame.Car, #personality: gGame.Car, #settings: gGame.Car]
+	// Default Boat
+	PlayerBoat	[#car: gGame.Boat, #skin: 1, #upgrades: gGame.Boat, #weapons: gGame.Boat, #personality: gGame.Boat, #settings: gGame.Boat]
+	// Default Plane
+	PlayerPlane	[#car: gGame.Plane, #skin: 1, #upgrades: gGame.Plane, #weapons: gGame.Plane, #personality: gGame.Plane, #settings: gGame.Plane]
+	// Default Helicopter
+	PlayerHelicopter	[#car: gGame.Helicopter, #skin: 1, #upgrades: gGame.Helicopter, #weapons: gGame.Helicopter, #personality: gGame.Helicopter, #settings: gGame.Helicopter]
+	
+	// PLAYER (THESE ARE FOR THE PLAYER; SAVING, TWEAKING, ETC.)
+	Tank	[#car: "Tank", #skin: 1, #upgrades: "Tank", #weapons: "Tank", #personality: "Tank", #settings: "Tank"]
+	Taxi	[#car: "Taxi", #skin: 1, #upgrades: "Taxi", #weapons: "Taxi", #personality: "Taxi", #settings: "Taxi"]
+	Rebel	[#car: "Rebel", #skin: 1, #upgrades: "Rebel", #weapons: "Rebel", #personality: "Rebel", #settings: "Rebel"]
+	Bullet350	[#car: "Bullet350", #skin: 4, #upgrades: "Bullet350", #weapons: "Bullet350", #personality: "Bullet350", #settings: "Bullet350"]
+	ViceV80	[#car: "ViceV80", #skin: 1, #upgrades: "ViceV80", #weapons: "ViceV80", #personality: "ViceV80", #settings: "ViceV80"]
+	Fennek	[#car: "Fennek", #skin: 1, #upgrades: "Fennek", #weapons: "Fennek", #personality: "Fennek", #settings: "Fennek"]
+	Hound	[#car: "Hound", #skin: 1, #upgrades: "Hound", #weapons: "Hound", #personality: "Hound", #settings: "Hound"]
+	PetiteXs	[#car: "PetiteXs", #skin: 1, #upgrades: "PetiteXs", #weapons: "PetiteXs", #personality: "PetiteXs", #settings: "PetiteXs"]
+	PhaserGti	[#car: "PhaserGti", #skin: 1, #upgrades: "PhaserGti", #weapons: "PhaserGti", #personality: "PhaserGti", #settings: "PhaserGti"]
+	Police	[#car: "Police", #skin: 1, #upgrades: "Police", #weapons: "Police", #personality: "Police", #settings: "Police"]
+	Rally7	[#car: "Rally7", #skin: 1, #upgrades: "Rally7", #weapons: "Rally7", #personality: "Rally7", #settings: "Rally7"]
+	BigTruck	[#car: "BigTruck", #skin: 1, #upgrades: "BigTruck", #weapons: "BigTruck", #personality: "BigTruck", #settings: "BigTruck"]
+	Sunstorm	[#car: "Sunstorm", #skin: 1, #upgrades: "Sunstorm", #weapons: "Sunstorm", #personality: "Sunstorm", #settings: "Sunstorm"]
+	Autobot	[#car: "Autobot", #skin: 1, #upgrades: "Autobot", #weapons: "Autobot", #personality: "Autobot", #settings: "Autobot"]
+	MonsterTruck	[#car: "MonsterTruck", #skin: 1, #upgrades: "MonsterTruck", #weapons: "MonsterTruck", #personality: "MonsterTruck", #settings: "MonsterTruck"]
+	
+	// Boats
+	SpeedBoat	[#car: "SpeedBoat", #skin: 1, #upgrades: "SpeedBoat", #weapons: "SpeedBoat", #personality: "SpeedBoat", #settings: "SpeedBoat"]
+	Policeboat	[#car: "Policeboat", #skin: 1, #upgrades: "Policeboat", #weapons: "Policeboat", #personality: "Policeboat", #settings: "Policeboat"]
+	Zodiac	[#car: "Zodiac", #skin: 1, #upgrades: "Zodiac", #weapons: "Zodiac", #personality: "Zodiac", #settings: "Zodiac"]
+	Stealth	[#car: "Stealth", #skin: 1, #upgrades: "Stealth", #weapons: "Stealth", #personality: "Stealth", #settings: "Stealth"]
+	
+	// Planes
+	AC130	[#car: "AC130", #skin: 1, #upgrades: "AC130", #weapons: "AC130", #personality: "AC130", #settings: "AC130"]
+	Spitfire	[#car: "Spitfire", #skin: 1, #upgrades: "Spitfire", #weapons: "Spitfire", #personality: "Spitfire", #settings: "Spitfire"]
+	F22	[#car: "F22", #skin: 1, #upgrades: "F22", #weapons: "F22", #personality: "F22", #settings: "F22"]
+	
+	// Helicopters
+	Apache	[#car: "Apache", #skin: 1, #upgrades: "Apache", #weapons: "Apache", #personality: "Apache", #settings: "Apache"]
+	
+	// AI
+	// Taxi
+	Taxi1	[#car: "Taxi", #skin: 1, #upgrades: "Taxi1", #weapons: "Taxi1", #personality: "Taxi1", #settings: "Taxi"]
+	Taxi2	[#car: "Taxi", #skin: 2, #upgrades: "Taxi2", #weapons: "Taxi2", #personality: "Taxi2", #settings: "Taxi"]
+	Taxi3	[#car: "Taxi", #skin: 3, #upgrades: "Taxi3", #weapons: "Taxi3", #personality: "Taxi3", #settings: "Taxi"]
+	Taxi4	[#car: "Taxi", #skin: 4, #upgrades: "Taxi4", #weapons: "Taxi4", #personality: "Taxi4", #settings: "Taxi"]
+	// Tank
+	Tank1	[#car: "Tank", #skin: 1, #upgrades: "Tank1", #weapons: "Tank1", #personality: "Tank1", #settings: "Tank1"]
+	Tank2	[#car: "Tank", #skin: 2, #upgrades: "Tank2", #weapons: "Tank2", #personality: "Tank2", #settings: "Tank"]
+	Tank3	[#car: "Tank", #skin: 3, #upgrades: "Tank3", #weapons: "Tank3", #personality: "Tank3", #settings: "Tank"]
+	Tank4	[#car: "Tank", #skin: 4, #upgrades: "Tank4", #weapons: "Tank4", #personality: "Tank4", #settings: "Tank2"]
+	// Rebel
+	Rebel1	[#car: "Rebel", #skin: 1, #upgrades: "Rebel1", #weapons: "Rebel1", #personality: "Rebel1", #settings: "Rebel"]
+	Rebel2	[#car: "Rebel", #skin: 2, #upgrades: "Rebel2", #weapons: "Rebel2", #personality: "Rebel2", #settings: "Rebel"]
+	Rebel3	[#car: "Rebel", #skin: 3, #upgrades: "Rebel3", #weapons: "Rebel3", #personality: "Rebel3", #settings: "Rebel"]
+	Rebel4	[#car: "Rebel", #skin: 4, #upgrades: "Rebel4", #weapons: "Rebel4", #personality: "Rebel4", #settings: "Rebel"]
+	// Bullet350
+	Bullet3501	[#car: "Bullet350", #skin: 1, #upgrades: "Bullet3501", #weapons: "Bullet3501", #personality: "Bullet3501", #settings: "Bullet350"]
+	Bullet3502	[#car: "Bullet350", #skin: 2, #upgrades: "Bullet3502", #weapons: "Bullet3502", #personality: "Bullet3502", #settings: "Bullet350"]
+	Bullet3503	[#car: "Bullet350", #skin: 3, #upgrades: "Bullet3503", #weapons: "Bullet3503", #personality: "Bullet3503", #settings: "Bullet350"]
+	Bullet3504	[#car: "Bullet350", #skin: 4, #upgrades: "Bullet3504", #weapons: "Bullet3504", #personality: "Bullet3504", #settings: "Bullet350"]
+	// ViceV80
+	ViceV801	[#car: "ViceV80", #skin: 1, #upgrades: "ViceV801", #weapons: "ViceV801", #personality: "ViceV801", #settings: "ViceV80"]
+	ViceV802	[#car: "ViceV80", #skin: 2, #upgrades: "ViceV802", #weapons: "ViceV802", #personality: "ViceV802", #settings: "ViceV80"]
+	ViceV803	[#car: "ViceV80", #skin: 3, #upgrades: "ViceV803", #weapons: "ViceV803", #personality: "ViceV803", #settings: "ViceV80"]
+	ViceV804	[#car: "ViceV80", #skin: 4, #upgrades: "ViceV804", #weapons: "ViceV804", #personality: "ViceV804", #settings: "ViceV80"]
+	// Fennek
+	Fennek1	[#car: "Fennek", #skin: 1, #upgrades: "Fennek1", #weapons: "Fennek1", #personality: "Fennek1", #settings: "Fennek"]
+	Fennek2	[#car: "Fennek", #skin: 2, #upgrades: "Fennek2", #weapons: "Fennek2", #personality: "Fennek2", #settings: "Fennek"]
+	Fennek3	[#car: "Fennek", #skin: 3, #upgrades: "Fennek3", #weapons: "Fennek3", #personality: "Fennek3", #settings: "Fennek"]
+	Fennek4	[#car: "Fennek", #skin: 4, #upgrades: "Fennek4", #weapons: "Fennek4", #personality: "Fennek4", #settings: "Fennek"]
+	// Hound
+	Hound1	[#car: "Hound", #skin: 1, #upgrades: "Hound1", #weapons: "Hound1", #personality: "Hound1", #settings: "Hound"]
+	Hound2	[#car: "Hound", #skin: 2, #upgrades: "Hound2", #weapons: "Hound2", #personality: "Hound2", #settings: "Hound"]
+	Hound3	[#car: "Hound", #skin: 3, #upgrades: "Hound3", #weapons: "Hound3", #personality: "Hound3", #settings: "Hound"]
+	Hound4	[#car: "Hound", #skin: 4, #upgrades: "Hound4", #weapons: "Hound4", #personality: "Hound4", #settings: "Hound"]
+	// PetiteXs
+	PetiteXs1	[#car: "PetiteXs", #skin: 1, #upgrades: "PetiteXs1", #weapons: "PetiteXs1", #personality: "PetiteXs1", #settings: "PetiteXs"]
+	PetiteXs2	[#car: "PetiteXs", #skin: 2, #upgrades: "PetiteXs2", #weapons: "PetiteXs2", #personality: "PetiteXs2", #settings: "PetiteXs"]
+	PetiteXs3	[#car: "PetiteXs", #skin: 3, #upgrades: "PetiteXs3", #weapons: "PetiteXs3", #personality: "PetiteXs3", #settings: "PetiteXs"]
+	PetiteXs4	[#car: "PetiteXs", #skin: 4, #upgrades: "PetiteXs4", #weapons: "PetiteXs4", #personality: "PetiteXs4", #settings: "PetiteXs"]
+	// PhaserGti
+	PhaserGti1	[#car: "PhaserGti", #skin: 1, #upgrades: "PhaserGti1", #weapons: "PhaserGti1", #personality: "PhaserGti1", #settings: "PhaserGti"]
+	PhaserGti2	[#car: "PhaserGti", #skin: 2, #upgrades: "PhaserGti2", #weapons: "PhaserGti2", #personality: "PhaserGti2", #settings: "PhaserGti"]
+	PhaserGti3	[#car: "PhaserGti", #skin: 3, #upgrades: "PhaserGti3", #weapons: "PhaserGti3", #personality: "PhaserGti3", #settings: "PhaserGti"]
+	PhaserGti4	[#car: "PhaserGti", #skin: 4, #upgrades: "PhaserGti4", #weapons: "PhaserGti4", #personality: "PhaserGti4", #settings: "PhaserGti"]
+	// Police
+	Police1	[#car: "Police", #skin: 1, #upgrades: "Police1", #weapons: "Police1", #personality: "Police1", #settings: "Police"]
+	Police2	[#car: "Police", #skin: 2, #upgrades: "Police2", #weapons: "Police2", #personality: "Police2", #settings: "Police"]
+	Police3	[#car: "Police", #skin: 3, #upgrades: "Police3", #weapons: "Police3", #personality: "Police3", #settings: "Police"]
+	Police4	[#car: "Police", #skin: 4, #upgrades: "Police4", #weapons: "Police4", #personality: "Police4", #settings: "Police"]
+	// Rally7
+	Rally71	[#car: "Rally7", #skin: 1, #upgrades: "Rally71", #weapons: "Rally71", #personality: "Rally71", #settings: "Rally7"]
+	Rally72	[#car: "Rally7", #skin: 2, #upgrades: "Rally72", #weapons: "Rally72", #personality: "Rally72", #settings: "Rally7"]
+	Rally73	[#car: "Rally7", #skin: 3, #upgrades: "Rally73", #weapons: "Rally73", #personality: "Rally73", #settings: "Rally7"]
+	Rally74	[#car: "Rally7", #skin: 4, #upgrades: "Rally74", #weapons: "Rally74", #personality: "Rally74", #settings: "Rally7"]
+	// BigTruck
+	BigTruck1	[#car: "BigTruck", #skin: 1, #upgrades: "BigTruck1", #weapons: "BigTruck1", #personality: "BigTruck1", #settings: "BigTruck"]
+	BigTruck2	[#car: "BigTruck", #skin: 2, #upgrades: "BigTruck2", #weapons: "BigTruck2", #personality: "BigTruck2", #settings: "BigTruck"]
+	BigTruck3	[#car: "BigTruck", #skin: 3, #upgrades: "BigTruck3", #weapons: "BigTruck3", #personality: "BigTruck3", #settings: "BigTruck"]
+	BigTruck4	[#car: "BigTruck", #skin: 4, #upgrades: "BigTruck4", #weapons: "BigTruck4", #personality: "BigTruck4", #settings: "BigTruck"]
+	// Sunstorm
+	Sunstorm1	[#car: "Sunstorm", #skin: 1, #upgrades: "Sunstorm1", #weapons: "Sunstorm1", #personality: "Sunstorm1", #settings: "Sunstorm"]
+	Sunstorm2	[#car: "Sunstorm", #skin: 2, #upgrades: "Sunstorm2", #weapons: "Sunstorm2", #personality: "Sunstorm2", #settings: "Sunstorm"]
+	Sunstorm3	[#car: "Sunstorm", #skin: 3, #upgrades: "Sunstorm3", #weapons: "Sunstorm3", #personality: "Sunstorm3", #settings: "Sunstorm"]
+	Sunstorm4	[#car: "Sunstorm", #skin: 4, #upgrades: "Sunstorm4", #weapons: "Sunstorm4", #personality: "Sunstorm4", #settings: "Sunstorm"]
+	// Autobot
+	Autobot1	[#car: "Autobot", #skin: 1, #upgrades: "Autobot1", #weapons: "Autobot1", #personality: "Autobot1", #settings: "Autobot"]
+	Autobot2	[#car: "Autobot", #skin: 2, #upgrades: "Autobot2", #weapons: "Autobot2", #personality: "Autobot2", #settings: "Autobot"]
+	Autobot3	[#car: "Autobot", #skin: 3, #upgrades: "Autobot3", #weapons: "Autobot3", #personality: "Autobot3", #settings: "Autobot"]
+	Autobot4	[#car: "Autobot", #skin: 4, #upgrades: "Autobot4", #weapons: "Autobot4", #personality: "Autobot4", #settings: "Autobot"]
+	// MonsterTruck
+	MonsterTruck1	[#car: "MonsterTruck", #skin: 1, #upgrades: "MonsterTruck1", #weapons: "MonsterTruck1", #personality: "MonsterTruck1", #settings: "MonsterTruck"]
+	MonsterTruck2	[#car: "MonsterTruck", #skin: 2, #upgrades: "MonsterTruck2", #weapons: "MonsterTruck2", #personality: "MonsterTruck2", #settings: "MonsterTruck"]
+	MonsterTruck3	[#car: "MonsterTruck", #skin: 3, #upgrades: "MonsterTruck3", #weapons: "MonsterTruck3", #personality: "MonsterTruck3", #settings: "MonsterTruck"]
+	MonsterTruck4	[#car: "MonsterTruck", #skin: 4, #upgrades: "MonsterTruck4", #weapons: "MonsterTruck4", #personality: "MonsterTruck4", #settings: "MonsterTruck"]
+	// Boats
+	// SpeedBoat
+	SpeedBoat1	[#car: "SpeedBoat", #skin: 1, #upgrades: "SpeedBoat1", #weapons: "SpeedBoat1", #personality: "SpeedBoat1", #settings: "SpeedBoat"]
+	SpeedBoat2	[#car: "SpeedBoat", #skin: 2, #upgrades: "SpeedBoat2", #weapons: "SpeedBoat2", #personality: "SpeedBoat2", #settings: "SpeedBoat"]
+	SpeedBoat3	[#car: "SpeedBoat", #skin: 3, #upgrades: "SpeedBoat3", #weapons: "SpeedBoat3", #personality: "SpeedBoat3", #settings: "SpeedBoat"]
+	SpeedBoat4	[#car: "SpeedBoat", #skin: 4, #upgrades: "SpeedBoat4", #weapons: "SpeedBoat4", #personality: "SpeedBoat4", #settings: "SpeedBoat"]
+	// Policeboat
+	Policeboat1	[#car: "Policeboat", #skin: 1, #upgrades: "Policeboat1", #weapons: "Policeboat1", #personality: "Policeboat1", #settings: "Policeboat"]
+	Policeboat2	[#car: "Policeboat", #skin: 2, #upgrades: "Policeboat2", #weapons: "Policeboat2", #personality: "Policeboat2", #settings: "Policeboat"]
+	Policeboat3	[#car: "Policeboat", #skin: 3, #upgrades: "Policeboat3", #weapons: "Policeboat3", #personality: "Policeboat3", #settings: "Policeboat"]
+	Policeboat4	[#car: "Policeboat", #skin: 4, #upgrades: "Policeboat4", #weapons: "Policeboat4", #personality: "Policeboat4", #settings: "Policeboat"]
+	// Zodiac
+	Zodiac1	[#car: "Zodiac", #skin: 1, #upgrades: "Zodiac1", #weapons: "Zodiac1", #personality: "Zodiac1", #settings: "Zodiac"]
+	Zodiac2	[#car: "Zodiac", #skin: 2, #upgrades: "Zodiac2", #weapons: "Zodiac2", #personality: "Zodiac2", #settings: "Zodiac"]
+	Zodiac3	[#car: "Zodiac", #skin: 3, #upgrades: "Zodiac3", #weapons: "Zodiac3", #personality: "Zodiac3", #settings: "Zodiac"]
+	Zodiac4	[#car: "Zodiac", #skin: 4, #upgrades: "Zodiac4", #weapons: "Zodiac4", #personality: "Zodiac4", #settings: "Zodiac"]
+	// Stealth
+	Stealth1	[#car: "Stealth", #skin: 1, #upgrades: "Stealth1", #weapons: "Stealth1", #personality: "Stealth1", #settings: "Stealth"]
+	Stealth2	[#car: "Stealth", #skin: 2, #upgrades: "Stealth2", #weapons: "Stealth2", #personality: "Stealth2", #settings: "Stealth"]
+	Stealth3	[#car: "Stealth", #skin: 3, #upgrades: "Stealth3", #weapons: "Stealth3", #personality: "Stealth3", #settings: "Stealth"]
+	Stealth4	[#car: "Stealth", #skin: 4, #upgrades: "Stealth4", #weapons: "Stealth4", #personality: "Stealth4", #settings: "Stealth"]
+	
+	// Planes
+	// Apache
+	Apache1	[#car: "Apache", #skin: 1, #upgrades: "Apache1", #weapons: "Apache1", #personality: "Apache1", #settings: "Apache"]
+	Apache2	[#car: "Apache", #skin: 2, #upgrades: "Apache2", #weapons: "Apache2", #personality: "Apache2", #settings: "Apache"]
+	Apache3	[#car: "Apache", #skin: 3, #upgrades: "Apache3", #weapons: "Apache3", #personality: "Apache3", #settings: "Apache"]
+	Apache4	[#car: "Apache", #skin: 4, #upgrades: "Apache4", #weapons: "Apache4", #personality: "Apache4", #settings: "Apache"]
+	// AC130
+	AC1301	[#car: "AC130", #skin: 1, #upgrades: "AC1301", #weapons: "AC1301", #personality: "AC1301", #settings: "AC130"]
+	AC1302	[#car: "AC130", #skin: 2, #upgrades: "AC1302", #weapons: "AC1302", #personality: "AC1302", #settings: "AC130"]
+	AC1303	[#car: "AC130", #skin: 3, #upgrades: "AC1303", #weapons: "AC1303", #personality: "AC1303", #settings: "AC130"]
+	AC1304	[#car: "AC130", #skin: 4, #upgrades: "AC1304", #weapons: "AC1304", #personality: "AC1304", #settings: "AC130"]
+	// Spitfire
+	Spitfire1	[#car: "Spitfire", #skin: 1, #upgrades: "Spitfire1", #weapons: "Spitfire1", #personality: "Spitfire1", #settings: "Spitfire"]
+	Spitfire2	[#car: "Spitfire", #skin: 2, #upgrades: "Spitfire2", #weapons: "Spitfire2", #personality: "Spitfire2", #settings: "Spitfire"]
+	Spitfire3	[#car: "Spitfire", #skin: 3, #upgrades: "Spitfire3", #weapons: "Spitfire3", #personality: "Spitfire3", #settings: "Spitfire"]
+	Spitfire4	[#car: "Spitfire", #skin: 4, #upgrades: "Spitfire4", #weapons: "Spitfire4", #personality: "Spitfire4", #settings: "Spitfire"]
+	// F22
+	F221	[#car: "F22", #skin: 1, #upgrades: "F221", #weapons: "F221", #personality: "F221", #settings: "F22"]
+	F222	[#car: "F22", #skin: 2, #upgrades: "F222", #weapons: "F222", #personality: "F222", #settings: "F22"]
+	F223	[#car: "F22", #skin: 3, #upgrades: "F223", #weapons: "F223", #personality: "F223", #settings: "F22"]
+	F224	[#car: "F22", #skin: 4, #upgrades: "F224", #weapons: "F224", #personality: "F224", #settings: "F22"]
+	// Bosses
+	ViceV80Boss	[#car: "ViceV80", #skin: 4, #upgrades: "ViceV80Boss", #weapons: "ViceV80Boss", #personality: "ViceV80Boss", #settings: "ViceV80"]	
+	BigTruckBoss	[#car: "BigTruck", #skin: 4, #upgrades: "BigTruckBoss", #weapons: "BigTruckBoss", #personality: "BigTruckBoss", #settings: "BigTruck"]
+	FennekBoss	[#car: "Fennek", #skin: 4, #upgrades: "FennekBoss", #weapons: "FennekBoss", #personality: "FennekBoss", #settings: "Fennek"]
+	MonsterTruckBoss	[#car: "MonsterTruck", #skin: 4, #upgrades: "MonsterTruckBoss", #weapons: "MonsterTruckBoss", #personality: "MonsterTruckBoss", #settings: "MonsterTruck"]			
+	AutobotBoss	[#car: "Autobot", #skin: 1, #upgrades: "AutobotBoss", #weapons: "AutobotBoss", #personality: "AutobotBoss", #settings: "Autobot"]
+Car_End
+
+CarUpgrades_Begin
+	Default	[#engine: [0, 0], #armor: [0, 0], #handling: [0, 0], #primary: [1,10], #secondary: [1, 10]]
+	// PLAYER
+	Tank	[#engine: [5, 5], #armor: [8, 8], #handling: [4, 4], #primary: [10, 10], #secondary: [10, 10]]
+	Taxi	[#engine: [1, 4], #armor: [2, 5], #handling: [2, 3], #primary: [2, 3], #secondary: [3, 3]]
+	Rebel	[#engine: [3, 5], #armor: [2, 4], #handling: [3, 6], #primary: [3, 5], #secondary: [2, 4]]
+	Bullet350	[#engine: [2, 4], #armor: [1, 3], #handling: [1, 4], #primary: [2,4], #secondary: [2, 3]]
+	ViceV80	[#engine: [4, 7], #armor: [3, 5], #handling: [3, 6], #primary: [4, 6], #secondary: [3, 5]]
+	Fennek	[#engine: [4, 6], #armor: [5, 9], #handling: [3, 6], #primary: [4, 9], #secondary: [4, 8]]
+	Hound	[#engine: [3, 5], #armor: [4, 7], #handling: [3, 5], #primary: [3, 5], #secondary: [3, 5]]
+	PetiteXs	[#engine: [5, 9], #armor: [3, 5], #handling: [5, 8], #primary: [4, 7], #secondary: [3, 6]]
+	PhaserGti	[#engine: [1, 4], #armor: [2, 4], #handling: [2, 3], #primary: [2, 4], #secondary: [1, 3]]
+	Police	[#engine: [2, 5], #armor: [2, 5], #handling: [3, 4], #primary: [3, 4], #secondary: [2, 4]]
+	Rally7	[#engine: [4, 7], #armor: [3, 5], #handling: [4, 7], #primary: [4, 6], #secondary: [3, 5]]
+	BigTruck	[#engine: [3, 6], #armor: [5, 8], #handling: [3, 5], #primary: [4, 7], #secondary: [3, 6]]
+	Sunstorm	[#engine: [3, 6], #armor: [3, 5], #handling: [2, 5], #primary: [3, 4], #secondary: [2, 5]]
+	Autobot	[#engine: [8, 8], #armor: [10, 10], #handling: [6, 6], #primary: [10, 10], #secondary: [10, 10]]
+	MonsterTruck	[#engine: [6, 8], #armor: [6, 9], #handling: [3, 6], #primary: [6, 10], #secondary: [5, 8]]
+	// Boats
+	SpeedBoat	[#engine: [3, 10], #armor: [2, 10], #handling: [0, 0], #primary: [8, 8], #secondary: [8, 8]]
+	Policeboat	[#engine: [0, 0], #armor: [0, 0], #handling: [0, 0], #primary: [5, 5], #secondary: [5, 5]]
+	Zodiac	[#engine: [0, 0], #armor: [0, 0], #handling: [0, 0], #primary: [5, 5], #secondary: [5, 5]]
+	Stealth	[#engine: [0, 0], #armor: [0, 0], #handling: [0, 0], #primary: [5, 5], #secondary: [5, 5]]
+	
+	//Planes
+	Apache	[#engine: [0, 0], #armor: [0, 0], #handling: [0, 0], #primary: [5,10], #secondary: [5, 10]]
+	AC130	[#engine: [0, 0], #armor: [0, 0], #handling: [0, 0], #primary: [5,10], #secondary: [5, 10]]
+	Spitfire	[#engine: [0, 0], #armor: [0, 0], #handling: [0, 0], #primary: [5,10], #secondary: [5, 10]]
+	F22	[#engine: [0, 0], #armor: [0, 0], #handling: [0, 0], #primary: [6, 10], #secondary: [6, 10]]
+		
+	// AI
+	// Taxi
+	Taxi1	[#engine: [3, 10], #armor: [1, 10], #handling: [0, 10], #primary: [4,10], #secondary: [3, 10]]
+	Taxi2	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [1,10], #secondary: [1, 10]]
+	Taxi3	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [1,10], #secondary: [1, 10]]
+	Taxi4	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [1,10], #secondary: [1, 10]]
+	// Bullet
+	Bullet3501	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [1, 10]]
+	Bullet3502	[#engine: [1, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [2, 10]]
+	Bullet3503	[#engine: [1, 10], #armor: [2, 10], #handling: [0, 10], #primary: [5,10], #secondary: [2, 10]]
+	Bullet3504	[#engine: [2, 10], #armor: [3, 10], #handling: [0, 10], #primary: [5,10], #secondary: [3, 10]]
+	// Tank
+	Tank1	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [10,10], #secondary: [20, 20]]
+	Tank2	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [10,10], #secondary: [20, 20]]
+	Tank3	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [10,10], #secondary: [20, 20]]
+	Tank4	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [10,10], #secondary: [20, 20]]
+	// Rebel
+	Rebel1	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [1, 10]]
+	Rebel2	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [8,10], #secondary: [2, 10]]
+	Rebel3	[#engine: [1, 10], #armor: [1, 10], #handling: [0, 10], #primary: [8,10], #secondary: [3, 10]]
+	Rebel4	[#engine: [2, 10], #armor: [1, 10], #handling: [0, 10], #primary: [5,10], #secondary: [5, 10]]
+	// ViceV80
+	ViceV801	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [1, 10]]
+	ViceV802	[#engine: [2, 10], #armor: [2, 10], #handling: [0, 10], #primary: [6,10], #secondary: [4, 10]]
+	ViceV803	[#engine: [1, 10], #armor: [2, 10], #handling: [0, 10], #primary: [4,10], #secondary: [2, 10]]
+	ViceV804	[#engine: [2, 10], #armor: [2, 10], #handling: [0, 10], #primary: [4,10], #secondary: [3, 10]]
+	// Fennek
+	Fennek1	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [1, 10]]
+	Fennek2	[#engine: [4, 10], #armor: [6, 10], #handling: [0, 10], #primary: [8,10], #secondary: [5, 10]]
+	Fennek3	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [1, 10]]
+	Fennek4	[#engine: [6, 10], #armor: [8, 10], #handling: [0, 10], #primary: [8,10], #secondary: [6, 10]]
+	// Hound
+	Hound1	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [1, 10]]
+	Hound2	[#engine: [2, 10], #armor: [1, 10], #handling: [0, 10], #primary: [10,10], #secondary: [1, 10]]
+	Hound3	[#engine: [3, 10], #armor: [3, 10], #handling: [0, 10], #primary: [10,10], #secondary: [5, 10]]
+	Hound4	[#engine: [4, 10], #armor: [4, 10], #handling: [0, 10], #primary: [20,20], #secondary: [20, 20]]
+	// PetiteXs
+	PetiteXs1	[#engine: [1, 10], #armor: [1, 10], #handling: [0, 10], #primary: [5,10], #secondary: [1, 10]]
+	PetiteXs2	[#engine: [1, 10], #armor: [1, 10], #handling: [0, 10], #primary: [5,10], #secondary: [2, 10]]
+	PetiteXs3	[#engine: [0, 10], #armor: [2, 10], #handling: [0, 10], #primary: [3,10], #secondary: [2, 10]]
+	PetiteXs4	[#engine: [1, 10], #armor: [2, 10], #handling: [0, 10], #primary: [5,10], #secondary: [2, 10]]
+	// PhaserGti
+	PhaserGti1	[#engine: [0, 10], #armor: [2, 10], #handling: [0, 10], #primary: [5,10], #secondary: [1, 10]]
+	PhaserGti2	[#engine: [1, 0], #armor: [2, 10], #handling: [0, 10], #primary: [5,10], #secondary: [2, 10]]
+	PhaserGti3	[#engine: [2, 2], #armor: [3, 10], #handling: [0, 10], #primary: [5,10], #secondary: [2, 10]]
+	PhaserGti4	[#engine: [2, 2], #armor: [3, 10], #handling: [0, 10], #primary: [5,10], #secondary: [2, 10]]
+	// Police
+	Police1	[#engine: [3, 10], #armor: [0, 10], #handling: [0, 10], #primary: [10,10], #secondary: [5, 10]]
+	Police2	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [10,10], #secondary: [1, 10]]
+	Police3	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [10,10], #secondary: [1, 10]]
+	Police4	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [10,10], #secondary: [1, 10]]
+	// Rally7
+	Rally71	[#engine: [5, 10], #armor: [2, 10], #handling: [0, 10], #primary: [5,10], #secondary: [3, 10]]
+	Rally72	[#engine: [6, 10], #armor: [3, 10], #handling: [0, 10], #primary: [5,10], #secondary: [5, 10]]
+	Rally73	[#engine: [2, 10], #armor: [1, 10], #handling: [0, 10], #primary: [5,10], #secondary: [8, 10]]
+	Rally74	[#engine: [2, 10], #armor: [2, 10], #handling: [0, 10], #primary: [5,10], #secondary: [3, 10]]
+	// BigTruck
+	BigTruck1	[#engine: [6, 10], #armor: [0, 4], #handling: [0, 10], #primary: [10,10], #secondary: [5, 10]]
+	BigTruck2	[#engine: [7, 10], #armor: [1, 4], #handling: [0, 10], #primary: [10,10], #secondary: [6, 10]]
+	BigTruck3	[#engine: [8, 10], #armor: [2, 4], #handling: [0, 10], #primary: [10,10], #secondary: [3, 10]]
+	BigTruck4	[#engine: [9, 10], #armor: [3, 4], #handling: [0, 10], #primary: [10,10], #secondary: [4, 10]]
+	// Sunstorm
+	Sunstorm1	[#engine: [1, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [2, 10]]
+	Sunstorm2	[#engine: [2, 10], #armor: [3, 10], #handling: [0, 10], #primary: [5,10], #secondary: [4 , 10]]
+	Sunstorm3	[#engine: [3, 10], #armor: [3, 10], #handling: [0, 10], #primary: [5,10], #secondary: [2, 10]]
+	Sunstorm4	[#engine: [4, 10], #armor: [3, 10], #handling: [0, 10], #primary: [6,10], #secondary: [5, 10]]
+	// Autobot
+	Autobot1	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [1, 10]]
+	Autobot2	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [1, 10]]
+	Autobot3	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [1, 10]]
+	Autobot4	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [1, 10]]
+	// MonsterTruck
+	MonsterTruck1	[#engine: [0, 10], #armor: [1, 10], #handling: [0, 10], #primary: [5, 10], #secondary: [2, 10]]
+	MonsterTruck2	[#engine: [4, 10], #armor: [1, 10], #handling: [0, 10], #primary: [20, 20], #secondary: [10, 10]]
+	MonsterTruck3	[#engine: [3, 10], #armor: [1, 10], #handling: [0, 10], #primary: [5, 10], #secondary: [5, 10]]
+	MonsterTruck4	[#engine: [1, 10], #armor: [1, 10], #handling: [0, 10], #primary: [5, 10], #secondary: [3, 10]]
+	// Boats
+	//SpeedBoat
+	SpeedBoat1	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5, 10], #secondary: [2, 10]]
+	SpeedBoat2	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5, 10], #secondary: [2, 10]]
+	SpeedBoat3	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5, 10], #secondary: [2, 10]]
+	SpeedBoat4	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5, 10], #secondary: [2, 10]]
+	//Policeboat
+	Policeboat1	[#engine: [6, 10], #armor: [4, 10], #handling: [0, 10], #primary: [5,10], #secondary: [5, 10]]
+	Policeboat2	[#engine: [2, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [3, 10]]
+	Policeboat3	[#engine: [2, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [3, 10]]
+	Policeboat4	[#engine: [2, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [3, 10]]
+	//Zodiac
+	Zodiac1	[#engine: [3, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [1, 10]]
+	Zodiac2	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [1, 10]]
+	Zodiac3	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [1, 10]]
+	Zodiac4	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [1, 10]]
+	//Stealth
+	Stealth1	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [1, 10]]
+	Stealth2	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [1, 10]]
+	Stealth3	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [1, 10]]
+	Stealth4	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [1, 10]]
+	// Boats
+	//SpeedBoat
+	SpeedBoat1	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [1, 10]]
+	SpeedBoat2	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [1, 10]]
+	SpeedBoat3	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [1, 10]]
+	SpeedBoat4	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [1, 10]]
+	// Planes
+	//Apache
+	Apache1	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [1, 10]]
+	Apache2	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [1, 10]]
+	Apache3	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [1, 10]]
+	Apache4	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [1, 10]]
+	//AC130
+	AC1301	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [20,20], #secondary: [20, 20]]
+	AC1302	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [1, 10]]
+	AC1303	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [1, 10]]
+	AC1304	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [1, 10]]
+	//Spitfire
+	Spitfire1	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [1, 10]]
+	Spitfire2	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [20, 20], #secondary: [10,10]]
+	Spitfire3	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [1, 10]]
+	Spitfire4	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [1, 10]]
+	//F22
+	F221	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [1, 10]]
+	F222	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [1, 10]]
+	F223	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [5,10], #secondary: [1, 10]]
+	F224	[#engine: [0, 10], #armor: [0, 10], #handling: [0, 10], #primary: [510], #secondary: [1, 10]]
+	// Bosses
+	ViceV80Boss	[#engine: [4, 10], #armor: [0, 10], #handling: [0, 10], #primary: [10,10], #secondary: [10, 10]]
+	BigTruckBoss	[#engine: [8, 10], #armor: [20, 20], #handling: [0, 10], #primary: [10,10], #secondary: [20, 20]]
+	FennekBoss	[#engine: [3, 10], #armor: [0, 10], #handling: [0, 10], #primary: [10,10], #secondary: [20, 20]]
+	MonsterTruckBoss	[#engine: [0, 10], #armor: [0, 15], #handling: [0, 10], #primary: [30,30], #secondary: [10, 20]]	
+	AutobotBoss	[#engine: [0, 10], #armor: [0, 30], #handling: [0, 10], #primary: [20, 20], #secondary: [20, 20]]
+CarUpgrades_End
+
+CarWeapons_Begin
+	Default	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	
+	// PLAYER
+	Tank	[#primary: "MiniGun", #secondary: "MainGun"]
+	Taxi	[#primary: "MachineGun", #secondary: "GrenadeLauncher"]
+	Rebel	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	Bullet350	[#primary: "MachineGun", #secondary: "RocketPod"]
+	ViceV80	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	Fennek	[#primary: "DualMiniGun", #secondary: "GrenadeLauncher"]
+	Hound	[#primary: "MiniGun", #secondary: "RocketPod"]
+	PetiteXs	[#primary: "FlameThrower", #secondary: "GrenadeDeployer"]
+	PhaserGti	[#primary: "DualMachineGun", #secondary: "GrenadeLauncher"]
+	Police	[#primary: "MachineGun", #secondary: "RocketPod"]
+	Rally7	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	BigTruck	[#primary: "FlameThrower", #secondary: "MineDeployer"]
+	Sunstorm	[#primary: "DualMachineGun", #secondary: "MineDeployer"]
+	Autobot	[#primary: "Laser", #secondary: "MainGun"]
+	MonsterTruck	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	// Boats
+	SpeedBoat	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	Policeboat	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	Zodiac	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	Stealth	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	
+	//Planes
+	Apache	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	AC130	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	Spitfire	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	F22	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	
+	// AI
+	// Taxi
+	Taxi1	[#primary: "MachineGun", #secondary: "GrenadeLauncher"]
+	Taxi2	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	Taxi3	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	Taxi4	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	// Tank
+	Tank1	[#primary: "MiniGun", #secondary: "MainGun"]	
+	Tank2	[#primary: "MiniGun", #secondary: "MainGun"]
+	Tank3	[#primary: "MiniGun", #secondary: "MainGun"]
+	Tank4	[#primary: "MiniGun", #secondary: "MainGun"]
+	// Bullet350
+	Bullet3501	[#primary: "MachineGun", #secondary: "None"]
+	Bullet3502	[#primary: "DualMachineGun", #secondary: "None"]
+	Bullet3503	[#primary: "DualMiniGun", #secondary: "GrenadeDeployer"]
+	Bullet3504	[#primary: "DualMiniGun", #secondary: "RocketPod"]
+	// Rebel
+	Rebel1	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	Rebel2	[#primary: "MiniGun", #secondary: "RocketPod"]
+	Rebel3	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	Rebel4	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	// ViceV80
+	ViceV801	[#primary: "DualMiniGun", #secondary: "RocketPod"]
+	ViceV802	[#primary: "DualMiniGun", #secondary: "RocketPod"]
+	ViceV803	[#primary: "DualMiniGun", #secondary: "RocketPod"]
+	ViceV804	[#primary: "DualMiniGun", #secondary: "RocketPod"]
+	// Fennek
+	Fennek1	[#primary: "DualMiniGun", #secondary: ""]
+	Fennek2	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	Fennek3	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	Fennek4	[#primary: "Laser", #secondary: "GrenadeLauncher"]
+	// Hound
+	Hound1	[#primary: "MiniGun", #secondary: "RocketPod"]
+	Hound2	[#primary: "FlameThrower", #secondary: "GrenadeDeployer"]
+	Hound3	[#primary: "FlameThrower", #secondary: "RocketPod"]
+	Hound4	[#primary: "Laser", #secondary: "RocketPod"]
+	// PetiteXs
+	PetiteXs1	[#primary: "FlameThrower", #secondary: "MineDeployer"]
+	PetiteXs2	[#primary: "DualMachineGun", #secondary: "MineDeployer"]
+	PetiteXs3	[#primary: "FlameThrower", #secondary: "MineDeployer"]
+	PetiteXs4	[#primary: "DualMachineGun", #secondary: "MineDeployer"]
+	// PhaserGti
+	PhaserGti1	[#primary: "DualMachineGun", #secondary: "GrenadeLauncher"]
+	PhaserGti2	[#primary: "MachineGun", #secondary: "RocketPod"]
+	PhaserGti3	[#primary: "DualMachineGun", #secondary: "GrenadeLauncher"]
+	PhaserGti4	[#primary: "DualMachineGun", #secondary: "GrenadeLauncher"]
+	// Police
+	Police1	[#primary: "MachineGun", #secondary: "RocketPod"]
+	Police2	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	Police3	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	Police4	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	// Rally7
+	Rally71	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	Rally72	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	Rally73	[#primary: "FlameThrower", #secondary: "GrenadeLauncher"]
+	Rally74	[#primary: "MiniGun", #secondary: "GrenadeDeployer"]
+	// BigTruck
+	BigTruck1	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	BigTruck2	[#primary: "FlameThrower", #secondary: "GrenadeLauncher"]
+	BigTruck3	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	BigTruck4	[#primary: "DualMiniGun", #secondary: "GrenadeDeployer"]
+	// Sunstorm
+	Sunstorm1	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	Sunstorm2	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	Sunstorm3	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	Sunstorm4	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	// Autobot
+	Autobot1	[#primary: "Laser", #secondary: "MainGun"]
+	Autobot2	[#primary: "Laser", #secondary: "MainGun"]
+	Autobot3	[#primary: "Laser", #secondary: "MainGun"]
+	Autobot4	[#primary: "Laser", #secondary: "MainGun"]
+	// MonsterTruck
+	MonsterTruck1	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	MonsterTruck2	[#primary: "MiniGun", #secondary: "RocketPod"]
+	MonsterTruck3	[#primary: "Laser", #secondary: "GrenadeLauncher"]
+	MonsterTruck4	[#primary: "DualMiniGun", #secondary: "GrenadeDeployer"]
+	// Boats
+	// SpeedBoat
+	SpeedBoat1	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	SpeedBoat2	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	SpeedBoat3	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	SpeedBoat4	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	// Policeboat
+	Policeboat1	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	Policeboat2	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	Policeboat3	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	Policeboat4	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	// Zodiac
+	Zodiac1	[#primary: "DualMachineGun", #secondary: "GrenadeDeployer"]
+	Zodiac2	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	Zodiac3	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	Zodiac4	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	// Stealth
+	Stealth1	[#primary: "Laser", #secondary: "RocketPod"]
+	Stealth2	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	Stealth3	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	Stealth4	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	// Planes
+	// Apache
+	Apache1	[#primary: "MiniGun", #secondary: "RocketPod"]
+	Apache2	[#primary: "MiniGun", #secondary: "RocketPod"]
+	Apache3	[#primary: "MiniGun", #secondary: "RocketPod"]
+	Apache4	[#primary: "MiniGun", #secondary: "RocketPod"]
+	// AC130
+	AC1301	[#primary: "DualMachineGun", #secondary: "RocketPod", #primary2: "AC130AutoGun1", #primary3: "AC130AutoGun2"]
+	AC1302	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	AC1303	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	AC1304	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	// Spitfire
+	Spitfire1	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	Spitfire2	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	Spitfire3	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	Spitfire4	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	// F22
+	F221	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	F222	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	F223	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	F224	[#primary: "DualMachineGun", #secondary: "RocketPod"]
+	// Bosses
+	ViceV80Boss	[#primary: "DualMiniGun", #secondary: "RocketPod"]
+	BigTruckBoss	[#primary: "FlameThrower", #secondary: "MineDeployer"]
+	FennekBoss	[#primary: "DualMiniGun", #secondary: "GrenadeLauncher"]
+	MonsterTruckBoss	[#primary: "FlameThrower", #secondary: "GrenadeDeployer"]
+	AutobotBoss	[#primary: "Laser", #secondary: "MainGun"]
+
+CarWeapons_End
+
+CarPersonality_Begin
+	Default	[#health: 100, #aggro: 0.5, #defensive: 0.5]
+	
+	// PLAYER	
+	Tank	[#health: 500, #aggro: 0.5, #defensive: 0.5]
+	Taxi	[#health: 100, #aggro: 0.5, #defensive: 0.5]
+	Rebel	[#health: 100, #aggro: 0.5, #defensive: 0.5]
+	Bullet350	[#health: 100, #aggro: 0.5, #defensive: 0.5]
+	ViceV80	[#health: 100, #aggro: 0.5, #defensive: 0.5]
+	Fennek	[#health: 150, #aggro: 0.5, #defensive: 0.5]
+	Hound	[#health: 120, #aggro: 0.5, #defensive: 0.5]
+	PetiteXs	[#health: 100, #aggro: 0.5, #defensive: 0.5]
+	PhaserGti	[#health: 100, #aggro: 0.5, #defensive: 0.5]
+	Police	[#health: 110, #aggro: 0.5, #defensive: 0.5]
+	Rally7	[#health: 100, #aggro: 0.5, #defensive: 0.5]
+	BigTruck	[#health: 140, #aggro: 0.5, #defensive: 0.5]
+	Sunstorm	[#health: 100, #aggro: 0.5, #defensive: 0.5]
+	Autobot	[#health: 1000, #aggro: 0.5, #defensive: 0.5]
+	MonsterTruck	[#health: 100, #aggro: 0.5, #defensive: 0.5]
+	// Boats
+	SpeedBoat	[#health: 100, #aggro: 0.5, #defensive: 0.5]
+	Policeboat	[#health: 100, #aggro: 0.5, #defensive: 0.5]
+	Zodiac	[#health: 100, #aggro: 0.5, #defensive: 0.5]
+	Stealth	[#health: 100, #aggro: 0.5, #defensive: 0.5]
+		
+	// Planes
+	Apache	[#health: 500, #aggro: 0.5, #defensive: 0.5]
+	AC130	[#health: 2000, #aggro: 0.5, #defensive: 0.5]
+	Spitfire	[#health: 300, #aggro: 0.5, #defensive: 0.5]
+	F22	[#health: 500, #aggro: 0.5, #defensive: 0.5]
+	
+	// AI
+	// Taxi
+	Taxi1	[#health: 2000, #aggro: 0.5, #defensive: 0.5]
+	Taxi2	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	Taxi3	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	Taxi4	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	// Bullet350
+	Bullet3501	[#health: 150, #aggro: 0.5, #defensive: 0.5]
+	Bullet3502	[#health: 150, #aggro: 0.5, #defensive: 0.5]
+	Bullet3503	[#health: 150, #aggro: 0.5, #defensive: 0.5]
+	Bullet3504	[#health: 150, #aggro: 0.5, #defensive: 0.5]
+	// TANK
+	Tank1	[#health: 500, #aggro: 0.5, #defensive: 0.5]
+	Tank2	[#health: 2000, #aggro: 0.5, #defensive: 0.5]
+	Tank3	[#health: 2000, #aggro: 0.5, #defensive: 0.5]
+	Tank4	[#health: 2000, #aggro: 0.5, #defensive: 0.5]
+	// Rebel
+	Rebel1	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	Rebel2	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	Rebel3	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	Rebel4	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	// ViceV80
+	ViceV801	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	ViceV802	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	ViceV803	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	ViceV804	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	// Fennek
+	Fennek1	[#health: 300, #aggro: 0.5, #defensive: 0.5]
+	Fennek2	[#health: 300, #aggro: 0.5, #defensive: 0.5]
+	Fennek3	[#health: 300, #aggro: 0.5, #defensive: 0.5]
+	Fennek4	[#health: 300, #aggro: 0.5, #defensive: 0.5]
+	// Hound
+	Hound1	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	Hound2	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	Hound3	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	Hound4	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	// PetiteXs
+	PetiteXs1	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	PetiteXs2	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	PetiteXs3	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	PetiteXs4	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	// PhaserGti
+	PhaserGti1	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	PhaserGti2	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	PhaserGti3	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	PhaserGti4	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	// Police
+	Police1	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	Police2	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	Police3	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	Police4	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	// Rally7
+	Rally71	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	Rally72	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	Rally73	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	Rally74	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	// BigTruck
+	BigTruck1	[#health: 300, #aggro: 0.5, #defensive: 0.5]
+	BigTruck2	[#health: 300, #aggro: 0.5, #defensive: 0.5]
+	BigTruck3	[#health: 300, #aggro: 0.5, #defensive: 0.5]
+	BigTruck4	[#health: 300, #aggro: 0.5, #defensive: 0.5]
+	// Sunstorm
+	Sunstorm1	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	Sunstorm2	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	Sunstorm3	[#health: 150, #aggro: 0.5, #defensive: 0.5]
+	Sunstorm4	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	// Autobot
+	Autobot1	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	Autobot2	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	Autobot3	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	Autobot4	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	// MonsterTruck
+	MonsterTruck1	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	MonsterTruck2	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	MonsterTruck3	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	MonsterTruck4	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	// Boats
+	// SpeedBoat
+	SpeedBoat1	[#health: 150, #aggro: 0.5, #defensive: 0.5]
+	SpeedBoat2	[#health: 150, #aggro: 0.5, #defensive: 0.5]
+	SpeedBoat3	[#health: 150, #aggro: 0.5, #defensive: 0.5]
+	SpeedBoat4	[#health: 150, #aggro: 0.5, #defensive: 0.5]
+	// Policeboat
+	Policeboat1	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	Policeboat2	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	Policeboat3	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	Policeboat4	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	// Zodiac
+	Zodiac1	[#health: 300, #aggro: 0.5, #defensive: 0.5]
+	Zodiac2	[#health: 300, #aggro: 0.5, #defensive: 0.5]
+	Zodiac3	[#health: 300, #aggro: 0.5, #defensive: 0.5]
+	Zodiac4	[#health: 300, #aggro: 0.5, #defensive: 0.5]
+	// Stealth
+	Stealth1	[#health: 3000, #aggro: 0.5, #defensive: 0.5]
+	Stealth2	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	Stealth3	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	Stealth4	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	// Planes
+	// Apache
+	Apache1	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	Apache2	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	Apache3	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	Apache4	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	// AC130
+	AC1301	[#health: 3000, #aggro: 0.5, #defensive: 0.5]
+	AC1302	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	AC1303	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	AC1304	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	// Spitfire
+	Spitfire1	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	Spitfire2	[#health: 500, #aggro: 0.5, #defensive: 0.5]
+	Spitfire3	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	Spitfire4	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	// F22
+	F221	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	F222	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	F223	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	F224	[#health: 200, #aggro: 0.5, #defensive: 0.5]
+	// Bosses
+	ViceV80Boss	[#health: 800, #aggro: 0.5, #defensive: 0.5]
+	BigTruckBoss	[#health: 800, #aggro: 0.5, #defensive: 0.5]
+	FennekBoss	[#health: 1000, #aggro: 0.5, #defensive: 0.5]
+	MonsterTruckBoss	[#health: 600, #aggro: 0.5, #defensive: 0.5]
+	AutobotBoss	[#health: 1000, #aggro: 0.5, #defensive: 0.5]
+CarPersonality_End
+
+CarSettings_Begin
+	Default	[#name: "Default", #cost: 0, #mass: 3000.0, #friction: 0.35, #restitution: 0.8, #banking: 5.0, #MaxWheelTurn: 35.0, #hoverOffset: 0.225, #strength: 4.0, #damping:0.34, #maxSpeed: 88, #accGain: 0.04, #decGain: 0.02, #brakegain: 0.025, #turnGain: 1.5, #grip: 1.25, #driftGrip: 0.02, #drag: 0.010]
+	// CARS
+	Taxi	[#name: "Taxi", #cost: 50000, #mass: 3000.0, #friction: 0.35, #restitution: 0.8, #banking: 8.0, #MaxWheelTurn: 35.0, #hoverOffset: 0.12, #strength: 2.0, #damping:0.2, #maxSpeed: 75.0, #accGain: 0.02, #decGain: 0.02, #brakegain: 0.022, #turnGain: 1.5, #grip: 1.25, #driftGrip: 0.02, #drag: 0.010]
+	Rebel	[#name: "Rebel", #cost: 105000, #mass: 3000.0, #friction: 0.35, #restitution: 0.8, #banking: 7.0, #MaxWheelTurn: 35.0, #hoverOffset: 0.20, #strength: 4.0, #damping:0.2, #maxSpeed: 77.0, #accGain: 0.035, #decGain: 0.02, #brakegain: 0.025, #turnGain: 1.5, #grip: 1.25, #driftGrip: 0.02, #drag: 0.010]
+	Tank	[#name: "Abraham N1", #cost: 0,  #mass: 3000.0, #friction: 0.35, #restitution: 0.8, #banking: 1.0, #MaxWheelTurn: 35.0, #hoverOffset: 0.55, #strength: 4.0, #damping:0.05, #maxSpeed: 60.0, #accGain: 0.02, #decGain: 0.02, #brakegain: 0.022, #turnGain: 1.5, #grip: 1.25, #driftGrip: 0.02, #drag: 0.010]
+	Bullet350	[#name: "Bullet350", #cost: 0, #mass: 3000.0, #friction: 0.35, #restitution: 0.8, #banking: 4.0, #MaxWheelTurn: 35.0, #hoverOffset: 0.12, #strength: 4.0, #damping:0.255, #maxSpeed: 75.0, #accGain: 0.02, #decGain: 0.02, #brakegain: 0.022, #turnGain: 1.5, #grip: 1.25, #driftGrip: 0.02, #drag: 0.010]
+	ViceV80	[#name: "ViceV80", #cost: 0, #mass: 3000.0, #friction: 0.35, #restitution: 0.8, #banking: 4.0, #MaxWheelTurn: 35.0, #hoverOffset: 0.12, #strength: 4.0, #damping:0.255, #maxSpeed: 77.0, #accGain: 0.02, #decGain: 0.02, #brakegain: 0.022, #turnGain: 1.5, #grip: 1.25, #driftGrip: 0.02, #drag: 0.010]
+	Fennek	[#name: "Fox", #cost: 60000, #mass: 3000.0, #friction: 0.35, #restitution: 0.8, #banking: 2.0, #MaxWheelTurn: 30.0, #hoverOffset: 0.05, #strength: 3.0, #damping: 0.20, #maxSpeed: 68, #accGain: 0.030, #decGain: 0.02, #brakegain: 0.020, #turnGain: 1.5, #grip: 1.25, #driftGrip: 0.02, #drag: 0.010]
+	PetiteXs	[#name: "Petite Xs", #cost: 0,  #mass: 5000.0, #friction: 0.35, #restitution: 0.8, #banking: 3.0, #MaxWheelTurn: 35.0, #hoverOffset: 0.175, #strength: 2.5, #damping: 0.30, #maxSpeed: 78.0, #accGain: 0.02, #decGain: 0.03, #brakegain: 0.015, #turnGain: 1.5, #grip: 1.25, #driftGrip: 0.2, #drag: 0.010]
+	Hound	[#name: "Hound", #cost: 0,  #mass: 3000.0, #friction: 0.35, #restitution: 0.8, #banking: 5.0, #MaxWheelTurn: 35.0, #hoverOffset: 0.4, #strength: 6.5, #damping:0.20, #maxSpeed: 80.0, #accGain: 0.02, #decGain: 0.02, #brakegain: 0.020, #turnGain: 1.5, #grip: 1.25, #driftGrip: 0.02, #drag: 0.010]
+	SunStorm	[#name: "Sunstorm", #cost: 0,  #mass: 3000.0, #friction: 0.35, #restitution: 0.8, #banking: 5.0, #MaxWheelTurn: 35.0, #hoverOffset: 0.10, #strength: 5.0, #damping:0.3, #maxSpeed: 85.0, #accGain: 0.02, #decGain: 0.02, #brakegain: 0.022, #turnGain: 1.5, #grip: 1.25, #driftGrip: 0.02, #drag: 0.010]
+	PhaserGti	[#name: "Phaser GTI", #cost: 50000, #mass: 3000.0, #friction: 0.35, #restitution: 0.8, #banking: 8.0, #MaxWheelTurn: 35.0, #hoverOffset: 0.25, #strength: 6.0, #damping:0.2, #maxSpeed: 75.0, #accGain: 0.02, #decGain: 0.02, #brakegain: 0.022, #turnGain: 1.5, #grip: 1.25, #driftGrip: 0.02, #drag: 0.010]
+	Rally7	[#name: "Rally 7", #cost: 85000, #mass: 2400.0, #friction: 0.35, #restitution: 0.8, #banking: 6.0, #MaxWheelTurn: 35.0, #hoverOffset: 0.17, #strength: 5.0, #damping:0.2, #maxSpeed: 82.0, #accGain: 0.025, #decGain: 0.02, #brakegain: 0.02, #turnGain: 1.5, #grip: 1.25, #driftGrip: 0.02, #drag: 0.010]
+	BigTruck	[#name: "Big Truck", #cost: 0,  #mass: 10000.0, #friction: 0.35, #restitution: 0.8, #banking: 1.0, #MaxWheelTurn: 35.0, #hoverOffset: -0.2, #strength: 1.0, #damping:0.075, #maxSpeed: 80.0, #accGain: 0.009, #decGain: 0.001, #brakegain: 0.022, #turnGain: 1.5, #grip: 1.25, #driftGrip: 0.02, #drag: 0.010]
+	Police	[#name: "Police", #cost: 50000, #mass: 3000.0, #friction: 0.35, #restitution: 0.8, #banking: 8.0, #MaxWheelTurn: 35.0, #hoverOffset: 0.12, #strength: 2.0, #damping:0.2, #maxSpeed: 75.0, #accGain: 0.02, #decGain: 0.02, #brakegain: 0.022, #turnGain: 1.5, #grip: 1.25, #driftGrip: 0.02, #drag: 0.010]
+	Autobot	[#name: "Marauder-X", #cost: 50000, #mass: 3000.0, #friction: 0.35, #restitution: 0.8, #banking: 8.0, #MaxWheelTurn: 35.0, #hoverOffset: 0.12, #strength: 3.5, #damping:0.05, #maxSpeed: 40.0, #accGain: 0.02, #decGain: 0.02, #brakegain: 0.022, #turnGain: 1.5, #grip: 1.25, #driftGrip: 0.02, #drag: 0.010]
+	MonsterTruck	[#name: "Monster Truck", #cost: 3000, #mass: 3000.0, #friction: 0.35, #restitution: 0.8, #banking: 4.0, #MaxWheelTurn: 35.0, #hoverOffset: -0.1, #strength: 0.8, #damping:0.02, #maxSpeed: 80.0, #accGain: 0.035, #decGain: 0.015, #brakegain: 0.04, #turnGain: 1.5, #grip: 1.25, #driftGrip: 0.02, #drag: 0.010]
+	
+	// BOATS
+	SpeedBoat	[#name: "Flying Dutchman", #cost: 0, #mass: 1000.0, #friction: 0.35, #restitution: 0.8, #banking: 20.0, #BankingUp: 10.0, #MaxWheelTurn: 35.0, #hoverOffset: 0.14, #strength: 6.0, #damping:0.07, #maxSpeed: 90.0, #accGain: 0.03, #decGain: 0.01, #brakegain: 0.025, #turnGain: 2.25, #grip: 1.0, #driftGrip: 0.002, #drag: 0.005]
+	Policeboat	[#name: "Police",               #cost: 0, #mass: 1000.0, #friction: 0.35, #restitution: 0.8, #banking: 15.0, #BankingUp: 8.0, #MaxWheelTurn: 35.0, #hoverOffset: 0.14, #strength: 1.0, #damping:0.15, #maxSpeed: 90.0, #accGain: 0.03, #decGain: 0.01, #brakegain: 0.025, #turnGain: 2.25, #grip: 1.25, #driftGrip: 0.005, #drag: 0.010]
+	Zodiac	[#name: "Zodiac",              #cost: 0, #mass: 1000.0, #friction: 0.35, #restitution: 0.8, #banking: 10.0, #BankingUp: 5.0, #MaxWheelTurn: 35.0, #hoverOffset: 0.14, #strength: 6.0, #damping:0.5, #maxSpeed: 50.0, #accGain: 0.03, #decGain: 0.01, #brakegain: 0.025, #turnGain: 2.25, #grip: 1.25, #driftGrip: 0.005, #drag: 0.010]
+	Stealth	[#name: "Stealth",             #cost: 0, #mass: 50000.0, #friction: 0.35, #restitution: 0.8, #banking: 0.0,   #BankingUp: 0.0, #MaxWheelTurn: 35.0, #hoverOffset: 0.14, #strength: 1.0, #damping:0.05, #maxSpeed: 60.0, #accGain: 0.03, #decGain: 0.01, #brakegain: 0.025, #turnGain: 4.25, #grip: 1.25, #driftGrip: 0.005, #drag: 0.010]
+	
+	// Planes (?)
+	Apache	[#name: "Coyote", #cost: 50000, #mass: 3000.0, #friction: 0.35, #restitution: 0.8, #banking: 1.0, #MaxWheelTurn: 35.0, #hoverOffset: 1.05, #strength: 1.0, #damping:0.02, #maxSpeed: 77.0, #accGain: 0.027, #decGain: 0.002, #brakegain: 0.022, #turnGain: 1.75, #grip: 1.25, #driftGrip: 0.02, #drag: 0.010]
+	AC130	[#name: "AC130",  #cost: 50000, #mass: 30000.0, #friction: 0.35, #restitution: 0.8, #banking: 1.0, #MaxWheelTurn: 35.0, #hoverOffset: 1.05, #strength: 1.0, #damping:0.02, #maxSpeed: 77.0, #accGain: 0.027, #decGain: 0.002, #brakegain: 0.022, #turnGain: 1.75, #grip: 1.25, #driftGrip: 0.02, #drag: 0.010]
+	Spitfire	[#name: "Spitfire", #cost: 50000, #mass: 3000.0, #friction: 0.35, #restitution: 0.8, #banking: 1.0, #MaxWheelTurn: 35.0, #hoverOffset: 1.05, #strength: 1.0, #damping:0.02, #maxSpeed: 77.0, #accGain: 0.027, #decGain: 0.002, #brakegain: 0.022, #turnGain: 1.75, #grip: 1.25, #driftGrip: 0.02, #drag: 0.010]
+	F22	[#name: "Hammer-X 66", #cost: 0, #mass: 1000.0, #friction: 0.35, #restitution: 0.8, #banking: 3.0, #MaxWheelTurn: 35.0, #hoverOffset: 0.2, #strength: 4.0, #damping:0.5, #maxSpeed: 80.0, #accGain: 0.03, #decGain: 0.01, #brakegain: 0.025, #turnGain: 1.75, #grip: 1.25, #driftGrip: 0.02, #drag: 0.010]	
+	
+	// Bosses & Specials (??)
+	Tank1	[#name: "Abraham N1", #cost: 0,  #mass: 50000.0, #friction: 0.35, #restitution: 0.8, #banking: 1.0, #MaxWheelTurn: 35.0, #hoverOffset: 0.55, #strength: 4.0, #damping:0.05, #maxSpeed: 20.0, #accGain: 0.02, #decGain: 0.02, #brakegain: 0.022, #turnGain: 1.5, #grip: 1.25, #driftGrip: 0.02, #drag: 0.010]
+	Tank2	[#name: "Abraham N1", #cost: 0,  #mass: 50000.0, #friction: 0.35, #restitution: 0.8, #banking: 1.0, #MaxWheelTurn: 35.0, #hoverOffset: 0.25, #strength: 4.0, #damping:0.05, #maxSpeed: 60.0, #accGain: 0.02, #decGain: 0.02, #brakegain: 0.022, #turnGain: 1.5, #grip: 1.25, #driftGrip: 0.02, #drag: 0.010]
+	Hound2	[#name: "Hound", #cost: 0,  #mass: 3000.0, #friction: 0.35, #restitution: 0.8, #banking: 5.0, #MaxWheelTurn: 35.0, #hoverOffset: 0.1, #strength: 6.5, #damping:0.40, #maxSpeed: 80.0, #accGain: 0.02, #decGain: 0.02, #brakegain: 0.020, #turnGain: 1.5, #grip: 1.25, #driftGrip: 0.02, #drag: 0.010]
+	
+CarSettings_End

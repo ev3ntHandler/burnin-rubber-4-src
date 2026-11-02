@@ -1,0 +1,29 @@
+-- [Text] TrackDesertEvents
+
+DesertTextures_Begin
+	// Textures
+	CreateTexture	DesertAssets	[#texture: "DesertStreet_Texture"]
+	CreateTexture	DesertAssets	[#texture: "DesertBuildings_Texture"]
+	CreateTexture	DesertAssets	[#texture: "DesertTransparent_Texture", #renderFormat: #rgba8888]
+	CreateTexture	DesertAssets	[#texture: "Wall_Texture", #renderFormat: #rgba8888]
+	CreateTexture	DesertAssets	[#texture: "WorldMisc_Texture"]
+	
+	
+	// Set textures (shaders)
+	SetShader	DesertAssets	[#shader: "Misc_Material", #texture1: "WorldMisc_Texture"]
+	SetShader	DesertAssets	[#shader: "DesertStreet_Material", #texture1: "DesertStreet_Texture"]
+	SetShader	DesertAssets	[#shader: "DesertBuildings_Material", #texture1: "DesertBuildings_Texture"]
+	SetShader	DesertAssets	[#shader: "DesertTransparent_Material", #texture1: "DesertTransparent_Texture"]
+	SetShader	DesertAssets	[#shader: "DesertOpaque_Material", #texture1: "DesertTransparent_Texture"]
+	SetShader	DesertAssets	[#shader: "DesertCollision_Material", #texture1: "DesertTransparent_Texture"]
+	SetShader	DesertAssets	[#shader: "WorldMisc_Material", #texture1: "WorldMisc_Texture"]
+	
+	// Transparent off for opaque
+	SetShader	DesertAssets	[#shader: "DesertOpaque_Material", #transparent: FALSE]
+	
+	// AmbientStyle
+	SetShader	DesertAssets	[#shader: "DesertBuildings_Material", #emissive: gData.data.ambientstyle[gGame.trackinfo.ambientStyle].emissive]
+	SetShader	DesertAssets	[#shader: "DesertOpaque_Material", #emissive: gData.data.ambientstyle[gGame.trackinfo.ambientStyle].emissive]
+	SetShader	DesertAssets	[#shader: "DesertTransparent_Material", #emissive: gData.data.ambientstyle[gGame.trackinfo.ambientStyle].emissive]
+	
+DesertTextures_End

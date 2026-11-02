@@ -1,0 +1,3 @@
+-- [Text] FPSCounterText
+
+MIN: 2.1   MAX: 32.0   NOW: 29.3   AVG: 27.9

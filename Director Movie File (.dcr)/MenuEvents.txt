@@ -1,0 +1,901 @@
+-- [Text] MenuEvents
+
+//------------------------------------------------------------------------------------------------------
+// MENU: Setup
+//------------------------------------------------------------------------------------------------------
+SetupMenu_Begin
+	PutMessage	--> SetupMenu
+	// RemoveLod
+	RemoveLod	Menu
+	// Textures
+	CreateTexture	Menu	[#texture: "Font3D_Texture", #filtering: #lowFiltered]
+	CreateTexture	Menu	[#texture: "Font3DGlow_Texture", #renderFormat: #rgba8888, #filtering: #lowFiltered]
+	CreateTexture	Menu	[#texture: "Logo_Texture", #filtering: #lowFiltered]
+	CreateTexture	Menu	[#texture: "LogoAdd_Texture", #renderFormat: #rgba8888, #filtering: #lowFiltered]
+	CreateTexture	Menu	[#texture: "Clouds_Texture", #renderFormat: #rgba8888, #filtering: #lowFiltered]
+	CreateTexture	Menu	[#texture: "CloudsScrolling_Texture", #renderFormat: #rgba8888, #filtering: #lowFiltered]
+	CreateTexture	Menu	[#texture: "LogoShadow_Texture", #renderFormat: #rgba8888, #filtering: #lowFiltered]
+	CreateTexture	Menu	[#texture: "Help_Texture", #renderFormat: #rgba8888, #filtering: #lowFiltered]
+	CreateTexture	Menu	[#texture: "MenuOptions_Texture", #renderFormat: #rgba8888, #filtering: #lowFiltered]
+	CreateTexture	Menu	[#texture: "Scroller_Texture", #renderFormat: #rgba4444, #filtering: #lowFiltered]
+	CreateTexture	Menu	[#texture: "Statistics_Texture", #renderFormat: #rgba4444, #filtering: #lowFiltered]
+	CreateTexture	Menu	[#texture: "Trophies_Texture", #renderFormat: #rgba4444, #filtering: #lowFiltered]
+	CreateTexture	Menu	[#texture: "GameOfTheYear_Texture", #renderFormat: #rgba5650, #filtering: #lowFiltered]
+	BlendShader	Menu	[#shader: "LogoAdd_Material", #blendMode: #add]
+	// Set Ambient style menu
+	SetAmbientStyle	Menu	[#style: #World{:World}{:Setting}]	
+	// Additional Shaders
+	// Dropshadow clouds
+	DuplicateShader	Menu	[#shader: "Clouds_Material", shaderTag: "DropShadow"]
+	SetShader	Menu	[#shader: "DropShadowClouds_Material", #emissive: rgb(8, 30, 50), #diffuse: rgb(0,0,0), #blend: 20.0, #useDiffuseWithTexture: TRUE]
+	DuplicateShader	Menu	[#shader: "CloudsScrolling_Material", shaderTag: "DropShadow"]
+	SetShader	Menu	[#shader: "DropShadowCloudsScrolling_Material", #emissive: rgb(8, 30, 50), #diffuse: rgb(0,0,0), #blend: 20.0, #useDiffuseWithTexture: TRUE]
+	DuplicateShader	Menu	[#shader: "CloudsScrolling2_Material", shaderTag: "DropShadow"]
+	SetShader	Menu	[#shader: "DropShadowCloudsScrolling2_Material", #emissive: rgb(8, 30, 50), #diffuse: rgb(0,0,0), #blend: 45.0, #useDiffuseWithTexture: TRUE]
+	// Orange
+	DuplicateShader	Menu	[#shader: "Font3D_Material", shaderTag: "Orange"]
+	SetShader	Menu	[#shader: "OrangeFont3D_Material", #texture1: "none", #emissive: rgb(255, 163, 10), #diffuse: rgb(255,163,163), #useDiffuseWithTexture: TRUE]
+	// Grey
+	DuplicateShader	Menu	[#shader: "Font3D_Material", shaderTag: "Grey"]
+	SetShader	Menu	[#shader: "GreyFont3D_Material", #blend: 50]	
+	DuplicateShader	Menu	[#shader: "Font3DGlow_Material", shaderTag: "Grey"]
+	SetShader	Menu	[#shader: "GreyFont3DGlow_Material", #blend: 30]	
+	// Scroller
+	DuplicateShader	Menu	[#shader: "Slider_Material", #shaderTag: "Orange"]
+	SetShader	Menu	[#shader: "OrangeSlider_Material", #emissive: rgb(255, 163, 10), #diffuse: rgb(255,163,163), #useDiffuseWithTexture: TRUE]
+	// Menu buttons (options)
+	DuplicateShader	Menu	[#shader: "MenuOptionsButton_Material", #shaderTag: "Grey"]
+	SetShader	Menu	[#shader: "GreyMenuOptionsButton_Material", #emissive: rgb(128, 128, 128), #diffuse: rgb(64,64,64), #useDiffuseWithTexture: TRUE, #blend: 45]	
+	DuplicateShader	Menu	[#shader: "MenuOptionsButton_Material", #shaderTag: "Orange"]
+	SetShader	Menu	[#shader: "OrangeMenuOptionsButton_Material", #emissive: rgb(255, 200, 75), #diffuse: rgb(255, 200,75), #useDiffuseWithTexture: TRUE]	
+	// Reset some shaders menu	
+	SetShader	Menu	[#shader: "Logo_Material", #emissive: rgb(100, 100, 100)]	
+	SetShader	Menu	[#shader: "Font3D_Material", #emissive: rgb(100, 100, 100)]	
+	SetShader	Menu	[#shader: "GameOfTheYear_Material", #emissive: rgb(100, 100, 100)]	
+	SetShader	Menu	[#shader: "OptionsHeader_Material", #emissive: rgb(100, 100, 100)]
+	SetShader	Menu	[#shader: "MenuOptionsCopy_Material", #emissive: rgb(100, 100, 100)]
+	SetShader	Menu	[#shader: "MenuOptionsButton_Material", #emissive: rgb(100, 100, 100)]
+	SetShader	Menu	[#shader: "GreyMenuOptionsButton_Material", #emissive: rgb(100, 100, 100)]	
+	SetShader	Menu	[#shader: "Trophies_Material", #emissive: rgb(100, 100, 100)]
+	SetShader	Menu	[#shader: "Stats_Material", #emissive: rgb(100, 100, 100)]
+	SetShader	Menu	[#shader: "Help_Material", #emissive: rgb(100, 100, 100)]	
+	SetShader	Menu	[#shader: "WarningMenuOptions_Material", #emissive: rgb(255, 255, 255)]
+	// Eplxosion stuff
+	Event	Setup3DParticles
+	CloneModel	Menu	[#SourceMember: "Particles", #hide: TRUE, #delete: TRUE]
+	BlendShader	Menu	[#shader: "ParticleExplosion1_Material", #blendMode: #add]		
+  	// add camera
+	AddCameraToSprite	{:Sprite}	[#member: "Menu", #camera: "Menu_Camera"]
+	SetCamera	Menu	[#camera: "Menu_Camera", #rect: rect(0, 0, {:StageSize}[1], {:StageSize}[2]), #clearAtRender: FALSE]
+	// Visibility sets
+	SetVisible	Menu	[#model: "*back", #state: FALSE]
+	SetVisible	Menu	[#model: ["Main", "Help", "Stats", "Achievements", "Options"], #state: FALSE]
+	// Options hack
+	Event	CreateOptionsButtons
+	DeleteAllButtons	x	x
+	// script
+	AddScript	#System	[#script: "[PS] BR4 Menu", #data: [#member: "Menu"]]
+SetupMenu_End
+
+//----------------------------------------------------------------------------------------
+// MENU: Intro
+//----------------------------------------------------------------------------------------
+FadeStartIntro_Begin
+	PutMessage	FadeStartIntro
+	Fade	World{:World}	[#hold: 3500, #time: 500, #type: #out, #color: rgb(0, 0, 0)]
+	DelayEvent		[#delay: 3000, #event: "PrepareIntro"]
+	//DelayEvent		[#delay: 4650, #event: "StartIntro"]
+	DelayEvent		[#delay: 8000, #event: "StartIntro"]
+	PlaySound	AmbientWind_SFX	[#priority: #top, #volume: 0.55, #loopCount: 0]
+	FadeSound	AmbientWind_SFX	[#fadeTime: 750, #fadeOut: FALSE]
+FadeStartIntro_End
+
+PrepareIntro_Begin
+	PutMessage	PrepareIntro
+	MenuSetState		[#state: #active]
+	MenuStorePosition	x	x
+	MenuSetCamera		[#target: "Title_Dummy"]
+	MenuSetCameraRootNode		[#target: "World"]
+	MenuSetCameraSettings		[#fov: 32.0, #yon: 1500, #fogFar: 1800]
+PrepareIntro_End
+
+StartIntro_Begin
+	PutMessage	StartIntro
+	MenuStartIntro	x	x
+	MenuSetEvent	x	[#event: "CreateTitleButtons"]
+StartIntro_End
+
+Explosion1Intro_Begin
+	PutMessage	Explosion1Intro
+	AddScript	#system	[#script: "[PS] ExplosionMenu", #data: [#member: "Menu", #dummy: "LogoExplosion1_Dummy", #camera: "Menu_Camera"]]
+Explosion1Intro_End
+
+Explosion2Intro_Begin
+	PutMessage	Explosion2Intro
+	AddScript	#system	[#script: "[PS] ExplosionMenu2", #data: [#member: "Menu", #dummy: "LogoExplosion2_Dummy", #camera: "Menu_Camera"]]
+	
+Explosion2Intro_End
+
+PlayMusicIntro_Begin
+	PutMessage	PlayMusicIntro
+	PlaySound	TrailBlazer_Music	[#priority: #top, #loopCount: 0, #volume: 0.5]
+PlayMusicIntro_End
+
+//----------------------------------------------------------------------------------------
+// MENU: Title
+//----------------------------------------------------------------------------------------
+CreateTitleButtons_Begin
+	PutMessage	CreateTitleButtons
+	SetValue		[#MenuStart: FALSE]
+	CreateButton	Menu	[#model: "TitleStartButton", #event: "InterpolateMainMenu", #effect: #shaderRollover, #shaders: ["Font3D_Material", "OrangeFont3D_Material"]]	
+CreateTitleButtons_End
+
+//----------------------------------------------------------------------------------------
+// MENU: Main
+//----------------------------------------------------------------------------------------
+PrepareEnterMainMenu_Begin
+	PutMessage	PrepareEnterMainMenu
+	// Keys
+	Event	UnbindWorldKeys
+	// Hide, Show & Pause
+	Event	HideStatus
+	Event	HideCurrentInterface
+	SetVisible	Interface	[#model: "InterfaceOverlayPause", #state: TRUE]
+	PauseGame	x	[#particles: FALSE, #animations: FALSE]
+	// Set fade & event
+	MenuSetState	x	[#state: #fadeOut]
+	MenuSetShader	x	[#blend: 100]
+	MenuSetEvent	x	[#event: "EnterMainMenu"]
+	// Sound
+	//FadeSound	Mp3Player	[#fadeTime: 750]
+	//FadeRadioStream	x	[#type: #out, #Time: 750]
+	StopRadioStream	x	x
+	FadeSound	Ambient{:World}_SFX	[#fadeTime: 750]	
+PrepareEnterMainMenu_End
+
+EnterMainMenu_Begin
+	MenuStorePosition	x	x
+	MenuSetState		[#state: #active]
+	MenuSetCamera		[#target: "Target_Dummy"]
+	MenuSetCameraSettings		[#fov: 32.0, #yon: 1500, #fogFar: 1800]
+	MenuSetCameraRootNode		[#target: "World"]	
+	Event	InterpolateMainMenu	
+	PlaySound	PauseResume_SFX	[#override: TRUE, #volume: 0.45]
+	PlaySound	AmbientWind_SFX	[#priority: #top, #volume: 0.55, #loopCount: 0]
+	FadeSound	AmbientWind_SFX	[#fadeTime: 750, #fadeOut: FALSE]	
+	PlaySound	TrailBlazer_Music	[#priority: #top, #loopCount: 0, #volume: 0.5]	
+	FadeSound	TrailBlazer_Music	[#fadeTime: 750, #fadeOut: FALSE]	
+EnterMainMenu_End
+
+InterpolateTitle_Begin
+	PutMessage	InterpolateTitle
+	DeleteAllButtons	x	x
+	MenuSetCameraTarget		[#target: "Title_Dummy"]
+	MenuSetEvent	x	[#event: "CreateTitleButtons"]
+InterpolateTitle_End
+
+InterpolateMainMenu_Begin
+	PutMessage	InterpolateMainMenu
+	DeleteAllButtons	x	x
+	DeleteScript	#System	[#name: "Scroller"]
+	Event	ResetMainMenuShaders
+	SetVisible	Menu	[#model: "Main", #state: TRUE]
+	SetVisible	Menu	[#model: "*back", #state: FALSE]
+	SetVisible	Menu	[#model: ["Help", "Stats", "Achievements", "Options"], #state: FALSE]
+	SetVisible	Menu	[#model: ["MainWarning", "ContinueButton"], #state: FALSE]
+	Evaluate	{:GameLoaded}=TRUE	[#event: "ShowMainMenuContinueButton"]
+	MenuSetCameraTarget		[#target: "Main_Dummy"]
+	MenuSetEvent	x	[#event: "CreateMainMenuButtons"]
+InterpolateMainMenu_End
+
+CreateMainMenuButtons_Begin
+	PutMessage	CreateMainMenuButtons
+	CreateButton	Menu	[#model: "NewGameButton", #event: "NewGame", #effect: #shaderRollover, #shaders: ["Font3D_Material", "OrangeFont3D_Material"]]
+	CreateButton	Menu	[#model: "OptionsButton", #event: "InterpolateOptions", #effect: #shaderRollover, #shaders: ["Font3D_Material", "OrangeFont3D_Material"]]
+	CreateButton	Menu	[#model: "HelpButton", #event: "InterpolateHelp", #effect: #shaderRollover, #shaders: ["Font3D_Material", "OrangeFont3D_Material"]]
+	CreateButton	Menu	[#model: "AchievementsButton", #event: "InterpolateAchievements", #effect: #shaderRollover, #shaders: ["Font3D_Material", "OrangeFont3D_Material"]]
+	CreateButton	Menu	[#model: "StatsButton", #event: "InterpolateStats", #effect: #shaderRollover, #shaders: ["Font3D_Material", "OrangeFont3D_Material"]]
+	CreateButton	Menu	[#model: "QuitButton", #handler: "GameQuit", #effect: #shaderRollover, #shaders: ["Font3D_Material", "OrangeFont3D_Material"]]
+	Evaluate	{:GameLoaded}=TRUE	[#event: "CreateMainMenuContinueButton"]
+	BindKey		[#key: 53, #event: "InterpolateTitle", #once: TRUE]
+	Event	WorldCheatButtons
+CreateMainMenuButtons_End
+
+ShowMainMenuContinueButton_Begin	
+	PutMessage	ShowMainMenuContinueButton
+	SetVisible	Menu	[#model: "ContinueButton", #state: TRUE]	
+ShowMainMenuContinueButton_End
+
+CreateMainMenuContinueButton_Begin
+	PutMessage	CreateMainMenuContinueButton
+	CreateButton	Menu	[#model: "ContinueButton", #event: "InterpolateContinueGame", #effect: #shaderRollover, #shaders: ["Font3D_Material", "OrangeFont3D_Material"]]
+CreateMainMenuContinueButton_End
+
+ShowMainMenuWarning_Begin
+	PutMessage	ShowMainMenuWarning
+	// Change layer
+	SetValue	gGame.Menu	[#layer: 1]
+	SetVisible	Menu	[#model: "MainWarning", #parent: "Main", #state: TRUE]
+	// Buttons
+	CreateButton	Menu	[#model: "MainWarningYesButton", #event: "NewGameAccept", #Layer: 1, #effect: #shaderRollover, #shaders: ["MenuOptionsButton_Material", "OrangeMenuOptionsButton_Material"]]	
+	CreateButton	Menu	[#model: "MainWarningNoButton", #event: "NewGameCancel", #layer: 1, #effect: #shaderRollover, #shaders: ["MenuOptionsButton_Material", "OrangeMenuOptionsButton_Material"]]
+ShowMainMenuWarning_End
+
+HideMainMenuWarning_Begin
+	PutMessage	HideMainMenuWarning
+	// Change layer
+	SetValue	gGame.Menu	[#layer: 0]
+	SetVisible	Menu	[#model: "MainWarning", #state: FALSE]
+	// Buttons
+	DeleteButton	Menu	[#model: "MainWarningNoButton"]
+	DeleteButton	Menu	[#model: "MainWarningYesButton"]	
+HideMainMenuWarning_End
+
+//----------------------------------------------------------------------------------------
+// MENU: Main: NewGame
+//----------------------------------------------------------------------------------------
+NewGame_Begin
+	PutMessage	NewGame
+	Evaluate	{:GameLoaded}=TRUE	[#event: "ShowMainMenuWarning"]	
+	Evaluate	{:GameLoaded}=FALSE	[#event: "InterpolateContinueGame"]
+NewGame_End
+
+NewGameAccept_Begin
+	PutMessage	NewGameAccept
+	Event	HideMainMenuWarning
+	DeleteAllButtons	x	x
+	SetVisible	Menu	[#model: "*back", #state: FALSE]
+	SetVisible	Menu	[#model: "*button", #state: FALSE]
+	SetVisible	Menu	[#model: ["Main", "Help", "Stats", "Achievements", "Options"], #state: FALSE]
+	Fade	World{:World}	[#time: 500, #type: #in, #color: rgb(0, 0, 0), #event: "ResetAllAndStartNewGame"]]	
+NewGameAccept_End
+
+NewGameCancel_Begin
+	PutMessage	NewGameCancel
+	Event	HideMainMenuWarning
+NewGameCancel_End
+
+ResetAllAndStartNewGame_Begin
+	PutMessage	ResetAllAndStartNewGame
+	// ----------------------------
+	// Check delete scripts
+	// ----------------------------
+	DeleteScript	#System	[#name: "[PS] ExplosionMenu"]
+	DeleteScript	#System	[#name: "[PS] ExplosionMenu2"]	
+	// ----------------------------
+	// Events
+	// ----------------------------
+	Event	ResetCurrentWorld
+	Event	SetAllValuesToDefaultGame
+	Event	WorldInitialization
+ResetAllAndStartNewGame_End
+
+//----------------------------------------------------------------------------------------
+// MENU: Main: Continue
+//----------------------------------------------------------------------------------------
+InterpolateContinueGame_Begin
+	PutMessage	InterpolateContinueGame
+	DeleteAllButtons	x	x
+	UnBindKey		[#key: 53]
+	SetValue		[#GameLoaded: TRUE]
+	MenuSetCameraTarget		[#target: "Target_Dummy"]
+	MenuSetCameraSettings		[#fov: gGame.Camera[1].fov, #yon: 500.0, #fogFar: gGame.TrackInfo.FogRange[2]]
+	MenuSetEvent	x	[#event: "ContinueGame"]
+	PlaySound	PauseResume_SFX	[#override: TRUE, #volume: 0.45]
+	FadeSound	AmbientWind_SFX	[#fadeTime: 750]
+	FadeSound	TrailBlazer_Music	[#fadeTime: 1500]	
+InterpolateContinueGame_End
+
+ContinueGame_Begin
+	PutMessage	ContinueGame
+	//PauseGame	x	[#particles: FALSE, #animations: FALSE]
+	//Evaluate	{:GameLoaded}=FALSE	[#handler: "SaveData"]
+	//SaveData	x	[#progress: FALSE]
+	StopSound	AmbientWind_SFX
+	StopSound	TrailBlazer_Music
+	Event	PrepareStartGame
+ContinueGame_End
+
+//----------------------------------------------------------------------------------------
+// MENU: Main: Options
+//----------------------------------------------------------------------------------------
+InterpolateOptions_Begin
+	PutMessage	InterpolateOptions
+	DeleteAllButtons	x	x
+	Event	SetMainMenuShaders
+	SetModel	Menu	[#model: "OptionsButton", #shader: "Font3D_Material"]
+	SetModel	Menu	[#model: "OptionsGlowButton", #shader: "Font3DGlow_Material"]
+	SetVisible	Menu	[#model: "Main", #state: FALSE]
+	SetVisible	Menu	[#model: ["Options", "OptionsBackButton", "OptionsBackGlowButton"], #state: TRUE]
+	MenuSetCameraTarget		[#target: "Options_Dummy"]
+	MenuSetEvent	x	[#event: "CreateOptionsButtons"]
+InterpolateOptions_End
+
+CreateOptionsButtons_Begin
+	PutMessage	CreateOptionsButtons
+	CreateButton	Menu	[#model: "OptionsBackButton", #event: "InterpolateMainMenu", #pressed_sfx: "Back_SFX", #effect: #shaderRollover, #shaders: ["Font3D_Material", "OrangeFont3D_Material"]]
+	// Sound
+	Evaluate	{:Sound}=TRUE	[#event: "OptionsSoundOn"]
+	Evaluate	{:Sound}=FALSE	[#event: "OptionsSoundOff"]	
+	// Effects
+	Evaluate	#{:Effects}=#low	[#event: "OptionsEffectsLow"]
+	Evaluate	#{:Effects}=#medium	[#event: "OptionsEffectsMedium"]
+	Evaluate	#{:Effects}=#high	[#event: "OptionsEffectsHigh"]
+	// Bloom
+	Evaluate	{:Bloom}=TRUE	[#event: "OptionsBloomOn"]
+	Evaluate	{:Bloom}=FALSE	[#event: "OptionsBloomOff"]	
+	// AntiAliasing
+	Evaluate	#{:AntiAliasing}=#none	[#event: "OptionsAntiAliasingOff"]
+	Evaluate	#{:AntiAliasing}=#multiSample2x	[#event: "OptionsAntiAliasing2x"]
+	Evaluate	#{:AntiAliasing}=#multiSample4x	[#event: "OptionsAntiAliasing4x"]
+	Evaluate	#{:AntiAliasing}=#multiSample8x	[#event: "OptionsAntiAliasing8x"]	
+CreateOptionsButtons_End
+
+//----------------------------------------------------------------------------------------
+// MENU: Main: Options: Sound
+//----------------------------------------------------------------------------------------
+OptionsSoundOn_Begin
+	PutMessage	OptionsSoundOn
+	SetModel	Menu	[#model: "OptionsSoundOnButton", #shader: "MenuOptionsButton_Material"]
+	SetModel	Menu	[#model: "OptionsSoundOffButton", #shader: "GreyMenuOptionsButton_Material"]
+	DeleteButton	Menu	[#model: "OptionsSoundOnButton"]
+	CreateButton	Menu	[#model: "OptionsSoundOffButton", #event: "OptionsSoundOff", #effect: #shaderRollover, #shaders: ["GreyMenuOptionsButton_Material", "OrangeMenuOptionsButton_Material"]]
+	SetValue		[#sound: TRUE]
+	SetValue	gSound	[#mute: FALSE]
+	MuteSound	x	x
+OptionsSoundOn_End
+
+OptionsSoundOff_Begin
+	PutMessage	OptionsSoundOff
+	SetModel	Menu	[#model: "OptionsSoundOffButton", #shader: "MenuOptionsButton_Material"]
+	SetModel	Menu	[#model: "OptionsSoundOnButton", #shader: "GreyMenuOptionsButton_Material"]
+	DeleteButton	Menu	[#model: "OptionsSoundOffButton"]
+	CreateButton	Menu	[#model: "OptionsSoundOnButton", #event: "OptionsSoundOn", #effect: #shaderRollover, #shaders: ["GreyMenuOptionsButton_Material", "OrangeMenuOptionsButton_Material"]]
+	SetValue		[#sound: FALSE]
+	SetValue	gSound	[#mute: TRUE]
+	MuteSound	x	x
+OptionsSoundOff_End
+
+//----------------------------------------------------------------------------------------
+// MENU: Main: Options: Bloom
+//----------------------------------------------------------------------------------------
+OptionsBloomOn_Begin
+	PutMessage	--> --> OptionsBloomOn
+	SetModel	Menu	[#model: "OptionsBloomOnButton", #shader: "MenuOptionsButton_Material"]
+	SetModel	Menu	[#model: "OptionsBloomOffButton", #shader: "GreyMenuOptionsButton_Material"]
+	DeleteButton	Menu	[#model: "OptionsBloomOnButton"]
+	CreateButton	Menu	[#model: "OptionsBloomOffButton", #event: "OptionsBloomOff", #event: "OptionsSoundToggle", #effect: #shaderRollover, #shaders: ["GreyMenuOptionsButton_Material", "OrangeMenuOptionsButton_Material"]]
+	SetValue		[#Bloom: TRUE]
+	AddScript	#system	[#script: "[PS] Motion Blur", #duplicate: FALSE, #data: [#member: "World{:World}", #camera: "Player1_Camera", #passes: 7]]
+	AddScript	#system	[#script: "[PS] Bloom", #duplicate: FALSE, #data: [#member: "World{:World}", #camera: "Player1_Camera", #template: #World{:World}{:Setting}, #skybox: TRUE]]
+OptionsBloomOn_End
+
+OptionsBloomOff_Begin
+	PutMessage	--> --> OptionsBloomOff
+	SetModel	Menu	[#model: "OptionsBloomOffButton", #shader: "MenuOptionsButton_Material"]
+	SetModel	Menu	[#model: "OptionsBloomOnButton", #shader: "GreyMenuOptionsButton_Material"]
+	DeleteButton	Menu	[#model: "OptionsBloomOffButton"]
+	CreateButton	Menu	[#model: "OptionsBloomOnButton", #event: "OptionsBloomOn", #event: "OptionsSoundToggle", #effect: #shaderRollover, #shaders: ["GreyMenuOptionsButton_Material", "OrangeMenuOptionsButton_Material"]]
+	SetValue		[#Bloom: FALSE]
+	DeleteScript	#System	[#name: "[PS] Motion Blur"]
+	DeleteScript	#System	[#name: "[PS] Bloom"]
+OptionsBloomOff_End
+
+//----------------------------------------------------------------------------------------
+// MENU: Main: Options: Effects
+//----------------------------------------------------------------------------------------
+OptionsEffectsLow_Begin
+	PutMessage	OptionsEffectsLow	
+	SetModel	Menu	[#model: "OptionsEffectsLowButton", #shader: "MenuOptionsButton_Material"]
+	SetModel	Menu	[#model: "OptionsEffectsMediumButton", #shader: "GreyMenuOptionsButton_Material"]
+	SetModel	Menu	[#model: "OptionsEffectsHighButton", #shader: "GreyMenuOptionsButton_Material"]	
+	DeleteButton	Menu	[#model: "OptionsEffectsLowButton"]
+	CreateButton	Menu	[#model: "OptionsEffectsMediumButton", #event: "OptionsEffectsMedium", #effect: #shaderRollover, #shaders: ["GreyMenuOptionsButton_Material", "OrangeMenuOptionsButton_Material"]] 
+	CreateButton	Menu	[#model: "OptionsEffectsHighButton", #event: "OptionsEffectsHigh", #effect: #shaderRollover, #shaders: ["GreyMenuOptionsButton_Material", "OrangeMenuOptionsButton_Material"]] 
+	SetValue		[#Effects: #low]
+	Event	SetupWorld{:World}Effects{:Effects}	
+OptionsEffectsLow_End
+
+OptionsEffectsMedium_Begin
+	PutMessage	OptionsEffectsMedium	
+	SetModel	Menu	[#model: "OptionsEffectsLowButton", #shader: "GreyMenuOptionsButton_Material"]
+	SetModel	Menu	[#model: "OptionsEffectsMediumButton", #shader: "MenuOptionsButton_Material"]
+	SetModel	Menu	[#model: "OptionsEffectsHighButton", #shader: "GreyMenuOptionsButton_Material"]	
+	CreateButton	Menu	[#model: "OptionsEffectsLowButton", #event: "OptionsEffectsLow", #effect: #shaderRollover, #shaders: ["GreyMenuOptionsButton_Material", "OrangeMenuOptionsButton_Material"]] 
+	DeleteButton	Menu	[#model: "OptionsEffectsMediumButton"]
+	CreateButton	Menu	[#model: "OptionsEffectsHighButton", #event: "OptionsEffectsHigh", #effect: #shaderRollover, #shaders: ["GreyMenuOptionsButton_Material", "OrangeMenuOptionsButton_Material"]] 
+	SetValue		[#Effects: #medium]
+	Event	SetupWorld{:World}Effects{:Effects}	
+OptionsEffectsMedium_End
+
+OptionsEffectsHigh_Begin
+	PutMessage	OptionsEffectsHigh	
+	SetModel	Menu	[#model: "OptionsEffectsLowButton", #shader: "GreyMenuOptionsButton_Material"]
+	SetModel	Menu	[#model: "OptionsEffectsMediumButton", #shader: "GreyMenuOptionsButton_Material"]
+	SetModel	Menu	[#model: "OptionsEffectsHighButton", #shader: "MenuOptionsButton_Material"]	
+	CreateButton	Menu	[#model: "OptionsEffectsLowButton", #event: "OptionsEffectsLow", #effect: #shaderRollover, #shaders: ["GreyMenuOptionsButton_Material", "OrangeMenuOptionsButton_Material"]] 
+	CreateButton	Menu	[#model: "OptionsEffectsMediumButton", #event: "OptionsEffectsMedium", #effect: #shaderRollover, #shaders: ["GreyMenuOptionsButton_Material", "OrangeMenuOptionsButton_Material"]] 
+	DeleteButton	Menu	[#model: "OptionsEffectsHighButton"]	
+	SetValue		[#Effects: #high]
+	Event	SetupWorld{:World}Effects{:Effects}
+OptionsEffectsHigh_End
+
+//----------------------------------------------------------------------------------------
+// MENU: Main: Options: AA
+//----------------------------------------------------------------------------------------
+OptionsAntiAliasingOff_Begin
+	PutMessage	OptionsAntiAliasingOff
+	SetModel	Menu	[#model: "OptionsAntialiasingOffButton", #shader: "MenuOptionsButton_Material"]
+	SetModel	Menu	[#model: "OptionsAntialiasing2xButton", #shader: "GreyMenuOptionsButton_Material"]
+	SetModel	Menu	[#model: "OptionsAntialiasing4xButton", #shader: "GreyMenuOptionsButton_Material"]
+	SetModel	Menu	[#model: "OptionsAntialiasing8xButton", #shader: "GreyMenuOptionsButton_Material"]
+	DeleteButton	Menu	[#model: "OptionsAntialiasingOffButton"]
+	CreateButton	Menu	[#model: "OptionsAntialiasing2xButton", #event: "OptionsAntiAliasing2x", #effect: #shaderRollover, #shaders: ["GreyMenuOptionsButton_Material", "OrangeMenuOptionsButton_Material"]] 
+	CreateButton	Menu	[#model: "OptionsAntialiasing4xButton", #event: "OptionsAntiAliasing4x", #effect: #shaderRollover, #shaders: ["GreyMenuOptionsButton_Material", "OrangeMenuOptionsButton_Material"]] 
+	CreateButton	Menu	[#model: "OptionsAntialiasing8xButton", #event: "OptionsAntiAliasing8x", #effect: #shaderRollover, #shaders: ["GreyMenuOptionsButton_Material", "OrangeMenuOptionsButton_Material"]] 
+	SetValue		[#AntiAliasing: #none]
+	SetAntiAliasing	{:Sprite}	[#mode: #none]
+OptionsAntiAliasingOff_End
+
+OptionsAntiAliasing2x_Begin
+	PutMessage	OptionsAntiAliasing2x	
+	SetModel	Menu	[#model: "OptionsAntialiasingOffButton", #shader: "GreyMenuOptionsButton_Material"]
+	SetModel	Menu	[#model: "OptionsAntialiasing2xButton", #shader: "MenuOptionsButton_Material"]
+	SetModel	Menu	[#model: "OptionsAntialiasing4xButton", #shader: "GreyMenuOptionsButton_Material"]	
+	SetModel	Menu	[#model: "OptionsAntialiasing8xButton", #shader: "GreyMenuOptionsButton_Material"]	
+	CreateButton	Menu	[#model: "OptionsAntialiasingOffButton", #event: "OptionsAntiAliasingOff", #effect: #shaderRollover, #shaders: ["GreyMenuOptionsButton_Material", "OrangeMenuOptionsButton_Material"]]
+	DeleteButton	Menu	[#model: "OptionsAntialiasing2xButton"]
+	CreateButton	Menu	[#model: "OptionsAntialiasing4xButton", #event: "OptionsAntiAliasing4x", #effect: #shaderRollover, #shaders: ["GreyMenuOptionsButton_Material", "OrangeMenuOptionsButton_Material"]]
+	CreateButton	Menu	[#model: "OptionsAntialiasing8xButton", #event: "OptionsAntiAliasing8x", #effect: #shaderRollover, #shaders: ["GreyMenuOptionsButton_Material", "OrangeMenuOptionsButton_Material"]]
+	SetValue		[#AntiAliasing: #multiSample2x]
+	SetAntiAliasing	{:Sprite}	[#mode: #multiSample2x]
+OptionsAntiAliasing2x_End
+
+OptionsAntiAliasing4x_Begin
+	PutMessage	OptionsAntiAliasing4x	
+	SetModel	Menu	[#model: "OptionsAntialiasingOffButton", #shader: "GreyMenuOptionsButton_Material"]
+	SetModel	Menu	[#model: "OptionsAntialiasing2xButton", #shader: "GreyMenuOptionsButton_Material"]
+	SetModel	Menu	[#model: "OptionsAntialiasing4xButton", #shader: "MenuOptionsButton_Material"]	
+	SetModel	Menu	[#model: "OptionsAntialiasing8xButton", #shader: "GreyMenuOptionsButton_Material"]	
+	CreateButton	Menu	[#model: "OptionsAntialiasingOffButton", #event: "OptionsAntiAliasingOff", #effect: #shaderRollover, #shaders: ["GreyMenuOptionsButton_Material", "OrangeMenuOptionsButton_Material"]]
+	CreateButton	Menu	[#model: "OptionsAntialiasing2xButton", #event: "OptionsAntiAliasing2x", #effect: #shaderRollover, #shaders: ["GreyMenuOptionsButton_Material", "OrangeMenuOptionsButton_Material"]]
+	DeleteButton	Menu	[#model: "OptionsAntialiasing4xButton"]
+	CreateButton	Menu	[#model: "OptionsAntialiasing8xButton", #event: "OptionsAntiAliasing8x", #effect: #shaderRollover, #shaders: ["GreyMenuOptionsButton_Material", "OrangeMenuOptionsButton_Material"]]
+	SetValue		[#AntiAliasing: #multiSample4x]
+	SetAntiAliasing	{:Sprite}	[#mode: #multiSample4x]
+OptionsAntiAliasing4x_End
+
+OptionsAntiAliasing8x_Begin
+	PutMessage	OptionsAntiAliasing8x	
+	SetModel	Menu	[#model: "OptionsAntialiasingOffButton", #shader: "GreyMenuOptionsButton_Material"]
+	SetModel	Menu	[#model: "OptionsAntialiasing2xButton", #shader: "GreyMenuOptionsButton_Material"]
+	SetModel	Menu	[#model: "OptionsAntialiasing4xButton", #shader: "GreyMenuOptionsButton_Material"]	
+	SetModel	Menu	[#model: "OptionsAntialiasing8xButton", #shader: "MenuOptionsButton_Material"]	
+	CreateButton	Menu	[#model: "OptionsAntialiasingOffButton", #event: "OptionsAntiAliasingOff", #effect: #shaderRollover, #shaders: ["GreyMenuOptionsButton_Material", "OrangeMenuOptionsButton_Material"]]
+	CreateButton	Menu	[#model: "OptionsAntialiasing2xButton", #event: "OptionsAntiAliasing2x", #effect: #shaderRollover, #shaders: ["GreyMenuOptionsButton_Material", "OrangeMenuOptionsButton_Material"]]
+	CreateButton	Menu	[#model: "OptionsAntialiasing4xButton", #event: "OptionsAntiAliasing4x", #effect: #shaderRollover, #shaders: ["GreyMenuOptionsButton_Material", "OrangeMenuOptionsButton_Material"]]
+	DeleteButton	Menu	[#model: "OptionsAntialiasing8xButton"]	
+	SetValue		[#AntiAliasing: #multiSample8x]
+	SetAntiAliasing	{:Sprite}	[#mode: #multiSample8x]
+OptionsAntiAliasing8x_End
+
+//----------------------------------------------------------------------------------------
+// MENU: Main: Help
+//----------------------------------------------------------------------------------------
+InterpolateHelp_Begin
+	PutMessage	InterpolateHelp
+	DeleteAllButtons	x	x
+	Event	SetMainMenuShaders
+	SetModel	Menu	[#model: "HelpButton", #shader: "Font3D_Material"]
+	SetModel	Menu	[#model: "HelpGlowButton", #shader: "Font3DGlow_Material"]
+	SetVisible	Menu	[#model: "Main", #state: FALSE]
+	SetVisible	Menu	[#model: ["HelpBackButton", "HelpBackGlowButton", "Help"], #state: TRUE]
+	MenuSetCameraTarget		[#target: "Help_Dummy"]
+	MenuSetEvent	x	[#event: "CreateHelpButtons"]
+InterpolateHelp_End
+
+CreateHelpButtons_Begin
+	PutMessage	CreateHelpButtons
+	AddScript	#system	[#script: "[PS] Burnin3 Scroller", #data: [#member: "Menu", #tag: "Help", #shaderMax: 0.875]]	
+	CreateButton	Menu	[#model: "HelpBackButton", #event: "InterpolateMainMenu", #pressed_sfx: "Back_SFX", #effect: #shaderRollover, #shaders: ["Font3D_Material", "OrangeFont3D_Material"]]	
+CreateHelpButtons_End
+
+//----------------------------------------------------------------------------------------
+// MENU: Main: Stats
+//----------------------------------------------------------------------------------------
+InterpolateStats_Begin
+	PutMessage	InterpolateStats
+	DeleteAllButtons	x	x
+	UpdateStats	x	x
+	Event	SetMainMenuShaders
+	SetModel	Menu	[#model: "StatsButton", #shader: "Font3D_Material"]
+	SetModel	Menu	[#model: "StatsGlowButton", #shader: "Font3DGlow_Material"]
+	SetVisible	Menu	[#model: "Main", #state: FALSE]
+	SetVisible	Menu	[#model: ["StatsBackButton", "StatsBackGlowButton", "Stats"], #state: TRUE]
+	MenuSetCameraTarget		[#target: "Stats_Dummy"]
+	MenuSetEvent	x	[#event: "CreateStatsButtons"]
+InterpolateStats_End
+
+CreateStatsButtons_Begin
+	PutMessage	CreateStatsButtons
+	AddScript	#system	[#script: "[PS] Burnin3 Scroller", #data: [#member: "Menu", #tag: "Stats", #shaderMax: 0.0650]]	
+	CreateButton	Menu	[#model: "StatsBackButton", #event: "InterpolateMainMenu", #pressed_sfx: "Back_SFX", #effect: #shaderRollover, #shaders: ["Font3D_Material", "OrangeFont3D_Material"]]	
+CreateStatsButtons_End
+
+//----------------------------------------------------------------------------------------
+// MENU: Main: Achievements
+//----------------------------------------------------------------------------------------
+InterpolateAchievements_Begin
+	PutMessage	InterpolateAchievements
+	DeleteAllButtons	x	x
+	UpdateAchievements	x	x
+	Event	SetMainMenuShaders
+	SetModel	Menu	[#model: "AchievementsButton", #shader: "Font3D_Material"]
+	SetModel	Menu	[#model: "AchievementsGlowButton", #shader: "Font3DGlow_Material"]
+	SetVisible	Menu	[#model: "Main", #state: FALSE]
+	SetVisible	Menu	[#model: ["AchievementsBackButton", "AchievementsBackGlowButton", "Achievements"], #state: TRUE]
+	MenuSetCameraTarget		[#target: "Achievements_Dummy"]
+	MenuSetEvent	x	[#event: "CreateAchievementsButtons"]
+InterpolateAchievements_End
+
+CreateAchievementsButtons_Begin
+	PutMessage	CreateAchievementsButtons
+	CreateButton	Menu	[#model: "AchievementsBackButton", #event: "InterpolateMainMenu", #pressed_sfx: "Back_SFX", #effect: #shaderRollover, #shaders: ["Font3D_Material", "OrangeFont3D_Material"]]
+CreateAchievementsButtons_End
+
+//----------------------------------------------------------------------------------------
+// MENU: Misc
+//----------------------------------------------------------------------------------------
+ResetMainMenuShaders_Begin
+	PutMessage	ResetMainMenuShaders
+	SetModel	Menu	[#model: "NewGameButton", #shader: "Font3D_Material"]
+	SetModel	Menu	[#model: "ContinueButton", #shader: "Font3D_Material"]
+	SetModel	Menu	[#model: "OptionsButton", #shader: "Font3D_Material"]
+	SetModel	Menu	[#model: "HelpButton", #shader: "Font3D_Material"]
+	SetModel	Menu	[#model: "AchievementsButton", #shader: "Font3D_Material"]
+	SetModel	Menu	[#model: "StatsButton", #shader: "Font3D_Material"]	
+	SetModel	Menu	[#model: "NewGameGlowButton", #shader: "Font3DGlow_Material"]
+	SetModel	Menu	[#model: "ContinueGlowButton", #shader: "Font3DGlow_Material"]
+	SetModel	Menu	[#model: "OptionsGlowButton", #shader: "Font3DGlow_Material"]
+	SetModel	Menu	[#model: "HelpGlowButton", #shader: "Font3DGlow_Material"]
+	SetModel	Menu	[#model: "AchievementsGlowButton", #shader: "Font3DGlow_Material"]
+	SetModel	Menu	[#model: "StatsGlowButton", #shader: "Font3DGlow_Material"]	
+ResetMainMenuShaders_End
+
+SetMainMenuShaders_Begin
+	PutMessage	SetMainMenuShaders
+	SetModel	Menu	[#model: "NewGameButton", #shader: "GreyFont3D_Material"]
+	SetModel	Menu	[#model: "ContinueButton", #shader: "GreyFont3D_Material"]
+	SetModel	Menu	[#model: "OptionsButton", #shader: "GreyFont3D_Material"]
+	SetModel	Menu	[#model: "HelpButton", #shader: "GreyFont3D_Material"]
+	SetModel	Menu	[#model: "AchievementsButton", #shader: "GreyFont3D_Material"]
+	SetModel	Menu	[#model: "StatsButton", #shader: "GreyFont3D_Material"]	
+	SetModel	Menu	[#model: "NewGameGlowButton", #shader: "GreyFont3DGlow_Material"]
+	SetModel	Menu	[#model: "ContinueGlowButton", #shader: "GreyFont3DGlow_Material"]
+	SetModel	Menu	[#model: "OptionsGlowButton", #shader: "GreyFont3DGlow_Material"]
+	SetModel	Menu	[#model: "HelpGlowButton", #shader: "GreyFont3DGlow_Material"]
+	SetModel	Menu	[#model: "AchievementsGlowButton", #shader: "GreyFont3DGlow_Material"]
+	SetModel	Menu	[#model: "StatsGlowButton", #shader: "GreyFont3DGlow_Material"]	
+SetMainMenuShaders_End
+
+//----------------------------------------------------------------------------------------
+// Game
+//----------------------------------------------------------------------------------------
+FadeStartGame_Begin
+	PutMessage	FadeStartGame
+	Fade	World{:World}	[#hold: 500, #time: 500, #type: #out, #color: rgb(0, 0, 0), #event: "PrepareStartGame"]
+FadeStartGame_End
+
+PrepareStartGame_Begin
+	PutMessage	PrepareStartGame
+	// Save game
+	SaveData	x	[#progress: FALSE]
+	// Visible
+	SetVisible	Interface	[#model: "InterfaceOverlayPause", #state: TRUE]
+	// Set fade & event
+	MenuSetState	x	[#state: #fadeIn]
+	MenuSetShader	x	[#blend: 0]
+	MenuSetEvent	x	[#event: "StartGame"]
+PrepareStartGame_End
+
+StartGame_Begin
+	PutMessage	StartGame
+	// Main menu sets
+	MenuSetCameraRootNode		[#target: #none]
+	MenuSetState		[#state: #inactive]
+	// Hide, Show & Pause
+	Event	ShowCurrentInterface
+	SetVisible	Interface	[#model: "InterfaceOverlayPause", #state: FALSE]
+	PauseGame	x	[#particles: FALSE, #animations: FALSE]
+	// Input
+	SetValue		[#input: TRUE]
+	Event	BindWorldKeys
+	// Welcome & tank messages	
+	Evaluate	{:WelcomeMessage}=TRUE;{:TankMessageDisplayed}=FALSE	[#Event: "DelayWelcomeInformation"]
+	Evaluate	{:TankMessage}=TRUE;{:TankMessageDisplayed}=FALSE	[#Event: "DelayTankMessage"]	
+	// Music
+	SetRadioStream	x	[#Radio: "FungiFM", #Track: gGame.TrackInfo.music]
+	PlayRadioStream	x	x
+	//FadeRadioStream	x	[#fade: #in, #time: 750]
+	//PlaySound	Mp3Player	[#priority: #top, #loopCount: 0, #volume: 0.5]	
+	//FadeSound	Mp3Player	[#fadeTime: 750, #fadeOut: FALSE]	
+	// Sound
+	PlaySound	Ambient{:World}_SFX	[#priority: #top, #volume: 1.0, #loopcount: 0]	
+	FadeSound	Ambient{:World}_SFX	[#fadeTime: 750, #fadeOut: FALSE]	
+StartGame_End
+
+//------------------------------------------------------------------------------------------------------
+// Interface: Setup
+//------------------------------------------------------------------------------------------------------
+SetupInterface_Begin
+	PutMessage	Interface
+	// Setup
+	ResetWorld Interface
+	CreateTexture	Interface	[#texture: "Interface_Texture", #renderFormat: #rgba8888, #nearFiltering: FALSE, #filtering: #lowFiltered]
+	CreateTexture	Interface	[#texture: "InterfaceOverlays_Texture", #renderFormat: #rgba8888, #nearFiltering: FALSE, #filtering: #lowFiltered]
+	CreateTexture	Interface	[#texture: "SprayShopSkins_Texture", #renderFormat: #rgba8888, #nearFiltering: FALSE, #filtering: #lowFiltered]
+	// Add to sprite
+	AddCameraToSprite	{:Sprite}	[#member: "Interface", #camera: "Interface_Camera"]
+	SetCamera	Interface	[#camera: "Interface_Camera", #projection: #orthographic, #orthoHeight: 450.0,  #rect: rect(0, 0, {:StageSize}[1], {:StageSize}[2]), #clearAtRender: FALSE]
+	// Menu overlay 
+	SetVisible	Interface	[#model: "InterfaceOverlayPause", #state: FALSE]
+	// script
+	AddScript		[#script: "[PS] Interface", #data: [#member: "Interface"]]
+SetupInterface_End
+
+//------------------------------------------------------------
+// MiniMap: Setup
+//------------------------------------------------------------
+SetupMiniMap_Begin
+	PutMessage	--> SetupMiniMap
+	//MiniMap Textures
+	CreateTexture	Minimap	[#texture: "Minimap{:World}_Texture", #renderFormat: #rgba5650, #nearFiltering: FALSE, #filtering: #lowFiltered]
+	CreateTexture	Minimap	[#texture: "MiniMapBorder_Texture", #renderFormat: #rgba8888, #nearFiltering: TRUE, #filtering: #lowFiltered]
+	CreateTexture	Minimap	[#texture: "MinimapCircle_Texture", #renderFormat: #rgba8888, #nearFiltering: TRUE, #filtering: #lowFiltered]
+	CreateTexture	Minimap	[#texture: "MinimapMarker_Texture", #renderFormat: #rgba4444, #nearFiltering: TRUE, #filtering: #lowFiltered]
+	// shaders
+	SetShader	Minimap	[#shader: "MiniMap_Material", #texture1: "Minimap{:World}_Texture"]
+	SetShader	Minimap	[#shader: "MiniMap_Material", #texture2: "MinimapCircle_Texture"]
+	SetShader	Minimap	[#shader: "MiniMapBorder_Material", #texture1: "MiniMapBorder_Texture"]
+	SetShader	Minimap	[#shader: "MiniMapMarker_Material", #texture1: "MinimapMarker_Texture"]
+	//Script
+	AddScript		[#script: "[PS] MiniMap", #data: [#sprite: {:Sprite}, #member: "World{:World}", #Marker: TRUE]]
+	// Default markers
+	AddMiniMapMarker	MiniMap	[#type: #North, #position: vector(0,0,0)]
+	AddMiniMapMarker	MiniMap	[#type: #Player, #position: vector(0,0,0)]
+	// Standard markers
+	Event	MiniMapAddStandardMarkers
+	// Disable current Marker
+	DisableCurrentMarker	x	x
+tupMiniMap_End
+
+//------------------------------------------------------------
+// MiniMap: Standard markers
+//------------------------------------------------------------
+MiniMapAddStandardMarkers_Begin
+	PutMessage	--> MiniMapAddStandardMarkers
+	// Standard Markers
+	AddMarker	World{:World}	[#position: "SafeHouse{:World}_Marker", #Type: #SafeHouse]
+	AddMarker	World{:World}	[#position: "SprayShop{:World}_Marker", #Type: #SprayShop]
+	AddMarker	World{:World}	[#position: "TuneShop{:World}_Marker", #Type: #TuneShop]
+	AddMarker	World{:World}	[#position: "WeaponShop{:World}_Marker", #Type: #WeaponShop]
+	AddMarker	World{:World}	[#position: "TicketMaster{:World}_Marker", #Type: #TicketMaster]
+	// Daily Challenge
+	AddMarker	World{:World}	[#position: "DailyChallenge_Marker", #Type: #DailyChallenge]
+	// World related markers
+	Event	MiniMap{:World}Markers
+MiniMapAddStandardMarkers_End
+
+//------------------------------------------------------------
+// MiniMap: City markers
+//------------------------------------------------------------
+MiniMapCityMarkers_Begin
+	PutMessage	--> MiniMapCityMarkers
+	// Exits
+	AddMarker	World{:World}	[#position: "CityToDesert_Marker", #Type: #DesertEntrance]
+	AddMarker	World{:World}	[#position: "CityToSnow_Marker", #Type: #SnowEntrance]
+	AddMarker	World{:World}	[#position: "CityToJungle_Marker", #Type: #JungleEntrance]
+	AddMarker	World{:World}	[#position: "CityToIndustrial_Marker", #Type: #IndustrialEntrance]
+	// Special missions (these unlock worlds)
+	AddMarker	World{:World}	[#position: "SpecialMissionTunnel_Marker", #Type: #SpecialMission, #priority: #medium]
+	AddMarker	World{:World}	[#position: "SpecialMissionBridge_Marker", #Type: #SpecialMission, #priority: #medium]
+	AddMarker	World{:World}	[#position: "SpecialMissionDock_Marker", #Type: #SpecialMission, #priority: #medium]
+	// Special missions (these don't unlock worlds)
+	AddMarker	World{:World}	[#position: "SpecialMissionPolice_Marker", #Type: #SpecialMission, #priority: #medium]	
+	AddMarker	World{:World}	[#position: "SpecialMissionTaxi_Marker", #Type: #SpecialMission, #priority: #medium]
+	// BossEnd
+	CheckBossEndAvailability	x	x
+MiniMapCityMarkers_End
+
+//------------------------------------------------------------
+// MiniMap: Desert markers
+//------------------------------------------------------------
+MiniMapDesertMarkers_Begin
+	PutMessage	--> MiniMapDesertMarkers
+	// Exits
+	AddMarker	World{:World}	[#position: "DesertToCity_Marker", #Type: #CityEntrance]
+	// Special missions
+	AddMarker	World{:World}	[#position: "SpecialMissionConvoy_Marker", #Type: #SpecialMission, #priority: #medium]
+	CheckDesertSpecialMissions	x	x
+MiniMapDesertMarkers_End
+
+//------------------------------------------------------------
+// MiniMap: Jungle markers
+//------------------------------------------------------------
+MiniMapJungleMarkers_Begin
+	PutMessage	--> MiniMapJungleMarkers
+	// Exits
+	AddMarker	World{:World}	[#position: "JungleToCity_Marker", #Type: #CityEntrance]
+	// Boat/Car
+	Event	MiniMapJungle{:Vehicle}Marker
+	// Special missions
+	AddMarker	World{:World}	[#position: "SpecialMissionSpeedBoat_Marker", #Type: #SpecialMission, #priority: #medium]
+	CheckJungleSpecialMissions	x	x
+MiniMapDesertMarkers_End
+	
+MiniMapJungleCarMarker_Begin
+	PutMessage	--> MiniMapJungleCarMarker
+	AddMarker	World{:World}	[#position: "JungleCarToBoat_Marker", #Type: #SwitchToBoat]
+	AddMarker	World{:World}	[#position: "JungleCarToHelicopter_Marker", #Type: #SwitchToHelicopter]
+MiniMapJungleCarMarker_End
+
+MiniMapJungleBoatMarker_Begin
+	PutMessage	--> MiniMapJungleBoatMarker
+	AddMarker	World{:World}	[#position: "JungleBoatToCar_Marker", #Type: #SwitchToCar]
+MiniMapJungleBoatMarker_End
+
+//------------------------------------------------------------
+// MiniMap: Snow markers
+//------------------------------------------------------------
+MiniMapSnowMarkers_Begin
+	PutMessage	--> MiniMapSnowMarkers
+	// Exits
+	AddMarker	World{:World}	[#position: "SnowToCity_Marker", #Type: #CityEntrance]
+	AddMarker	World{:World}	[#position: "SpecialMissionTank_Marker", #Type: #SpecialMission, #priority: #medium]
+MiniMapSnowMarkers_End
+
+//------------------------------------------------------------
+// MiniMap: Industrial markers
+//------------------------------------------------------------
+MiniMapIndustrialMarkers_Begin
+	PutMessage	--> MiniMapIndustrialMarkers
+	// Exits
+	AddMarker	World{:World}	[#position: "IndustrialToCity_Marker", #Type: #CityEntrance]
+	AddMarker	World{:World}	[#position: "IndustrialCarToBoat_Marker", #Type: #SwitchToBoat]
+	AddMarker	World{:World}	[#position: "IndustrialCarToHelicopter_Marker", #Type: #SwitchToHelicopter]
+MiniMapIndustrialMarkers_End
+
+//------------------------------------------------------------
+// MiniMap: Misc
+//------------------------------------------------------------
+ShowMiniMap_Begin
+	ShowMiniMap	x	x
+ShowMiniMap_End
+
+HideMiniMap_Begin
+	HideMiniMap	x	x
+HideMiniMap_End
+
+//------------------------------------------------------------
+// Values for default game
+//------------------------------------------------------------
+SetAllValuesToDefaultGame_Begin
+	PutMessage	--> --> SetAllValuesToDefaultGame
+	//-----------------------------------------------------------------
+	// World & Assets
+	//-----------------------------------------------------------------
+	SetValue		[#Scene: "World"]
+	SetValue		[#World: "City"]
+	SetValue		[#Assets: "City"]
+	SetValue		[#Track: "StreetLife1"]
+	//-----------------------------------------------------------------
+	// Vehicles
+	//-----------------------------------------------------------------
+	SetValue		[#Vehicle: "Car"]
+	SetValue		[#PreviousVehicle: #none]
+	SetValue		[#Car: "Bullet350"]
+	SetValue		[#Boat: "SpeedBoat"]
+	SetValue		[#Plane: "Spitfire"]
+	SetValue		[#Helicopter: "Apache"]
+	//-----------------------------------------------------------------
+	// Username & money
+	//-----------------------------------------------------------------
+	SetValue		[#UserName: "Shockwave"]
+	SetValue		[#Money: 50000]
+	//-----------------------------------------------------------------
+	// Menu
+	//-----------------------------------------------------------------
+	SetValue		[#MenuStart: FALSE]	
+	//-----------------------------------------------------------------
+	// Messages
+	//-----------------------------------------------------------------
+	SetValue		[#FirstTicket: TRUE]
+	SetValue		[#FirstTicketDisplayed: FALSE]
+	SetValue		[#WelcomeMessage: TRUE]
+	SetValue		[#WelcomeMessageDisplayed: FALSE]
+	SetValue		[#TankMessage: FALSE]
+	SetValue		[#TankMessageDisplayed: FALSE]
+	//-----------------------------------------------------------------
+	// Extra
+	//-----------------------------------------------------------------
+	SetValue		[#Pause: FALSE]	
+	//-----------------------------------------------------------------
+	// Camera
+	//-----------------------------------------------------------------
+	SetValue		[#CameraSet: #Car]
+	SetValue		[#CameraStates: [#ShowHideRoots, #BackWardsView]]
+	//-----------------------------------------------------------------
+	// Daily Challenge (other values keep, do not reset day)
+	//-----------------------------------------------------------------
+	SetValue		[#DailyChallenge: FALSE]
+	SetValue		[#DailyChallengeState: #new]
+	SetValue		[#DailyChallengeLastTime: #none]
+	//-----------------------------------------------------------------
+	// UP
+	//-----------------------------------------------------------------
+	SetValue		[#UPTickets: []]
+	SetValue		[#UPBossTickets: []]	
+	SetValue		[#UPChallenges: []]
+	SetValue		[#UPChallengesNew: []]
+	SetValue		[#UPChallengesCompleted: []]
+	SetValue		[#UPChallengesPrestige: []]
+	SetValue		[#UPSpecialMissionsCompleted: []]	
+	SetValue		[#UpRampagesCompleted: []]
+	SetValue		[#UpDemolitionsCompleted: []]
+	SetValue		[#UpTimeTrialsCompleted: []]
+	SetValue		[#UPCars: ["Bullet350", "PhaserGti"]]
+	SetValue		[#UPCashStashes: []]
+	SetValue		[#UPLandMarks: []]
+	SetValue		[#UPNuclearDetonators: []]
+	SetValue		[#UPHiddenPackages: []]
+	SetValue		[#UPSpecialPickups: []]
+	SetValue		[#UPTrophies: [#WheelsOnFire: 0, #SecretAgent: 0, #KingOfTheGarage: 0, #TheTreasureHunter: 0, #BillionDollarMan: 0]]
+	SetValue		[#UPStatistics: [#money: 0, #totalTime: 0, #ticketsCompleted: [0, 36], #specialMissionsCompleted: [0, 13], #carsWrecked: 0, #enemiesWrecked: 0, #carsUnlocked: [0, 15], #hiddenPackagesFound: [0, 36], #timeTrialsCompleted: [0, 8], #rampagesCompleted: [0, 7], #demolitionsCompleted: [0, 7], #nuclearDetonators: [0, 15], #landMarks: [0, 5]]]
+	SetValue		[#UPUnlockableCheats: []]
+	//-----------------------------------------------------------------
+	// SW
+	//-----------------------------------------------------------------
+	SetValue		[#SWGameTrophies: [#CarsWrecked: 0, #CarsTotalled: 0, #RoadRaceWon: 0, #AllPackages: 0, #AllVehicles: 0, #BoatChallenge: 0, #PlaneChallenge: 0, #Score: 0, #UpgradePurchased: 0, #PaintPurchased: 0, #WeaponPurchased: 0, #Explosion: 0]]
+	//-----------------------------------------------------------------
+	// Startdummy
+	//-----------------------------------------------------------------
+	SetValue		[#WorldStartDummy: [#city: "CityFromDesert_Marker", #desert: "SafeHouseDesert_Marker", #snow: "SafeHouseSnow_Marker", #Jungle: "SafeHouseJungle_Marker", #Industrial: "SafeHouseIndustrial_Marker"]]
+	//-----------------------------------------------------------------
+	// Loading
+	//-----------------------------------------------------------------
+	SetValue		[#WorldCityLoaded: [#state: FALSE, #cast: "World", #loc: "Worlds/WorldCity.cct"]]
+	SetValue		[#WorldDesertLoaded: [#state: FALSE, #cast: "World", #loc: "Worlds/WorldDesert.cct"]]
+	SetValue		[#WorldSnowLoaded: [#state: FALSE, #cast: "World", #loc: "Worlds/WorldSnow.cct"]]
+	SetValue		[#WorldJungleLoaded: [#state: FALSE, #cast: "World", #loc: "Worlds/WorldJungle.cct"]]	
+	SetValue		[#WorldIndustrialLoaded: [#state: FALSE, #cast: "World", #loc: "Worlds/WorldIndustrial.cct"]]	
+	//-----------------------------------------------------------------
+	// Restore data
+	//-----------------------------------------------------------------
+	RestoreCarData	x	x
+	//-----------------------------------------------------------------
+	// Load other data
+	//-----------------------------------------------------------------
+	LoadDataBR3	x	x
+	//-----------------------------------------------------------------
+	// Save & set
+	//-----------------------------------------------------------------
+	SaveData	x	x
+	SetValue		[#GameLoaded: TRUE]	
+	SetValue		[#NewGame: TRUE]	
+SetAllValuesToDefaultGame_End
+
+//------------------------------------------------------------
+// Cheat buttons...
+//------------------------------------------------------------
+WorldCheatButtons_begin
+	//City
+	CreateButton	World{:World}	[#model: "04_04_signsafehouse_1_object", #rolloverSound: "none", #pressedSound: "none", #event: "EnableCheats"]
+	// Desert
+	CreateButton	World{:World}	[#model: "02_03_signsafehouse_1_object", #rolloverSound: "none", #pressedSound: "none", #event: "EnableCheats"]
+	// Jungle
+	CreateButton	World{:World}	[#model: "05_05_signsafehouse_1_object", #rolloverSound: "none", #pressedSound: "none", #event: "EnableCheats"]
+	// Snow
+	CreateButton	World{:World}	[#model: "01_14_signsafehouse_1_object", #rolloverSound: "none", #pressedSound: "none", #event: "EnableCheats"]
+	// Industrial
+	CreateButton	World{:World}	[#model: "08_03_signsafehouse_1_object", #rolloverSound: "none", #pressedSound: "none", #event: "EnableCheats"]
+WorldCheatButtons_End

@@ -1,0 +1,184 @@
+-- [Text] WorldJungleEvents
+
+//--------------------------------------------------------
+// World{:World} SPECFIFIC SETUP & RESET
+//--------------------------------------------------------
+SetupWorldJungle_Begin
+	PutMessage	--> SetupWorldJungle
+	// ModelList
+	SetValue		[#WorldModelList: {:WorldModels}.duplicate()]
+	AddToList	gGame.WorldModelList	[#value: "Sea"]
+	AddToList	gGame.WorldModelList	[#value: "Waves"]
+	// Additional textures & shader sets
+	CreateTexture	World{:World}	[#texture: "WorldSea{:Setting}_Texture"]
+	SetShader	World{:World}	[#shader: "WorldJungleSea_Material", #texture1: "WorldSea{:Setting}_Texture"]
+	SetShader	World{:World}	[#shader: "WorldJunglePool_Material", #texture1: "WorldSea{:Setting}_Texture"]
+	CreateTexture	World{:World}	[#texture: "WorldWaves{:Setting}_Texture"]
+	SetShader	World{:World}	[#shader: "WorldJungleWaves_Material", #texture1: "WorldWaves{:Setting}_Texture"]
+	Evaluate	"{:Setting}"="Night"	[#Event: "WorldJungleAdditiveTextures"]	
+	// Skybox
+	Event	SkyboxInitialization
+	SetSkybox	World{:World}	[#skybox: "SkyboxJungle"]
+SetupWorldJungle_End	
+
+SetupWorldJungleSpecialEffects_Begin
+	PutMessage	SetupWorldJungleSpecialEffects	
+	// Scroller
+	AddToScroller	World{:World}	[#shader: "WorldJungleSea_Material", #position: vector(-0.001, -0.001, 0.0)]
+	AddToScroller	World{:World}	[#shader: "WorldJunglePool_Material", #position: vector(-0.001, -0.001, 0.0)]
+SetupWorldJungleSpecialEffects_End
+
+SetupWorldJungleEffectsLow_Begin
+	PutMessage	SetupWorldJungleEffectsLow
+	SetShader	World{:World}	[#shader: "WorldJungleMisc_Material", #texture3: "None"]
+	TurnOffVehicleEffects	x	x
+	WorldTrafficLightsOff	x	x
+SetupWorldJungleEffectsLow_End
+
+SetupWorldJungleEffectsMedium_Begin
+	PutMessage	SetupWorldJungleEffectsMedium
+	SetShader	World{:World}	[#shader: "WorldJungleMisc_Material", #texture3: "None"]
+	TurnOnVehicleEffects	x	x
+	WorldTrafficLightsOff	x	x
+SetupWorldJungleEffectsMedium_End
+
+SetupWorldJungleEffectsHigh_Begin
+	PutMessage	SetupWorldJungleEffectsHigh
+	Evaluate	"{:Setting}"="Night"	[#Event: "WorldJungleAdditive"]
+	TurnOnVehicleEffects	x	x
+	WorldTrafficLightsOn	x	x
+SetupWorldJungleEffectsHigh_End
+
+WorldJungleAdditiveTextures_Begin
+	CreateTexture	World{:World}	[#texture: "WorldMiscAdditive_Texture", #filtering: #high, #renderFormat: #rgba5650]
+WorldJungleAdditiveTextures_End
+
+WorldJungleAdditive_Begin
+	SetShader	World{:World}	[#shader: "WorldJungleMisc_Material", #texture3: "WorldMiscAdditive_Texture", #textureMode3: #none, #blendFunction3: #add]
+WorldJungleAdditive_End
+
+//--------------------------------------------------------
+// World{:World} TILE SPECIFIC EVENTS
+//--------------------------------------------------------
+05_05_WorldJungle_Begin
+	PutMessage	--> --> 05_05_WorldJungle
+	SetModel	World{:World}	[#model: "05_05_WorldJunglePool", #shader: "WorldJunglePool_Material"]
+	SetModel	World{:World}	[#model: "05_05_WorldJunglePoolEdge", #shader: "WorldJungleWaves_Material"]
+05_05_WorldJungle_End
+
+//--------------------------------------------------------
+// TRAFFIC
+//--------------------------------------------------------
+WorldJungleTraffic01_Begin
+	PutMessage	--> WorldJungleTraffic01
+	// LEFT! NO RIGHT CARS IN JUNGLE! ALL DIRECTION LEFT 1 
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Shopper, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Yup, #direction: #left1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Truck, #direction: #left1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #PoliceTraffic, #direction: #left1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #PoliceTraffic, #direction: #left1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Shopper, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Yup, #direction: #left1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Truck, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #left1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #ArmoredTruck, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Shopper, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Yup, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Truck, #direction: #left1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Truck, #direction: #left1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #PoliceTraffic, #direction: #left1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #PoliceTraffic, #direction: #left1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #PoliceTraffic, #direction: #left1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Shopper, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Yup, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Shopper, #direction: #left1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Truck, #direction: #left1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #ArmoredTruck, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #PoliceTraffic, #direction: #left1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Shopper, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Yup, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #left1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #PoliceTraffic, #direction: #left1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #PoliceTraffic, #direction: #left1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Shopper, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Yup, #direction: #left1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Truck, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Truck, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Transporter, #direction: #left1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #ArmoredTruck, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Shopper, #direction: #left1, #skin: 1]
+	Buildtraffic	World{:World}	[#type: #Shopper, #direction: #left1, #skin: 2]
+	Buildtraffic	World{:World}	[#type: #Truck, #direction: #left1, #skin: 2]
+WorldJungleTraffic01_End
+
+//--------------------------------------------------------
+// NUCLEAR DETONATORS
+//--------------------------------------------------------
+NuclearDetonatorJungle1_Begin
+	PutMessage	--> NuclearDetonatorJungle1
+	// Std detonator
+	Event	NuclearDetonator
+	// set camera
+	SetValue	gGame.Camera[1]	[#state: #mimic]
+	SetValue	gGame.Camera[1]	[#target: "NuclearDetonatorJungle1_Camera"]
+	// DelayEvent to restore camera
+	DelayEvent		[#delay: 6000, #name: "RestoreCamera", #event: "RestoreCamera"]
+	// AddToList
+	AddToList	gGame.UPNuclearDetonators	[#value: "NuclearDetonatorJungle1", #override: TRUE]	
+	CheckNuclearDetonators	x	x
+NuclearDetonatorJungle1_End
+
+NuclearDetonatorJungle2_Begin
+	PutMessage	--> NuclearDetonatorJungle2
+	// Std detonator
+	Event	NuclearDetonator
+	// set camera
+	SetValue	gGame.Camera[1]	[#state: #mimic]
+	SetValue	gGame.Camera[1]	[#target: "NuclearDetonatorJungle2_Camera"]
+	// DelayEvent to restore camera
+	DelayEvent		[#delay: 6000, #name: "RestoreCamera", #event: "RestoreCamera"]
+	// AddToList
+	AddToList	gGame.UPNuclearDetonators	[#value: "NuclearDetonatorJungle2", #override: TRUE]
+	CheckNuclearDetonators	x	x
+NuclearDetonatorJungle2_End
+
+NuclearDetonatorJungle3_Begin
+	PutMessage	--> NuclearDetonatorJungle3
+	// Std detonator
+	Event	NuclearDetonator
+	// set camera
+	SetValue	gGame.Camera[1]	[#state: #mimic]
+	SetValue	gGame.Camera[1]	[#target: "NuclearDetonatorJungle3_Camera"]
+	// DelayEvent to restore camera
+	DelayEvent		[#delay: 6000, #name: "RestoreCamera", #event: "RestoreCamera"]
+	// AddToList
+	AddToList	gGame.UPNuclearDetonators	[#value: "NuclearDetonatorJungle3", #override: TRUE]
+	CheckNuclearDetonators	x	x
+NuclearDetonatorJungle3_End
+
+//--------------------------------------------------------
+// LANDMARK
+//--------------------------------------------------------
+LandMarkJungle_Begin
+	PutMessage	--> LandMarkJungle
+	// Sound
+	PlaySound	SpecialPickUp_SFX	[#override: TRUE]
+	// Text textures
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusHeaderText, #style: #StatusTitle, #text: #LandmarkInformationTitle]
+	CreateTextTexture	Interface	[#tag: #InterfaceStatusBodyText, #style: #StatusBody, #text: #LandmarkInformation]
+	// Show it
+	SetVisible	Interface	[#model: "InterfaceStatus", #state: TRUE, #parent: "World{:World}"]
+	// Delay next event
+	DelayEvent		[#delay: {:StatusDelay}, #name: "HideStatus", #event: "HideStatus"]
+	// Do it
+	SetModel	World{:World}	[#model: "06_08_landmarkjungle_1_object", #resource: "landmarkjungledestroyed_object", #shader: "WorldJungleMisc_Material"] 
+	AddToList	gGame.UPLandMarks	[#value: "LandMarkJungle_Object", #override: TRUE]
+	SaveData	x	x
+	CheckAllLandMarks	x	x
+LandMarkJungle_End

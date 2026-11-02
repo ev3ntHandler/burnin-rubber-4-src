@@ -1,0 +1,24 @@
+-- [Text] TrackSnowEvents
+
+SnowTextures_Begin
+	// Textures
+	CreateTexture	SnowAssets	[#texture: "SnowStreet_Texture"]
+	CreateTexture	SnowAssets	[#texture: "SnowBuildings_Texture"]
+	CreateTexture	SnowAssets	[#texture: "SnowTransparent_Texture", #renderFormat: #rgba8888]
+	CreateTexture	SnowAssets	[#texture: "Wall_Texture", #renderFormat: #rgba8888]
+	CreateTexture	SnowAssets	[#texture: "WorldMisc_Texture"]
+	SetShader	SnowAssets	[#shader: "Misc_Material", #texture1: "WorldMisc_Texture"]
+	
+	// Set textures (shaders)
+	SetShader	SnowAssets	[#shader: "SnowStreet_Material", #texture1: "SnowStreet_Texture"]
+	SetShader	SnowAssets	[#shader: "SnowBuildings_Material", #texture1: "SnowBuildings_Texture"]
+	SetShader	SnowAssets	[#shader: "SnowTransparent_Material", #texture1: "SnowTransparent_Texture"]
+	SetShader	SnowAssets	[#shader: "SnowOpaque_Material", #texture1: "SnowTransparent_Texture"]
+	SetShader	SnowAssets	[#shader: "SnowCollision_Material", #texture1: "SnowTransparent_Texture"]
+	SetShader	SnowAssets	[#shader: "WorldMisc_Material", #texture1: "WorldMisc_Texture"]
+	
+	// AmbientStyle
+	SetShader	SnowAssets	[#shader: "SnowBuildings_Material", #emissive: gData.data.ambientstyle[gGame.trackinfo.ambientStyle].emissive]
+	SetShader	SnowAssets	[#shader: "SnowOpaque_Material", #emissive: gData.data.ambientstyle[gGame.trackinfo.ambientStyle].emissive]
+	SetShader	SnowAssets	[#shader: "SnowTransparent_Material", #emissive: gData.data.ambientstyle[gGame.trackinfo.ambientStyle].emissive]
+SnowTextures_End

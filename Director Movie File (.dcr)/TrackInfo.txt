@@ -1,0 +1,121 @@
+-- [Text] TrackInfo
+
+TrackName	Assets	GameMode	Target	PrestigeTarget	Interface	PrizeMoney	Vehicle	Enemies	EnemyBehavior	AIFriendlyFire	FogColor	AmbientStyle	FogRange	Skybox	Bloom	Rewards	Ticket	Requirement	StartEvents	EndEvents	Music	Reference
+StreetLife1	City	Battle	120000	70000	Weapons, Position, Keys, Speedometer, Timer	10000	Car	Bullet3501, Bullet3501, Bullet3501	Battle	TRUE	166,163,151	#TrackCity	100,700	SkyboxMountainsSunny	Medium		Ticket1				Grip_Music	
+StreetLife2	City	Battle	120000	70000	Weapons, Position, Keys, Speedometer, Timer	15000	Car	Bullet3502, Bullet3502, PhaserGti2	Battle	TRUE	73,81,75	#TrackCity	150,500	SkyboxMountainsDusk	Medium		Ticket2				Grip_Music	
+RoadWarrior1	City	Battle	120000	55000	Weapons, Position, Keys, Speedometer, Timer	20000	Car	PhaserGti2, PhaserGti2, PhaserGti2	Battle	TRUE	156,145,121	#TrackCity	100,800	SkyboxCitySunny	Medium		Ticket3				Grip_Music	
+RoadWarrior2	City	Battle	120000	55000	Weapons, Position, Keys, Speedometer, Timer	25000	Car	PhaserGti3, PhaserGti3, Bullet3502	Battle	TRUE	100,89,70	#TrackCity	150,500	SkyboxCityYellow	Medium		Ticket4				Grip_Music	
+RushHour1	City	Battle	120000	70000	Weapons, Position, Keys, Speedometer, Timer	30000	Car	PetiteXs2, PhaserGti4, Bullet3504	Battle	TRUE	204,172,125	#TrackCity	150,700	SkyboxHillsSunny	Medium		Ticket5				Grip_Music	
+RushHour2	City	Battle	120000	70000	Weapons, Position, Keys, Speedometer, Timer	35000	Car	Sunstorm3, PetiteXs3, ViceV803	Battle	TRUE	180,140,97	#TrackCity	100,800	SkyboxHillsPink	Medium		Ticket6				Grip_Music	
+UrbanChaos1	City	Battle	120000	85000	Weapons, Position, Keys, Speedometer, Timer	40000	Car	ViceV804, PetiteXs4, PhaserGti4	Battle	TRUE	176,173,163	#TrackCity	150,600	SkyboxSnowYellow	Heavy		Ticket7				Grip_Music	
+UrbanChaos2	City	Battle	120000	85000	Weapons, Position, Keys, Speedometer, Timer	45000	Car	ViceV802, ViceV802, ViceV802	Battle	TRUE	28,47,75	#TrackCity	100,800	SkyboxSnowTwilight	Light		Ticket8				Grip_Music	
+OperationSandStorm1	Desert	Battle	120000	70000	Weapons, Position, Keys, Speedometer, Timer	10000	Car	Rebel2, Rebel2, Rebel2	Battle	TRUE	193,174,140	#TrackDesert	150,400	SkyboxDesertYellow	Heavy		Ticket9				Rotation_Music	
+OperationSandStorm2	Desert	Battle	120000	70000	Weapons, Position, Keys, Speedometer, Timer	15000	Car	Rebel3, Rebel3, Rebel3	Battle	TRUE	199,197,185	#TrackDesert	50,800	SkyboxDesertTwilight	Light		Ticket10				Rotation_Music	
+AreaOne1	Desert	Battle	120000	80000	Weapons, Position, Keys, Speedometer, Timer	20000	Car	Rally73, Rally73, Rally73	Battle	TRUE	181,151,116	#TrackDesert	150,500	SkyboxDesertDusk	Medium		Ticket11				Rotation_Music	
+AreaOne2	Desert	Battle	120000	95000	Weapons, Position, Keys, Speedometer, Timer	25000	Car	Rebel4, Bullet3504, Rally74	Battle	TRUE	161,149,129	#TrackDesert	150,800	SkyboxDesertSunny	Medium		Ticket12				Rotation_Music	
+HardBoiled1	Desert	Battle	120000	90000	Weapons, Position, Keys, Speedometer, Timer	30000	Car	Rally74, PhaserGti4, Sunstorm2	Battle	TRUE	171,151,117	#TrackDesert	130,600	SkyboxCityYellow	Heavy		Ticket13				Rotation_Music	
+HardBoiled2	Desert	Battle	120000	80000	Weapons, Position, Keys, Speedometer, Timer	35000	Car	Sunstorm3, Sunstorm3, Sunstorm3	Battle	TRUE	180,140,97	#TrackDesert	100,800	SkyboxCityCloudy	Light		Ticket14				Rotation_Music	
+RedCanyon1	Desert	Battle	120000	90000	Weapons, Position, Keys, Speedometer, Timer	40000	Car	BigTruck3, Sunstorm4, Rally74	Battle	TRUE	241,233,217	#TrackDesert	100,700	SkyboxHillsSunny	Medium		Ticket15				Rotation_Music	
+RedCanyon2	Desert	Battle	120000	95000	Weapons, Position, Keys, Speedometer, Timer	45000	Car	BigTruck4, BigTruck4, BigTruck4	Battle	TRUE	28,47,75	#TrackDesert	100,800	SkyboxHillsPink	Medium		Ticket16				Rotation_Music	
+Blizzard1	Snow	Battle	120000	75000	Weapons, Position, Keys, Speedometer, Timer	10000	Car	Rally71, Rally71, Rally71	Battle	TRUE	159,152,144	#TrackSnow	150,500	SkyboxSnowTwilight	Medium		Ticket17				BackFire_Music	
+Blizzard2	Snow	Battle	120000	75000	Weapons, Position, Keys, Speedometer, Timer	15000	Car	Bullet3502, PhaserGti2, Rally72	Battle	TRUE	180,180,172	#TrackSnow	150,350	SkyboxSnowCloudy	Light		Ticket18				BackFire_Music	
+Flake1	Snow	Battle	120000	80000	Weapons, Position, Keys, Speedometer, Timer	20000	Car	Rebel2, Rebel3, Rebel4	Battle	TRUE	195,200,205	#TrackSnow	150,800	SkyboxSnowSunny	Medium		Ticket19				BackFire_Music	
+Flake2	Snow	Battle	120000	90000	Weapons, Position, Keys, Speedometer, Timer	25000	Car	Rebel4, Rally74, PetiteXs4	Battle	TRUE	125,116,102	#TrackSnow	150,550	SkyboxSnowYellow	Heavy		Ticket20				BackFire_Music	
+MountDoom1	Snow	Battle	120000	70000	Weapons, Position, Keys, Speedometer, Timer	30000	Car	Sunstorm4, Sunstorm4, Sunstorm4	Battle	TRUE	211, 191, 166	#TrackSnow	150,600	SkyboxDawn	Medium		Ticket21				BackFire_Music	
+MountDoom2	Snow	Battle	120000	80000	Weapons, Position, Keys, Speedometer, Timer	35000	Car	BigTruck2, BigTruck3, BigTruck4	Battle	TRUE	38,51,63	#TrackSnow	150,400	SkyboxNight	Light		Ticket22				BackFire_Music	
+Avalanche1	Snow	Battle	120000	120000	Weapons, Position, Keys, Speedometer, Timer	40000	Car	Fennek2, Fennek2, Fennek2	Battle	TRUE	186,182,171	#TrackSnow	100,800	SkyboxSnowCloudy	Light		Ticket23				BackFire_Music	
+Avalanche2	Snow	Battle	120000	120000	Weapons, Position, Keys, Speedometer, Timer	45000	Car	MonsterTruck4, Fennek4, Fennek4	Battle	TRUE	28,47,75	#TrackSnow	100,800	SkyboxSnowYellow	Heavy		Ticket24				BackFire_Music	
+SuperOffroad1	Jungle	Battle	120000	80000	Weapons, Position, Keys, Speedometer, Timer	10000	Car	Hound2, Hound2, Hound2	Battle	TRUE	224,222,209	#TrackJungle	150,500	SkyboxYellow	Heavy		Ticket25				GrayScales_Music	
+SuperOffroad2	Jungle	Battle	120000	80000	Weapons, Position, Keys, Speedometer, Timer	15000	Car	Hound3, Hound3, BigTruck2	Battle	TRUE	88,89,75	#TrackJungle	100,700	SkyboxCloudy	Light		Ticket26				GrayScales_Music	
+ClubBaja1	Jungle	Battle	120000	80000	Weapons, Position, Keys, Speedometer, Timer	20000	Car	Rally74, Bullet3504, PhaserGti4	Battle	TRUE	227,233,235	#TrackJungle	150,800	SkyboxJungleSunny	Medium		Ticket27				GrayScales_Music	
+ClubBaja2	Jungle	Battle	120000	70000	Weapons, Position, Keys, Speedometer, Timer	25000	Car	ViceV802, ViceV803, ViceV804	Battle	TRUE	115,110,87	#TrackJungle	150,500	SkyboxJungleDawn	Heavy		Ticket28				GrayScales_Music	
+MudRace1	Jungle	Battle	120000	90000	Weapons, Position, Keys, Speedometer, Timer	30000	Car	Hound3, Hound3, BigTruck2	Battle	TRUE	204,172,125	#TrackJungle	100,800	SkyboxCitySunny	Medium		Ticket29				GrayScales_Music	
+MudRace2	Jungle	Battle	120000	95000	Weapons, Position, Keys, Speedometer, Timer	35000	Car	BigTruck4, BigTruck4, BigTruck4	Battle	TRUE	180,140,97	#TrackJungle	100,800	SkyboxCitySunny	Medium		Ticket30				GrayScales_Music	
+Vulcano1	Jungle	Battle	120000	95000	Weapons, Position, Keys, Speedometer, Timer	40000	Car	MonsterTruck2, MonsterTruck3, MonsterTruck4	Battle	TRUE	180,140,97	#TrackJungle	100,800	SkyboxDawn	Medium		Ticket31				GrayScales_Music	
+Vulcano2	Jungle	Battle	120000	105000	Weapons, Position, Keys, Speedometer, Timer	45000	Car	MonsterTruck4, Fennek4, Hound4	Battle	TRUE	28,47,75	#TrackJungle	100,800	SkyboxNight	Light		Ticket32				GrayScales_Music	
+																						
+BossCity	City	Destroy	90000	60000	Weapons, Targets, Timer, Keys, Speedometer	50000	Car	ViceV80Boss	BattleNoRespawn	FALSE	204,172,125	#TrackCity	100,800	SkyboxBoulevardPink	Medium	ViceV80	TicketBoss1				HighOctane_Music	
+BossDesert	Desert	Destroy	90000	60000	Weapons, Targets, Timer, Keys, Speedometer	50000	Car	BigTruckBoss	BattleNoRespawn	FALSE	131,107,76	#TrackDesert	150,400	SkyboxHillsDawn	Medium	BigTruck	TicketBoss2				HighOctane_Music	
+BossSnow	Snow	Destroy	90000	60000	Weapons, Targets, Timer, Keys, Speedometer	50000	Car	FennekBoss	BattleNoRespawn	FALSE	163,160,155	#TrackSnow	150,400	SkyboxSnowCloudy	Medium	Fennek	TicketBoss3				HighOctane_Music	
+BossJungle	Jungle	Destroy	90000	60000	Weapons, Targets, Timer, Keys, Speedometer	50000	Car	MonsterTruckBoss	BattleNoRespawn	FALSE	189,180,158	#TrackJungle	100,700	SkyboxJungleYellow	Medium	MonsterTruck	TicketBoss4				HighOctane_Music	
+BossEnd	City	Destroy	120000	90000	Weapons, Targets, Timer, Keys, Speedometer	100000	Car	AutobotBoss	BattleNoRespawn	FALSE	52,57,60	#TrackBossEnd	150,450	SkyboxNight	Light	Autobot					Trailblazer_Music	
+																						
+SpecialMissionBridge	Desert	Trial	120000	120000	Weapons, Timer, Keys, Speedometer	30000	Car				218,194,148	#TrackDesert	100,800	SkyboxDesertSunny	Medium	Rebel		3			AllThatMatters_Music	
+SpecialMissionTunnel	Snow	Trial	120000	120000	Weapons, Timer, Keys, Speedometer	30000	Car				208,223,235	#TrackSnow	150,500	SkyboxSnowSunny	Medium	Sunstorm		7			AlphaBeta2008_Music	
+SpecialMissionDock	City	Trial	90000	90000	Weapons, Timer, Keys, Speedometer	30000	Car				187,196,194	#TrackCity	100,700	SkyboxBoulevardSunny	Medium	Hound		10			Adrenaline_Music	
+SpecialMissionSpeedBoat	Jungle	Battle	180000	180000	Weapons, Position,  Keys, Speedometer, Timer	25000	Boat	SpeedBoat2, SpeedBoat2, SpeedBoat2	BattleNoRespawn	FALSE	128,100,64	#TrackJungle	100,800	SkyboxJungleYellow	Heavy			12			AllThatMatters_Music	
+SpecialMissionCoastGuard	Jungle	Battle	180000	180000	Weapons, Position, Keys, Speedometer, Timer	35000	Boat	Policeboat1, Policeboat1, Policeboat1	BattleNoRespawn	FALSE	254,238,200	#TrackJungle	100,800	SkyboxJungleSunny	Medium			14			AlphaBeta2008_Music	
+SpecialMissionStealth	Jungle	Destroy	120000	120000	Weapons, Targets, Timer, Keys, Speedometer, Timer	45000	Boat	Stealth1, Zodiac1, Zodiac1	BattleNoRespawn	FALSE	250,253,255	#TrackJungle	100,800	SkyboxPink	Medium	PetiteXs		16			Adrenaline_Music	
+SpecialMissionConvoy	Desert	Destroy	180000	180000	Weapons, Targets, Timer, Keys	25000	Helicopter	Tank1, Tank1, Tank1	BattleNoRespawn	FALSE	128,100,64	#TrackDesert	100,800	SkyboxDesertYellow	Heavy			5			AllThatMatters_Music	
+SpecialMissionDogfight	Desert	Destroy	180000	180000	Weapons, Targets, Timer	35000	Plane	Spitfire2, Spitfire2, Spitfire2	BattleNoRespawn	FALSE	243,230,191	#TrackDesert	100,800	SkyboxDesertSunny	Medium			7			AlphaBeta2008_Music	
+SpecialMissionAC130	Desert	Destroy	180000	180000	Weapons, Targets, Timer, Keys	45000	Plane	AC1301	BattleNoRespawn	FALSE	183, 190, 187	#TrackDesert	100,800	SkyboxDesertTwilight	Light	Rally7		9			Adrenaline_Music	
+SpecialMissionTaxi	City	Battle	120000	120000	Weapons, Position, Keys, Speedometer	15000	Car	Taxi1, Taxi1, Taxi1	Battle	FALSE	209,204,186	#TrackCity	100,700	SkyboxYellow	Medium	Taxi		1			AllThatMatters_Music	
+SpecialMissionPolice	City	Battle	120000	120000	Weapons, Position, Keys, Speedometer	15000	Car	Police1, Police1, Police1	Battle	FALSE	77,80,68	#TrackCity	150,600	SkyboxMountainsSunny	Medium	Police		2			AlphaBeta2008_Music	
+SpecialMissionTank	Snow	Destroy	120000	120000	Weapons, Targets, Timer, Keys, Speedometer	35000	Car	Tank4, Tank4, Tank4	BattleNoRespawn	FALSE	231,223,198	#TrackSnow	100,800	SkyboxSnowYellow	Heavy			15			AlphaBeta2008_Music	
+																						
+WorldCityNight	WorldCity	FreeRoaming			Weapons, Money, Tickets, Keys, Minimap		Car				52,48,54	#WorldCityNight	100,800								DustAndScratches_Music	
+WorldDesertNight	WorldDesert	FreeRoaming			Weapons, Money, Tickets, Keys, Minimap		Car				99,57,31	#WorldDesertNight	100,700								MoreOrLess_Music	
+WorldSnowNight	WorldSnow	FreeRoaming			Weapons, Money, Tickets, Keys, Minimap		Car				142,171,204	#WorldSnowNight	100,700								Formula_Music	
+WorldJungleNight	WorldJungle	FreeRoaming			Weapons, Money, Tickets, Keys, Minimap		Car				84,97,101	#WorldJungleNight	100,800								LittleByLittle_Music	
+WorldIndustrialNight	WorldIndustrial	FreeRoaming			Weapons, Money, Tickets, Keys, Minimap		Car				105,86,66	#WorldIndustrialNight	100,800								AllThatMatters_Music	
+
+WorldCityDay	WorldCity	FreeRoaming			Weapons, Money, Tickets, Keys, Minimap		Car				108,146,180	#WorldCityDay	100,800								DustAndScratches_Music	
+WorldDesertDay	WorldDesert	FreeRoaming			Weapons, Money, Tickets, Keys, Minimap		Car				232,197,151	#WorldDesertDay	100,700								MoreOrLess_Music	
+WorldSnowDay	WorldSnow	FreeRoaming			Weapons, Money, Tickets, Keys, Minimap		Car				161,167,169	#WorldSnowDay	100,700								Formula_Music	
+WorldJungleDay	WorldJungle	FreeRoaming			Weapons, Money, Tickets, Keys, Minimap		Car				212,195,164	#WorldJungleDay	100,800								LittleByLittle_Music	
+WorldIndustrialDay	WorldIndustrial	FreeRoaming			Weapons, Money, Tickets, Keys, Minimap		Car				108,146,180	#WorldIndustrialDay	100,800								AllThatMatters_Music	
+																						
+TimeTrialCityA	WorldCity	Trial	120000	120000	Weapons, Timer, Keys, Minimap	15000	Car				128,100,64		100,800		Medium							
+TimeTrialDesert	WorldDesert	Trial	120000	120000	Weapons, Timer, Keys, Minimap	15000	Car				245,242,237		100,800		Medium							
+TimeTrialSnow	WorldSnow	Trial	120000	120000	Weapons, Timer, Keys, Minimap	15000	Car				185,204,213		100,800		Medium							
+TimeTrialJungleA	WorldJungle	Trial	90000	90000	Weapons, Timer, Keys, Minimap	15000	Car						100,800		Medium							
+TimeTrialJungleB	WorldJungle	Trial	120000	120000	Weapons, Timer, Keys, Minimap	15000	Car				210,201,189		100,800		Medium							
+TimeTrialIndustrialA	WorldIndustrial	Trial	90000	90000	Weapons, Timer, Keys, Minimap	15000	Car						100,800		Medium							
+TimeTrialIndustrialB	WorldIndustrial	Trial	240000	180000	Weapons, Timer, Keys, Minimap	15000	Car						100,800		Medium							
+TimeTrialIndustrialC	WorldIndustrial	Trial	180000	150000	Weapons, Timer, Keys, Minimap	15000	Car						100,800		Medium							
+DemolitionCityA	WorldCity	Destroy	120000	120000	Weapons, Targets, Timer, Keys, Minimap	15000	Car				232,197,151		100,800		Heavy							
+DemolitionDesert	WorldDesert	Destroy	120000	120000	Weapons, Targets, Timer, Keys, Minimap	15000	Car				232,197,151		100,800		Heavy							
+DemolitionSnow	WorldSnow	Destroy	120000	120000	Weapons, Targets, Timer, Keys, Minimap	15000	Car				232,197,151		100,800		Heavy							
+DemolitionJungleA	WorldJungle	Destroy	120000	120000	Weapons, Targets, Timer, Keys, Minimap	15000	Car				232,197,151		100,800		Heavy							
+DemolitionIndustrialA	WorldIndustrial	Destroy	120000	120000	Weapons, Targets, Timer, Keys, Minimap	15000	Car				232,197,151		100,800		Heavy							
+DemolitionIndustrialB	WorldIndustrial	Destroy	120000	120000	Weapons, Targets, Timer, Keys, Minimap	15000	Car				232,197,151		100,800		Heavy							
+DemolitionIndustrialC	WorldIndustrial	Destroy	120000	120000	Weapons, Targets, Timer, Keys, Minimap	15000	Car				232,197,151		100,800		Heavy							
+RampageCity1	WorldCity	Destroy	150000	150000	Weapons, Targets, Timer, Keys, Minimap	15000	Car	15, TaxiTraffic			232,197,151		100,800		Heavy							
+RampageDesert1	WorldDesert	Destroy	150000	150000	Weapons, Targets, Timer, Keys, Minimap	15000	Car	40, AmmoCrateExplosive			232,197,151		100,800		Heavy							
+RampageSnow1	WorldSnow	Destroy	150000	150000	Weapons, Targets, Timer, Keys, Minimap	15000	Car	25,  OilDrumExplosive			232,197,151		100,800		Heavy							
+RampageJungle1	WorldJungle	Destroy	150000	150000	Weapons, Targets, Timer, Keys, Minimap	15000	Car	10,  GasTankExplosive			232,197,151		100,800		Heavy							
+RampageIndustrialA	WorldIndustrial	Destroy	150000	120000	Weapons, Targets, Timer, Keys, Minimap	15000	Car	30,  OilDrumExplosive			232,197,151		100,800		Heavy							
+RampageIndustrialB	WorldIndustrial	Destroy	150000	150000	Weapons, Targets, Timer, Keys, Minimap	15000	Car	20,  SeaMineExplosive			232,197,151		100,800		Heavy							
+RampageIndustrialC	WorldIndustrial	Destroy	150000	150000	Weapons, Targets, Timer, Keys, Minimap	15000	Car	5 , SamSite			232,197,151		100,800		Heavy							
+																						
+DailyChallenge1	City	Battle	120000	120000	Weapons, Position, Keys, Speedometer, Timer	10000	Car	Bullet3501, Bullet3501, Bullet3501	Battle	TRUE	166,163,151	#TrackCity	100,700	SkyboxMountainsSunny	Medium						Grip_Music	StreetLife1
+DailyChallenge2	City	Battle	120000	120000	Weapons, Position, Keys, Speedometer, Timer	10000	Car	Bullet3502, Bullet3502, PhaserGti2	Battle	TRUE	73,81,75	#TrackCity	150,500	SkyboxMountainsDusk	Medium						Grip_Music	StreetLife2
+DailyChallenge3	City	Battle	120000	120000	Weapons, Position, Keys, Speedometer, Timer	10000	Car	PhaserGti2, PhaserGti2, PhaserGti2	Battle	TRUE	156,145,121	#TrackCity	100,800	SkyboxCitySunny	Medium						Grip_Music	RoadWarrior1
+DailyChallenge4	City	Battle	120000	120000	Weapons, Position, Keys, Speedometer, Timer	10000	Car	PhaserGti3, PhaserGti3, Bullet3502	Battle	TRUE	100,89,70	#TrackCity	150,500	SkyboxCityYellow	Medium						Grip_Music	RoadWarrior2
+DailyChallenge5	City	Battle	120000	120000	Weapons, Position, Keys, Speedometer, Timer	10000	Car	PetiteXs2, PhaserGti4, Bullet3504	Battle	TRUE	204,172,125	#TrackCity	150,700	SkyboxHillsSunny	Medium						Grip_Music	RushHour1
+DailyChallenge6	City	Battle	120000	120000	Weapons, Position, Keys, Speedometer, Timer	10000	Car	Sunstorm3, PetiteXs3, ViceV803	Battle	TRUE	180,140,97	#TrackCity	100,800	SkyboxHillsPink	Medium						Grip_Music	RushHour2
+DailyChallenge7	City	Battle	120000	120000	Weapons, Position, Keys, Speedometer, Timer	10000	Car	ViceV804, PetiteXs4, PhaserGti4	Battle	TRUE	176,173,163	#TrackCity	150,600	SkyboxSnowYellow	Heavy						Grip_Music	UrbanChaos1
+DailyChallenge8	City	Battle	120000	120000	Weapons, Position, Keys, Speedometer, Timer	10000	Car	ViceV802, ViceV802, ViceV802	Battle	TRUE	28,47,75	#TrackCity	100,800	SkyboxSnowTwilight	Light						Grip_Music	UrbanChaos2
+DailyChallenge9	Desert	Battle	120000	120000	Weapons, Position, Keys, Speedometer, Timer	10000	Car	Rebel2, Rebel2, Rebel2	Battle	TRUE	193,174,140	#TrackDesert	150,400	SkyboxDesertYellow	Heavy						Grip_Music	OperationSandStorm1
+DailyChallenge10	Desert	Battle	120000	120000	Weapons, Position, Keys, Speedometer, Timer	10000	Car	Rebel3, Rebel3, Rebel3	Battle	TRUE	199,197,185	#TrackDesert	50,800	SkyboxDesertTwilight	Light						Grip_Music	OperationSandStorm2
+DailyChallenge11	Desert	Battle	120000	120000	Weapons, Position, Keys, Speedometer, Timer	10000	Car	Rally73, Rally73, Rally73	Battle	TRUE	181,151,116	#TrackDesert	150,500	SkyboxDesertDusk	Medium						Grip_Music	AreaOne1
+DailyChallenge12	Desert	Battle	120000	120000	Weapons, Position, Keys, Speedometer, Timer	10000	Car	Rebel4, Bullet3504, Rally74	Battle	TRUE	161,149,129	#TrackDesert	150,800	SkyboxDesertSunny	Medium						Grip_Music	AreaOne2
+DailyChallenge13	Desert	Battle	120000	120000	Weapons, Position, Keys, Speedometer, Timer	10000	Car	Rally74, PhaserGti4, Sunstorm2	Battle	TRUE	171,151,117	#TrackDesert	130,600	SkyboxCityYellow	Heavy						Grip_Music	HardBoiled1
+DailyChallenge14	Desert	Battle	120000	120000	Weapons, Position, Keys, Speedometer, Timer	10000	Car	Sunstorm3, Sunstorm3, Sunstorm3	Battle	TRUE	180,140,97	#TrackDesert	100,800	SkyboxCityCloudy	Light						Grip_Music	HardBoiled2
+DailyChallenge15	Desert	Battle	120000	120000	Weapons, Position, Keys, Speedometer, Timer	10000	Car	BigTruck3, Sunstorm4, Rally74	Battle	TRUE	241,233,217	#TrackDesert	100,700	SkyboxHillsSunny	Medium						Grip_Music	RedCanyon1
+DailyChallenge16	Desert	Battle	120000	120000	Weapons, Position, Keys, Speedometer, Timer	10000	Car	BigTruck4, BigTruck4, BigTruck4	Battle	TRUE	28,47,75	#TrackDesert	100,800	SkyboxHillsPink	Medium						Grip_Music	RedCanyon2
+DailyChallenge17	Snow	Battle	120000	120000	Weapons, Position, Keys, Speedometer, Timer	10000	Car	Rally71, Rally71, Rally71	Battle	TRUE	159,152,144	#TrackSnow	150,500	SkyboxSnowTwilight	Medium						Grip_Music	Blizzard1
+DailyChallenge18	Snow	Battle	120000	120000	Weapons, Position, Keys, Speedometer, Timer	10000	Car	Bullet3502, PhaserGti2, Rally72	Battle	TRUE	180,180,172	#TrackSnow	150,350	SkyboxSnowCloudy	Light						Grip_Music	Blizzard2
+DailyChallenge19	Snow	Battle	120000	120000	Weapons, Position, Keys, Speedometer, Timer	10000	Car	Rebel2, Rebel3, Rebel4	Battle	TRUE	195,200,205	#TrackSnow	150,800	SkyboxSnowSunny	Medium						Grip_Music	Flake1
+DailyChallenge20	Snow	Battle	120000	120000	Weapons, Position, Keys, Speedometer, Timer	10000	Car	Rebel4, Rally74, PetiteXs4	Battle	TRUE	125,116,102	#TrackSnow	150,550	SkyboxSnowYellow	Heavy						Grip_Music	Flake2
+DailyChallenge21	Snow	Battle	120000	120000	Weapons, Position, Keys, Speedometer, Timer	10000	Car	Sunstorm4, Sunstorm4, Sunstorm4	Battle	TRUE	211, 191, 166	#TrackSnow	150,600	SkyboxDawn	Medium						Grip_Music	MountDoom1
+DailyChallenge22	Snow	Battle	120000	120000	Weapons, Position, Keys, Speedometer, Timer	10000	Car	BigTruck2, BigTruck3, BigTruck4	Battle	TRUE	38,51,63	#TrackSnow	150,400	SkyboxNight	Light						Grip_Music	MountDoom2
+DailyChallenge23	Snow	Battle	120000	120000	Weapons, Position, Keys, Speedometer, Timer	10000	Car	Fennek2, Fennek2, Fennek2	Battle	TRUE	186,182,171	#TrackSnow	100,800	SkyboxSnowCloudy	Light						Grip_Music	Avalanche1
+DailyChallenge24	Snow	Battle	120000	120000	Weapons, Position, Keys, Speedometer, Timer	10000	Car	MonsterTruck4, Fennek4, Fennek4	Battle	TRUE	28,47,75	#TrackSnow	100,800	SkyboxSnowYellow	Heavy						Grip_Music	Avalanche2
+DailyChallenge25	Jungle	Battle	120000	120000	Weapons, Position, Keys, Speedometer, Timer	10000	Car	Hound2, Hound2, Hound2	Battle	TRUE	224,222,209	#TrackJungle	150,500	SkyboxYellow	Heavy						Grip_Music	SuperOffroad1
+DailyChallenge26	Jungle	Battle	120000	120000	Weapons, Position, Keys, Speedometer, Timer	10000	Car	Hound3, Hound3, BigTruck2	Battle	TRUE	88,89,75	#TrackJungle	100,700	SkyboxCloudy	Light						Grip_Music	SuperOffroad2
+DailyChallenge27	Jungle	Battle	120000	120000	Weapons, Position, Keys, Speedometer, Timer	10000	Car	Rally74, Bullet3504, PhaserGti4	Battle	TRUE	227,233,235	#TrackJungle	150,800	SkyboxJungleSunny	Medium						Grip_Music	ClubBaja1
+DailyChallenge28	Jungle	Battle	120000	120000	Weapons, Position, Keys, Speedometer, Timer	10000	Car	ViceV802, ViceV803, ViceV804	Battle	TRUE	115,110,87	#TrackJungle	150,500	SkyboxJungleDawn	Heavy						Grip_Music	ClubBaja2
+DailyChallenge29	Jungle	Battle	120000	120000	Weapons, Position, Keys, Speedometer, Timer	10000	Car	Hound3, Hound3, BigTruck2	Battle	TRUE	204,172,125	#TrackJungle	100,800	SkyboxCitySunny	Medium						Grip_Music	MudRace1
+DailyChallenge30	Jungle	Battle	120000	120000	Weapons, Position, Keys, Speedometer, Timer	10000	Car	BigTruck4, BigTruck4, BigTruck4	Battle	TRUE	180,140,97	#TrackJungle	100,800	SkyboxCitySunny	Medium						Grip_Music	MudRace2
+DailyChallenge31	Jungle	Battle	120000	120000	Weapons, Position, Keys, Speedometer, Timer	10000	Car	MonsterTruck2, MonsterTruck3, MonsterTruck4	Battle	TRUE	180,140,97	#TrackJungle	100,800	SkyboxDawn	Medium						Grip_Music	Vulcano1

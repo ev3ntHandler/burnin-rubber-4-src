@@ -1,0 +1,101 @@
+-- [Text] SharedEvents
+
+//----------------------------------------------------------------------
+// Weapons
+//----------------------------------------------------------------------
+SetupWeapons_Begin
+	CreateTexture	Weapons	[#texture: "Weapons_Texture"]
+	CreateTexture	Weapons	[#texture: "RocketFlame_Texture"]
+	CreateTexture	Weapons	[#texture: "Effects_Texture"]
+	CreateTexture	Weapons	[#texture: "Flame_Texture"]
+	SetShader	Weapons	[#shader: "Weapons_Material", #shininess: 60.0]
+	BlendShader	Weapons	[#shader: "Effects_Material", #blendMode: #add]
+	BlendShader	Weapons	[#shader: "Flame_Material", #blendMode: #add]
+SetupWeapons_End
+
+//----------------------------------------------------------------------
+// Old particles setup
+//----------------------------------------------------------------------
+Setup3DParticles_Begin
+	CreateTexture	Particles	[#texture: "ParticleExplosion1_Texture"]
+	CreateTexture	Particles	[#texture: "ParticleSmoke1_Texture"]
+Setup3DParticles_End
+
+//----------------------------------------------------------------------
+// Objects
+//----------------------------------------------------------------------
+SetupObjects_Begin
+	PutMessage	SetupObjects
+	ResetWorld	Objects
+	CreateTexture	Objects	[#texture: "WorldMisc_Texture"]
+	CreateTexture	Objects	[#texture: "WorldMarker_Texture", #renderFormat: #rgba8888]
+	CreateTexture	Objects	[#texture: "Arrows_Texture", #renderFormat: #rgba8888]
+	CreateTexture	Objects	[#texture: "Crosses_Texture", #renderFormat: #rgba8888]
+	CreateTexture	Objects	[#texture: "Finish_Texture", #renderFormat: #rgba8888]
+	SetShader	Objects	[#shader: "WorldMisc_Material", #texture1: "WorldMisc_Texture"]
+	SetShader	Objects	[#shader: "WorldMarker_Material", #texture1: "WorldMarker_Texture"]
+	SetShader	Objects	[#shader: "Arrows_Material", #texture1: "Arrows_Texture"]
+	SetShader	Objects	[#shader: "Crosses_Material", #texture1: "Crosses_Texture"]
+	SetShader	Objects	[#shader: "Finish_Material", #texture1: "Finish_Texture"]
+	AddValue		[#name: "ObjectsInitialized", #value: TRUE]
+SetupObjects_End
+
+ResetObjects_Begin
+	PutMessage	ResetObjects
+	ResetWorld	Objects
+ResetObjects_End
+
+//----------------------------------------------------------------------
+// Pickups
+//----------------------------------------------------------------------
+SetupPickups_Begin
+	PutMessage	SetupPickups
+	CreateTexture	Pickups	[#texture: "Pickups_Texture", #renderFormat: #rgba8888]
+	SetShader	Pickups	[#shader: "Pickups_Material", #texture1: "Pickups_Texture"]
+	AddValue		[#name: "PickupsInitialized", #value: TRUE]
+SetupPickups_End
+
+ResetPickups_Begin
+	PutMessage	ResetPickups
+	ResetWorld	Pickups
+ResetPickups_End
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// Markers
+//-------------------------------------------------------------------------------------------------------------------------------------------
+SetupWorldMarker_Begin
+	PutMessage	SetupWorldMarker
+	CreateTexture	WorldMarker	[#texture: "WorldMarker_Texture", #renderFormat: #rgba8888]
+	SetShader	WorldMarker	[#shader: "WorldMarker_Material", #texture1: "WorldMarker_Texture"]
+SetupWorldMarker_End
+
+ResetWorldMarker_Begin
+	PutMessage	ResetWorldMarker
+	ResetWorld	WorldMarker
+ResetWorldMarker_End
+
+//-------------------------------------------------------------------------------------------------------------------------------------------
+// Decals & Impacts
+//-------------------------------------------------------------------------------------------------------------------------------------------
+SetupDecals_Begin
+	PutMessage	SetupDecals
+	CreateTexture	Decals	[#texture: "Decals_Texture", #renderFormat: #rgba8888]
+	SetShader	WorldMarker	[#shader: "Decals_Material", #texture1: "Decals_Texture"]
+SetupDecals_End
+
+ResetDecals_Begin
+	PutMessage	ResetDecals
+	ResetWorld	Decals
+ResetDecals_End
+
+SetupImpacts_Begin
+	PutMessage	SetupImpacts
+	CreateTexture	Impacts	[#texture: "Impacts_Texture", #renderFormat: #rgba8888]
+	SetShader	WorldMarker	[#shader: "Impacts_Material", #texture1: "Impacts_Texture"]
+	SetShader	WorldMarker	[#shader: "ImpactsDebris_Material", #transparent: FALSE]
+SetupImpacts_End
+
+ResetImpacts_Begin
+	PutMessage	ResetImpacts
+	ResetWorld	Impacts
+ResetImpacts_End
