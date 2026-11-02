@@ -1,0 +1,9 @@
+# build output and local tooling scratch
+node_modules/
+dist/
+*.tsbuildinfo
+.tmp/
+
+# editor / OS noise
+.DS_Store
+*.log

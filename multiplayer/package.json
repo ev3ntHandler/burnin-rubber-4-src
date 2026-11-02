@@ -1,0 +1,33 @@
+{
+  "name": "br4-multiplayer",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Modern multiplayer stack for Burnin' Rubber 4 (Shockwave/Director): online races + free roam with chat.",
+  "type": "module",
+  "workspaces": [
+    "packages/protocol",
+    "packages/server",
+    "packages/webclient"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "npm run build -w @br4mp/protocol && npm run build -w @br4mp/server",
+    "typecheck": "npm run typecheck -w @br4mp/protocol && npm run typecheck -w @br4mp/server",
+    "test": "npm run build && node --test packages/protocol/dist/test/*.test.js packages/server/dist/test/*.test.js",
+    "check:webclient": "node tools/check-webclient.mjs",
+    "smoke:webclient": "node tools/smoke-webclient.mjs",
+    "e2e": "node tools/headless-client.mjs --bots 3 --seconds 12 --mode 1",
+    "start": "node packages/server/dist/src/index.js",
+    "dev": "npm run build && node packages/server/dist/src/index.js",
+    "import-data": "node tools/import-br4-data.mjs",
+    "verify": "npm test && npm run check:webclient"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@types/ws": "^8.5.13",
+    "typescript": "^5.7.2",
+    "ws": "^8.18.0"
+  }
+}

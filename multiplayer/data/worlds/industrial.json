@@ -1,0 +1,3423 @@
+{
+ "world": "Industrial",
+ "worldIndex": 3,
+ "source": "WorldIndustrialData.txt",
+ "generatedFrom": "Burnin' Rubber 4 decompiled assets",
+ "spawn": {
+  "name": "SafeHouseIndustrial_Marker",
+  "pos": [
+   1898.02,
+   969.59,
+   19.1
+  ],
+  "yawDeg": 64.91
+ },
+ "markers": [
+  {
+   "name": "DemolitionIndustrialC3_Marker",
+   "kind": "DemolitionIndustrialC3",
+   "tile": "03_03",
+   "pos": [
+    640.88,
+    903.69,
+    106.63
+   ],
+   "yawDeg": 179.53,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialC22_Marker",
+   "kind": "TimeTrialIndustrialC22",
+   "tile": "04_02",
+   "pos": [
+    977.63,
+    686.15,
+    107.1
+   ],
+   "yawDeg": 36.24,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialC21_Marker",
+   "kind": "TimeTrialIndustrialC21",
+   "tile": "04_03",
+   "pos": [
+    972.37,
+    873.2,
+    94.16
+   ],
+   "yawDeg": -21.92,
+   "count": 1
+  },
+  {
+   "name": "DemolitionIndustrialB3_Marker",
+   "kind": "DemolitionIndustrialB3",
+   "tile": "05_02",
+   "pos": [
+    1168.86,
+    618.35,
+    0.19
+   ],
+   "yawDeg": -2.75,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialC23_Marker",
+   "kind": "TimeTrialIndustrialC23",
+   "tile": "05_02",
+   "pos": [
+    1133.02,
+    574.43,
+    121.45
+   ],
+   "yawDeg": 90,
+   "count": 1
+  },
+  {
+   "name": "IndustrialCarFromHelicopter_Marker",
+   "kind": "IndustrialCarFromHelicopter",
+   "tile": "05_03",
+   "pos": [
+    1149.59,
+    872.44,
+    20.51
+   ],
+   "yawDeg": 0.47,
+   "count": 1
+  },
+  {
+   "name": "IndustrialCarToHelicopter_Marker",
+   "kind": "IndustrialCarToHelicopter",
+   "tile": "05_03",
+   "pos": [
+    1149.59,
+    872.44,
+    20.51
+   ],
+   "yawDeg": 0.47,
+   "count": 1
+  },
+  {
+   "name": "IndustrialHelicopterFromCar_Marker",
+   "kind": "IndustrialHelicopterFromCar",
+   "tile": "05_03",
+   "pos": [
+    1149.59,
+    872.44,
+    20.51
+   ],
+   "yawDeg": 0.47,
+   "count": 1
+  },
+  {
+   "name": "IndustrialHelicopterToCar_Marker",
+   "kind": "IndustrialHelicopterToCar",
+   "tile": "05_03",
+   "pos": [
+    1149.59,
+    872.44,
+    20.51
+   ],
+   "yawDeg": 0.47,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialA12_Marker",
+   "kind": "TimeTrialIndustrialA12",
+   "tile": "05_03",
+   "pos": [
+    1198.46,
+    787.9,
+    18.96
+   ],
+   "yawDeg": 109.89,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialA13_Marker",
+   "kind": "TimeTrialIndustrialA13",
+   "tile": "05_03",
+   "pos": [
+    1198.46,
+    958.4,
+    18.96
+   ],
+   "yawDeg": -4.27,
+   "count": 1
+  },
+  {
+   "name": "DemolitionIndustrialB4_Marker",
+   "kind": "DemolitionIndustrialB4",
+   "tile": "05_04",
+   "pos": [
+    1251.96,
+    1080.06,
+    -0.12
+   ],
+   "yawDeg": 179.53,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialC20_Marker",
+   "kind": "TimeTrialIndustrialC20",
+   "tile": "05_04",
+   "pos": [
+    1099.11,
+    1028.03,
+    67.61
+   ],
+   "yawDeg": -45.36,
+   "count": 1
+  },
+  {
+   "name": "DailyChallenge_Marker",
+   "kind": "DailyChallenge",
+   "tile": "06_02",
+   "pos": [
+    1489.49,
+    561.61,
+    33.13
+   ],
+   "yawDeg": 64.91,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialC24_Marker",
+   "kind": "TimeTrialIndustrialC24",
+   "tile": "06_02",
+   "pos": [
+    1453.36,
+    566.91,
+    112.25
+   ],
+   "yawDeg": 90,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialB18_Marker",
+   "kind": "TimeTrialIndustrialB18",
+   "tile": "06_03",
+   "pos": [
+    1519.31,
+    730.31,
+    -0.62
+   ],
+   "yawDeg": -109.48,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialC18_Marker",
+   "kind": "TimeTrialIndustrialC18",
+   "tile": "06_04",
+   "pos": [
+    1390.01,
+    1047.47,
+    56.46
+   ],
+   "yawDeg": -83.11,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialC19_Marker",
+   "kind": "TimeTrialIndustrialC19",
+   "tile": "06_04",
+   "pos": [
+    1307.32,
+    1046.49,
+    48.44
+   ],
+   "yawDeg": -91.15,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialC14_Marker",
+   "kind": "TimeTrialIndustrialC14",
+   "tile": "06_05",
+   "pos": [
+    1397.24,
+    1371.24,
+    101.21
+   ],
+   "yawDeg": 76.13,
+   "count": 1
+  },
+  {
+   "name": "WeaponShopIndustrial_Marker",
+   "kind": "WeaponShopIndustrial",
+   "tile": "06_05",
+   "pos": [
+    1370.3,
+    1470.39,
+    29.38
+   ],
+   "yawDeg": 169.31,
+   "count": 1
+  },
+  {
+   "name": "DemolitionIndustrialA3_Marker",
+   "kind": "DemolitionIndustrialA3",
+   "tile": "06_06",
+   "pos": [
+    1320.05,
+    1602.44,
+    29.85
+   ],
+   "yawDeg": 179.53,
+   "count": 1
+  },
+  {
+   "name": "DemolitionIndustrialC4_Marker",
+   "kind": "DemolitionIndustrialC4",
+   "tile": "06_06",
+   "pos": [
+    1234.98,
+    1682.51,
+    222.92
+   ],
+   "yawDeg": 179.53,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialC12_Marker",
+   "kind": "TimeTrialIndustrialC12",
+   "tile": "06_06",
+   "pos": [
+    1516.06,
+    1575.07,
+    112.04
+   ],
+   "yawDeg": -92.29,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialC13_Marker",
+   "kind": "TimeTrialIndustrialC13",
+   "tile": "06_06",
+   "pos": [
+    1340.87,
+    1521.74,
+    129.04
+   ],
+   "yawDeg": -20.38,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialC1_Marker",
+   "kind": "TimeTrialIndustrialC1",
+   "tile": "07_02",
+   "pos": [
+    1560.01,
+    569.9,
+    86.6
+   ],
+   "yawDeg": 90,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialA10_Marker",
+   "kind": "TimeTrialIndustrialA10",
+   "tile": "07_03",
+   "pos": [
+    1586.79,
+    873.38,
+    18.96
+   ],
+   "yawDeg": -109.48,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialA11_Marker",
+   "kind": "TimeTrialIndustrialA11",
+   "tile": "07_03",
+   "pos": [
+    1543.56,
+    785.35,
+    18.96
+   ],
+   "yawDeg": -175.73,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialA14_Marker",
+   "kind": "TimeTrialIndustrialA14",
+   "tile": "07_03",
+   "pos": [
+    1560.79,
+    968.86,
+    18.96
+   ],
+   "yawDeg": 40.64,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialB17_Marker",
+   "kind": "TimeTrialIndustrialB17",
+   "tile": "07_03",
+   "pos": [
+    1575.12,
+    918.93,
+    -0.62
+   ],
+   "yawDeg": -109.48,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialA15_Marker",
+   "kind": "TimeTrialIndustrialA15",
+   "tile": "07_04",
+   "pos": [
+    1556.53,
+    1143.07,
+    18.96
+   ],
+   "yawDeg": 5.4,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialA9_Marker",
+   "kind": "TimeTrialIndustrialA9",
+   "tile": "07_04",
+   "pos": [
+    1677.81,
+    1001.76,
+    18.96
+   ],
+   "yawDeg": 179.53,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialB16_Marker",
+   "kind": "TimeTrialIndustrialB16",
+   "tile": "07_04",
+   "pos": [
+    1571.61,
+    1149.91,
+    -0.62
+   ],
+   "yawDeg": -79.63,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialC16_Marker",
+   "kind": "TimeTrialIndustrialC16",
+   "tile": "07_04",
+   "pos": [
+    1642.53,
+    1143.96,
+    72.13
+   ],
+   "yawDeg": -17.63,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialC17_Marker",
+   "kind": "TimeTrialIndustrialC17",
+   "tile": "07_04",
+   "pos": [
+    1555.34,
+    1054.58,
+    72.13
+   ],
+   "yawDeg": -17.63,
+   "count": 1
+  },
+  {
+   "name": "DemolitionIndustrialA2_Marker",
+   "kind": "DemolitionIndustrialA2",
+   "tile": "07_05",
+   "pos": [
+    1649.58,
+    1260.38,
+    19.59
+   ],
+   "yawDeg": 179.53,
+   "count": 1
+  },
+  {
+   "name": "DemolitionIndustrialB2_Marker",
+   "kind": "DemolitionIndustrialB2",
+   "tile": "07_05",
+   "pos": [
+    1566.95,
+    1311.71,
+    -0.03
+   ],
+   "yawDeg": 179.53,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialC15_Marker",
+   "kind": "TimeTrialIndustrialC15",
+   "tile": "07_05",
+   "pos": [
+    1569.74,
+    1322.78,
+    79.86
+   ],
+   "yawDeg": 75.01,
+   "count": 1
+  },
+  {
+   "name": "DemolitionIndustrialA4_Marker",
+   "kind": "DemolitionIndustrialA4",
+   "tile": "07_06",
+   "pos": [
+    1741.42,
+    1473.76,
+    43.59
+   ],
+   "yawDeg": 179.53,
+   "count": 1
+  },
+  {
+   "name": "DemolitionIndustrialC2_Marker",
+   "kind": "DemolitionIndustrialC2",
+   "tile": "07_06",
+   "pos": [
+    1756.81,
+    1644.84,
+    106.07
+   ],
+   "yawDeg": 179.53,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialC11_Marker",
+   "kind": "TimeTrialIndustrialC11",
+   "tile": "07_06",
+   "pos": [
+    1714.4,
+    1553.73,
+    93.69
+   ],
+   "yawDeg": -83.11,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialB13_Marker",
+   "kind": "TimeTrialIndustrialB13",
+   "tile": "08_02",
+   "pos": [
+    1910.66,
+    581.27,
+    -0.62
+   ],
+   "yawDeg": 90,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialC2_Marker",
+   "kind": "TimeTrialIndustrialC2",
+   "tile": "08_02",
+   "pos": [
+    1850.95,
+    562.99,
+    61.51
+   ],
+   "yawDeg": 103.8,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialC3_Marker",
+   "kind": "TimeTrialIndustrialC3",
+   "tile": "08_02",
+   "pos": [
+    1958.2,
+    702.5,
+    46.12
+   ],
+   "yawDeg": -177.26,
+   "count": 1
+  },
+  {
+   "name": "SafeHouseIndustrial_Marker",
+   "kind": "SafeHouseIndustrial",
+   "tile": "08_03",
+   "pos": [
+    1898.02,
+    969.59,
+    19.1
+   ],
+   "yawDeg": 64.91,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialB14_Marker",
+   "kind": "TimeTrialIndustrialB14",
+   "tile": "08_03",
+   "pos": [
+    1871.88,
+    824.12,
+    -0.62
+   ],
+   "yawDeg": 90,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialC4_Marker",
+   "kind": "TimeTrialIndustrialC4",
+   "tile": "08_03",
+   "pos": [
+    1971.52,
+    901.92,
+    47.22
+   ],
+   "yawDeg": 179.35,
+   "count": 1
+  },
+  {
+   "name": "CarPositionIndustrial10_Marker",
+   "kind": "CarPositionIndustrial10",
+   "tile": "08_04",
+   "pos": [
+    1870,
+    970.67,
+    19.1
+   ],
+   "yawDeg": 90,
+   "count": 1
+  },
+  {
+   "name": "CarPositionIndustrial11_Marker",
+   "kind": "CarPositionIndustrial11",
+   "tile": "08_04",
+   "pos": [
+    1862,
+    970.67,
+    19.1
+   ],
+   "yawDeg": 90,
+   "count": 1
+  },
+  {
+   "name": "CarPositionIndustrial12_Marker",
+   "kind": "CarPositionIndustrial12",
+   "tile": "08_04",
+   "pos": [
+    1853.84,
+    970.79,
+    19.1
+   ],
+   "yawDeg": 90,
+   "count": 1
+  },
+  {
+   "name": "CarPositionIndustrial13_Marker",
+   "kind": "CarPositionIndustrial13",
+   "tile": "08_04",
+   "pos": [
+    1845.84,
+    970.79,
+    19.1
+   ],
+   "yawDeg": 90,
+   "count": 1
+  },
+  {
+   "name": "CarPositionIndustrial14_Marker",
+   "kind": "CarPositionIndustrial14",
+   "tile": "08_04",
+   "pos": [
+    1837.84,
+    970.79,
+    19.1
+   ],
+   "yawDeg": 90,
+   "count": 1
+  },
+  {
+   "name": "CarPositionIndustrial15_Marker",
+   "kind": "CarPositionIndustrial15",
+   "tile": "08_04",
+   "pos": [
+    1829.84,
+    970.79,
+    19.1
+   ],
+   "yawDeg": 90,
+   "count": 1
+  },
+  {
+   "name": "CarPositionIndustrial1_Marker",
+   "kind": "CarPositionIndustrial1",
+   "tile": "08_04",
+   "pos": [
+    1806.73,
+    968.46,
+    19.1
+   ],
+   "yawDeg": 0.47,
+   "count": 1
+  },
+  {
+   "name": "CarPositionIndustrial2_Marker",
+   "kind": "CarPositionIndustrial2",
+   "tile": "08_04",
+   "pos": [
+    1806.73,
+    1008.83,
+    19.1
+   ],
+   "yawDeg": 0.47,
+   "count": 1
+  },
+  {
+   "name": "CarPositionIndustrial3_Marker",
+   "kind": "CarPositionIndustrial3",
+   "tile": "08_04",
+   "pos": [
+    1827.58,
+    1006.44,
+    19.1
+   ],
+   "yawDeg": -90,
+   "count": 1
+  },
+  {
+   "name": "CarPositionIndustrial4_Marker",
+   "kind": "CarPositionIndustrial4",
+   "tile": "08_04",
+   "pos": [
+    1835.58,
+    1006.44,
+    19.1
+   ],
+   "yawDeg": -90,
+   "count": 1
+  },
+  {
+   "name": "CarPositionIndustrial5_Marker",
+   "kind": "CarPositionIndustrial5",
+   "tile": "08_04",
+   "pos": [
+    1843.43,
+    1006.56,
+    19.1
+   ],
+   "yawDeg": -90,
+   "count": 1
+  },
+  {
+   "name": "CarPositionIndustrial6_Marker",
+   "kind": "CarPositionIndustrial6",
+   "tile": "08_04",
+   "pos": [
+    1851.22,
+    1006.35,
+    19.1
+   ],
+   "yawDeg": -90,
+   "count": 1
+  },
+  {
+   "name": "CarPositionIndustrial7_Marker",
+   "kind": "CarPositionIndustrial7",
+   "tile": "08_04",
+   "pos": [
+    1859.22,
+    1006.35,
+    19.1
+   ],
+   "yawDeg": -90,
+   "count": 1
+  },
+  {
+   "name": "CarPositionIndustrial8_Marker",
+   "kind": "CarPositionIndustrial8",
+   "tile": "08_04",
+   "pos": [
+    1867.22,
+    1006.35,
+    19.1
+   ],
+   "yawDeg": -90,
+   "count": 1
+  },
+  {
+   "name": "CarPositionIndustrial9_Marker",
+   "kind": "CarPositionIndustrial9",
+   "tile": "08_04",
+   "pos": [
+    1875.22,
+    1006.35,
+    19.1
+   ],
+   "yawDeg": -90,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialA16_Marker",
+   "kind": "TimeTrialIndustrialA16",
+   "tile": "08_04",
+   "pos": [
+    1918.13,
+    1148.01,
+    18.96
+   ],
+   "yawDeg": 90,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialA8_Marker",
+   "kind": "TimeTrialIndustrialA8",
+   "tile": "08_04",
+   "pos": [
+    1804.86,
+    987.95,
+    18.96
+   ],
+   "yawDeg": 179.53,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialB15_Marker",
+   "kind": "TimeTrialIndustrialB15",
+   "tile": "08_04",
+   "pos": [
+    1858.05,
+    1223.27,
+    -0.62
+   ],
+   "yawDeg": 179.53,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialA17_Marker",
+   "kind": "TimeTrialIndustrialA17",
+   "tile": "08_05",
+   "pos": [
+    1930.87,
+    1261.4,
+    18.96
+   ],
+   "yawDeg": 5.4,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialA6_Marker",
+   "kind": "TimeTrialIndustrialA6",
+   "tile": "08_05",
+   "pos": [
+    1992.88,
+    1359.01,
+    4
+   ],
+   "yawDeg": -90,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialC7_Marker",
+   "kind": "TimeTrialIndustrialC7",
+   "tile": "08_05",
+   "pos": [
+    1994.15,
+    1482.64,
+    12.79
+   ],
+   "yawDeg": -175.78,
+   "count": 1
+  },
+  {
+   "name": "TicketMasterIndustrial_Marker",
+   "kind": "TicketMasterIndustrial",
+   "tile": "08_06",
+   "pos": [
+    1787.56,
+    1689.34,
+    43.12
+   ],
+   "yawDeg": -38.84,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialA5_Marker",
+   "kind": "TimeTrialIndustrialA5",
+   "tile": "08_06",
+   "pos": [
+    1993.59,
+    1585.79,
+    3.89
+   ],
+   "yawDeg": -90,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialC10_Marker",
+   "kind": "TimeTrialIndustrialC10",
+   "tile": "08_06",
+   "pos": [
+    1831.06,
+    1719.83,
+    63.19
+   ],
+   "yawDeg": -6.85,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialC8_Marker",
+   "kind": "TimeTrialIndustrialC8",
+   "tile": "08_06",
+   "pos": [
+    1995.64,
+    1704.85,
+    8.07
+   ],
+   "yawDeg": -174.12,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialA4_Marker",
+   "kind": "TimeTrialIndustrialA4",
+   "tile": "08_07",
+   "pos": [
+    1995.5,
+    1766.71,
+    3.98
+   ],
+   "yawDeg": -94.59,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialC9_Marker",
+   "kind": "TimeTrialIndustrialC9",
+   "tile": "08_07",
+   "pos": [
+    1953.78,
+    1830.6,
+    32.39
+   ],
+   "yawDeg": -86.56,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialB12_Marker",
+   "kind": "TimeTrialIndustrialB12",
+   "tile": "09_01",
+   "pos": [
+    2180.33,
+    385.43,
+    -0.62
+   ],
+   "yawDeg": 149.43,
+   "count": 1
+  },
+  {
+   "name": "IndustrialBoatFromCar_Marker",
+   "kind": "IndustrialBoatFromCar",
+   "tile": "09_03",
+   "pos": [
+    2240.75,
+    870.92,
+    0.42
+   ],
+   "yawDeg": -94.59,
+   "count": 1
+  },
+  {
+   "name": "IndustrialBoatToCar_Marker",
+   "kind": "IndustrialBoatToCar",
+   "tile": "09_03",
+   "pos": [
+    2240.75,
+    870.92,
+    0.42
+   ],
+   "yawDeg": -94.59,
+   "count": 1
+  },
+  {
+   "name": "IndustrialCarFromBoat_Marker",
+   "kind": "IndustrialCarFromBoat",
+   "tile": "09_03",
+   "pos": [
+    2254.59,
+    963.32,
+    3.77
+   ],
+   "yawDeg": 90,
+   "count": 1
+  },
+  {
+   "name": "IndustrialCarToBoat_Marker",
+   "kind": "IndustrialCarToBoat",
+   "tile": "09_03",
+   "pos": [
+    2254.59,
+    963.32,
+    3.77
+   ],
+   "yawDeg": 90,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialA7_Marker",
+   "kind": "TimeTrialIndustrialA7",
+   "tile": "09_03",
+   "pos": [
+    1986.93,
+    1102.44,
+    4
+   ],
+   "yawDeg": -90,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialC5_Marker",
+   "kind": "TimeTrialIndustrialC5",
+   "tile": "09_03",
+   "pos": [
+    1993.43,
+    1096.62,
+    66.09
+   ],
+   "yawDeg": -178.95,
+   "count": 1
+  },
+  {
+   "name": "DemolitionIndustrialA1_Marker",
+   "kind": "DemolitionIndustrialA1",
+   "tile": "09_04",
+   "pos": [
+    2148.52,
+    1168.77,
+    19.47
+   ],
+   "yawDeg": 179.53,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialC6_Marker",
+   "kind": "TimeTrialIndustrialC6",
+   "tile": "09_04",
+   "pos": [
+    1994.21,
+    1295.97,
+    65.15
+   ],
+   "yawDeg": -174.56,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialA18_Marker",
+   "kind": "TimeTrialIndustrialA18",
+   "tile": "09_05",
+   "pos": [
+    2259.19,
+    1313.56,
+    18.96
+   ],
+   "yawDeg": 5.4,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialA1_Marker",
+   "kind": "TimeTrialIndustrialA1",
+   "tile": "09_05",
+   "pos": [
+    2203.88,
+    1332.86,
+    18.9
+   ],
+   "yawDeg": 105.01,
+   "count": 1
+  },
+  {
+   "name": "TuneShopIndustrial_Marker",
+   "kind": "TuneShopIndustrial",
+   "tile": "09_05",
+   "pos": [
+    2217.07,
+    1272.17,
+    19.13
+   ],
+   "yawDeg": 74.99,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialA2_Marker",
+   "kind": "TimeTrialIndustrialA2",
+   "tile": "09_06",
+   "pos": [
+    2126.4,
+    1554.65,
+    19.13
+   ],
+   "yawDeg": 90,
+   "count": 1
+  },
+  {
+   "name": "SprayShopIndustrial_Marker",
+   "kind": "SprayShopIndustrial",
+   "tile": "09_07",
+   "pos": [
+    2129.85,
+    1751.39,
+    19.13
+   ],
+   "yawDeg": -73.91,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialA3_Marker",
+   "kind": "TimeTrialIndustrialA3",
+   "tile": "09_07",
+   "pos": [
+    2051.52,
+    1752.88,
+    19.3
+   ],
+   "yawDeg": 135.26,
+   "count": 1
+  },
+  {
+   "name": "DemolitionIndustrialB1_Marker",
+   "kind": "DemolitionIndustrialB1",
+   "tile": "10_01",
+   "pos": [
+    2302.76,
+    509.26,
+    -0.03
+   ],
+   "yawDeg": 179.53,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialB11_Marker",
+   "kind": "TimeTrialIndustrialB11",
+   "tile": "10_01",
+   "pos": [
+    2305.17,
+    440.3,
+    -0.62
+   ],
+   "yawDeg": 174.6,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialB1_Marker",
+   "kind": "TimeTrialIndustrialB1",
+   "tile": "10_01",
+   "pos": [
+    2354.23,
+    372.75,
+    -0.05
+   ],
+   "yawDeg": 24.38,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialB2_Marker",
+   "kind": "TimeTrialIndustrialB2",
+   "tile": "10_01",
+   "pos": [
+    2381.77,
+    308.17,
+    -0.05
+   ],
+   "yawDeg": 105.01,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialB3_Marker",
+   "kind": "TimeTrialIndustrialB3",
+   "tile": "10_01",
+   "pos": [
+    2510.67,
+    356.83,
+    -0.05
+   ],
+   "yawDeg": 44.74,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialB10_Marker",
+   "kind": "TimeTrialIndustrialB10",
+   "tile": "10_02",
+   "pos": [
+    2356.7,
+    584.26,
+    -0.05
+   ],
+   "yawDeg": -129.74,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialB4_Marker",
+   "kind": "TimeTrialIndustrialB4",
+   "tile": "10_02",
+   "pos": [
+    2519.94,
+    483.16,
+    -0.05
+   ],
+   "yawDeg": 44.74,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialB9_Marker",
+   "kind": "TimeTrialIndustrialB9",
+   "tile": "10_02",
+   "pos": [
+    2460.79,
+    693.83,
+    -0.05
+   ],
+   "yawDeg": -129.74,
+   "count": 1
+  },
+  {
+   "name": "DemolitionIndustrialC1_Marker",
+   "kind": "DemolitionIndustrialC1",
+   "tile": "11_03",
+   "pos": [
+    2554.24,
+    803.29,
+    18.35
+   ],
+   "yawDeg": 179.53,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialB5_Marker",
+   "kind": "TimeTrialIndustrialB5",
+   "tile": "11_03",
+   "pos": [
+    2717.41,
+    934.51,
+    -0.05
+   ],
+   "yawDeg": 44.74,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialB8_Marker",
+   "kind": "TimeTrialIndustrialB8",
+   "tile": "11_03",
+   "pos": [
+    2508.02,
+    886.56,
+    -0.05
+   ],
+   "yawDeg": -79.63,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialB6_Marker",
+   "kind": "TimeTrialIndustrialB6",
+   "tile": "11_04",
+   "pos": [
+    2706.26,
+    1009.89,
+    -0.05
+   ],
+   "yawDeg": 155.62,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialIndustrialB7_Marker",
+   "kind": "TimeTrialIndustrialB7",
+   "tile": "11_04",
+   "pos": [
+    2620.07,
+    1020.31,
+    -0.05
+   ],
+   "yawDeg": -124.8,
+   "count": 1
+  },
+  {
+   "name": "IndustrialFromCity_Marker",
+   "kind": "IndustrialFromCity",
+   "tile": "12_03",
+   "pos": [
+    3019.62,
+    826.52,
+    92.73
+   ],
+   "yawDeg": 179.49,
+   "count": 1
+  },
+  {
+   "name": "IndustrialToCity_Marker",
+   "kind": "IndustrialToCity",
+   "tile": "12_03",
+   "pos": [
+    3055.18,
+    822.41,
+    95.83
+   ],
+   "yawDeg": 5.52,
+   "count": 1
+  }
+ ],
+ "pickups": [
+  {
+   "kind": "ammo",
+   "tile": "03_03",
+   "pos": [
+    778.59,
+    874,
+    134.36
+   ]
+  },
+  {
+   "kind": "cashstash",
+   "tile": "03_03",
+   "pos": [
+    575.4,
+    928.37,
+    1.45
+   ]
+  },
+  {
+   "kind": "repair",
+   "tile": "03_03",
+   "pos": [
+    672.61,
+    853.47,
+    1.44
+   ]
+  },
+  {
+   "kind": "cashstash",
+   "tile": "04_08",
+   "pos": [
+    949.1,
+    2009.43,
+    1.59
+   ]
+  },
+  {
+   "kind": "nitro",
+   "tile": "05_02",
+   "pos": [
+    1080.19,
+    686.51,
+    1.48
+   ]
+  },
+  {
+   "kind": "repair",
+   "tile": "05_02",
+   "pos": [
+    1268.66,
+    667.61,
+    1.44
+   ]
+  },
+  {
+   "kind": "ammo",
+   "tile": "05_04",
+   "pos": [
+    1041.02,
+    1076.54,
+    1.66
+   ]
+  },
+  {
+   "kind": "cashstash",
+   "tile": "05_08",
+   "pos": [
+    1015.16,
+    2034.39,
+    105.33
+   ]
+  },
+  {
+   "kind": "ammo",
+   "tile": "06_02",
+   "pos": [
+    1502.42,
+    565.81,
+    104.14
+   ]
+  },
+  {
+   "kind": "nitro",
+   "tile": "06_03",
+   "pos": [
+    1445.03,
+    964.94,
+    20.58
+   ]
+  },
+  {
+   "kind": "cashstash",
+   "tile": "06_06",
+   "pos": [
+    1268.37,
+    1690.57,
+    30.58
+   ]
+  },
+  {
+   "kind": "cashstash",
+   "tile": "06_06",
+   "pos": [
+    1409.8,
+    1486.88,
+    176.18
+   ]
+  },
+  {
+   "kind": "ammo",
+   "tile": "07_02",
+   "pos": [
+    1585.05,
+    696.47,
+    1.66
+   ]
+  },
+  {
+   "kind": "cashstash",
+   "tile": "07_02",
+   "pos": [
+    1645.88,
+    567.36,
+    38.08
+   ]
+  },
+  {
+   "kind": "cashstash",
+   "tile": "07_04",
+   "pos": [
+    1669.05,
+    1219.82,
+    4.75
+   ]
+  },
+  {
+   "kind": "nitro",
+   "tile": "07_04",
+   "pos": [
+    1568.79,
+    1090.34,
+    1.48
+   ]
+  },
+  {
+   "kind": "repair",
+   "tile": "07_04",
+   "pos": [
+    1793.9,
+    1224.73,
+    1.44
+   ]
+  },
+  {
+   "kind": "ammo",
+   "tile": "07_08",
+   "pos": [
+    1520.88,
+    2225.14,
+    1.66
+   ]
+  },
+  {
+   "kind": "nitro",
+   "tile": "08_02",
+   "pos": [
+    1965.65,
+    544.69,
+    1.68
+   ]
+  },
+  {
+   "kind": "ammo",
+   "tile": "08_06",
+   "pos": [
+    1810.67,
+    1642.38,
+    90.84
+   ]
+  },
+  {
+   "kind": "nitro",
+   "tile": "08_06",
+   "pos": [
+    1992.81,
+    1514.49,
+    5.7
+   ]
+  },
+  {
+   "kind": "nitro",
+   "tile": "09_06",
+   "pos": [
+    2051.81,
+    1629.7,
+    20.37
+   ]
+  },
+  {
+   "kind": "cashstash",
+   "tile": "10_01",
+   "pos": [
+    2462.8,
+    402.74,
+    1.28
+   ]
+  },
+  {
+   "kind": "nitro",
+   "tile": "10_01",
+   "pos": [
+    2412.23,
+    469.69,
+    1.68
+   ]
+  },
+  {
+   "kind": "repair",
+   "tile": "10_02",
+   "pos": [
+    2402.58,
+    632.68,
+    1.44
+   ]
+  },
+  {
+   "kind": "ammo",
+   "tile": "10_05",
+   "pos": [
+    2429.85,
+    1315.48,
+    56.94
+   ]
+  },
+  {
+   "kind": "nitro",
+   "tile": "10_05",
+   "pos": [
+    2428.13,
+    1288.77,
+    1.1
+   ]
+  },
+  {
+   "kind": "ammo",
+   "tile": "11_04",
+   "pos": [
+    2697.59,
+    1016.12,
+    1.66
+   ]
+  },
+  {
+   "kind": "nitro",
+   "tile": "11_05",
+   "pos": [
+    2566.92,
+    1314.72,
+    20.82
+   ]
+  },
+  {
+   "kind": "nitro",
+   "tile": "12_03",
+   "pos": [
+    2930.85,
+    961.85,
+    83.26
+   ]
+  }
+ ],
+ "roads": [
+  {
+   "name": "WorldIndustrialTraffic01",
+   "length": 3767,
+   "points": [
+    [
+     1557.09,
+     1078.15,
+     19.01
+    ],
+    [
+     1555.4,
+     1088.01,
+     19.01
+    ],
+    [
+     1553.76,
+     1097.87,
+     19.01
+    ],
+    [
+     1552.2,
+     1107.75,
+     19.01
+    ],
+    [
+     1550.75,
+     1117.64,
+     19.01
+    ],
+    [
+     1549.35,
+     1127.54,
+     19.01
+    ],
+    [
+     1547.95,
+     1137.44,
+     19.01
+    ],
+    [
+     1546.57,
+     1147.35,
+     19.01
+    ],
+    [
+     1545.2,
+     1157.25,
+     19.01
+    ],
+    [
+     1543.8,
+     1167.16,
+     19.01
+    ],
+    [
+     1542.29,
+     1177.04,
+     19.01
+    ],
+    [
+     1540.69,
+     1186.91,
+     19.01
+    ],
+    [
+     1538.94,
+     1196.76,
+     19.01
+    ],
+    [
+     1537.17,
+     1206.6,
+     19.01
+    ],
+    [
+     1535.56,
+     1216.47,
+     19.01
+    ],
+    [
+     1533.99,
+     1226.35,
+     19.01
+    ],
+    [
+     1532.58,
+     1236.25,
+     19.01
+    ],
+    [
+     1531.21,
+     1246.15,
+     19.01
+    ],
+    [
+     1529.79,
+     1256.05,
+     19.01
+    ],
+    [
+     1528.36,
+     1265.95,
+     19.01
+    ],
+    [
+     1526.97,
+     1275.85,
+     19.01
+    ],
+    [
+     1526.52,
+     1285.82,
+     19.02
+    ],
+    [
+     1526.49,
+     1295.82,
+     19.03
+    ],
+    [
+     1526.47,
+     1305.82,
+     19.04
+    ],
+    [
+     1526.44,
+     1315.82,
+     19.04
+    ],
+    [
+     1526.42,
+     1325.82,
+     19.05
+    ],
+    [
+     1526.39,
+     1335.82,
+     19.06
+    ],
+    [
+     1526.19,
+     1345.63,
+     20.83
+    ],
+    [
+     1526,
+     1355.28,
+     23.42
+    ],
+    [
+     1525.86,
+     1364.83,
+     26.39
+    ],
+    [
+     1525.59,
+     1374.29,
+     29.61
+    ],
+    [
+     1525.19,
+     1383.65,
+     33.09
+    ],
+    [
+     1524.63,
+     1393.06,
+     36.4
+    ],
+    [
+     1523.76,
+     1402.57,
+     39.38
+    ],
+    [
+     1522.89,
+     1412.08,
+     42.36
+    ],
+    [
+     1520.54,
+     1421.73,
+     43.01
+    ],
+    [
+     1517.08,
+     1431.11,
+     43.01
+    ],
+    [
+     1513.06,
+     1440.25,
+     43.01
+    ],
+    [
+     1509.42,
+     1449.54,
+     43.01
+    ],
+    [
+     1507.93,
+     1459.43,
+     43.01
+    ],
+    [
+     1507.47,
+     1469.42,
+     43.01
+    ],
+    [
+     1507.47,
+     1479.42,
+     43.01
+    ],
+    [
+     1507.47,
+     1489.42,
+     43.01
+    ],
+    [
+     1507.47,
+     1499.42,
+     43.01
+    ],
+    [
+     1507.47,
+     1509.42,
+     43.01
+    ],
+    [
+     1507.47,
+     1519.42,
+     43.01
+    ],
+    [
+     1507.47,
+     1529.42,
+     43.01
+    ],
+    [
+     1507.48,
+     1539.42,
+     43.01
+    ],
+    [
+     1508.59,
+     1549.3,
+     43.01
+    ],
+    [
+     1513.1,
+     1558.12,
+     43.01
+    ],
+    [
+     1520.64,
+     1564.55,
+     43.01
+    ],
+    [
+     1530.06,
+     1567.61,
+     43.01
+    ],
+    [
+     1540.05,
+     1567.9,
+     43.01
+    ],
+    [
+     1550.05,
+     1567.9,
+     43.01
+    ],
+    [
+     1560.05,
+     1567.9,
+     43.01
+    ],
+    [
+     1570.05,
+     1567.9,
+     43.01
+    ],
+    [
+     1580.05,
+     1567.9,
+     43.01
+    ],
+    [
+     1590.05,
+     1567.9,
+     43.01
+    ],
+    [
+     1600.05,
+     1567.91,
+     43.01
+    ],
+    [
+     1610.05,
+     1567.91,
+     43.01
+    ],
+    [
+     1620.05,
+     1567.91,
+     43.01
+    ],
+    [
+     1629.97,
+     1568.69,
+     43.01
+    ],
+    [
+     1635.58,
+     1575.93,
+     43.01
+    ],
+    [
+     1635.89,
+     1585.91,
+     43.01
+    ],
+    [
+     1635.89,
+     1595.91,
+     43.01
+    ],
+    [
+     1635.9,
+     1605.91,
+     43.01
+    ],
+    [
+     1635.9,
+     1615.91,
+     43.01
+    ],
+    [
+     1635.9,
+     1625.91,
+     43.01
+    ],
+    [
+     1635.9,
+     1635.91,
+     43.01
+    ],
+    [
+     1635.9,
+     1645.91,
+     43.01
+    ],
+    [
+     1635.9,
+     1655.91,
+     43.01
+    ],
+    [
+     1635.91,
+     1665.91,
+     43.01
+    ],
+    [
+     1635.91,
+     1675.91,
+     43.01
+    ],
+    [
+     1635.91,
+     1685.91,
+     43.01
+    ],
+    [
+     1635.92,
+     1695.91,
+     43.01
+    ],
+    [
+     1636.03,
+     1705.9,
+     43.01
+    ],
+    [
+     1641.83,
+     1712.83,
+     43.01
+    ],
+    [
+     1651.76,
+     1713.61,
+     43.01
+    ],
+    [
+     1661.76,
+     1713.61,
+     43.01
+    ],
+    [
+     1671.76,
+     1713.62,
+     43.01
+    ],
+    [
+     1681.76,
+     1713.62,
+     43.01
+    ],
+    [
+     1691.76,
+     1713.63,
+     43.01
+    ],
+    [
+     1701.76,
+     1713.63,
+     43.01
+    ],
+    [
+     1711.76,
+     1713.63,
+     43.01
+    ],
+    [
+     1721.76,
+     1713.63,
+     43.01
+    ],
+    [
+     1731.76,
+     1713.63,
+     43.01
+    ],
+    [
+     1741.76,
+     1713.63,
+     43.01
+    ],
+    [
+     1751.76,
+     1713.63,
+     43.01
+    ],
+    [
+     1761.76,
+     1713.63,
+     43.01
+    ],
+    [
+     1771.76,
+     1713.62,
+     43.01
+    ],
+    [
+     1781.76,
+     1713.62,
+     43.01
+    ],
+    [
+     1791.76,
+     1713.62,
+     43.01
+    ],
+    [
+     1801.76,
+     1713.62,
+     43.01
+    ],
+    [
+     1811.76,
+     1713.62,
+     43.01
+    ],
+    [
+     1821.76,
+     1713.62,
+     43.01
+    ],
+    [
+     1831.65,
+     1713.62,
+     41.88
+    ],
+    [
+     1841.47,
+     1713.63,
+     39.99
+    ],
+    [
+     1851.28,
+     1713.75,
+     38.05
+    ],
+    [
+     1861,
+     1714.84,
+     36.09
+    ],
+    [
+     1870.22,
+     1718.14,
+     34.26
+    ],
+    [
+     1878.56,
+     1723.33,
+     32.61
+    ],
+    [
+     1886.95,
+     1728.51,
+     31.04
+    ],
+    [
+     1896.26,
+     1731.56,
+     29.17
+    ],
+    [
+     1906,
+     1732.4,
+     27.23
+    ],
+    [
+     1915.89,
+     1732.4,
+     25.8
+    ],
+    [
+     1925.79,
+     1732.4,
+     24.37
+    ],
+    [
+     1935.7,
+     1732.4,
+     23.06
+    ],
+    [
+     1945.62,
+     1732.4,
+     21.75
+    ],
+    [
+     1955.53,
+     1732.4,
+     20.42
+    ],
+    [
+     1965.44,
+     1732.4,
+     19.08
+    ],
+    [
+     1975.43,
+     1732.15,
+     19.03
+    ],
+    [
+     1985.43,
+     1731.9,
+     19.02
+    ],
+    [
+     1995.43,
+     1731.65,
+     19.02
+    ],
+    [
+     2005.42,
+     1731.4,
+     19.01
+    ],
+    [
+     2015.42,
+     1731.15,
+     19.01
+    ],
+    [
+     2025.42,
+     1731.02,
+     19.01
+    ],
+    [
+     2035.42,
+     1731.02,
+     19.01
+    ],
+    [
+     2045.42,
+     1731.02,
+     19.01
+    ],
+    [
+     2055.42,
+     1731.02,
+     19.01
+    ],
+    [
+     2065.24,
+     1729.65,
+     19.01
+    ],
+    [
+     2074.91,
+     1727.11,
+     19.01
+    ],
+    [
+     2083.78,
+     1723.1,
+     19.01
+    ],
+    [
+     2091.12,
+     1716.31,
+     19.01
+    ],
+    [
+     2098.01,
+     1709.2,
+     19.01
+    ],
+    [
+     2102.08,
+     1700.06,
+     19.01
+    ],
+    [
+     2106.15,
+     1690.93,
+     19.01
+    ],
+    [
+     2109.33,
+     1681.47,
+     19.01
+    ],
+    [
+     2112.13,
+     1671.87,
+     19.01
+    ],
+    [
+     2114.57,
+     1662.19,
+     19.01
+    ],
+    [
+     2116.22,
+     1652.32,
+     19.01
+    ],
+    [
+     2117.87,
+     1642.46,
+     19.01
+    ],
+    [
+     2119.1,
+     1632.54,
+     19.01
+    ],
+    [
+     2120.23,
+     1622.6,
+     19.01
+    ],
+    [
+     2121.35,
+     1612.66,
+     19.01
+    ],
+    [
+     2122.45,
+     1602.72,
+     19.01
+    ],
+    [
+     2123.49,
+     1592.78,
+     19.01
+    ],
+    [
+     2124.45,
+     1582.82,
+     19.01
+    ],
+    [
+     2125.4,
+     1572.87,
+     19.01
+    ],
+    [
+     2126.34,
+     1562.92,
+     19.01
+    ],
+    [
+     2127.21,
+     1552.95,
+     19.01
+    ],
+    [
+     2127.99,
+     1542.98,
+     19.01
+    ],
+    [
+     2128.71,
+     1533.01,
+     19.01
+    ],
+    [
+     2129.38,
+     1523.03,
+     19.01
+    ],
+    [
+     2130.25,
+     1513.07,
+     19.01
+    ],
+    [
+     2131.3,
+     1503.13,
+     19.01
+    ],
+    [
+     2132.45,
+     1493.19,
+     19.01
+    ],
+    [
+     2133.72,
+     1483.28,
+     19.01
+    ],
+    [
+     2135.61,
+     1473.47,
+     19.01
+    ],
+    [
+     2137.96,
+     1463.75,
+     19.01
+    ],
+    [
+     2140.65,
+     1454.13,
+     19.01
+    ],
+    [
+     2144.18,
+     1444.78,
+     19.01
+    ],
+    [
+     2147.75,
+     1435.44,
+     19.01
+    ],
+    [
+     2151.56,
+     1426.19,
+     19.01
+    ],
+    [
+     2155.38,
+     1416.95,
+     19.01
+    ],
+    [
+     2159.04,
+     1407.64,
+     19.01
+    ],
+    [
+     2162.7,
+     1398.34,
+     19.01
+    ],
+    [
+     2166.82,
+     1389.23,
+     19.01
+    ],
+    [
+     2170.98,
+     1380.14,
+     19.01
+    ],
+    [
+     2175.76,
+     1371.36,
+     19.01
+    ],
+    [
+     2180.73,
+     1362.68,
+     19.01
+    ],
+    [
+     2186.3,
+     1354.4,
+     19.01
+    ],
+    [
+     2192.19,
+     1346.31,
+     19.01
+    ],
+    [
+     2198.45,
+     1338.53,
+     19.01
+    ],
+    [
+     2205.21,
+     1331.16,
+     19.01
+    ],
+    [
+     2211.8,
+     1323.65,
+     19.01
+    ],
+    [
+     2213.88,
+     1314.45,
+     19.05
+    ],
+    [
+     2206.45,
+     1308.29,
+     19.01
+    ],
+    [
+     2196.84,
+     1305.55,
+     19.01
+    ],
+    [
+     2187.21,
+     1302.87,
+     19.01
+    ],
+    [
+     2177.81,
+     1299.51,
+     19.01
+    ],
+    [
+     2168.62,
+     1295.59,
+     19.01
+    ],
+    [
+     2159.45,
+     1291.59,
+     19.01
+    ],
+    [
+     2150.34,
+     1287.47,
+     19.01
+    ],
+    [
+     2141.27,
+     1283.25,
+     19.01
+    ],
+    [
+     2132.31,
+     1278.81,
+     19.01
+    ],
+    [
+     2123.16,
+     1274.89,
+     19.01
+    ],
+    [
+     2113.46,
+     1272.46,
+     19.01
+    ],
+    [
+     2103.76,
+     1270.04,
+     19.01
+    ],
+    [
+     2093.8,
+     1269.18,
+     19.01
+    ],
+    [
+     2083.83,
+     1268.33,
+     19.01
+    ],
+    [
+     2073.84,
+     1267.93,
+     19.01
+    ],
+    [
+     2063.85,
+     1267.63,
+     19.01
+    ],
+    [
+     2053.85,
+     1267.35,
+     19.01
+    ],
+    [
+     2043.85,
+     1267.08,
+     19.01
+    ],
+    [
+     2033.86,
+     1266.97,
+     19.01
+    ],
+    [
+     2023.86,
+     1266.96,
+     19.01
+    ],
+    [
+     2013.86,
+     1266.95,
+     19.01
+    ],
+    [
+     2003.86,
+     1266.94,
+     19.01
+    ],
+    [
+     1993.86,
+     1266.93,
+     19.01
+    ],
+    [
+     1983.86,
+     1266.92,
+     19.01
+    ],
+    [
+     1973.86,
+     1266.9,
+     19.01
+    ],
+    [
+     1963.86,
+     1266.89,
+     19.01
+    ],
+    [
+     1953.86,
+     1266.89,
+     19.01
+    ],
+    [
+     1943.87,
+     1266.64,
+     19.01
+    ],
+    [
+     1934.4,
+     1263.73,
+     19.01
+    ],
+    [
+     1926.76,
+     1257.43,
+     19.01
+    ],
+    [
+     1922.1,
+     1248.69,
+     19.01
+    ],
+    [
+     1920.87,
+     1238.82,
+     19.01
+    ],
+    [
+     1920.86,
+     1228.82,
+     19.01
+    ],
+    [
+     1920.86,
+     1218.82,
+     19.01
+    ],
+    [
+     1920.86,
+     1208.82,
+     19.01
+    ],
+    [
+     1920.86,
+     1198.82,
+     19.01
+    ],
+    [
+     1920.86,
+     1188.82,
+     19.01
+    ],
+    [
+     1920.86,
+     1178.82,
+     19.01
+    ],
+    [
+     1920.85,
+     1168.82,
+     19.01
+    ],
+    [
+     1920.85,
+     1158.82,
+     19.01
+    ],
+    [
+     1920.85,
+     1148.82,
+     19.01
+    ],
+    [
+     1920.85,
+     1138.82,
+     19.01
+    ],
+    [
+     1920.85,
+     1128.82,
+     19.01
+    ],
+    [
+     1920.85,
+     1118.82,
+     19.01
+    ],
+    [
+     1920.86,
+     1108.82,
+     19.01
+    ],
+    [
+     1920.86,
+     1098.82,
+     19.01
+    ],
+    [
+     1920.86,
+     1088.82,
+     19.01
+    ],
+    [
+     1920.86,
+     1078.82,
+     19.01
+    ],
+    [
+     1920.86,
+     1068.82,
+     19.01
+    ],
+    [
+     1920.86,
+     1058.82,
+     19.01
+    ],
+    [
+     1920.86,
+     1048.82,
+     19.01
+    ],
+    [
+     1920.86,
+     1038.82,
+     19.01
+    ],
+    [
+     1920.86,
+     1028.82,
+     19.01
+    ],
+    [
+     1920.86,
+     1018.82,
+     19.01
+    ],
+    [
+     1920.86,
+     1008.82,
+     19.01
+    ],
+    [
+     1920.86,
+     998.82,
+     19.01
+    ],
+    [
+     1920.86,
+     988.82,
+     19.01
+    ],
+    [
+     1920.86,
+     978.82,
+     19.01
+    ],
+    [
+     1920.86,
+     968.82,
+     19.01
+    ],
+    [
+     1920.86,
+     958.82,
+     19.01
+    ],
+    [
+     1920.86,
+     948.82,
+     19.01
+    ],
+    [
+     1920.86,
+     938.82,
+     19.01
+    ],
+    [
+     1920.86,
+     928.82,
+     19.01
+    ],
+    [
+     1920.86,
+     918.82,
+     19.01
+    ],
+    [
+     1920.86,
+     908.82,
+     19.01
+    ],
+    [
+     1920.86,
+     898.82,
+     19.01
+    ],
+    [
+     1920.86,
+     888.82,
+     19.01
+    ],
+    [
+     1920.86,
+     878.82,
+     19.01
+    ],
+    [
+     1920.86,
+     868.82,
+     19.01
+    ],
+    [
+     1920.86,
+     858.82,
+     19.01
+    ],
+    [
+     1920.88,
+     848.82,
+     19.01
+    ],
+    [
+     1920.93,
+     838.82,
+     19.01
+    ],
+    [
+     1920.98,
+     828.82,
+     19.01
+    ],
+    [
+     1920.74,
+     818.84,
+     19.01
+    ],
+    [
+     1917.91,
+     809.34,
+     19.01
+    ],
+    [
+     1911.68,
+     801.65,
+     19.01
+    ],
+    [
+     1902.98,
+     796.91,
+     19.01
+    ],
+    [
+     1893.12,
+     795.63,
+     19.01
+    ],
+    [
+     1883.12,
+     795.63,
+     19.01
+    ],
+    [
+     1873.12,
+     795.63,
+     19.01
+    ],
+    [
+     1863.12,
+     795.63,
+     19.01
+    ],
+    [
+     1853.12,
+     795.63,
+     19.01
+    ],
+    [
+     1843.12,
+     795.63,
+     19.01
+    ],
+    [
+     1833.12,
+     795.63,
+     19.01
+    ],
+    [
+     1823.12,
+     795.63,
+     19.01
+    ],
+    [
+     1813.12,
+     795.63,
+     19.01
+    ],
+    [
+     1803.12,
+     795.63,
+     19.01
+    ],
+    [
+     1793.12,
+     795.63,
+     19.01
+    ],
+    [
+     1783.12,
+     795.63,
+     19.01
+    ],
+    [
+     1773.12,
+     795.63,
+     19.01
+    ],
+    [
+     1763.12,
+     795.63,
+     19.01
+    ],
+    [
+     1753.12,
+     795.63,
+     19.01
+    ],
+    [
+     1743.12,
+     795.63,
+     19.01
+    ],
+    [
+     1733.12,
+     795.63,
+     19.01
+    ],
+    [
+     1723.12,
+     795.63,
+     19.01
+    ],
+    [
+     1713.12,
+     795.63,
+     19.01
+    ],
+    [
+     1703.12,
+     795.63,
+     19.01
+    ],
+    [
+     1693.12,
+     795.63,
+     19.01
+    ],
+    [
+     1683.12,
+     795.63,
+     19.01
+    ],
+    [
+     1673.12,
+     795.56,
+     19.01
+    ],
+    [
+     1663.12,
+     795.47,
+     19.01
+    ],
+    [
+     1653.12,
+     795.13,
+     19.01
+    ],
+    [
+     1643.13,
+     794.74,
+     19.01
+    ],
+    [
+     1633.15,
+     794.08,
+     19.01
+    ],
+    [
+     1623.18,
+     793.37,
+     19.01
+    ],
+    [
+     1613.2,
+     792.66,
+     19.01
+    ],
+    [
+     1603.23,
+     791.95,
+     19.01
+    ],
+    [
+     1593.28,
+     790.98,
+     19.01
+    ],
+    [
+     1583.33,
+     789.96,
+     19.01
+    ],
+    [
+     1573.4,
+     788.78,
+     19.01
+    ],
+    [
+     1563.47,
+     787.57,
+     19.01
+    ],
+    [
+     1553.55,
+     786.36,
+     19.01
+    ],
+    [
+     1543.62,
+     785.14,
+     19.01
+    ],
+    [
+     1533.7,
+     783.93,
+     19.01
+    ],
+    [
+     1523.77,
+     782.71,
+     19.01
+    ],
+    [
+     1513.83,
+     781.61,
+     19.01
+    ],
+    [
+     1503.89,
+     780.55,
+     19.01
+    ],
+    [
+     1493.9,
+     780.29,
+     19.01
+    ],
+    [
+     1483.9,
+     780.28,
+     19.01
+    ],
+    [
+     1473.9,
+     780.28,
+     19.01
+    ],
+    [
+     1463.9,
+     780.28,
+     19.01
+    ],
+    [
+     1453.9,
+     780.28,
+     19.01
+    ],
+    [
+     1443.9,
+     780.28,
+     19.01
+    ],
+    [
+     1433.9,
+     780.28,
+     19.01
+    ],
+    [
+     1423.9,
+     780.28,
+     19.01
+    ],
+    [
+     1413.9,
+     780.28,
+     19.01
+    ],
+    [
+     1403.9,
+     780.28,
+     19.01
+    ],
+    [
+     1393.9,
+     780.28,
+     19.01
+    ],
+    [
+     1383.9,
+     780.28,
+     19.01
+    ],
+    [
+     1373.9,
+     780.28,
+     19.01
+    ],
+    [
+     1363.9,
+     780.28,
+     19.01
+    ],
+    [
+     1353.9,
+     780.28,
+     19.01
+    ],
+    [
+     1343.9,
+     780.28,
+     19.01
+    ],
+    [
+     1333.9,
+     780.28,
+     19.01
+    ],
+    [
+     1323.9,
+     780.28,
+     19.01
+    ],
+    [
+     1313.9,
+     780.28,
+     19.01
+    ],
+    [
+     1303.9,
+     780.28,
+     19.01
+    ],
+    [
+     1293.9,
+     780.28,
+     19.01
+    ],
+    [
+     1283.9,
+     780.28,
+     19.01
+    ],
+    [
+     1273.9,
+     780.28,
+     19.01
+    ],
+    [
+     1263.9,
+     780.28,
+     19.01
+    ],
+    [
+     1253.9,
+     780.28,
+     19.01
+    ],
+    [
+     1243.9,
+     780.28,
+     19.01
+    ],
+    [
+     1233.9,
+     780.28,
+     19.01
+    ],
+    [
+     1223.9,
+     780.28,
+     19.01
+    ],
+    [
+     1213.92,
+     780.61,
+     19.01
+    ],
+    [
+     1204.51,
+     783.71,
+     19.01
+    ],
+    [
+     1196.99,
+     790.17,
+     19.01
+    ],
+    [
+     1192.51,
+     799,
+     19.01
+    ],
+    [
+     1191.45,
+     808.89,
+     19.01
+    ],
+    [
+     1191.5,
+     818.89,
+     19.01
+    ],
+    [
+     1191.56,
+     828.89,
+     19.01
+    ],
+    [
+     1191.57,
+     838.89,
+     19.01
+    ],
+    [
+     1191.57,
+     848.89,
+     19.01
+    ],
+    [
+     1191.57,
+     858.89,
+     19.01
+    ],
+    [
+     1191.57,
+     868.89,
+     19.01
+    ],
+    [
+     1191.57,
+     878.89,
+     19.01
+    ],
+    [
+     1191.57,
+     888.89,
+     19.01
+    ],
+    [
+     1191.57,
+     898.89,
+     19.01
+    ],
+    [
+     1191.57,
+     908.89,
+     19.01
+    ],
+    [
+     1191.57,
+     918.89,
+     19.01
+    ],
+    [
+     1191.57,
+     928.89,
+     19.01
+    ],
+    [
+     1191.67,
+     938.89,
+     19.01
+    ],
+    [
+     1193.93,
+     948.55,
+     19.01
+    ],
+    [
+     1199.7,
+     956.63,
+     19.01
+    ],
+    [
+     1208.12,
+     961.9,
+     19.01
+    ],
+    [
+     1217.91,
+     963.62,
+     19.01
+    ],
+    [
+     1227.91,
+     963.62,
+     19.01
+    ],
+    [
+     1237.91,
+     963.62,
+     19.01
+    ],
+    [
+     1247.91,
+     963.62,
+     19.01
+    ],
+    [
+     1257.91,
+     963.62,
+     19.01
+    ],
+    [
+     1267.91,
+     963.62,
+     19.01
+    ],
+    [
+     1277.91,
+     963.62,
+     19.01
+    ],
+    [
+     1287.91,
+     963.62,
+     19.01
+    ],
+    [
+     1297.91,
+     963.62,
+     19.01
+    ],
+    [
+     1307.91,
+     963.62,
+     19.01
+    ],
+    [
+     1317.91,
+     963.62,
+     19.01
+    ],
+    [
+     1327.91,
+     963.62,
+     19.01
+    ],
+    [
+     1337.91,
+     963.62,
+     19.01
+    ],
+    [
+     1347.91,
+     963.62,
+     19.01
+    ],
+    [
+     1357.91,
+     963.62,
+     19.01
+    ],
+    [
+     1367.91,
+     963.62,
+     19.01
+    ],
+    [
+     1377.91,
+     963.62,
+     19.01
+    ],
+    [
+     1387.91,
+     963.62,
+     19.01
+    ],
+    [
+     1397.91,
+     963.62,
+     19.01
+    ],
+    [
+     1407.91,
+     963.62,
+     19.01
+    ],
+    [
+     1417.91,
+     963.62,
+     19.01
+    ],
+    [
+     1427.91,
+     963.62,
+     19.01
+    ],
+    [
+     1437.91,
+     963.62,
+     19.01
+    ],
+    [
+     1447.91,
+     963.62,
+     19.01
+    ],
+    [
+     1457.91,
+     963.62,
+     19.01
+    ],
+    [
+     1467.91,
+     963.62,
+     19.01
+    ],
+    [
+     1477.91,
+     963.62,
+     19.01
+    ],
+    [
+     1487.91,
+     963.62,
+     19.01
+    ],
+    [
+     1497.91,
+     963.62,
+     19.01
+    ],
+    [
+     1507.91,
+     963.62,
+     19.01
+    ],
+    [
+     1517.91,
+     963.62,
+     19.01
+    ],
+    [
+     1527.91,
+     963.62,
+     19.01
+    ],
+    [
+     1537.91,
+     963.62,
+     19.01
+    ],
+    [
+     1547.9,
+     963.81,
+     19.01
+    ],
+    [
+     1557.44,
+     966.47,
+     19.01
+    ],
+    [
+     1565.25,
+     972.57,
+     19.01
+    ],
+    [
+     1570.13,
+     981.18,
+     19.01
+    ],
+    [
+     1571.56,
+     991.02,
+     19.01
+    ],
+    [
+     1570.35,
+     1000.92,
+     19.01
+    ],
+    [
+     1568.69,
+     1010.78,
+     19.01
+    ],
+    [
+     1567.01,
+     1020.64,
+     19.01
+    ],
+    [
+     1565.32,
+     1030.5,
+     19.01
+    ],
+    [
+     1563.62,
+     1040.35,
+     19.01
+    ],
+    [
+     1561.92,
+     1050.21,
+     19.01
+    ],
+    [
+     1560.22,
+     1060.06,
+     19.01
+    ],
+    [
+     1558.51,
+     1069.91,
+     19.01
+    ]
+   ]
+  }
+ ]
+}

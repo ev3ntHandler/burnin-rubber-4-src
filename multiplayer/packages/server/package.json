@@ -1,0 +1,15 @@
+{
+  "name": "@br4mp/server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/src/index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@br4mp/protocol": "1.0.0",
+    "ws": "^8.18.0"
+  }
+}

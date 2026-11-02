@@ -1,0 +1,833 @@
+{
+ "world": "Desert",
+ "worldIndex": 1,
+ "source": "WorldDesertData.txt",
+ "generatedFrom": "Burnin' Rubber 4 decompiled assets",
+ "spawn": {
+  "name": "SafeHouseDesert_Marker",
+  "pos": [
+   450.07,
+   579.89,
+   44.43
+  ],
+  "yawDeg": 67.98
+ },
+ "markers": [
+  {
+   "name": "CarPositionDesert10_Marker",
+   "kind": "CarPositionDesert10",
+   "tile": "02_03",
+   "pos": [
+    454,
+    495.5,
+    44.58
+   ],
+   "yawDeg": 0.47,
+   "count": 1
+  },
+  {
+   "name": "CarPositionDesert11_Marker",
+   "kind": "CarPositionDesert11",
+   "tile": "02_03",
+   "pos": [
+    454,
+    505.12,
+    44.58
+   ],
+   "yawDeg": 0.47,
+   "count": 1
+  },
+  {
+   "name": "CarPositionDesert12_Marker",
+   "kind": "CarPositionDesert12",
+   "tile": "02_03",
+   "pos": [
+    454,
+    514.4,
+    44.58
+   ],
+   "yawDeg": 0.47,
+   "count": 1
+  },
+  {
+   "name": "CarPositionDesert13_Marker",
+   "kind": "CarPositionDesert13",
+   "tile": "02_03",
+   "pos": [
+    454,
+    524.2,
+    44.58
+   ],
+   "yawDeg": 0.47,
+   "count": 1
+  },
+  {
+   "name": "CarPositionDesert14_Marker",
+   "kind": "CarPositionDesert14",
+   "tile": "02_03",
+   "pos": [
+    454,
+    533.75,
+    44.58
+   ],
+   "yawDeg": 0.47,
+   "count": 1
+  },
+  {
+   "name": "CarPositionDesert15_Marker",
+   "kind": "CarPositionDesert15",
+   "tile": "02_03",
+   "pos": [
+    454,
+    543.11,
+    44.58
+   ],
+   "yawDeg": 0.47,
+   "count": 1
+  },
+  {
+   "name": "CarPositionDesert1_Marker",
+   "kind": "CarPositionDesert1",
+   "tile": "02_03",
+   "pos": [
+    486,
+    543.35,
+    44.58
+   ],
+   "yawDeg": 179.53,
+   "count": 1
+  },
+  {
+   "name": "CarPositionDesert2_Marker",
+   "kind": "CarPositionDesert2",
+   "tile": "02_03",
+   "pos": [
+    486,
+    533.86,
+    44.58
+   ],
+   "yawDeg": 179.53,
+   "count": 1
+  },
+  {
+   "name": "CarPositionDesert3_Marker",
+   "kind": "CarPositionDesert3",
+   "tile": "02_03",
+   "pos": [
+    486,
+    524.2,
+    44.58
+   ],
+   "yawDeg": 179.53,
+   "count": 1
+  },
+  {
+   "name": "CarPositionDesert4_Marker",
+   "kind": "CarPositionDesert4",
+   "tile": "02_03",
+   "pos": [
+    486,
+    514.4,
+    44.58
+   ],
+   "yawDeg": 179.53,
+   "count": 1
+  },
+  {
+   "name": "CarPositionDesert5_Marker",
+   "kind": "CarPositionDesert5",
+   "tile": "02_03",
+   "pos": [
+    486,
+    505.12,
+    44.58
+   ],
+   "yawDeg": 179.53,
+   "count": 1
+  },
+  {
+   "name": "CarPositionDesert6_Marker",
+   "kind": "CarPositionDesert6",
+   "tile": "02_03",
+   "pos": [
+    486,
+    495.5,
+    44.58
+   ],
+   "yawDeg": 179.53,
+   "count": 1
+  },
+  {
+   "name": "CarPositionDesert7_Marker",
+   "kind": "CarPositionDesert7",
+   "tile": "02_03",
+   "pos": [
+    479.44,
+    490,
+    44.58
+   ],
+   "yawDeg": 135.26,
+   "count": 1
+  },
+  {
+   "name": "CarPositionDesert8_Marker",
+   "kind": "CarPositionDesert8",
+   "tile": "02_03",
+   "pos": [
+    470,
+    487.62,
+    44.58
+   ],
+   "yawDeg": 90,
+   "count": 1
+  },
+  {
+   "name": "CarPositionDesert9_Marker",
+   "kind": "CarPositionDesert9",
+   "tile": "02_03",
+   "pos": [
+    461.05,
+    490,
+    44.58
+   ],
+   "yawDeg": 44.74,
+   "count": 1
+  },
+  {
+   "name": "SafeHouseDesert_Marker",
+   "kind": "SafeHouseDesert",
+   "tile": "02_03",
+   "pos": [
+    450.07,
+    579.89,
+    44.43
+   ],
+   "yawDeg": 67.98,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialDesert10_Marker",
+   "kind": "TimeTrialDesert10",
+   "tile": "02_06",
+   "pos": [
+    424.99,
+    1285,
+    74.47
+   ],
+   "yawDeg": 90,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialDesert1_Marker",
+   "kind": "TimeTrialDesert1",
+   "tile": "02_08",
+   "pos": [
+    484.85,
+    1800.32,
+    71.97
+   ],
+   "yawDeg": 33.01,
+   "count": 1
+  },
+  {
+   "name": "DemolitionDesert3_Marker",
+   "kind": "DemolitionDesert3",
+   "tile": "03_02",
+   "pos": [
+    583.15,
+    477.74,
+    48.86
+   ],
+   "yawDeg": -149.94,
+   "count": 1
+  },
+  {
+   "name": "DailyChallenge_Marker",
+   "kind": "DailyChallenge",
+   "tile": "03_03",
+   "pos": [
+    644.46,
+    657.9,
+    44.97
+   ],
+   "yawDeg": -115.27,
+   "count": 1
+  },
+  {
+   "name": "SpecialMissionAC130_Marker",
+   "kind": "SpecialMissionAC130",
+   "tile": "03_03",
+   "pos": [
+    656.4,
+    606.57,
+    44.43
+   ],
+   "yawDeg": 90,
+   "count": 1
+  },
+  {
+   "name": "SpecialMissionDogfight_Marker",
+   "kind": "SpecialMissionDogfight",
+   "tile": "03_03",
+   "pos": [
+    721.61,
+    606.9,
+    44.43
+   ],
+   "yawDeg": 90,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialDesert9_Marker",
+   "kind": "TimeTrialDesert9",
+   "tile": "03_03",
+   "pos": [
+    678.33,
+    697.13,
+    46.56
+   ],
+   "yawDeg": 179.53,
+   "count": 1
+  },
+  {
+   "name": "WeaponShopDesert_Marker",
+   "kind": "WeaponShopDesert",
+   "tile": "03_03",
+   "pos": [
+    563.94,
+    607.48,
+    44.43
+   ],
+   "yawDeg": -165.14,
+   "count": 1
+  },
+  {
+   "name": "DemolitionDesert2_Marker",
+   "kind": "DemolitionDesert2",
+   "tile": "04_03",
+   "pos": [
+    924.87,
+    681.92,
+    41.67
+   ],
+   "yawDeg": -51.57,
+   "count": 1
+  },
+  {
+   "name": "SpecialMissionConvoy_Marker",
+   "kind": "SpecialMissionConvoy",
+   "tile": "04_03",
+   "pos": [
+    788.78,
+    607.23,
+    44.43
+   ],
+   "yawDeg": 90,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialDesert8_Marker",
+   "kind": "TimeTrialDesert8",
+   "tile": "05_02",
+   "pos": [
+    1161.33,
+    480.12,
+    58.16
+   ],
+   "yawDeg": -174.37,
+   "count": 1
+  },
+  {
+   "name": "SprayShopDesert_Marker",
+   "kind": "SprayShopDesert",
+   "tile": "05_07",
+   "pos": [
+    1090.75,
+    1499.37,
+    59.77
+   ],
+   "yawDeg": 44.74,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialDesert2_Marker",
+   "kind": "TimeTrialDesert2",
+   "tile": "05_07",
+   "pos": [
+    1116.57,
+    1737.09,
+    64.6
+   ],
+   "yawDeg": -1.14,
+   "count": 1
+  },
+  {
+   "name": "TuneShopDesert_Marker",
+   "kind": "TuneShopDesert",
+   "tile": "05_07",
+   "pos": [
+    1018.3,
+    1515.96,
+    61.4
+   ],
+   "yawDeg": 56.56,
+   "count": 1
+  },
+  {
+   "name": "DesertFromCity_Marker",
+   "kind": "DesertFromCity",
+   "tile": "05_09",
+   "pos": [
+    1116.22,
+    2173.61,
+    93.06
+   ],
+   "yawDeg": -90,
+   "count": 1
+  },
+  {
+   "name": "DesertToCity_Marker",
+   "kind": "DesertToCity",
+   "tile": "05_10",
+   "pos": [
+    1116.22,
+    2274.08,
+    93.06
+   ],
+   "yawDeg": -90,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialDesert7_Marker",
+   "kind": "TimeTrialDesert7",
+   "tile": "06_02",
+   "pos": [
+    1461.78,
+    495.08,
+    72.66
+   ],
+   "yawDeg": 167.37,
+   "count": 1
+  },
+  {
+   "name": "DemolitionDesert1_Marker",
+   "kind": "DemolitionDesert1",
+   "tile": "06_04",
+   "pos": [
+    1327.86,
+    771.41,
+    70.03
+   ],
+   "yawDeg": -104.96,
+   "count": 1
+  },
+  {
+   "name": "DemolitionDesert4_Marker",
+   "kind": "DemolitionDesert4",
+   "tile": "06_05",
+   "pos": [
+    1323.41,
+    1132.97,
+    69.85
+   ],
+   "yawDeg": -91.15,
+   "count": 1
+  },
+  {
+   "name": "TicketMasterDesert_Marker",
+   "kind": "TicketMasterDesert",
+   "tile": "06_05",
+   "pos": [
+    1341.47,
+    1054.45,
+    68.86
+   ],
+   "yawDeg": -165.19,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialDesert4_Marker",
+   "kind": "TimeTrialDesert4",
+   "tile": "07_05",
+   "pos": [
+    1601.11,
+    1204.28,
+    61.38
+   ],
+   "yawDeg": -90,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialDesert3_Marker",
+   "kind": "TimeTrialDesert3",
+   "tile": "07_07",
+   "pos": [
+    1563.04,
+    1705.04,
+    74.95
+   ],
+   "yawDeg": -50.16,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialDesert6_Marker",
+   "kind": "TimeTrialDesert6",
+   "tile": "08_03",
+   "pos": [
+    1842.37,
+    520.59,
+    82.85
+   ],
+   "yawDeg": -134.59,
+   "count": 1
+  },
+  {
+   "name": "TimeTrialDesert5_Marker",
+   "kind": "TimeTrialDesert5",
+   "tile": "08_04",
+   "pos": [
+    1853.54,
+    833.23,
+    61.21
+   ],
+   "yawDeg": -75.06,
+   "count": 1
+  }
+ ],
+ "pickups": [
+  {
+   "kind": "nitro",
+   "tile": "02_03",
+   "pos": [
+    489.28,
+    629.55,
+    45.93
+   ]
+  },
+  {
+   "kind": "nitro",
+   "tile": "02_05",
+   "pos": [
+    450.31,
+    1008.8,
+    66.19
+   ]
+  },
+  {
+   "kind": "nitro",
+   "tile": "02_06",
+   "pos": [
+    424.21,
+    1470.57,
+    76.1
+   ]
+  },
+  {
+   "kind": "nitro",
+   "tile": "02_08",
+   "pos": [
+    463.59,
+    1780.29,
+    73.95
+   ]
+  },
+  {
+   "kind": "ammo",
+   "tile": "03_03",
+   "pos": [
+    565.15,
+    629.54,
+    45.93
+   ]
+  },
+  {
+   "kind": "cashstash",
+   "tile": "03_03",
+   "pos": [
+    681.76,
+    586.28,
+    46.1
+   ]
+  },
+  {
+   "kind": "nitro",
+   "tile": "03_05",
+   "pos": [
+    644.59,
+    1013.65,
+    53.85
+   ]
+  },
+  {
+   "kind": "ammo",
+   "tile": "03_06",
+   "pos": [
+    718,
+    1417.89,
+    37.95
+   ]
+  },
+  {
+   "kind": "repair",
+   "tile": "03_08",
+   "pos": [
+    742.05,
+    1780.18,
+    75.65
+   ]
+  },
+  {
+   "kind": "repair",
+   "tile": "04_02",
+   "pos": [
+    812.87,
+    497.47,
+    45.93
+   ]
+  },
+  {
+   "kind": "nitro",
+   "tile": "04_03",
+   "pos": [
+    839.06,
+    629.55,
+    45.93
+   ]
+  },
+  {
+   "kind": "cashstash",
+   "tile": "04_05",
+   "pos": [
+    868.17,
+    1135.71,
+    52.77
+   ]
+  },
+  {
+   "kind": "nitro",
+   "tile": "04_05",
+   "pos": [
+    849.57,
+    1206.19,
+    53.22
+   ]
+  },
+  {
+   "kind": "nitro",
+   "tile": "04_06",
+   "pos": [
+    849.57,
+    1379.74,
+    50.87
+   ]
+  },
+  {
+   "kind": "nitro",
+   "tile": "04_08",
+   "pos": [
+    749.51,
+    1821.15,
+    73.01
+   ]
+  },
+  {
+   "kind": "nitro",
+   "tile": "05_04",
+   "pos": [
+    1224.41,
+    927.54,
+    108.98
+   ]
+  },
+  {
+   "kind": "cashstash",
+   "tile": "05_06",
+   "pos": [
+    1030.1,
+    1497.78,
+    63.12
+   ]
+  },
+  {
+   "kind": "nitro",
+   "tile": "05_06",
+   "pos": [
+    1106.02,
+    1477.88,
+    61.27
+   ]
+  },
+  {
+   "kind": "ammo",
+   "tile": "05_07",
+   "pos": [
+    1093.09,
+    1545.5,
+    61.27
+   ]
+  },
+  {
+   "kind": "nitro",
+   "tile": "05_07",
+   "pos": [
+    1030.86,
+    1732.02,
+    68.29
+   ]
+  },
+  {
+   "kind": "repair",
+   "tile": "05_07",
+   "pos": [
+    1012.89,
+    1526.53,
+    62.85
+   ]
+  },
+  {
+   "kind": "cashstash",
+   "tile": "05_08",
+   "pos": [
+    1215.64,
+    1900.52,
+    117.32
+   ]
+  },
+  {
+   "kind": "nitro",
+   "tile": "06_03",
+   "pos": [
+    1365.72,
+    732.63,
+    70.76
+   ]
+  },
+  {
+   "kind": "cashstash",
+   "tile": "06_04",
+   "pos": [
+    1292.88,
+    935.1,
+    85.84
+   ]
+  },
+  {
+   "kind": "cashstash",
+   "tile": "06_04",
+   "pos": [
+    1413.67,
+    865.03,
+    99.35
+   ]
+  },
+  {
+   "kind": "nitro",
+   "tile": "06_04",
+   "pos": [
+    1410.56,
+    912.97,
+    89.45
+   ]
+  },
+  {
+   "kind": "nitro",
+   "tile": "06_05",
+   "pos": [
+    1331.35,
+    1198.87,
+    63.91
+   ]
+  },
+  {
+   "kind": "ammo",
+   "tile": "07_02",
+   "pos": [
+    1572.66,
+    407.6,
+    83.92
+   ]
+  },
+  {
+   "kind": "cashstash",
+   "tile": "07_02",
+   "pos": [
+    1586.26,
+    491.18,
+    97.71
+   ]
+  },
+  {
+   "kind": "nitro",
+   "tile": "07_04",
+   "pos": [
+    1623.94,
+    939.67,
+    81.16
+   ]
+  },
+  {
+   "kind": "repair",
+   "tile": "07_04",
+   "pos": [
+    1608.41,
+    846.45,
+    94
+   ]
+  },
+  {
+   "kind": "nitro",
+   "tile": "07_05",
+   "pos": [
+    1642.49,
+    1018.85,
+    66.33
+   ]
+  },
+  {
+   "kind": "nitro",
+   "tile": "07_06",
+   "pos": [
+    1602.5,
+    1362.97,
+    62.88
+   ]
+  },
+  {
+   "kind": "nitro",
+   "tile": "07_07",
+   "pos": [
+    1569.7,
+    1697.53,
+    76.92
+   ]
+  },
+  {
+   "kind": "nitro",
+   "tile": "08_03",
+   "pos": [
+    1829.11,
+    507.55,
+    83.4
+   ]
+  },
+  {
+   "kind": "cashstash",
+   "tile": "08_04",
+   "pos": [
+    1818.75,
+    884.3,
+    62.44
+   ]
+  },
+  {
+   "kind": "nitro",
+   "tile": "08_04",
+   "pos": [
+    1853.9,
+    833.37,
+    62.7
+   ]
+  }
+ ],
+ "roads": []
+}

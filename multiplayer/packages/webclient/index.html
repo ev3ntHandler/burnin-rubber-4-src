@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Burnin' Rubber 4 — Online</title>
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🏁</text></svg>" />
+  </head>
+  <body>
+    <!-- ── lobby ─────────────────────────────────────────────────────── -->
+    <section id="lobby" class="screen">
+      <div class="lobby-card">
+        <header class="brand">
+          <h1>BURNIN' <span>RUBBER</span> 4</h1>
+          <p class="tagline">online — races &amp; free roam</p>
+        </header>
+
+        <div class="row">
+          <label>
+            <span>Callsign</span>
+            <input id="name" maxlength="20" placeholder="Dirk" value="" autocomplete="off" />
+          </label>
+          <label>
+            <span>Vehicle</span>
+            <select id="vehicle">
+              <option value="PlayerCar">Player Car (stock)</option>
+              <option value="Bullet350">Bullet 350</option>
+              <option value="PhaserGTI">Phaser GTI</option>
+              <option value="PantherV8">Panther V8</option>
+              <option value="Hound">Hound</option>
+              <option value="Apache">Apache (heli)</option>
+              <option value="SpeedBoat">Speed Boat</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="row">
+          <label>
+            <span>World</span>
+            <select id="world">
+              <option value="0">City</option>
+              <option value="1">Desert</option>
+              <option value="2">Jungle</option>
+              <option value="3">Industrial</option>
+              <option value="4">Snow</option>
+            </select>
+          </label>
+          <label id="track-label">
+            <span>Circuit</span>
+            <select id="track"></select>
+          </label>
+        </div>
+
+        <div class="modes">
+          <button id="btn-roam" class="mode">
+            <strong>Free Roam</strong>
+            <small>persistent world · chat · pickups · PvP</small>
+          </button>
+          <button id="btn-race" class="mode primary">
+            <strong>Race</strong>
+            <small>grid start · laps · live standings</small>
+          </button>
+        </div>
+
+        <div class="room-list">
+          <h3>Live rooms <button id="refresh" class="link">refresh</button></h3>
+          <ul id="rooms"></ul>
+        </div>
+
+        <p class="hint">
+          This page is the reference client for the multiplayer protocol — the same server also
+          speaks to the original Shockwave build over HTTP long-poll (see <code>docs/06-transport-and-hosting.md</code>).
+        </p>
+      </div>
+    </section>
+
+    <!-- ── game ──────────────────────────────────────────────────────── -->
+    <section id="game" class="screen hidden">
+      <canvas id="stage"></canvas>
+
+      <div id="hud-top">
+        <div class="pill" id="room-pill">connecting…</div>
+        <div class="pill" id="ping-pill">— ms</div>
+        <div class="pill" id="players-pill">0 players</div>
+      </div>
+
+      <div id="race-panel" class="panel hidden">
+        <div class="race-head">
+          <span id="race-phase">LOBBY</span>
+          <span id="race-timer">0:00.000</span>
+        </div>
+        <div id="race-countdown" class="countdown hidden">3</div>
+        <ol id="standings"></ol>
+      </div>
+
+      <div id="speedo">
+        <div class="speed"><span id="speed-value">0</span><small>km/h</small></div>
+        <div class="bar"><i id="health-bar"></i></div>
+        <div class="nitro"><i id="nitro-bar"></i></div>
+      </div>
+
+      <div id="killfeed"></div>
+      <div id="toasts"></div>
+
+      <div id="chat">
+        <div id="chat-log"></div>
+        <form id="chat-form" autocomplete="off">
+          <input id="chat-input" maxlength="200" placeholder="Enter to chat…" />
+        </form>
+      </div>
+
+      <div id="help" class="hidden">
+        <h3>Controls</h3>
+        <p><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> drive · <kbd>Shift</kbd> drift · <kbd>Space</kbd> fire · <kbd>N</kbd> nitro</p>
+        <p><kbd>Enter</kbd> chat · <kbd>H</kbd> horn · <kbd>E</kbd> emote · <kbd>I</kbd> invite nearest · <kbd>Y</kbd> accept invite</p>
+        <p><kbd>M</kbd> map zoom · <kbd>Esc</kbd> leave</p>
+      </div>
+
+      <div id="leave">
+        <button id="btn-leave">Leave</button>
+        <button id="btn-help" class="link">?</button>
+      </div>
+    </section>
+
+    <script type="module" src="/src/app.js"></script>
+  </body>
+</html>
