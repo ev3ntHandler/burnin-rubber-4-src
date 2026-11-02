@@ -1,6 +1,7 @@
 -- =====================================================================
 --  br4mp_game.ls  —  Burnin' Rubber 4 online bridge: game glue
---  Movie script. Requires br4mp_config.ls and br4mp_net.ls.
+--  Movie script (cast member type: Movie Script). Requires br4mp_config.ls
+--  and br4mp_net.ls, or use the single-file build br4mp_bridge.ls.
 --
 --  This is the only file with game-specific code. It reads the local car
 --  that "[PS] Advanced Car.ls enterFrame" already simulates, sends its
@@ -15,47 +16,51 @@
 global gBR4MP
 
 -- ── ADAPT: local car accessors ─────────────────────────────────────────
--- Returns the sprite/member the hover physics drives. In the shipped movie
--- gGame.me.car is the player's car; adjust if your build keeps it on
--- gGame.player.car.
+-- These four handlers are the only build-specific code in the bridge.
+-- Each one is a single expression on purpose: probing for different
+-- property layouts with `if x.prop <> VOID` raises "property not found"
+-- on script objects in Lingo, so edit the expression instead of guessing.
+
+-- The object the hover physics drives in [PS] Advanced Car.ls.
 on BR4MPLocalCar
-  if voidP(gGame) then return VOID
-  if voidP(gGame.me) then return VOID
-  if gGame.me.car = VOID then return VOID
   return gGame.me.car
 end
 
+-- The car's transform in world space (metres, Z-up).
+on BR4MPLocalTransform
+  return BR4MPLocalCar().transform
+end
+
 -- Heading in radians. The physics keeps the car upright, so a single yaw
--- around Z is enough for the wire (rx=ry=0).
+-- around Z is enough for the wire (rx=ry=0). If your build stores the
+-- heading in degrees on the script object, use:
+--     return gGame.me.angle * pi() / 180
 on BR4MPLocalYaw
-  pCar = BR4MPLocalCar()
-  if pCar = VOID then return 0
-  -- Most builds expose the angle directly:
-  if pCar.angle <> VOID then return pCar.angle * pi() / 180
-  -- ... otherwise read the 3D transform. Shockwave returns euler angles in
-  -- degrees for transform.rotation when the model was built that way.
-  pRot = pCar.transform.rotation
-  if pRot.ilk = VOID then return pRot.z * pi() / 180
+  pRot = BR4MPLocalTransform().rotation
+  if ilk(pRot) = #vector then return pRot.z * pi() / 180
+  if ilk(pRot) = #propList then return 2 * BR4MPAtan2(pRot.z, pRot.w)
   return 0
 end
 
+-- Ground speed in m/s, as the speedometer uses it.
 on BR4MPLocalSpeed
-  pCar = BR4MPLocalCar()
-  if pCar = VOID then return 0
-  if pCar.speed <> VOID then return pCar.speed
-  if voidP(gGame.me) then return 0
-  if gGame.me.speed = VOID then return 0
   return gGame.me.speed
 end
 
+-- Velocity in m/s; only used as advisory info in the snapshot.
+on BR4MPLocalVelocity
+  pVel = gBR4MP.localVel
+  if ilk(pVel) = #vector then return pVel
+  return vector(0, 0, 0)
+end
+
 on BR4MPLocalHealth
-  if voidP(gGame.me) then return 100
-  if gGame.me.health = VOID then return 100
   return gGame.me.health
 end
 
 -- ── per-frame entry point (call from a movie script enterFrame) ────────
 on BR4MPGameFrame
+  BR4MPEnsure
   if not BR4MPActive() then return
   BR4MPFrame                       -- transport pump (br4mp_net.ls)
   BR4MPUplink
@@ -65,14 +70,15 @@ on BR4MPGameFrame
 end
 
 on BR4MPUplink
-  if gBR4MP.stateSent = VOID then gBR4MP.stateSent = 0
+  BR4MPEnsure
   if the milliseconds - gBR4MP.stateSent < (1000 / gBR4MP.stateHz) then return
   gBR4MP.stateSent = the milliseconds
 
-  pCar = BR4MPLocalCar()
-  if pCar = VOID then return
-  pPos = pCar.transform.position
+  pTransform = BR4MPLocalTransform()
+  pPos = pTransform.position
+  pVel = BR4MPLocalVelocity()
   pYaw = BR4MPLocalYaw()
+  gBR4MP.localVel = pVel
   gBR4MP.seq = gBR4MP.seq + 1
 
   pLine = "STATE|s=" & string(gBR4MP.seq) & ¬
@@ -81,7 +87,7 @@ on BR4MPUplink
           ",px=" & BR4MPFixed(pPos.x) & ",py=" & BR4MPFixed(pPos.y) & ",pz=" & BR4MPFixed(pPos.z) & ¬
           ",rx=0,ry=0" & ¬
           ",rz=" & BR4MPFixed(sin(pYaw / 2)) & ",rw=" & BR4MPFixed(cos(pYaw / 2)) & ¬
-          ",vx=" & BR4MPFixed(gBR4MP.lastVX) & ",vy=" & BR4MPFixed(gBR4MP.lastVY) & ",vz=0" & ¬
+          ",vx=" & BR4MPFixed(pVel.x) & ",vy=" & BR4MPFixed(pVel.y) & ",vz=" & BR4MPFixed(pVel.z) & ¬
           ",h=" & string(round(BR4MPLocalHealth())) & ¬
           ",l=" & string(gBR4MP.lap) & ",c=" & string(gBR4MP.cp) & ¬
           ",sp=" & string(round(BR4MPLocalSpeed()))
@@ -93,7 +99,7 @@ on BR4MPFixed pValue
 end
 
 on BR4MPPingIfDue
-  if gBR4MP.lastPing = VOID then gBR4MP.lastPing = 0
+  BR4MPEnsure
   if the milliseconds - gBR4MP.lastPing < gBR4MP.pingMs then return
   gBR4MP.lastPing = the milliseconds
   gBR4MP.pingSentAt = the milliseconds
@@ -103,6 +109,7 @@ end
 
 -- ── snapshot entries ───────────────────────────────────────────────────
 on BR4MPGameSnapshotEntry pBody
+  BR4MPEnsure
   pId = BR4MPNum(pBody, "i")
   if pId = gBR4MP.playerId then return          -- that's us; the local car wins
 
@@ -139,18 +146,18 @@ end
 -- create a clone of the player car here and return it.
 on BR4MPGameRemoteSpawn pRemote
   if pRemote.mesh <> VOID then return pRemote.mesh
-  if voidP(gGame) then return VOID
-  if voidP(gGame.world) then return VOID
-  if gGame.world.SpawnCarMesh = VOID then
-    -- No spawner in this build: the roster still updates, the car is
-    -- invisible. See lingo/patches/README.md for wiring your own.
-    return VOID
-  end if
-  pRemote.mesh = gGame.world.SpawnCarMesh(pRemote.id)
-  return pRemote.mesh
+  -- ADAPT: create (or borrow from the traffic pool) a car model for this
+  -- opponent, store it in pRemote.mesh and return it. Example for a movie
+  -- whose traffic system exposes a spawner:
+  --     pRemote.mesh = gGame.world.SpawnTrafficCar(pRemote.id)
+  --     return pRemote.mesh
+  -- Returning VOID is safe: the roster, chat and race logic keep working,
+  -- the opponent is just not drawn.
+  return VOID
 end
 
 on BR4MPAnimateRemotes
+  BR4MPEnsure
   pIds = gBR4MP.remotes.getPropList()
   pNow = the milliseconds
   repeat with i = 1 to pIds.count
@@ -195,13 +202,14 @@ on BR4MPAtan2 pY, pX
 end
 
 on BR4MPLerp pTarget, pToward, pAlpha
-  if pTarget = VOID then return pToward
-  if pToward = VOID then return pTarget
+  if ilk(pTarget) <> #vector then return pToward
+  if ilk(pToward) <> #vector then return pTarget
   return pTarget + (pToward - pTarget) * pAlpha
 end
 
 -- ── callbacks from br4mp_net.ls ────────────────────────────────────────
 on BR4MPGameJoined pRoomId, pTrackId
+  BR4MPEnsure
   gBR4MP.roomId = pRoomId
   gBR4MP.trackId = pTrackId
   gBR4MP.remotes = [:]
@@ -214,6 +222,7 @@ on BR4MPGamePlayerJoin pPlayer
 end
 
 on BR4MPGamePlayerLeave pId
+  BR4MPEnsure
   pRemote = gBR4MP.remotes[pId]
   if pRemote <> VOID then
     if pRemote.mesh <> VOID then pRemote.mesh.visible = FALSE
@@ -238,8 +247,8 @@ on BR4MPGameRaceState pPhase, pLap, pTotalLaps, pCountdownMs
 end
 
 on BR4MPGameStanding pId, pLap, pCp, pFinished, pFinishMs
+  BR4MPEnsure
   -- keep a simple table the HUD can draw; index 1 = leader
-  if gBR4MP.standings = VOID then gBR4MP.standings = []
   gBR4MP.standings.add([#id: pId, #lap: pLap, #cp: pCp, #finished: pFinished, #timeMs: pFinishMs])
 end
 
@@ -257,11 +266,9 @@ on BR4MPGameEvent pEvent, pActor, pTarget, pValue, pPos
 end
 
 on BR4MPGameCorrection pReason, pPos, pRot
-  pCar = BR4MPLocalCar()
-  if pCar = VOID then return
   -- Trust the server: reason 1/2 (respawn / race start) are authoritative
   -- teleports, reason 0 is the anti-cheat pulling us back.
-  pCar.transform.position = vector(pPos[1], pPos[2], pPos[3])
+  BR4MPLocalTransform().position = vector(pPos[1], pPos[2], pPos[3])
   if pReason = 0 then
     BR4MPShowChat("SYSTEM", "Position corrected by the server.", 2)
   end if
@@ -274,27 +281,32 @@ end
 
 -- ── public API for the original UI ─────────────────────────────────────
 on BR4MPChat pText
+  BR4MPEnsure
   if not BR4MPActive() then return
   if pText = "" then return
   BR4MPSendNow("CHAT|ch=0,x=" & BR4MPEncode(pText))
 end
 
 on BR4MPAction pAction
+  BR4MPEnsure
   BR4MPSendLine("ACTION|a=" & string(pAction) & ",t=0,arg=0")
 end
 
 on BR4MPHit pTargetId, pWeapon, pPos
+  BR4MPEnsure
   BR4MPSendLine("HIT|t=" & string(pTargetId) & ",w=" & string(pWeapon) & ¬
                 ",px=" & BR4MPFixed(pPos[1]) & ",py=" & BR4MPFixed(pPos[2]) & ",pz=" & BR4MPFixed(pPos[3]) & ¬
                 ",ct=" & string(the milliseconds) & ",d=0")
 end
 
 on BR4MPAcceptInvite
-  if gBR4MP.invitedRoom = VOID then return
+  BR4MPEnsure
+  if gBR4MP.invitedRoom = 0 then return
   BR4MPSendNow("ACTION|a=6,t=0,arg=" & string(gBR4MP.invitedRoom))
 end
 
 on BR4MPPlayerName pId
+  BR4MPEnsure
   pPlayer = gBR4MP.players[pId]
   if pPlayer = VOID then return "#" & string(pId)
   return pPlayer.name
@@ -302,6 +314,7 @@ end
 
 -- ── HUD ────────────────────────────────────────────────────────────────
 on BR4MPShowChat pName, pText, pChannel
+  BR4MPEnsure
   gBR4MP.chat.add([#name: pName, #text: pText, #channel: pChannel])
   if gBR4MP.chat.count > 8 then gBR4MP.chat.deleteAt(1)
   if gBR4MP.chatMember <> VOID then
@@ -316,6 +329,7 @@ on BR4MPChatMember pMember
 end
 
 on BR4MPUpdateStatus
+  BR4MPEnsure
   pPhaseName = ["LOBBY", "COUNTDOWN", "RACING", "FINISHING", "RESULTS"]
   pName = pPhaseName[gBR4MP.phase + 1]
   if pName = VOID then pName = "—"
@@ -326,5 +340,6 @@ on BR4MPUpdateStatus
 end
 
 on BR4MPStatusText
+  BR4MPEnsure
   return gBR4MP.statusText
 end

@@ -25,6 +25,7 @@ Open `http://localhost:8080`, pick a name, press **Race** (bots fill the grid) o
 ```bash
 npm test                  # 26 tests: protocol + rooms + transport + static
 npm run check:webclient   # static gate for the browser client
+npm run check:lingo       # Director bridge: handlers, state keys, single-file build in sync
 npm run smoke:webclient -- --url http://localhost:8080   # boots the real client headlessly
 npm run e2e               # 3 headless cars race city-1 for 12 s
 ```
@@ -51,6 +52,7 @@ docs/                architecture, protocol, server, webclient, Director, operat
 | [04-webclient](docs/04-webclient.md) | modules, controls, netcode, how to verify it |
 | [05-director-bridge](docs/05-director-bridge.md) | Lingo integration, hooks, failure modes |
 | [06-operations](docs/06-operations.md) | endpoints, env vars, TLS/proxy, capacity, pitfalls |
+| [lingo/patches/TROUBLESHOOTING](lingo/patches/TROUBLESHOOTING.md) | Director install errors (`handler not defined #Active`, `#BR4MPGameFrame`) |
 
 ## What works today
 

@@ -1,6 +1,7 @@
 -- =====================================================================
 --  br4mp_net.ls  —  Burnin' Rubber 4 online bridge: text transport
---  Movie script. Requires br4mp_config.ls.
+--  Movie script (cast member type: Movie Script). Requires br4mp_config.ls,
+--  or use the single-file build br4mp_bridge.ls.
 --
 --  Shockwave Player cannot open a WebSocket, so the bridge speaks the
 --  line-oriented text profile over HTTP (see docs/02-protocol.md §5):
@@ -18,6 +19,7 @@ global gBR4MP
 
 -- ── connect ────────────────────────────────────────────────────────────
 on BR4MPConnect
+  BR4MPEnsure
   pURL = gBR4MP.baseURL & "/mp/connect" & "?name=" & BR4MPEncode(gBR4MP.playerName) & ¬
          "&v=1&cv=director&veh=" & BR4MPEncode(gBR4MP.vehicle) & ¬
          "&sk=" & string(gBR4MP.skin) & ¬
@@ -34,6 +36,7 @@ end
 
 -- ── per-frame pump ─────────────────────────────────────────────────────
 on BR4MPFrame
+  BR4MPEnsure
   if not BR4MPActive() then return
 
   -- 1. connection reply
@@ -61,6 +64,7 @@ on BR4MPFrame
 end
 
 on BR4MPStartPoll
+  BR4MPEnsure
   if not BR4MPActive() then return
   if gBR4MP.token = "" then return
   if gBR4MP.pollNet > 0 then return
@@ -70,6 +74,7 @@ on BR4MPStartPoll
 end
 
 on BR4MPCancelPoll
+  BR4MPEnsure
   -- nothing to cancel in Lingo; just forget the handle so its result is ignored
   gBR4MP.pollNet = 0
 end
@@ -77,7 +82,7 @@ end
 -- ── uplink ─────────────────────────────────────────────────────────────
 -- Queue one protocol line (no newline needed) for the next flush.
 on BR4MPSendLine pLine
-  if voidP(gBR4MP) then return
+  BR4MPEnsure
   if pLine = "" then return
   gBR4MP.sendQueue.add(pLine)
 end
@@ -88,6 +93,7 @@ on BR4MPSendNow pLine
 end
 
 on BR4MPFlush
+  BR4MPEnsure
   if gBR4MP.token = "" then return
   if gBR4MP.sendQueue.count = 0 then return
   pPayload = gBR4MP.sendQueue[1]
@@ -289,6 +295,6 @@ on BR4MPUnHex pCh
 end
 
 on BR4MPTrace pText
-  if voidP(gBR4MP) then return
+  if ilk(gBR4MP) <> #propList then return
   if gBR4MP.trace then put pText
 end
