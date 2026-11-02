@@ -62,6 +62,13 @@ or a `case` statement, which the movie itself uses in 26 scripts. Every branch i
 files is block form - no `else if`, and no one-line `if ... then statement` either (the movie's
 own scripts contain none, and this parser rejects them).
 
+**The runtime implements what the movie itself uses, and little else.** `round()` is not in
+its function table - it raises *"Handler not defined #round"* - so `BR4MPRound()` (built on
+`integer()`) does the rounding, and `BR4MPHasBit()` does the arithmetic that `bitAnd()` would.
+`sin`, `cos`, `atan`, `pi`, `sqrt`, `integer`, `abs`, `string`, `the milliseconds`, `getProp`,
+`charToNum` and `numToChar` are all present. If you add handlers, stick to functions the shipped
+scripts already call.
+
 The uplink also builds its `STATE` line one statement at a time instead of using `¬`
 continuations, so a paste that mangles a continuation character cannot break the compile.
 

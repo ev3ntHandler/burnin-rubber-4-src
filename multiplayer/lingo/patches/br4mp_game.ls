@@ -119,15 +119,50 @@ on BR4MPUplink
   pLine = pLine & ",vx=" & BR4MPFixed(pVel.x)
   pLine = pLine & ",vy=" & BR4MPFixed(pVel.y)
   pLine = pLine & ",vz=" & BR4MPFixed(pVel.z)
-  pLine = pLine & ",h=" & string(abs(round(BR4MPLocalHealth())))
+  pLine = pLine & ",h=" & string(BR4MPRound(abs(BR4MPLocalHealth())))
   pLine = pLine & ",l=" & string(gBR4MP.lap)
   pLine = pLine & ",c=" & string(gBR4MP.cp)
-  pLine = pLine & ",sp=" & string(abs(round(BR4MPLocalSpeed())))
+  pLine = pLine & ",sp=" & string(BR4MPRound(abs(BR4MPLocalSpeed())))
   BR4MPSendLine(pLine)
 end
 
+-- Power-of-two flag test that avoids bitAnd(), which the bridge does not need to
+-- rely on (flags parsed from the wire are small integers).
+on BR4MPHasBit pMask, pBit
+  if pMask < pBit then
+    return 0
+  end if
+  pQuotient = pMask / pBit
+  pRest = pQuotient - integer(pQuotient)
+  if pRest = 0 then
+    return 1
+  end if
+  return 0
+end
+
+-- round() is not defined in this Lingo runtime ("Handler not defined #round"),
+-- so rounding is done with integer(), which truncates toward zero.
+on BR4MPRound pValue
+  if pValue < 0 then
+    return -1 * integer((-1 * pValue) + 0.5)
+  end if
+  return integer(pValue + 0.5)
+end
+
+-- Two decimals of a metre, built as text so no float formatting is involved.
+-- -12.345 -> "-12.35", 0.004 -> "0.00"
 on BR4MPFixed pValue
-  return string(round(pValue * 100) / 100.0)
+  pScaled = BR4MPRound(pValue * 100)
+  pWhole = integer(pScaled / 100)
+  pFrac = pScaled - (pWhole * 100)
+  if pFrac < 0 then
+    pFrac = -1 * pFrac
+  end if
+  pText = string(pWhole) & "."
+  if pFrac < 10 then
+    pText = pText & "0"
+  end if
+  return pText & string(pFrac)
 end
 
 on BR4MPPingIfDue
@@ -161,10 +196,10 @@ on BR4MPGameSnapshotEntry pBody
     gBR4MP.remotes[pId] = pRemote
   end if
 
-  if bitAnd(pMask, 1) then
+  if BR4MPHasBit(pMask, 1) = 1 then
     pRemote.pos = vector(BR4MPNum(pBody, "px"), BR4MPNum(pBody, "py"), BR4MPNum(pBody, "pz"))
   end if
-  if bitAnd(pMask, 2) then
+  if BR4MPHasBit(pMask, 2) = 1 then
     pQZ = BR4MPNum(pBody, "rz")
     pQW = BR4MPNum(pBody, "rw")
     if pQZ = 0 and pQW = 0 then
@@ -173,10 +208,10 @@ on BR4MPGameSnapshotEntry pBody
       pRemote.yaw = 2 * BR4MPAtan2(pQZ, pQW)
     end if
   end if
-  if bitAnd(pMask, 8) then
+  if BR4MPHasBit(pMask, 8) = 1 then
     pRemote.health = BR4MPNum(pBody, "h")
   end if
-  if bitAnd(pMask, 64) then
+  if BR4MPHasBit(pMask, 64) = 1 then
     pRemote.speed = BR4MPNum(pBody, "sp")
   end if
   pRemote.seenAt = the milliseconds
