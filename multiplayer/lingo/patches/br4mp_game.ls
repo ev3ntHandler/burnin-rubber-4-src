@@ -133,15 +133,7 @@ on BR4MPGameSnapshotEntry pBody
   pMask = BR4MPNum(pBody, "m")
   pRemote = gBR4MP.remotes[pId]
   if ilk(pRemote) <> #propList then
-    pRemote = [:]
-    pRemote.id = pId
-    pRemote.pos = vector(0, 0, 0)
-    pRemote.shown = vector(0, 0, 0)
-    pRemote.yaw = 0
-    pRemote.health = 100
-    pRemote.speed = 0
-    pRemote.seenAt = the milliseconds
-    pRemote.mesh = VOID
+    pRemote = [#id: pId, #pos: vector(0, 0, 0), #shown: vector(0, 0, 0), #yaw: 0, #health: 100, #speed: 0, #seenAt: the milliseconds, #mesh: VOID]
     gBR4MP.remotes[pId] = pRemote
   end if
 
@@ -269,12 +261,7 @@ end
 
 on BR4MPGameStanding pId, pLap, pCp, pFinished, pFinishMs
   global gBR4MP
-  pRow = [:]
-  pRow.id = pId
-  pRow.lap = pLap
-  pRow.cp = pCp
-  pRow.finished = pFinished
-  pRow.timeMs = pFinishMs
+  pRow = [#id: pId, #lap: pLap, #cp: pCp, #finished: pFinished, #timeMs: pFinishMs]
   gBR4MP.standings.append(pRow)
 end
 
@@ -358,10 +345,7 @@ end
 
 on BR4MPShowChat pName, pText, pChannel
   global gBR4MP
-  pRow = [:]
-  pRow.name = pName
-  pRow.text = pText
-  pRow.channel = pChannel
+  pRow = [#name: pName, #text: pText, #channel: pChannel]
   gBR4MP.chat.append(pRow)
   repeat while gBR4MP.chat.count > 8
     gBR4MP.chat.deleteAt(1)

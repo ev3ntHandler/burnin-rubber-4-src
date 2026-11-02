@@ -37,7 +37,12 @@ Two Lingo-specific fixes, both of which showed up as script errors during bring-
   `BR4MPUplink`.
 * **`gBR4MP = gBR4MP or [:]` is wrong.** `or` is boolean/bitwise in Lingo, so it yields `TRUE`
   and every later `gBR4MP.active` is read as a handler lookup (*"handler not defined #Active"*).
-  v1.1 initialises with a plain `gBR4MP = [:]` and writes every key up front.
+  v1.1 initialises with a plain `gBR4MP = [:]`.
+* **Dot syntax does not create properties.** On a fresh `[:]`, `pList.newKey = x` raises
+  *"Property not found #newKey"*. Keys must be created with `setProp(pList, #key, value)` or
+  bracket syntax; every key is created that way in `BR4MPDefaults`, and remote/roster/chat rows
+  are built as complete `[#id: ..., #pos: ...]` literals, so the rest of the bridge can use
+  ordinary `gBR4MP.key` access.
 
 The uplink also builds its `STATE` line one statement at a time instead of using `¬`
 continuations, so a paste that mangles a continuation character cannot break the compile.

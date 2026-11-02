@@ -167,10 +167,7 @@ on BR4MPHandleLine pLine
       BR4MPGameJoined(gBR4MP.roomId, gBR4MP.trackId)
 
     "PJ":
-      pPlayer = [#id: BR4MPNum(pBody, "i")]
-      pPlayer.name = BR4MPStr(pBody, "n")
-      pPlayer.vehicle = BR4MPStr(pBody, "veh")
-      pPlayer.ready = BR4MPNum(pBody, "r")
+      pPlayer = [#id: BR4MPNum(pBody, "i"), #name: BR4MPStr(pBody, "n"), #vehicle: BR4MPStr(pBody, "veh"), #ready: BR4MPNum(pBody, "r")]
       gBR4MP.players[pPlayer.id] = pPlayer
       BR4MPGamePlayerJoin(pPlayer)
 

@@ -18,10 +18,15 @@
 --  what it uses, so the error cannot come back when scripts are pasted in
 --  any order or split across several cast members.
 --
---  Also note: `gBR4MP = gBR4MP or [:]` is wrong in Lingo ( `or` is a
---  boolean/bitwise operator, so it yields TRUE and every later
---  gBR4MP.active becomes a handler lookup ). Initialisation below uses
---  ilk() instead.
+--  Two Lingo rules this file depends on:
+--
+--  1. `gBR4MP = gBR4MP or [:]` is wrong: `or` is boolean/bitwise, so it
+--     yields TRUE and every later gBR4MP.active becomes a handler lookup.
+--  2. Dot syntax only *reads or updates existing* properties. Creating a
+--     property needs setProp() or bracket syntax - `pList.newKey = x` on a
+--     fresh [:] raises "Property not found #newKey". Every key is therefore
+--     created below with gBR4MP[#key] = value; the rest of the bridge can
+--     then use ordinary dot syntax.
 -- =====================================================================
 
 -- Version of the bridge scripts.
@@ -34,69 +39,69 @@ end
 on BR4MPDefaults
   global gBR4MP
   gBR4MP = [:]
-  gBR4MP.version = BR4MPVersion()
-  gBR4MP.active = FALSE
+  gBR4MP[#version] = BR4MPVersion()
+  gBR4MP[#active] = FALSE
 
   -- Point this at the machine running packages/server (no trailing slash).
   -- Shockwave Player may only reach the host it was served from unless a
   -- crossdomain.xml allows more; see docs/06-operations.md.
-  gBR4MP.baseURL = "http://localhost:8080"
+  gBR4MP[#baseURL] = "http://localhost:8080"
 
   -- Identity shown in the roster and chat.
-  gBR4MP.playerName = "Racer"
-  gBR4MP.vehicle = "PlayerCar"
-  gBR4MP.skin = 0
+  gBR4MP[#playerName] = "Racer"
+  gBR4MP[#vehicle] = "PlayerCar"
+  gBR4MP[#skin] = 0
 
   -- Networking cadence: 20 Hz state uplink, 15 s long-poll hold, 2.5 s ping.
-  gBR4MP.stateHz = 20
-  gBR4MP.pollWait = 15
-  gBR4MP.pingMs = 2500
-  gBR4MP.resumeWindowMs = 60000
+  gBR4MP[#stateHz] = 20
+  gBR4MP[#pollWait] = 15
+  gBR4MP[#pingMs] = 2500
+  gBR4MP[#resumeWindowMs] = 60000
 
   -- Debug: put every parsed protocol line in the Message window.
-  gBR4MP.trace = FALSE
+  gBR4MP[#trace] = FALSE
 
   -- Transport handles (0 = no request in flight).
-  gBR4MP.connectNet = 0
-  gBR4MP.pollNet = 0
-  gBR4MP.lastFlush = 0
-  gBR4MP.stateSent = 0
-  gBR4MP.lastPing = 0
-  gBR4MP.pingSentAt = 0
-  gBR4MP.pingId = 0
-  gBR4MP.rttMs = 0
-  gBR4MP.lastError = ""
+  gBR4MP[#connectNet] = 0
+  gBR4MP[#pollNet] = 0
+  gBR4MP[#lastFlush] = 0
+  gBR4MP[#stateSent] = 0
+  gBR4MP[#lastPing] = 0
+  gBR4MP[#pingSentAt] = 0
+  gBR4MP[#pingId] = 0
+  gBR4MP[#rttMs] = 0
+  gBR4MP[#lastError] = ""
 
   -- Session state.
-  gBR4MP.token = ""
-  gBR4MP.playerId = 0
-  gBR4MP.roomId = ""
-  gBR4MP.trackId = ""
-  gBR4MP.mode = 0
-  gBR4MP.worldIndex = 0
-  gBR4MP.startTick = 0
-  gBR4MP.seq = 0
-  gBR4MP.ackTick = 0
-  gBR4MP.snapshotTick = 0
-  gBR4MP.tickRate = 20
-  gBR4MP.localVel = vector(0, 0, 0)
+  gBR4MP[#token] = ""
+  gBR4MP[#playerId] = 0
+  gBR4MP[#roomId] = ""
+  gBR4MP[#trackId] = ""
+  gBR4MP[#mode] = 0
+  gBR4MP[#worldIndex] = 0
+  gBR4MP[#startTick] = 0
+  gBR4MP[#seq] = 0
+  gBR4MP[#ackTick] = 0
+  gBR4MP[#snapshotTick] = 0
+  gBR4MP[#tickRate] = 20
+  gBR4MP[#localVel] = vector(0, 0, 0)
 
   -- Race / HUD state.
-  gBR4MP.phase = 0
-  gBR4MP.lap = 0
-  gBR4MP.cp = 0
-  gBR4MP.totalLaps = 1
-  gBR4MP.countdownMs = 0
-  gBR4MP.statusText = ""
+  gBR4MP[#phase] = 0
+  gBR4MP[#lap] = 0
+  gBR4MP[#cp] = 0
+  gBR4MP[#totalLaps] = 1
+  gBR4MP[#countdownMs] = 0
+  gBR4MP[#statusText] = ""
 
   -- Collections.
-  gBR4MP.players = [:]
-  gBR4MP.remotes = [:]
-  gBR4MP.chat = []
-  gBR4MP.standings = []
-  gBR4MP.sendQueue = []
-  gBR4MP.invitedRoom = 0
-  gBR4MP.chatMember = VOID
+  gBR4MP[#players] = [:]
+  gBR4MP[#remotes] = [:]
+  gBR4MP[#chat] = []
+  gBR4MP[#standings] = []
+  gBR4MP[#sendQueue] = []
+  gBR4MP[#invitedRoom] = 0
+  gBR4MP[#chatMember] = VOID
 
   return gBR4MP
 end
@@ -130,7 +135,9 @@ end
 on BR4MPActive
   global gBR4MP
   if ilk(gBR4MP) <> #propList then return FALSE
-  return gBR4MP.active = TRUE
+  -- getProp returns VOID for a missing key instead of raising
+  -- "Property not found", so this is safe before BR4MPDefaults has run.
+  return getProp(gBR4MP, #active) = TRUE
 end
 
 -- ---------------------------------------------------------------------
