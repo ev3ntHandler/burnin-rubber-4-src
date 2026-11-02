@@ -15,60 +15,72 @@
 -- =====================================================================
 
 -- ---------------------------------------------------------------------
---  ADAPT: local car accessors
---  These six handlers are the only build-specific code in the bridge.
---  Each is a single expression on purpose: probing for alternative
---  property layouts with `if x.prop <> VOID` raises "Property not found"
---  on script objects in Lingo, so edit the expression instead.
+--  Local car accessors - matched to this movie's data model
+--
+--  There is no gGame.me in the Director source: vehicles live in the
+--  property list gGame.vehicles, keyed by tag, and the player's car is
+--  gGame.vehicles[1] (created first) until the game sets
+--  gGame.CurrentVehicle = t.general.tag. The physics transform is
+--  t.Vehicle.Proxy.transform; speed and health are t.Vehicle.Speed /
+--  t.Vehicle.Health. If your build differs, these six handlers are the
+--  only place to edit.
 -- ---------------------------------------------------------------------
 
--- The object the hover physics drives.
-on BR4MPLocalCar
+-- The property list describing the player's car.
+on BR4MPLocalVehicle
   global gGame
-  return gGame.me.car
+  pTag = gGame.CurrentVehicle
+  pType = ilk(pTag)
+  if (pType = #integer) or (pType = #symbol) then
+    pVehicle = gGame.vehicles[pTag]
+    if ilk(pVehicle) = #propList then return pVehicle
+  end if
+  -- tag 1 is the first vehicle created, i.e. the player's
+  return gGame.vehicles[1]
 end
 
--- Its transform in world space (metres, Z-up).
+-- The physics transform (metres, Z-up).
 on BR4MPLocalTransform
-  global gGame
-  return gGame.me.car.transform
+  return BR4MPLocalVehicle().Vehicle.Proxy.transform
 end
 
--- Heading in radians. The physics keeps the car upright, so one yaw
--- around Z is enough for the wire (rx=ry=0). If your build stores the
--- heading in degrees, use:  return gGame.me.angle * pi() / 180
-on BR4MPLocalYaw
-  pRot = BR4MPLocalTransform().rotation
-  if ilk(pRot) = #vector then return pRot.z * pi() / 180
-  if ilk(pRot) = #propList then return 2 * BR4MPAtan2(pRot.z, pRot.w)
-  return 0
-end
-
--- Ground speed in m/s, as the speedometer uses it.
+-- Ground speed in m/s (t.Vehicle.Speed).
 on BR4MPLocalSpeed
-  global gGame
-  return gGame.me.speed
+  return BR4MPLocalVehicle().Vehicle.Speed
 end
 
--- Health, 0..100. Only free roam changes it.
+-- Health, 0 = destroyed (t.Vehicle.Health).
 on BR4MPLocalHealth
-  global gGame
-  return gGame.me.health
+  return BR4MPLocalVehicle().Vehicle.Health
 end
 
--- Velocity in m/s. Advisory only (the server derives ram damage from its
--- own history); set gBR4MP.localVel if you want it on the wire.
+-- Heading in radians, derived the same way Advanced Car computes its
+-- forward vector: rotate (0,1,0) by the car transform and take atan2.
+on BR4MPLocalYaw
+  pTransform = transform()
+  pTransform.rotation = BR4MPLocalTransform().rotation
+  pForward = pTransform * vector(0, 1, 0)
+  return BR4MPAtan2(pForward.y, pForward.x)
+end
+
+-- Velocity in m/s, derived from speed + heading (advisory on the wire).
 on BR4MPLocalVelocity
-  global gBR4MP
-  if ilk(gBR4MP.localVel) = #vector then return gBR4MP.localVel
-  return vector(0, 0, 0)
+  pSpeed = BR4MPLocalSpeed()
+  pYaw = BR4MPLocalYaw()
+  return vector(cos(pYaw) * pSpeed, sin(pYaw) * pSpeed, 0)
 end
 
 -- ---------------------------------------------------------------------
 --  per-frame entry point - call BR4MPGameFrame() once per frame
 -- ---------------------------------------------------------------------
 on BR4MPGameFrame
+  global gBR4MP
   if not BR4MPActive() then return
+  -- Advanced Car's enterFrame runs once per vehicle instance; only drive the
+  -- bridge once per frame (the player's call wins, the others fall through).
+  pNow = the milliseconds
+  if pNow = gBR4MP.lastFrameMs then return
+  gBR4MP.lastFrameMs = pNow
   BR4MPFrame
   BR4MPUplink
   BR4MPPingIfDue
@@ -99,10 +111,10 @@ on BR4MPUplink
   pLine = pLine & ",vx=" & BR4MPFixed(pVel.x)
   pLine = pLine & ",vy=" & BR4MPFixed(pVel.y)
   pLine = pLine & ",vz=" & BR4MPFixed(pVel.z)
-  pLine = pLine & ",h=" & string(round(BR4MPLocalHealth()))
+  pLine = pLine & ",h=" & string(abs(round(BR4MPLocalHealth())))
   pLine = pLine & ",l=" & string(gBR4MP.lap)
   pLine = pLine & ",c=" & string(gBR4MP.cp)
-  pLine = pLine & ",sp=" & string(round(BR4MPLocalSpeed()))
+  pLine = pLine & ",sp=" & string(abs(round(BR4MPLocalSpeed())))
   BR4MPSendLine(pLine)
 end
 
@@ -291,8 +303,7 @@ end
 -- The server moved us: reason 1/2 (respawn / race start) are authoritative
 -- teleports, reason 0 is the anti-cheat pulling the car back.
 on BR4MPGameCorrection pReason, pX, pY, pZ
-  global gGame
-  gGame.me.car.transform.position = vector(pX, pY, pZ)
+  BR4MPLocalTransform().position = vector(pX, pY, pZ)
   if pReason = 0 then BR4MPShowChat("SYSTEM", "Position corrected by the server.", 2)
 end
 

@@ -53,24 +53,59 @@ Verify an install from the Message window at any time:
 put BR4MPDiagnostics()   -- ilk(gBR4MP) must be #propList, plus URL/token/room/phase/rtt
 ```
 
-## Hook points
+## Hook points (verified against the shipped movie)
+
+The three edits below are the only ones the movie needs. Each is a single line (or two) in an
+existing handler; no new cast members.
+
+**1. Frame pump - `[PS] Advanced Car.ls`, first lines of `on enterFrame me`**
 
 ```lingo
--- main menu, "Online" button
+on enterFrame me
+  t = gGame.vehicles[p.tag]
+  if t.general.controller = #player then BR4MPGameFrame
+  ... existing body ...
+```
+
+Put it *at the top*, not at the end: this handler returns early for a destroyed car
+(`if t.Vehicle.Health = 0 then return 0`) and `exit`s out of its state loop, so anything appended
+to the bottom stops running as soon as the car explodes or a state handles the frame. The
+`#player` guard matters too - `enterFrame` is the car script, so it runs once per vehicle
+instance (AI and traffic included). `BR4MPGameFrame` also ignores repeat calls inside the same
+millisecond, so the guard is belt-and-braces.
+
+**2. Joining online - `MenuEvents.txt`, end of the `StartGame_Begin` block**
+
+`MenuEvents.txt` is *data* parsed by `[M] Event Manager.ls`, not Lingo: fields are TAB separated
+and every command is dispatched as `sendSprite(0, #Handler, tTarget, tDataList)`, i.e. with two
+arguments. So a three-argument `BR4MPStart 0 0 ""` cannot be called from there. Use the
+two-argument wrapper instead (TABs, like `PutMessage`):
+
+```
+BR4MPOnline	0	[#mode: 0, #world: 0, #track: ""]
+```
+
+**3. Leaving - `[M] Init Game.ls`, first line of `on stopMovie me`**
+
+```lingo
+on stopMovie me
+  BR4MPStop
+  if _player.runMode = "Plugin" then
+    return 0
+  end if
+```
+
+It has to be the first statement: in Plugin (Shockwave) mode the handler returns before doing
+anything, and the `ResetEngine()`/`reset()` calls further down can cancel still-pending nets, so
+the `LEAVE` would never leave.
+
+**Menu-driven calls (all optional)**
+
+```lingo
 BR4MPStart(1, 0, "city-1")        -- mode 1 = race, world 0 = City, track city-1
-
--- once per frame, after the car physics has run
--- (e.g. at the end of [PS] Advanced Car.ls  "enterFrame")
-BR4MPGameFrame()
-
--- chat input field
 BR4MPChat("hello grid")
-
--- HUD text member that should show the newest chat line
-BR4MPChatMember(member("status"))
-
--- leaving the online menu
-BR4MPStop()
+BR4MPChatMember(member("status")) -- HUD text member showing the newest chat line
+BR4MPStop
 ```
 
 `BR4MPGameFrame` does four things per frame: pumps the completed HTTP requests, sends a `STATE`
@@ -87,11 +122,21 @@ line every 50 ms, pings every 2.5 s, and eases the remote cars towards their las
 
 ## Things to adapt to your build
 
-Only two accessors assume a particular movie layout, both at the top of `br4mp_game.ls`:
+Only the "ADAPT" block in `br4mp_game.ls` assumes anything about the movie, and it now matches
+the shipped Director source:
 
-* `BR4MPLocalCar()` — returns the car the physics drives (default `gGame.me.car`).
-* `BR4MPLocalYaw()` / `BR4MPLocalSpeed()` — read the heading and speed (default
-  `car.angle` in degrees, `car.speed`).
+* `BR4MPLocalVehicle()` — the player's vehicle record:
+  `gGame.vehicles[gGame.CurrentVehicle]`, falling back to `gGame.vehicles[1]` (tag 1 is the car
+  created first, i.e. the player's).
+* `BR4MPLocalTransform()` — `t.Vehicle.Proxy.transform` (metres, Z-up); corrections are written
+  straight back to this transform's `position`.
+* `BR4MPLocalYaw()` — heading in radians, computed the way `Advanced Car` computes its forward
+  vector: rotate `(0,1,0)` by the car transform, `atan2(y, x)`.
+* `BR4MPLocalSpeed()` / `BR4MPLocalHealth()` — `t.Vehicle.Speed` / `t.Vehicle.Health` (sent as
+  magnitudes).
+* `BR4MPLocalVelocity()` — derived from speed and heading.
+
+If your build names these fields differently, edit those six handlers and nothing else.
 
 And one optional spawner:
 

@@ -59,15 +59,19 @@ These are the only places the original scripts must change. Everything is guarde
 
 1. **Startup** — `BR4MPStart(mode, worldIndex, trackId)` after `gGame` is initialised, e.g. from
    the main menu's "Online" button, and `BR4MPStop()` when returning to the menu.
-2. **Frame loop** — `BR4MPGameFrame()` once per frame, from a movie script `enterFrame` or from
-   the `Advanced Car` `enterFrame` after the physics update:
+2. **Frame loop** — `BR4MPGameFrame()` once per frame. The shipped hook is the **first** line of
+   `Advanced Car`'s `enterFrame`, guarded by `if t.general.controller = #player then` (that
+   handler runs once per vehicle instance and returns early for destroyed cars, so a call
+   appended to the end stops firing after the car explodes):
    * pumps the poll (`netDone` check),
    * every 50 ms builds a `STATE` line from the local car,
    * applies incoming snapshot entries to the remote car list.
-3. **Local transform** — the bridge reads
-   `pCar = gGame.me.car`, `pCar.transform.position` and `pCar.transform.rotation`, and the speed
-   from the physics global (`gGame.me.speed`). Nothing else is needed; the server does not
-   simulate physics.
+3. **Local transform** — the bridge reads the player's vehicle record:
+   `t = gGame.vehicles[gGame.CurrentVehicle]` (the movie has no `gGame.me`; tag `1` is the car
+   created first, which is the player's), then `t.Vehicle.Proxy.transform.position` (metres,
+   Z-up), the heading from `t.Vehicle.Proxy.transform.rotation` (rotate `(0,1,0)` and take
+   `atan2`), `t.Vehicle.Speed` and `t.Vehicle.Health`. Nothing else is needed; the server does
+   not simulate physics.
 4. **Remote cars** — `BR4MPApplyEntry(entry)` creates or updates a `#mesh` clone of the player
    car in the scene (`gGame.world.group`), positions it with `transform.position` and
    `transform.rotation`, and interpolates towards the last two snapshot positions. Vehicles are

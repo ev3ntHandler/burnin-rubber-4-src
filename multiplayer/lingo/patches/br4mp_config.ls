@@ -66,6 +66,7 @@ on BR4MPDefaults
   gBR4MP[#pollNet] = 0
   gBR4MP[#lastFlush] = 0
   gBR4MP[#stateSent] = 0
+  gBR4MP[#lastFrameMs] = -1
   gBR4MP[#lastPing] = 0
   gBR4MP[#pingSentAt] = 0
   gBR4MP[#pingId] = 0
@@ -119,6 +120,27 @@ on BR4MPStart mode, worldIndex, trackId
   gBR4MP.statusText = "Connecting to " & gBR4MP.baseURL
   BR4MPConnect
   return gBR4MP.active
+end
+
+-- Entry point for the MenuEvents.txt event system, which dispatches every
+-- command as sendSprite(0, #handler, tTarget, tDataList) - i.e. two
+-- arguments only. Add this line to the StartGame_*_Begin block (TAB
+-- separated, like PutMessage):
+--     BR4MPOnline<TAB>0<TAB>[#mode: 0, #world: 0, #track: ""]
+on BR4MPOnline me, tTarget, tDataList
+  pMode = 0
+  pWorld = 0
+  pTrack = ""
+  if ilk(tDataList) = #propList then
+    if ilk(tDataList.mode) <> #void then pMode = tDataList.mode
+    if ilk(tDataList.world) <> #void then pWorld = tDataList.world
+    if ilk(tDataList.track) <> #void then pTrack = tDataList.track
+  else if ilk(tTarget) = #propList then
+    if ilk(tTarget.mode) <> #void then pMode = tTarget.mode
+    if ilk(tTarget.world) <> #void then pWorld = tTarget.world
+    if ilk(tTarget.track) <> #void then pTrack = tTarget.track
+  end if
+  return BR4MPStart(pMode, pWorld, pTrack)
 end
 
 on BR4MPStop
