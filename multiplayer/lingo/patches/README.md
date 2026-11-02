@@ -44,6 +44,24 @@ Two Lingo-specific fixes, both of which showed up as script errors during bring-
   are built as complete `[#id: ..., #pos: ...]` literals, so the rest of the bridge can use
   ordinary `gBR4MP.key` access.
 
+**There is no `else if` in Lingo.** The keyword does not exist in this Director build (and in
+classic Lingo generally): an `else if` chain fails with *"errors here at end, expected end if"*.
+Write either a nested block
+
+```lingo
+if a then
+  ...
+else
+  if b then
+    ...
+  end if
+end if
+```
+
+or a `case` statement, which the movie itself uses in 26 scripts. Every branch in these three
+files is block form - no `else if`, and no one-line `if ... then statement` either (the movie's
+own scripts contain none, and this parser rejects them).
+
 The uplink also builds its `STATE` line one statement at a time instead of using `¬`
 continuations, so a paste that mangles a continuation character cannot break the compile.
 

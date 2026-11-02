@@ -33,7 +33,9 @@ on BR4MPLocalVehicle
   pType = ilk(pTag)
   if (pType = #integer) or (pType = #symbol) then
     pVehicle = gGame.vehicles[pTag]
-    if ilk(pVehicle) = #propList then return pVehicle
+    if ilk(pVehicle) = #propList then
+      return pVehicle
+    end if
   end if
   -- tag 1 is the first vehicle created, i.e. the player's
   return gGame.vehicles[1]
@@ -75,11 +77,15 @@ end
 -- ---------------------------------------------------------------------
 on BR4MPGameFrame
   global gBR4MP
-  if not BR4MPActive() then return
+  if not BR4MPActive() then
+    return
+  end if
   -- Advanced Car's enterFrame runs once per vehicle instance; only drive the
   -- bridge once per frame (the player's call wins, the others fall through).
   pNow = the milliseconds
-  if pNow = gBR4MP.lastFrameMs then return
+  if pNow = gBR4MP.lastFrameMs then
+    return
+  end if
   gBR4MP.lastFrameMs = pNow
   BR4MPFrame
   BR4MPUplink
@@ -91,7 +97,9 @@ end
 on BR4MPUplink
   global gBR4MP
   pNow = the milliseconds
-  if pNow - gBR4MP.stateSent < (1000 / gBR4MP.stateHz) then return
+  if pNow - gBR4MP.stateSent < (1000 / gBR4MP.stateHz) then
+    return
+  end if
   gBR4MP.stateSent = pNow
 
   pPos = BR4MPLocalTransform().position
@@ -125,7 +133,9 @@ end
 on BR4MPPingIfDue
   global gBR4MP
   pNow = the milliseconds
-  if pNow - gBR4MP.lastPing < gBR4MP.pingMs then return
+  if pNow - gBR4MP.lastPing < gBR4MP.pingMs then
+    return
+  end if
   gBR4MP.lastPing = pNow
   gBR4MP.pingSentAt = pNow
   gBR4MP.pingId = gBR4MP.pingId + 1
@@ -140,7 +150,9 @@ end
 on BR4MPGameSnapshotEntry pBody
   global gBR4MP
   pId = BR4MPNum(pBody, "i")
-  if pId = gBR4MP.playerId then return          -- that's us; the local car wins
+  if pId = gBR4MP.playerId then
+    return          -- that's us; the local car wins
+  end if
 
   pMask = BR4MPNum(pBody, "m")
   pRemote = gBR4MP.remotes[pId]
@@ -161,8 +173,12 @@ on BR4MPGameSnapshotEntry pBody
       pRemote.yaw = 2 * BR4MPAtan2(pQZ, pQW)
     end if
   end if
-  if bitAnd(pMask, 8) then pRemote.health = BR4MPNum(pBody, "h")
-  if bitAnd(pMask, 64) then pRemote.speed = BR4MPNum(pBody, "sp")
+  if bitAnd(pMask, 8) then
+    pRemote.health = BR4MPNum(pBody, "h")
+  end if
+  if bitAnd(pMask, 64) then
+    pRemote.speed = BR4MPNum(pBody, "sp")
+  end if
   pRemote.seenAt = the milliseconds
   BR4MPGameRemoteSpawn(pRemote)
 end
@@ -174,7 +190,9 @@ end
 -- Returning VOID is safe: roster, chat and race logic keep working, the
 -- opponent is simply not drawn.
 on BR4MPGameRemoteSpawn pRemote
-  if ilk(pRemote.mesh) <> #void then return pRemote.mesh
+  if ilk(pRemote.mesh) <> #void then
+    return pRemote.mesh
+  end if
   return VOID
 end
 
@@ -192,7 +210,9 @@ on BR4MPAnimateRemotes
         -- snapshots arrive at 20 Hz; ease the drawn car towards the last
         -- authoritative position so it looks smooth at 30-60 fps
         pRemote.shown = BR4MPLerp(pRemote.shown, pRemote.pos, 0.35)
-        if pRemote.mesh <> VOID then pRemote.mesh.visible = TRUE
+        if pRemote.mesh <> VOID then
+          pRemote.mesh.visible = TRUE
+        end if
         BR4MPPlaceRemote(pRemote)
       end if
     end if
@@ -200,31 +220,47 @@ on BR4MPAnimateRemotes
 end
 
 on BR4MPPlaceRemote pRemote
-  if pRemote.mesh = VOID then return
+  if pRemote.mesh = VOID then
+    return
+  end if
   pRemote.mesh.transform.position = pRemote.shown
   pRemote.mesh.transform.rotation = vector(0, 0, pRemote.yaw)
 end
 
 on BR4MPHideRemote pRemote
-  if pRemote.mesh = VOID then return
+  if pRemote.mesh = VOID then
+    return
+  end if
   pRemote.mesh.visible = FALSE
 end
 
 -- Lingo has no two-argument atan; usual quadrant fix-up.
 on BR4MPAtan2 pY, pX
-  if pX > 0 then return atan(pY / pX)
+  if pX > 0 then
+    return atan(pY / pX)
+  end if
   if pX < 0 then
-    if pY >= 0 then return atan(pY / pX) + pi()
+    if pY >= 0 then
+      return atan(pY / pX) + pi()
+    end if
     return atan(pY / pX) - pi()
   end if
-  if pY > 0 then return pi() / 2
-  if pY < 0 then return -pi() / 2
+  if pY > 0 then
+    return pi() / 2
+  end if
+  if pY < 0 then
+    return -pi() / 2
+  end if
   return 0
 end
 
 on BR4MPLerp pTarget, pToward, pAlpha
-  if ilk(pTarget) <> #vector then return pToward
-  if ilk(pToward) <> #vector then return pTarget
+  if ilk(pTarget) <> #vector then
+    return pToward
+  end if
+  if ilk(pToward) <> #vector then
+    return pTarget
+  end if
   return pTarget + (pToward - pTarget) * pAlpha
 end
 
@@ -247,7 +283,9 @@ on BR4MPGamePlayerLeave pId
   global gBR4MP
   pRemote = gBR4MP.remotes[pId]
   if ilk(pRemote) = #propList then
-    if pRemote.mesh <> VOID then pRemote.mesh.visible = FALSE
+    if pRemote.mesh <> VOID then
+      pRemote.mesh.visible = FALSE
+    end if
     gBR4MP.remotes.deleteProp(pId)
   end if
 end
@@ -264,11 +302,15 @@ on BR4MPGameRaceState pPhase, pLap, pTotalLaps, pCountdownMs
   gBR4MP.countdownMs = pCountdownMs
   if pPhase = 1 then
     pSeconds = integer(pCountdownMs / 1000)
-    if pSeconds < 1 then pSeconds = 1
+    if pSeconds < 1 then
+      pSeconds = 1
+    end if
     pMessage = "Starting in " & string(pSeconds) & "..."
     BR4MPShowChat("SYSTEM", pMessage, 2)
   end if
-  if pPhase = 2 then BR4MPShowChat("SYSTEM", "GO!", 2)
+  if pPhase = 2 then
+    BR4MPShowChat("SYSTEM", "GO!", 2)
+  end if
 end
 
 on BR4MPGameStanding pId, pLap, pCp, pFinished, pFinishMs
@@ -287,7 +329,9 @@ on BR4MPGameEvent pEvent, pActor, pTarget, pValue
     pMessage = BR4MPPlayerName(pActor) & " respawned."
     BR4MPShowChat("SYSTEM", pMessage, 2)
   end if
-  if pEvent = 9 then BR4MPShowChat("SYSTEM", "GO!", 2)
+  if pEvent = 9 then
+    BR4MPShowChat("SYSTEM", "GO!", 2)
+  end if
   if pEvent = 10 then
     pSeconds = pValue / 1000.0
     pMessage = "Lap in " & string(pSeconds) & "s"
@@ -297,14 +341,18 @@ on BR4MPGameEvent pEvent, pActor, pTarget, pValue
     pMessage = BR4MPPlayerName(pActor) & " finished!"
     BR4MPShowChat("SYSTEM", pMessage, 2)
   end if
-  if pEvent = 16 then gBR4MP.invitedRoom = pValue
+  if pEvent = 16 then
+    gBR4MP.invitedRoom = pValue
+  end if
 end
 
 -- The server moved us: reason 1/2 (respawn / race start) are authoritative
 -- teleports, reason 0 is the anti-cheat pulling the car back.
 on BR4MPGameCorrection pReason, pX, pY, pZ
   BR4MPLocalTransform().position = vector(pX, pY, pZ)
-  if pReason = 0 then BR4MPShowChat("SYSTEM", "Position corrected by the server.", 2)
+  if pReason = 0 then
+    BR4MPShowChat("SYSTEM", "Position corrected by the server.", 2)
+  end if
 end
 
 on BR4MPGameError pCode, pMessage
@@ -317,8 +365,12 @@ end
 --  public API for the original UI
 -- ---------------------------------------------------------------------
 on BR4MPChat pText
-  if not BR4MPActive() then return
-  if pText = "" then return
+  if not BR4MPActive() then
+    return
+  end if
+  if pText = "" then
+    return
+  end if
   BR4MPSendNow("CHAT|ch=0,x=" & BR4MPEncode(pText))
 end
 
@@ -342,7 +394,9 @@ end
 
 on BR4MPAcceptInvite
   global gBR4MP
-  if gBR4MP.invitedRoom = 0 then return
+  if gBR4MP.invitedRoom = 0 then
+    return
+  end if
   pLine = "ACTION|a=6,t=0,arg=" & string(gBR4MP.invitedRoom)
   BR4MPSendNow(pLine)
 end
@@ -350,7 +404,9 @@ end
 on BR4MPPlayerName pId
   global gBR4MP
   pPlayer = gBR4MP.players[pId]
-  if ilk(pPlayer) <> #propList then return "#" & string(pId)
+  if ilk(pPlayer) <> #propList then
+    return "#" & string(pId)
+  end if
   return pPlayer.name
 end
 
@@ -369,7 +425,9 @@ end
 -- Pass the text member that should show the newest chat line.
 on BR4MPChatMember pMember
   global gBR4MP
-  if ilk(gBR4MP) <> #propList then return
+  if ilk(gBR4MP) <> #propList then
+    return
+  end if
   gBR4MP.chatMember = pMember
 end
 
@@ -377,7 +435,9 @@ on BR4MPUpdateStatus
   global gBR4MP
   pPhaseName = ["LOBBY", "COUNTDOWN", "RACING", "FINISHING", "RESULTS"]
   pName = pPhaseName[gBR4MP.phase + 1]
-  if pName = VOID then pName = "-"
+  if pName = VOID then
+    pName = "-"
+  end if
   pText = gBR4MP.roomId & " - " & pName
   pText = pText & " - lap " & string(gBR4MP.lap) & "/" & string(gBR4MP.totalLaps)
   pText = pText & " - " & string(gBR4MP.players.count) & "p"
@@ -387,6 +447,8 @@ end
 
 on BR4MPStatusText
   global gBR4MP
-  if ilk(gBR4MP) <> #propList then return ""
+  if ilk(gBR4MP) <> #propList then
+    return ""
+  end if
   return gBR4MP.statusText
 end

@@ -42,7 +42,9 @@ end
 -- ---------------------------------------------------------------------
 on BR4MPFrame
   global gBR4MP
-  if not BR4MPActive() then return
+  if not BR4MPActive() then
+    return
+  end if
 
   -- 1. connection reply
   if gBR4MP.connectNet > 0 then
@@ -51,7 +53,9 @@ on BR4MPFrame
       pText = netTextResult(pNet)
       pErr = netError(pNet)
       gBR4MP.connectNet = 0
-      if pErr <> "" then gBR4MP.lastError = "net: " & pErr
+      if pErr <> "" then
+        gBR4MP.lastError = "net: " & pErr
+      end if
       BR4MPHandleText(pText)
       BR4MPStartPoll
     end if
@@ -64,19 +68,29 @@ on BR4MPFrame
       pText = netTextResult(pNet)
       gBR4MP.pollNet = 0
       BR4MPHandleText(pText)
-      if BR4MPActive() then BR4MPStartPoll
+      if BR4MPActive() then
+        BR4MPStartPoll
+      end if
     end if
   end if
 
   -- 3. flush queued uplinks at most every 50 ms
-  if the milliseconds - gBR4MP.lastFlush >= 50 then BR4MPFlush
+  if the milliseconds - gBR4MP.lastFlush >= 50 then
+    BR4MPFlush
+  end if
 end
 
 on BR4MPStartPoll
   global gBR4MP
-  if not BR4MPActive() then return
-  if gBR4MP.token = "" then return
-  if gBR4MP.pollNet > 0 then return
+  if not BR4MPActive() then
+    return
+  end if
+  if gBR4MP.token = "" then
+    return
+  end if
+  if gBR4MP.pollNet > 0 then
+    return
+  end if
   pURL = gBR4MP.baseURL & "/mp/poll?token=" & BR4MPEncode(gBR4MP.token)
   pURL = pURL & "&wait=" & string(gBR4MP.pollWait)
   pURL = pURL & "&r=" & string(the milliseconds)
@@ -85,7 +99,9 @@ end
 
 on BR4MPCancelPoll
   global gBR4MP
-  if ilk(gBR4MP) <> #propList then return
+  if ilk(gBR4MP) <> #propList then
+    return
+  end if
   -- nothing to cancel in Lingo; forget the handle so its result is ignored
   gBR4MP.pollNet = 0
 end
@@ -95,8 +111,12 @@ end
 -- ---------------------------------------------------------------------
 on BR4MPSendLine pLine
   global gBR4MP
-  if ilk(gBR4MP) <> #propList then return
-  if pLine = "" then return
+  if ilk(gBR4MP) <> #propList then
+    return
+  end if
+  if pLine = "" then
+    return
+  end if
   gBR4MP.sendQueue.append(pLine)
 end
 
@@ -107,9 +127,15 @@ end
 
 on BR4MPFlush
   global gBR4MP
-  if ilk(gBR4MP) <> #propList then return
-  if gBR4MP.token = "" then return
-  if gBR4MP.sendQueue.count = 0 then return
+  if ilk(gBR4MP) <> #propList then
+    return
+  end if
+  if gBR4MP.token = "" then
+    return
+  end if
+  if gBR4MP.sendQueue.count = 0 then
+    return
+  end if
   pPayload = gBR4MP.sendQueue[1]
   repeat with i = 2 to gBR4MP.sendQueue.count
     pPayload = pPayload & numToChar(10) & gBR4MP.sendQueue[i]
@@ -126,11 +152,15 @@ end
 --  parsing
 -- ---------------------------------------------------------------------
 on BR4MPHandleText pText
-  if pText = "" then return
+  if pText = "" then
+    return
+  end if
   pCount = the number of lines in pText
   repeat with i = 1 to pCount
     pLine = pText.line[i]
-    if pLine <> "" then BR4MPHandleLine(pLine)
+    if pLine <> "" then
+      BR4MPHandleLine(pLine)
+    end if
   end repeat
 end
 
@@ -226,7 +256,9 @@ end
 -- Returns the text after the first pMarker in pLine.
 on BR4MPAfter pLine, pMarker
   pAt = offset(pMarker, pLine)
-  if pAt = 0 then return pLine
+  if pAt = 0 then
+    return pLine
+  end if
   pStart = pAt + pMarker.length
   return pLine.char[pStart .. pLine.length]
 end
@@ -250,7 +282,9 @@ end
 
 on BR4MPNum pBody, pKey
   pValue = BR4MPParam(pBody, pKey)
-  if pValue = "" then return 0
+  if pValue = "" then
+    return 0
+  end if
   return value(pValue)
 end
 
@@ -267,13 +301,20 @@ on BR4MPEncode pText
   repeat with i = 1 to pLen
     pCh = pText.char[i]
     pCode = charToNum(pCh)
+    pKeep = 0
     if (pCode >= 48 and pCode <= 57) or (pCode >= 65 and pCode <= 90) or (pCode >= 97 and pCode <= 122) then
-      pOut = pOut & pCh
-    else if pCh = "." then
-      pOut = pOut & pCh
-    else if pCh = "-" then
-      pOut = pOut & pCh
-    else if pCh = "_" then
+      pKeep = 1
+    end if
+    if pCh = "." then
+      pKeep = 1
+    end if
+    if pCh = "-" then
+      pKeep = 1
+    end if
+    if pCh = "_" then
+      pKeep = 1
+    end if
+    if pKeep = 1 then
       pOut = pOut & pCh
     else
       pHigh = integer(pCode / 16)
@@ -296,31 +337,43 @@ on BR4MPDecode pText
   i = 1
   repeat while i <= pLen
     pCh = pText.char[i]
+    pStep = 1
     if pCh = "%" and i + 2 <= pLen then
       pCode = BR4MPUnHex(pText.char[i + 1]) * 16 + BR4MPUnHex(pText.char[i + 2])
       pOut = pOut & numToChar(pCode)
-      i = i + 3
-    else if pCh = "+" then
-      pOut = pOut & " "
-      i = i + 1
+      pStep = 3
     else
-      pOut = pOut & pCh
-      i = i + 1
+      if pCh = "+" then
+        pOut = pOut & " "
+      else
+        pOut = pOut & pCh
+      end if
     end if
+    i = i + pStep
   end repeat
   return pOut
 end
 
 on BR4MPUnHex pCh
   pCode = charToNum(pCh)
-  if pCode >= 48 and pCode <= 57 then return pCode - 48
-  if pCode >= 65 and pCode <= 70 then return pCode - 55
-  if pCode >= 97 and pCode <= 102 then return pCode - 87
+  if pCode >= 48 and pCode <= 57 then
+    return pCode - 48
+  end if
+  if pCode >= 65 and pCode <= 70 then
+    return pCode - 55
+  end if
+  if pCode >= 97 and pCode <= 102 then
+    return pCode - 87
+  end if
   return 0
 end
 
 on BR4MPTrace pText
   global gBR4MP
-  if ilk(gBR4MP) <> #propList then return
-  if gBR4MP.trace then put pText
+  if ilk(gBR4MP) <> #propList then
+    return
+  end if
+  if gBR4MP.trace then
+    put pText
+  end if
 end

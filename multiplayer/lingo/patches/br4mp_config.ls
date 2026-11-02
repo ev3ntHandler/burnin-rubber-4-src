@@ -131,22 +131,35 @@ on BR4MPOnline me, tTarget, tDataList
   pMode = 0
   pWorld = 0
   pTrack = ""
-  if ilk(tDataList) = #propList then
-    if ilk(tDataList.mode) <> #void then pMode = tDataList.mode
-    if ilk(tDataList.world) <> #void then pWorld = tDataList.world
-    if ilk(tDataList.track) <> #void then pTrack = tDataList.track
-  else if ilk(tTarget) = #propList then
-    if ilk(tTarget.mode) <> #void then pMode = tTarget.mode
-    if ilk(tTarget.world) <> #void then pWorld = tTarget.world
-    if ilk(tTarget.track) <> #void then pTrack = tTarget.track
+  pList = tDataList
+  if ilk(pList) <> #propList then
+    pList = tTarget
+  end if
+  if ilk(pList) = #propList then
+    pValue = getProp(pList, #mode)
+    if ilk(pValue) <> #void then
+      pMode = pValue
+    end if
+    pValue = getProp(pList, #world)
+    if ilk(pValue) <> #void then
+      pWorld = pValue
+    end if
+    pValue = getProp(pList, #track)
+    if ilk(pValue) <> #void then
+      pTrack = pValue
+    end if
   end if
   return BR4MPStart(pMode, pWorld, pTrack)
 end
 
 on BR4MPStop
   global gBR4MP
-  if ilk(gBR4MP) <> #propList then return
-  if gBR4MP.token <> "" then BR4MPSendLine("LEAVE|")
+  if ilk(gBR4MP) <> #propList then
+    return
+  end if
+  if gBR4MP.token <> "" then
+    BR4MPSendLine("LEAVE|")
+  end if
   BR4MPFlush
   gBR4MP.active = FALSE
   gBR4MP.token = ""
@@ -156,7 +169,9 @@ end
 -- TRUE once BR4MPStart has run and the session has not been stopped.
 on BR4MPActive
   global gBR4MP
-  if ilk(gBR4MP) <> #propList then return FALSE
+  if ilk(gBR4MP) <> #propList then
+    return FALSE
+  end if
   -- getProp returns VOID for a missing key instead of raising
   -- "Property not found", so this is safe before BR4MPDefaults has run.
   return getProp(gBR4MP, #active) = TRUE
