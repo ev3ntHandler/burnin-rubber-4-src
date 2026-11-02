@@ -1,27 +1,61 @@
 # Lingo patches — online bridge for the Director build
 
-These scripts give the original Shockwave build an online mode that talks to
+These three movie scripts give the original Shockwave build an online mode that talks to
 `packages/server`. They use the **text profile** over HTTP long-polling, because Shockwave
 Player gives Lingo `getNetText` / `postNetText` and nothing else — no WebSocket, no binary
 frames. Protocol reference: [docs/02-protocol.md](../../docs/02-protocol.md#5-text-profile).
 Integration notes: [docs/05-director-bridge.md](../../docs/05-director-bridge.md).
-Errors while installing: **[TROUBLESHOOTING.md](TROUBLESHOOTING.md)**.
 
-## Install — one member (recommended)
+| File | Paste as | Purpose |
+| --- | --- | --- |
+| `br4mp_config.ls` | movie script | server URL, identity, cadence, all runtime state in `gBR4MP` |
+| `br4mp_net.ls` | movie script | connect / poll / send, percent codec, line parser and dispatch |
+| `br4mp_game.ls` | movie script | reads the local car, sends `STATE`, spawns and animates remote cars, HUD |
 
-1. `File → New → Cast Member → Script`, set the script type popup to **Movie Script**.
-2. Paste **`br4mp_bridge.ls`** — the whole file, configuration + transport + game glue in one
-   script. There is then exactly one member to place and no cross-member handler resolution.
-3. If you publish a `.dcr`, tick **Include in Shockwave** in that member's properties and keep
-   it in the movie's internal cast.
-4. Call it from the movie:
+They are deliberately dependency free and self-contained: no external casts, no Xtras, no
+`.ls` includes. Copy them into a new cast (`File → New → Cast`), then paste each into a movie
+script cast member.
+
+## Install
+
+1. Copy the three `.ls` files into a movie script cast, in the order listed above.
+2. Add the calls below. Everything is guarded by `BR4MPActive()`, so the single-player game is
+   unchanged when online is not started.
+3. Start the server (`npm start` in `multiplayer/`, or a deployed instance) and point
+   `gBR4MP.baseURL` at it in `br4mp_config.ls`.
+4. If the movie is embedded in a browser page on a different host than the server, add a
+   `crossdomain.xml` (or serve both from the same origin) — see
+   [docs/06-operations.md](../../docs/06-operations.md#shockwave-and-cross-origin-requests).
+
+## Version note (v1.1)
+
+Two Lingo-specific fixes, both of which showed up as script errors during bring-up:
+
+* **Globals are per handler.** `global gBR4MP` must appear inside every handler that touches
+  it, not once at the top of the script. Without it, `gBR4MP` is an unassigned local and
+  Director reports *"variable used before assigned a value"* — typically on the `STATE` line in
+  `BR4MPUplink`.
+* **`gBR4MP = gBR4MP or [:]` is wrong.** `or` is boolean/bitwise in Lingo, so it yields `TRUE`
+  and every later `gBR4MP.active` is read as a handler lookup (*"handler not defined #Active"*).
+  v1.1 initialises with a plain `gBR4MP = [:]` and writes every key up front.
+
+The uplink also builds its `STATE` line one statement at a time instead of using `¬`
+continuations, so a paste that mangles a continuation character cannot break the compile.
+
+Verify an install from the Message window at any time:
+
+```lingo
+put BR4MPDiagnostics()   -- ilk(gBR4MP) must be #propList, plus URL/token/room/phase/rtt
+```
+
+## Hook points
 
 ```lingo
 -- main menu, "Online" button
 BR4MPStart(1, 0, "city-1")        -- mode 1 = race, world 0 = City, track city-1
 
 -- once per frame, after the car physics has run
--- (end of [PS] Advanced Car.ls "enterFrame", or a movie script "enterFrame")
+-- (e.g. at the end of [PS] Advanced Car.ls  "enterFrame")
 BR4MPGameFrame()
 
 -- chat input field
@@ -34,34 +68,8 @@ BR4MPChatMember(member("status"))
 BR4MPStop()
 ```
 
-5. Verify from the Message window:
-
-```lingo
-put BR4MPDiagnostics()    -- ilk, version, baseURL, token, room, phase, rtt, last error
-put BR4MPStart(0, 0, "")  -- free roam in City
-put BR4MPStatusText()     -- e.g. "roam-w0-1 · LOBBY · lap 0/1 · 2p · 12ms"
-```
-
-## Install — three members
-
-Same calls, but paste one file per Movie Script member, in this order:
-
-| File | Purpose |
-| --- | --- |
-| `br4mp_config.ls` | server URL, identity, cadence, `gBR4MP` state, `BR4MPEnsure`, `BR4MPDiagnostics` |
-| `br4mp_net.ls` | connect / poll / send, percent codec, line parser and dispatch |
-| `br4mp_game.ls` | local car accessors, `STATE` uplink, remote cars, HUD |
-
-`br4mp_bridge.ls` is generated from these three (`npm run build:lingo`), so the two install
-styles can never drift apart.
-
-## Version note (v1.1)
-
-v1.0 initialised the global with `gBR4MP = gBR4MP or [:]`, which in Lingo turns the global into
-`TRUE` and makes every later `gBR4MP.active` fail with *"handler not defined #Active"*. v1.1
-uses `ilk(gBR4MP) <> #propList` instead (`BR4MPEnsure`), adds `BR4MPDiagnostics`, initialises
-every state key up front, and removes speculative property probing from the car accessors. If
-you pasted an earlier copy, replace the members.
+`BR4MPGameFrame` does four things per frame: pumps the completed HTTP requests, sends a `STATE`
+line every 50 ms, pings every 2.5 s, and eases the remote cars towards their last snapshot.
 
 ## What the server does with the data
 
@@ -72,31 +80,19 @@ you pasted an earlier copy, replace the members.
   does nothing.
 * **Damage and pickups** are arbitrated from `HIT` / `ACTION` lines (free roam only).
 
-## What to adapt to your build
+## Things to adapt to your build
 
-Four accessors at the top of `br4mp_game.ls` (section "ADAPT"), each a single expression:
+Only two accessors assume a particular movie layout, both at the top of `br4mp_game.ls`:
 
-```lingo
-on BR4MPLocalCar        -- the object the hover physics drives
-  return gGame.me.car
-end
-
-on BR4MPLocalYaw        -- heading, radians (vector → degrees around Z, or a quaternion)
-on BR4MPLocalSpeed      -- gGame.me.speed, m/s
-on BR4MPLocalHealth     -- gGame.me.health
-```
+* `BR4MPLocalCar()` — returns the car the physics drives (default `gGame.me.car`).
+* `BR4MPLocalYaw()` / `BR4MPLocalSpeed()` — read the heading and speed (default
+  `car.angle` in degrees, `car.speed`).
 
 And one optional spawner:
 
-```lingo
-on BR4MPGameRemoteSpawn pRemote
-  pRemote.mesh = gGame.world.SpawnTrafficCar(pRemote.id)   -- your traffic spawner
-  return pRemote.mesh
-end
-```
-
-By default it returns VOID: the roster, chat and race logic work, opponents are simply not
-drawn.
+* `BR4MPGameRemoteSpawn()` — asks `gGame.world.SpawnCarMesh(id)` for a car model. If your build
+  has a different traffic-car factory, create the clone there and return the mesh; otherwise the
+  roster still works but opponents are invisible.
 
 ## Not included
 
@@ -109,20 +105,11 @@ drawn.
 
 ## Bring-up checklist
 
-1. `put BR4MPDiagnostics()` runs and prints `gBR4MP ilk : #propList`.
-2. `BR4MPStart(0, 0, "")` — in trace mode (`gBR4MP.trace = TRUE`) you see `WELCOME|i=…` and
-   `JOINED|room=roam-w0-…`.
-3. The local car moves and `/health` on the server shows one more player.
+1. `BR4MPDefaults` runs without script errors (check the message window).
+2. `BR4MPStart(0, 0, "")` logs `WELCOME|i=…` and `JOINED|room=roam-w0-…` in trace mode
+   (`gBR4MP.trace = TRUE`).
+3. The local car moves in the game and `/health` shows one more player.
 4. A second client (browser tab or a second Director copy) appears in `gBR4MP.remotes` and
    drives smoothly.
-5. Chat works both ways; `/help` replies from the server.
-6. `BR4MPStart(1, 0, "city-1")` starts a countdown and laps advance as you cross the gates.
-
-## Static checks
-
-```bash
-cd multiplayer
-npm run check:lingo   # every referenced handler is defined, every gBR4MP key initialised,
-                      # ¬ placement, bridge in sync with the three sources
-npm run build:lingo   # regenerate br4mp_bridge.ls
-```
+5. Chat reaches both directions; `/help` replies from the server.
+6. `BR4MPStart(1, 0, "city-1")` starts a countdown, and laps advance as you cross the gates.

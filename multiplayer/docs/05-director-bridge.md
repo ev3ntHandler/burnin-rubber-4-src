@@ -6,25 +6,24 @@ has a text profile — one message per line, no binary, no base64 — and why th
 the long-poll endpoints `/mp/connect`, `/mp/send`, `/mp/poll` (and `/mp/turn`, which sends and
 waits in a single round trip).
 
-The bridge ships in `lingo/patches/` as one generated single-file build and three sources:
+The bridge is three small Lingo scripts in `lingo/patches/`:
 
 | File | Responsibility |
 | --- | --- |
-| `br4mp_bridge.ls` | **all of the below in one member** — generated, paste this one |
-| `br4mp_config.ls` | server URL, cadence, timeouts, `gBR4MP` state, `BR4MPEnsure`, `BR4MPDiagnostics` |
+| `br4mp_config.ls` | server URL, cadence, timeouts, feature switches |
 | `br4mp_net.ls` | transport: connect, poll loop, send queue, line parsing, message dispatch |
 | `br4mp_game.ls` | glue to the original game: read the local car, apply remote cars, HUD, chat |
 
-They are *reference implementations*: paste them into the movie as **Movie Script** members
-(not Behavior, not Parent — only movie-script handlers are global), keep the property names, and
-wire the small set of hooks below. They are written against the exported protocol in
+They are *reference implementations*: paste them into the movie's **internal cast** as Movie
+Script members (`Window → Library → New Cast Member`, type "Movie Script"), keep the property
+names, and wire the small set of hooks below.
+
+Lingo globals are declared **inside each handler** (`on X` / `global gBR4MP` / `...` / `end`);
+a single `global gBR4MP` line at the top of a script does not apply to its handlers. Every
+handler in these files declares what it uses, and there are no `¬` line continuations, so the
+scripts compile when pasted in any order or split across members. They are written against the exported protocol in
 [02-protocol.md](02-protocol.md#5-text-profile), which is the part that matters if you would
 rather write your own.
-
-Initialisation is `ilk()`-based (`BR4MPEnsure`) rather than `gBR4MP = gBR4MP or [:]`: Lingo's
-`or` is boolean, so the latter produces `TRUE` and every later `gBR4MP.active` fails with
-"handler not defined #Active". Every install error met so far is documented in
-[lingo/patches/TROUBLESHOOTING.md](../lingo/patches/TROUBLESHOOTING.md).
 
 ## Transport shape
 
@@ -64,21 +63,15 @@ These are the only places the original scripts must change. Everything is guarde
    the `Advanced Car` `enterFrame` after the physics update:
    * pumps the poll (`netDone` check),
    * every 50 ms builds a `STATE` line from the local car,
-   * pings every 2.5 s,
-   * applies incoming snapshot entries to the remote car list and eases them into place,
-   * refreshes `gBR4MP.statusText` for the HUD.
-
-   Verify the install from the Message window with `put BR4MPDiagnostics()` — it prints
-   `gBR4MP ilk` (must be `#propList`), the URL, token, room, phase, RTT and last error, and
-   repairs a damaged global.
+   * applies incoming snapshot entries to the remote car list.
 3. **Local transform** — the bridge reads
    `pCar = gGame.me.car`, `pCar.transform.position` and `pCar.transform.rotation`, and the speed
    from the physics global (`gGame.me.speed`). Nothing else is needed; the server does not
    simulate physics.
-4. **Remote cars** — `BR4MPGameRemoteSpawn(pRemote)` is the one place to create a car model
-   (default: returns VOID, so opponents are not drawn). `BR4MPPlaceRemote` writes
-   `transform.position`/`transform.rotation` every frame and `BR4MPAnimateRemotes` eases the
-   rendered position towards the last snapshot (20 Hz snapshots, smooth at 30–60 fps).
+4. **Remote cars** — `BR4MPApplyEntry(entry)` creates or updates a `#mesh` clone of the player
+   car in the scene (`gGame.world.group`), positions it with `transform.position` and
+   `transform.rotation`, and interpolates towards the last two snapshot positions. Vehicles are
+   created lazily from `PJ`/`PJ_DETAIL` so a newcomer appears without a scene reload.
 5. **UI** — `BR4MPStatus` fills a small member (`gBR4MP.statusText`) that the existing HUD text
    member can display: room name, ping, player count, race phase and lap.
 6. **Input** — chat is `BR4MPChat("text")`, respawn `BR4MPAction(2)`, horn `BR4MPAction(0)`,
@@ -115,10 +108,6 @@ in `data/worlds/*.json` match the original scenes.
 ## Testing without Director
 
 The text profile is exercised by the transport tests and can be poked by hand:
-
-The bridge also has a static linter (`npm run check:lingo`) that resolves every referenced
-handler and every `gBR4MP.*` key, checks `¬` continuation placement and keeps
-`br4mp_bridge.ls` in sync with the three sources.
 
 ```bash
 # join a free-roam room and read the welcome + roster

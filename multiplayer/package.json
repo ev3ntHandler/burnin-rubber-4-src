@@ -22,9 +22,7 @@
     "start": "node packages/server/dist/src/index.js",
     "dev": "npm run build && node packages/server/dist/src/index.js",
     "import-data": "node tools/import-br4-data.mjs",
-    "verify": "npm test && npm run check:webclient && npm run check:lingo",
-    "check:lingo": "node tools/check-lingo.mjs",
-    "build:lingo": "node tools/check-lingo.mjs --build"
+    "verify": "npm test && npm run check:webclient"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
