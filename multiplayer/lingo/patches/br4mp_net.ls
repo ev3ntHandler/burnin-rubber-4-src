@@ -140,8 +140,10 @@ on BR4MPHandleLine pLine
   BR4MPTrace("<- " & pLine)
   pBar = offset("|", pLine)
   if pBar > 0 then
-    pTag = pLine.char[1 .. pBar - 1]
-    pBody = pLine.char[pBar + 1 .. pLine.length]
+    pTagEnd = pBar - 1
+    pBodyStart = pBar + 1
+    pTag = pLine.char[1 .. pTagEnd]
+    pBody = pLine.char[pBodyStart .. pLine.length]
   else
     pTag = pLine
     pBody = ""
@@ -228,7 +230,8 @@ end
 on BR4MPAfter pLine, pMarker
   pAt = offset(pMarker, pLine)
   if pAt = 0 then return pLine
-  return pLine.char[(pAt + pMarker.length) .. pLine.length]
+  pStart = pAt + pMarker.length
+  return pLine.char[pStart .. pLine.length]
 end
 
 -- Value of key=value inside a comma separated body, still percent-encoded.
@@ -238,7 +241,11 @@ on BR4MPParam pBody, pKey
     pItem = pBody.item[i]
     pEq = offset("=", pItem)
     if pEq > 0 then
-      if pItem.char[1 .. pEq - 1] = pKey then return pItem.char[(pEq + 1) .. pItem.length]
+      pEnd = pEq - 1
+      if pItem.char[1 .. pEnd] = pKey then
+        pStart = pEq + 1
+        return pItem.char[pStart .. pItem.length]
+      end if
     end if
   end repeat
   return ""
@@ -272,7 +279,9 @@ on BR4MPEncode pText
     else if pCh = "_" then
       pOut = pOut & pCh
     else
-      pOut = pOut & "%" & BR4MPHex(pCode div 16) & BR4MPHex(pCode mod 16)
+      pHigh = integer(pCode / 16)
+      pLow = pCode - (pHigh * 16)
+      pOut = pOut & "%" & BR4MPHex(pHigh) & BR4MPHex(pLow)
     end if
   end repeat
   return pOut
@@ -280,7 +289,8 @@ end
 
 on BR4MPHex pValue
   pDigits = "0123456789ABCDEF"
-  return pDigits.char[(pValue + 1)]
+  pIndex = pValue + 1
+  return pDigits.char[pIndex]
 end
 
 on BR4MPDecode pText

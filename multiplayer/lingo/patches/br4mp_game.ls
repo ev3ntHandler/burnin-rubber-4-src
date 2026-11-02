@@ -258,7 +258,12 @@ on BR4MPGameRaceState pPhase, pLap, pTotalLaps, pCountdownMs
   gBR4MP.lap = pLap
   gBR4MP.totalLaps = pTotalLaps
   gBR4MP.countdownMs = pCountdownMs
-  if pPhase = 1 then BR4MPShowChat("SYSTEM", "Starting in " & string((pCountdownMs div 1000) + 1) & "...", 2)
+  if pPhase = 1 then
+    pSeconds = integer(pCountdownMs / 1000)
+    if pSeconds < 1 then pSeconds = 1
+    pMessage = "Starting in " & string(pSeconds) & "..."
+    BR4MPShowChat("SYSTEM", pMessage, 2)
+  end if
   if pPhase = 2 then BR4MPShowChat("SYSTEM", "GO!", 2)
 end
 
@@ -275,11 +280,24 @@ end
 
 on BR4MPGameEvent pEvent, pActor, pTarget, pValue
   global gBR4MP
-  if pEvent = 4 then BR4MPShowChat("SYSTEM", BR4MPPlayerName(pTarget) & " was destroyed by " & BR4MPPlayerName(pActor) & ".", 2)
-  if pEvent = 5 then BR4MPShowChat("SYSTEM", BR4MPPlayerName(pActor) & " respawned.", 2)
+  if pEvent = 4 then
+    pMessage = BR4MPPlayerName(pTarget) & " was destroyed by " & BR4MPPlayerName(pActor) & "."
+    BR4MPShowChat("SYSTEM", pMessage, 2)
+  end if
+  if pEvent = 5 then
+    pMessage = BR4MPPlayerName(pActor) & " respawned."
+    BR4MPShowChat("SYSTEM", pMessage, 2)
+  end if
   if pEvent = 9 then BR4MPShowChat("SYSTEM", "GO!", 2)
-  if pEvent = 10 then BR4MPShowChat("SYSTEM", "Lap in " & string(pValue / 1000.0) & "s", 2)
-  if pEvent = 11 then BR4MPShowChat("SYSTEM", BR4MPPlayerName(pActor) & " finished!", 2)
+  if pEvent = 10 then
+    pSeconds = pValue / 1000.0
+    pMessage = "Lap in " & string(pSeconds) & "s"
+    BR4MPShowChat("SYSTEM", pMessage, 2)
+  end if
+  if pEvent = 11 then
+    pMessage = BR4MPPlayerName(pActor) & " finished!"
+    BR4MPShowChat("SYSTEM", pMessage, 2)
+  end if
   if pEvent = 16 then gBR4MP.invitedRoom = pValue
 end
 
@@ -345,9 +363,9 @@ on BR4MPShowChat pName, pText, pChannel
   pRow.text = pText
   pRow.channel = pChannel
   gBR4MP.chat.append(pRow)
-  while gBR4MP.chat.count > 8
+  repeat while gBR4MP.chat.count > 8
     gBR4MP.chat.deleteAt(1)
-  end while
+  end repeat
   if gBR4MP.chatMember <> VOID then
     gBR4MP.chatMember.text = pName & ": " & pText
   end if
