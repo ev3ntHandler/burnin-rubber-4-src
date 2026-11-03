@@ -65,6 +65,10 @@ own scripts contain none, and this parser rejects them).
 **The runtime implements what the movie itself uses, and little else.** `round()` is not in
 its function table - it raises *"Handler not defined #round"* - so `BR4MPRound()` (built on
 `integer()`) does the rounding, and `BR4MPHasBit()` does the arithmetic that `bitAnd()` would.
+**Property lists reject integer keys.** `pList[14] = x` raises *"Index out of range"* - the
+runtime treats a numeric key as a linear index. Player records are therefore stored under symbol
+keys built by `BR4MPKey(id)` (`#p14`), which is also what `deleteProp` is given on leave.
+
 `getPropList()` is missing too: walk property lists with `count` + `getPropAt(i)` (which returns
 the *key* at position i - the same pattern `[M] 3D Particles.ls` uses). `sin`, `cos`, `atan`,
 `pi`, `sqrt`, `integer`, `abs`, `string`, `the milliseconds`, `getProp`, `postNetText`,

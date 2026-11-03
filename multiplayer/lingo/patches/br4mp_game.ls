@@ -190,10 +190,10 @@ on BR4MPGameSnapshotEntry pBody
   end if
 
   pMask = BR4MPNum(pBody, "m")
-  pRemote = gBR4MP.remotes[pId]
+  pRemote = gBR4MP.remotes[BR4MPKey(pId)]
   if ilk(pRemote) <> #propList then
     pRemote = [#id: pId, #pos: vector(0, 0, 0), #shown: vector(0, 0, 0), #yaw: 0, #health: 100, #speed: 0, #seenAt: the milliseconds, #mesh: VOID]
-    gBR4MP.remotes[pId] = pRemote
+    gBR4MP.remotes[BR4MPKey(pId)] = pRemote
   end if
 
   if BR4MPHasBit(pMask, 1) = 1 then
@@ -318,12 +318,12 @@ end
 
 on BR4MPGamePlayerLeave pId
   global gBR4MP
-  pRemote = gBR4MP.remotes[pId]
+  pRemote = gBR4MP.remotes[BR4MPKey(pId)]
   if ilk(pRemote) = #propList then
     if pRemote.mesh <> VOID then
       pRemote.mesh.visible = FALSE
     end if
-    gBR4MP.remotes.deleteProp(pId)
+    gBR4MP.remotes.deleteProp(BR4MPKey(pId))
   end if
 end
 
@@ -440,7 +440,7 @@ end
 
 on BR4MPPlayerName pId
   global gBR4MP
-  pPlayer = gBR4MP.players[pId]
+  pPlayer = gBR4MP.players[BR4MPKey(pId)]
   if ilk(pPlayer) <> #propList then
     return "#" & string(pId)
   end if

@@ -183,6 +183,12 @@ end
 --  Only uses configuration-level state, so it works even when the
 --  transport or game scripts are missing.
 -- ---------------------------------------------------------------------
+-- Property lists here reject integer keys ("Index out of range"), so the
+-- roster and the remote-car table are keyed by symbol: BR4MPKey(14) -> #p14.
+on BR4MPKey pId
+  return symbol("p" & string(pId))
+end
+
 on BR4MPDiagnostics
   global gBR4MP
   if ilk(gBR4MP) <> #propList then

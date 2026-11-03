@@ -56,8 +56,8 @@ on BR4MPFrame
       if pErr <> "" then
         gBR4MP.lastError = "net: " & pErr
       end if
-      BR4MPHandleText(pText)
       BR4MPStartPoll
+      BR4MPHandleText(pText)
     end if
   end if
 
@@ -67,10 +67,13 @@ on BR4MPFrame
       pNet = gBR4MP.pollNet
       pText = netTextResult(pNet)
       gBR4MP.pollNet = 0
-      BR4MPHandleText(pText)
+      -- queue the next held poll *before* parsing: if one bad line raises,
+      -- the stream keeps running instead of going silent until the session
+      -- times out
       if BR4MPActive() then
         BR4MPStartPoll
       end if
+      BR4MPHandleText(pText)
     end if
   end if
 
@@ -198,12 +201,12 @@ on BR4MPHandleLine pLine
 
     "PJ":
       pPlayer = [#id: BR4MPNum(pBody, "i"), #name: BR4MPStr(pBody, "n"), #vehicle: BR4MPStr(pBody, "veh"), #ready: BR4MPNum(pBody, "r")]
-      gBR4MP.players[pPlayer.id] = pPlayer
+      gBR4MP.players[BR4MPKey(pPlayer.id)] = pPlayer
       BR4MPGamePlayerJoin(pPlayer)
 
     "PL":
       pId = BR4MPNum(pBody, "i")
-      gBR4MP.players.deleteProp(pId)
+      gBR4MP.players.deleteProp(BR4MPKey(pId))
       BR4MPGamePlayerLeave(pId)
 
     "C":
