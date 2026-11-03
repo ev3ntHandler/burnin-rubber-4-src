@@ -65,7 +65,9 @@ own scripts contain none, and this parser rejects them).
 **The runtime implements what the movie itself uses, and little else.** `round()` is not in
 its function table - it raises *"Handler not defined #round"* - so `BR4MPRound()` (built on
 `integer()`) does the rounding, and `BR4MPHasBit()` does the arithmetic that `bitAnd()` would.
-`sin`, `cos`, `atan`, `pi`, `sqrt`, `integer`, `abs`, `string`, `the milliseconds`, `getProp`,
+`getPropList()` is missing too: walk property lists with `count` + `getPropAt(i)` (which returns
+the *key* at position i - the same pattern `[M] 3D Particles.ls` uses). `sin`, `cos`, `atan`,
+`pi`, `sqrt`, `integer`, `abs`, `string`, `the milliseconds`, `getProp`, `postNetText`,
 `charToNum` and `numToChar` are all present. If you add handlers, stick to functions the shipped
 scripts already call.
 

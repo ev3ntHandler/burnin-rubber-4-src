@@ -233,10 +233,12 @@ end
 
 on BR4MPAnimateRemotes
   global gBR4MP
-  pIds = gBR4MP.remotes.getPropList()
+  -- No getPropList() in this runtime: getPropAt() returns the key at a position
+  -- (same pattern the movie uses to walk property lists).
+  pCount = gBR4MP.remotes.count
   pNow = the milliseconds
-  repeat with i = 1 to pIds.count
-    pId = pIds[i]
+  repeat with i = 1 to pCount
+    pId = gBR4MP.remotes.getPropAt(i)
     pRemote = gBR4MP.remotes[pId]
     if ilk(pRemote) = #propList then
       if pNow - pRemote.seenAt > 4000 then
