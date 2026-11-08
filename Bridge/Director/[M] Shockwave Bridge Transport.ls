@@ -41,7 +41,7 @@ global gSystem, gData, gGame, gBridge
 on BridgeDetectIo me
 	-- Which disk back end this movie really has. `_movie.movieURL` starting with "http"
 	-- is the browser: a Shockwave movie gets no file access at all, in any Director.
-	if _movie.movieURL begins with "http" then
+	if _movie.movieURL starts "http" then
 		gBridge.io = "none"
 		gBridge[#browser] = 1
 		BridgeLog(0, "warn", "browser movie: no disk access, so transport `files` cannot work -- write `transport http` in Bridge.Data.txt")

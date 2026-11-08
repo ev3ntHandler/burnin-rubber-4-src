@@ -51,6 +51,14 @@ return tRate'''))
         self.assertEqual([], self.problems('put "then else" -- then else'))
         self.assertEqual([], self.problems('if tReady then return 1'))
 
+    def test_string_prefix_operator(self):
+        for operator in ('begins with', 'starts with'):
+            with self.subTest(operator=operator):
+                problems = self.problems('if _movie.movieURL ' + operator + ' "http" then\n    exit\nend if')
+                self.assertTrue(any("use Lingo's `starts` operator" in p for p in problems))
+        self.assertEqual([], self.problems('if _movie.movieURL starts "http" then\n    exit\nend if'))
+        self.assertEqual([], self.problems('put "begins with" -- begins with'))
+
     def test_backslash_is_not_an_escape(self):
         code, problems = strip_comments('tSep = "\\" -- a path separator')
         self.assertEqual([], problems)

@@ -17,7 +17,8 @@ Checks, in the order they can bite you:
    so ``switch x`` / ``case "a":`` / ``endswitch`` never compiles -- it has to be
    ``case x of`` / ``"a":`` / ``end case``), and a branch that repeats the keyword inside a real
    ``case … of``, which is the ActionScript tell. ``otherwise`` without its colon joins them.
-   ``then`` outside an if statement and inline ``then ... else`` expressions are also flagged.
+   ``then`` outside an if statement, inline ``then ... else`` expressions, and the unsupported
+   ``begins with`` / ``starts with`` operators are also flagged (Lingo uses ``starts``).
 3. Balanced parentheses and brackets, and properly closed strings: Lingo uses doubled quotes
    inside strings and does not treat backslashes as escapes. Also flag the invalid comma-separated
    ``the chars of text, start, end`` form; character slices use chunk expressions.
@@ -64,6 +65,7 @@ NOT_LINGO = re.compile(r"^\s*(?:(?:switch|end\s*switch)\b|default\s*:)", re.I)
 CASE_LABEL = re.compile(r"^\s*case\b\s+.*:\s*$", re.I)
 OTHERWISE = re.compile(r"^\s*otherwise\s*$", re.I)
 BAD_CHAR_SLICE = re.compile(r"\bthe\s+chars\s+of\s+[A-Za-z_]\w*\s*,", re.I)
+BAD_STARTS = re.compile(r"\b(?:begins|starts)\s+with\b", re.I)
 
 CLOSERS = {
     "if": re.compile(r"^\s*end if\b", re.I),
@@ -212,6 +214,8 @@ def analyse(path: str, source: str) -> Tuple[List[str], Dict[str, int], List[str
                 problems.append("%s:%d: `then` outside an if statement; Lingo has no inline conditional expression" % (path, number))
             elif re.search(r"\bthen\b.*\belse\b", stripped, re.I):
                 problems.append("%s:%d: inline `then ... else` is not supported; use an if/else block" % (path, number))
+        if BAD_STARTS.search(stripped):
+            problems.append("%s:%d: use Lingo's `starts` operator, not `begins with` or `starts with`" % (path, number))
         if BAD_CHAR_SLICE.search(stripped):
             problems.append("%s:%d: `the chars of text, start, end` is not a Lingo chunk expression"
                             " -- use `char start to end of text`" % (path, number))
