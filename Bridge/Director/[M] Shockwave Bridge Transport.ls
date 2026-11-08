@@ -267,11 +267,21 @@ end
 -- files  (PROTOCOL.md 7.1)
 --------------------------------------------------------------------------------
 
+on BridgeMarkerPath me, tPath
+	-- Match Godot and the protocol: d2g.txt -> d2g.seq, not d2g.txt.seq.
+	if tPath.length >= 4 then
+		if BridgeChars(0, tPath, tPath.length - 3, tPath.length) = ".txt" then
+			return BridgeChars(0, tPath, 1, tPath.length - 4) & ".seq"
+		end if
+	end if
+	return tPath & ".seq"
+end
+
 on BridgeFilesWrite me, tText
 	-- Payload first, marker last, and the payload closed before the marker opens: that
 	-- ordering is the only synchronisation either side needs.
 	tPayload = gBridge.outPath
-	tMarker = tPayload & ".seq"
+	tMarker = BridgeMarkerPath(0, tPayload)
 	tLines = BridgeLineCount(0, tText)
 	if gBridge.io = "filextra4" then
 		gBridge.fx.fx_WriteFileText(tPayload, tText)
@@ -310,9 +320,10 @@ on BridgeFilesPoll me
 		gBridge[#lastInSeq] = -1
 	end if
 	tPayload = gBridge.inPath
-	tMark = BridgeMarkerRead(0, tPayload & ".seq")
+	tMarker = BridgeMarkerPath(0, tPayload)
+	tMark = BridgeMarkerRead(0, tMarker)
 	if tMark = VOID then
-		BridgeWarnOnce(0, "in", "no " & tPayload & ".seq yet -- waiting for Godot (normal on the first frames)")
+		BridgeWarnOnce(0, "in", "no " & tMarker & " yet -- waiting for Godot (normal on the first frames)")
 		exit
 	end if
 	if tMark[#seq] = gBridge.lastInSeq then

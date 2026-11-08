@@ -73,9 +73,12 @@ window, with the full path it tried:
 [bridge warn] cannot write D:\games\br4\BridgeData\d2g.txt -- the folder has to exist first
 ```
 
-Both sides must point at the **same** folder. If your Godot project is not next to the movie, set
-an absolute `root` in `Bridge.Data.txt` (and the same absolute path as `bridge.root` in Godot's
-autoload or a `Bridge.Data.txt` copy in the Godot project — one file, both peers read it):
+Both sides must point at the **same** folder. For a relative `root`, Director uses `gSystem.path`
+when available, otherwise `_movie.path`; this can differ from the directory you expect. To check
+where Director actually writes, start the movie and enter `global gBridge`, then
+`put gBridge.outPath` in the Message window after the bridge has initialized. Compare its parent
+folder with Godot's mailbox path. If your Godot project is not next to the movie, set an absolute
+`root` in `Bridge.Data.txt` (and the same absolute path in Godot's `Bridge.Data.txt` copy):
 
 ```
 root	D:\games\burnin-rubber-4\BridgeData

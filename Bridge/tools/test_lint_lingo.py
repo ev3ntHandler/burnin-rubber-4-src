@@ -101,6 +101,18 @@ end'''
             with self.subTest(script=script.name):
                 self.assertEqual(set(), missing_bridge_globals(script.read_text(encoding='utf-8')))
 
+    def test_director_file_transport_uses_protocol_marker_paths(self):
+        # Structural regression only; BridgeMarkerPath must also be checked in Director itself.
+        source = (Path(__file__).resolve().parent.parent / 'Director' /
+                  '[M] Shockwave Bridge Transport.ls').read_text(encoding='utf-8')
+        helper = re.search(r'(?ms)^on BridgeMarkerPath\b.*?^end\s*$', source).group()
+        self.assertIn('BridgeChars(0, tPath, tPath.length - 3, tPath.length) = ".txt"', helper)
+        self.assertIn('BridgeChars(0, tPath, 1, tPath.length - 4) & ".seq"', helper)
+        for handler in ('BridgeFilesWrite', 'BridgeFilesPoll'):
+            body = re.search(r'(?ms)^on ' + handler + r'\b.*?^end\s*$', source).group()
+            self.assertIn('tMarker = BridgeMarkerPath(0, tPayload)', body)
+            self.assertNotIn('tPayload & ".seq"', body)
+
     def test_backslash_is_not_an_escape(self):
         code, problems = strip_comments('tSep = "\\" -- a path separator')
         self.assertEqual([], problems)
