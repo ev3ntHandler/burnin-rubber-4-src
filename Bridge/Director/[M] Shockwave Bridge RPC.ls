@@ -34,36 +34,36 @@ global gSystem, gData, gGame, gBridge
 on BridgeDispatch me, tVerb, tFields
 	-- One parsed message. Every verb either needs no reply (SNAP/EVT/LOG/BYE/RSP) or
 	-- queues exactly one (REQ), so a batch is answered in one flush (§4).
-	switch tVerb
-		case "SNAP", "DELTA":
+	case tVerb of
+		"SNAP", "DELTA":
 			BridgeAcceptSnapshot(0, tFields)
 			exit
-		case "EVT":
+		"EVT":
 			if tFields.count >= 2 then
 				BridgeRaiseEvent(0, tFields[2], BridgeDecodeKvList(0, BridgeFieldOf(0, tFields, 3)))
 			end if
 			exit
-		case "HELLO":
+		"HELLO":
 			BridgeAcceptHello(0, tFields)
 			exit
-		case "BYE":
+		"BYE":
 			gBridge.peerReady = 0
 			gBridge.status = "degraded"
 			BridgeLog(0, "info", "peer said bye: " & BridgeFieldOf(0, tFields, 1))
 			exit
-		case "PING":
+		"PING":
 			BridgePush(0, BridgeBuild(0, "PONG", [BridgeFieldOf(0, tFields, 1), _system.milliSeconds]))
 			exit
-		case "PONG":
+		"PONG":
 			if tFields.count >= 2 then
 				gBridge.latency = (_system.milliSeconds - BridgeToInt(0, tFields[2])) / 2.0
 			end if
 			exit
-		case "LOG":
+		"LOG":
 			-- the peer's log lines, relayed into the movie's own Message window
 			LogMessage(0, "[godot] " & BridgeJoinFields(0, tFields))
 			exit
-		case "REQ":
+		"REQ":
 			tRid = BridgeFieldOf(0, tFields, 1)
 			tOp = BridgeFieldOf(0, tFields, 2)
 			tArgs = []
@@ -72,7 +72,7 @@ on BridgeDispatch me, tVerb, tFields
 			end repeat
 			BridgeAnswerReq(0, tRid, tOp, tArgs)
 			exit
-		case "CMD":
+		"CMD":
 			-- a REQ without a reply: the sender does not care what came back
 			if tFields.count >= 2 then
 				tArgs = []
@@ -80,17 +80,17 @@ on BridgeDispatch me, tVerb, tFields
 					tArgs.add(tFields[i])
 				end repeat
 				tReply = BridgeRunOp(0, BridgeFieldOf(0, tFields, 2), tArgs)
-				if (the chars of tReply, 1, 3) = "err" then
+				if (BridgeChars(0, tReply, 1, 3)) = "err" then
 					BridgeLog(0, "warn", "cmd refused: " & tReply)
 				end if
 			end if
 			exit
-		case "RSP":
+		"RSP":
 			BridgeAcceptRsp(0, tFields)
 			exit
 		otherwise:
 			BridgeLog(0, "warn", "ignored unknown verb `" & tVerb & "`")
-	endswitch
+	end case
 end
 
 on BridgeFieldOf me, tFields, tIndex
@@ -323,7 +323,7 @@ on BridgeUnquote me, tText
 	-- string it is the text with quotes around it, so peel them before comparing.
 	if tText.length > 1 then
 		if tText[1] = quote and tText[tText.length] = quote then
-			return the chars of tText, 2, tText.length - 1
+			return BridgeChars(0, tText, 2, tText.length - 1)
 		end if
 	end if
 	return tText
@@ -393,8 +393,8 @@ end
 on BridgeRunOp me, tOp, tArgs
 	-- The op table. Argument order is PROTOCOL.md 4 verbatim; the same table is
 	-- bridge_peer.py::handle_op, and BridgeSelfTest checks both against the vectors file.
-	switch tOp
-		case "get":
+	case tOp of
+		"get":
 			-- get <path> -> path value
 			if tArgs.count < 1 then
 				return BridgeError(0, "badargs", "get <path>")
@@ -405,7 +405,7 @@ on BridgeRunOp me, tOp, tArgs
 				return tRefusal
 			end if
 			return [tPath, BridgeEncode(0, BridgeResolvePath(0, tPath))]
-		case "gets":
+		"gets":
 			-- gets path;path;path -> "path=wire;path=wire", per path, denials inline
 			tOut = []
 			tList = BridgeSplitOn(0, BridgeFieldOf(0, tArgs, 1), ";")
@@ -420,7 +420,7 @@ on BridgeRunOp me, tOp, tArgs
 				end if
 			end repeat
 			return [BridgeJoinWith(0, tOut, ";")]
-		case "set":
+		"set":
 			-- set <path> <value> -> path value
 			if tArgs.count < 2 then
 				return BridgeError(0, "badargs", "set <path> <value>")
@@ -433,7 +433,7 @@ on BridgeRunOp me, tOp, tArgs
 			BridgeApplyRemote(0, tArgs[1], tValue, 1)
 			BridgeMarkDirty(0, tArgs[1], tValue)
 			return [tArgs[1], BridgeEncode(0, tValue)]
-		case "sets":
+		"sets":
 			-- sets path=value;path=value -> atomic-enough batch; denials are per path
 			tOut = []
 			repeat with tChunk in BridgeSplitOn(0, BridgeFieldOf(0, tArgs, 1), ";")
@@ -444,8 +444,8 @@ on BridgeRunOp me, tOp, tArgs
 				if tEquals < 2 then
 					next repeat
 				end if
-				tPath = the chars of tChunk, 1, tEquals - 1
-				tRaw = the chars of tChunk, tEquals + 1, tChunk.length
+				tPath = BridgeChars(0, tChunk, 1, tEquals - 1)
+				tRaw = BridgeChars(0, tChunk, tEquals + 1, tChunk.length)
 				tRefusal = BridgeCheckWrite(0, tPath)
 				if tRefusal <> VOID then
 					gBridge.stats.denied = gBridge.stats.denied + 1
@@ -458,7 +458,7 @@ on BridgeRunOp me, tOp, tArgs
 				tOut.add(tPath & "=" & BridgeEncode(0, tValue))
 			end repeat
 			return [BridgeJoinWith(0, tOut, ";")]
-		case "sub":
+		"sub":
 			-- sub <path> [rate] -> path value  (and the path starts being mirrored)
 			if tArgs.count < 1 then
 				return BridgeError(0, "badargs", "sub <path>")
@@ -469,17 +469,17 @@ on BridgeRunOp me, tOp, tArgs
 			end if
 			BridgeSubscribe(0, tArgs[1], BridgeToInt(0, BridgeFieldOf(0, tArgs, 2)))
 			return [tArgs[1], BridgeEncode(0, BridgeResolvePath(0, tArgs[1]))]
-		case "unsub":
+		"unsub":
 			if tArgs.count < 1 then
 				return BridgeError(0, "badargs", "unsub <path>")
 			end if
 			BridgeUnsubscribe(0, tArgs[1])
 			return [tArgs[1]]
-		case "snap":
+		"snap":
 			-- snap on|off [rate] [delta|full]
 			tOn = 1
 			tMode = BridgeFieldOf(0, tArgs, 1)
-			if (the chars of tMode, tMode.length, tMode.length) = "0" then
+			if (BridgeChars(0, tMode, tMode.length, tMode.length)) = "0" then
 				tOn = 0
 			end if
 			if tMode = "off" then
@@ -502,46 +502,46 @@ on BridgeRunOp me, tOp, tArgs
 				gBridge.lastSent = [:]
 			end if
 			return ["b:" & tOn, string(gBridge.cfg.rate), gBridge.cfg.snapshot]
-		case "call":
+		"call":
 			-- call <handler> [target] [literal] -> value
 			if tArgs.count < 1 then
 				return BridgeError(0, "badargs", "call <handler> [target] [literal]")
 			end if
 			return [BridgeExecuteCall(0, tArgs[1], BridgeFieldOf(0, tArgs, 2), BridgeFieldOf(0, tArgs, 3))]
-		case "event":
+		"event":
 			-- event <name> [kvlist] -> 1
 			if tArgs.count < 1 then
 				return BridgeError(0, "badargs", "event <name> [kvlist]")
 			end if
 			BridgeRaiseEvent(0, tArgs[1], BridgeDecodeKvList(0, BridgeFieldOf(0, tArgs, 2)))
 			return ["b:1"]
-		case "eval":
+		"eval":
 			if gBridge.cfg.allowEval = 0 then
 				return BridgeError(0, "disabled", "eval needs allowEval TRUE in Bridge.Data.txt")
 			end if
 			return [BridgeEncode(0, value(BridgeJoinWith(0, tArgs, " ")))]
-		case "exec":
+		"exec":
 			if gBridge.cfg.allowEval = 0 then
 				return BridgeError(0, "disabled", "exec needs allowEval TRUE in Bridge.Data.txt")
 			end if
 			do(BridgeJoinWith(0, tArgs, " "))
 			return ["b:1"]
-		case "list":
+		"list":
 			-- list [prefix] [depth] -> "path=wire;path=wire"
 			tOut = []
 			repeat with tEntry in BridgeEnumerate(0, BridgeFieldOf(0, tArgs, 1), BridgeToInt(0, BridgeFieldOf(0, tArgs, 2)))
 				tOut.add(tEntry[1] & "=" & tEntry[2])
 			end repeat
 			return [BridgeJoinWith(0, tOut, ";")]
-		case "ping":
+		"ping":
 			-- ping <tms> -> our own tms, so the caller can measure the round trip
 			return [string(_system.milliSeconds), BridgeFieldOf(0, tArgs, 1)]
-		case "quit":
+		"quit":
 			BridgePushBye(0, "quit")
 			return ["b:1"]
 		otherwise:
 			return BridgeError(0, "unknownop", tOp)
-	endswitch
+	end case
 end
 
 on BridgeSplitOn me, tText, tDelimiter
@@ -901,7 +901,7 @@ on BridgeStatusText me
 	-- what, with whom, and is anything stuck.
 	tStats = gBridge.stats
 	tLine = "status " & gBridge.status & "  transport " & gBridge.cfg.transport & "  io " & gBridge.io
-	tLine = tLine & "  peer " & gBridge.peerRole & " \"" & gBridge.peerName & "\" (" & gBridge.peerReady & ")"
+	tLine = tLine & "  peer " & gBridge.peerRole & " " & quote & gBridge.peerName & quote & " (" & gBridge.peerReady & ")"
 	tLine = tLine & "  frame " & gBridge.frame & "  seq " & gBridge.outSeq & "/" & gBridge.inSeq
 	tLine = tLine & "  latency " & BridgeFloatText(0, gBridge.latency) & " ms"
 	tLine = tLine & "  subs " & gBridge.subs.count & "  store " & gBridge.store.count & "  mirror " & gBridge.mirror.count & "  pending " & gBridge.pending.count
@@ -1064,7 +1064,7 @@ on BridgeSelfTest me
 			tPass = tPass + 1
 		else
 			tFail = tFail + 1
-			put "FAIL " & tKind & " \"" & tNote & "\" -- " & tWhy
+			put "FAIL " & tKind & " " & quote & tNote & quote & " -- " & tWhy
 		end if
 	end repeat
 	the itemDelimiter = tOldDelimiter

@@ -111,8 +111,8 @@ on BridgeOpenTransport me
 	gBridge[#torn] = 0
 	gBridge[#tcpTail] = EMPTY
 	BridgeEnsureDir(0, BridgeDirOf(0, gBridge.outPath))
-	switch gBridge.cfg.transport
-		case "files":
+	case gBridge.cfg.transport of
+		"files":
 			if not BridgeIoAvailable(0) then
 				BridgeWarnOnce(0, "io", "no file access in this movie (browser?) -- the files transport needs a projector, or use `transport http`")
 				gBridge.status = "blocked"
@@ -121,14 +121,14 @@ on BridgeOpenTransport me
 			gBridge.status = "waiting"
 			BridgeLog(0, "info", "mailbox " & gBridge.outPath & "  (io: " & gBridge.io & ")")
 			exit
-		case "http":
+		"http":
 			gBridge[#httpPushUrl] = BridgeHttpUrl(0, "/push")
 			gBridge[#httpPollUrl] = BridgeHttpUrl(0, "/poll")
 			gBridge[#httpHandshakeUrl] = BridgeHttpUrl(0, "/handshake")
 			gBridge.status = "waiting"
 			BridgeHttpStartPoll(0)
 			exit
-		case "tcp":
+		"tcp":
 			if voidp(gBridge.sock) = 1 then
 				BridgeWarnOnce(0, "tcp", "transport `tcp` needs a socket xtra handed to BridgeTcpAttach(xtraInstance) first")
 				gBridge.status = "blocked"
@@ -140,7 +140,7 @@ on BridgeOpenTransport me
 			BridgeWarnOnce(0, "transport", "unknown transport `" & gBridge.cfg.transport & "` in Bridge.Data.txt; expected files, http or tcp")
 			gBridge.status = "blocked"
 			exit
-	endswitch
+	end case
 	return gBridge.status
 end
 
@@ -159,7 +159,7 @@ end
 
 on BridgeDirOf me, tPath
 	-- everything up to the last separator, whichever kind this platform is using
-	tBack = BridgeLastIndex(0, tPath, "\\")
+	tBack = BridgeLastIndex(0, tPath, "\")
 	tFront = BridgeLastIndex(0, tPath, "/")
 	if tFront > tBack then
 		tBack = tFront
@@ -167,7 +167,7 @@ on BridgeDirOf me, tPath
 	if tBack < 1 then
 		return tPath
 	end if
-	return the chars of tPath, 1, tBack - 1
+	return BridgeChars(0, tPath, 1, tBack - 1)
 end
 
 on BridgeLastIndex me, tText, tChar
@@ -614,8 +614,8 @@ on BridgeTcpPoll me
 			gBridge[#tcpTail] = tText
 			exit
 		end if
-		gBridge[#tcpTail] = the chars of tText, tCut + 1, tText.length
-		tText = the chars of tText, 1, tCut
+		gBridge[#tcpTail] = BridgeChars(0, tText, tCut + 1, tText.length)
+		tText = BridgeChars(0, tText, 1, tCut)
 	end if
 	BridgeFeed(0, tText)
 end

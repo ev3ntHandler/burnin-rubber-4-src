@@ -231,8 +231,8 @@ on BridgeConfigParse me, tText
 	repeat with i = 1 to tCount
 		tLine = BridgeTrim(0, tText.line[i])
 		if tLine.length > 0 then
-			if (the chars of tLine, 1, 2) <> "//" then
-				if (the chars of tLine, 1, 2) <> "--" then
+			if (BridgeChars(0, tLine, 1, 2)) <> "//" then
+				if (BridgeChars(0, tLine, 1, 2)) <> "--" then
 					if tLine[1] <> "#" then
 						BridgeConfigLine(0, tCfg, tLine)
 					end if
@@ -317,7 +317,7 @@ on BridgeIsAbsolutePath me, tPath
 	if tPath.length < 2 then
 		return 0
 	end if
-	if tPath[1] = "\\" or tPath[1] = "/" then
+	if tPath[1] = "\" or tPath[1] = "/" then
 		return 1
 	end if
 	-- Windows drive letter, e.g. "D:\games\br4"
@@ -336,7 +336,7 @@ on BridgeJoinPath me, tBase, tTail
 	if tTail.length = 0 then
 		return tBase
 	end if
-	tSep = "\\"
+	tSep = "\"
 	if voidp(gSystem) = 0 then
 		if gSystem.Mac = 1 then
 			tSep = "/"
@@ -347,7 +347,7 @@ on BridgeJoinPath me, tBase, tTail
 		end if
 	end if
 	tLast = tBase[tBase.length]
-	if tLast = "\\" or tLast = "/" then
+	if tLast = "\" or tLast = "/" then
 		return tBase & tTail
 	end if
 	return tBase & tSep & tTail
@@ -387,7 +387,7 @@ on BridgeReplace me, tSource, tFind, tWith
 	tFromLen = tFind.length
 	i = 1
 	repeat while i <= tLen
-		if (the chars of tSource, i, i + tFromLen - 1) = tFind then
+		if (BridgeChars(0, tSource, i, i + tFromLen - 1)) = tFind then
 			tOut = tOut & tWith
 			i = i + tFromLen
 		else
@@ -478,6 +478,23 @@ on BridgeLineCount me, tText
 	end if
 	the lineDelimiter = tOld
 	return tCount
+end
+
+on BridgeChars me, tText, tFrom, tTo
+	-- Clamp empty or invalid ranges before using Lingo's character chunk expression.
+	if tTo > tText.length then
+		tTo = tText.length
+	end if
+	if tTo < 1 then
+		return EMPTY
+	end if
+	if tFrom < 1 then
+		tFrom = 1
+	end if
+	if tTo < tFrom then
+		return EMPTY
+	end if
+	return char tFrom to tTo of tText
 end
 
 on BridgeTrim me, tText
@@ -580,7 +597,7 @@ on BridgeDecode me, tText
 		return tText
 	end if
 	tTag = tText[1]
-	tPayload = the chars of tText, 3, tText.length
+	tPayload = BridgeChars(0, tText, 3, tText.length)
 	case tTag of
 		"i", "f", "d":
 			return value(tPayload)
@@ -682,8 +699,8 @@ on BridgeDecodeKV me, tText
 		tChunk = tText.item[i]
 		tPosition = BridgeIndexOf(0, tChunk, "=", 1)
 		if tPosition > 1 then
-			tKey = the chars of tChunk, 1, tPosition - 1
-			tValue = the chars of tChunk, tPosition + 1, tChunk.length
+			tKey = BridgeChars(0, tChunk, 1, tPosition - 1)
+			tValue = BridgeChars(0, tChunk, tPosition + 1, tChunk.length)
 			tList.add([tKey, BridgeDecode(0, tValue)])
 		end if
 	end repeat
@@ -921,15 +938,15 @@ on BridgePathSegments me, tPath
 		tChunk = tPath.item[i]
 		tBracket = BridgeIndexOf(0, tChunk, "[", 1)
 		if tBracket > 1 then
-			tOut.add(the chars of tChunk, 1, tBracket - 1)
-			tRest = the chars of tChunk, tBracket + 1, tChunk.length
+			tOut.add(BridgeChars(0, tChunk, 1, tBracket - 1))
+			tRest = BridgeChars(0, tChunk, tBracket + 1, tChunk.length)
 			repeat while tRest.length > 0
 				tClose = BridgeIndexOf(0, tRest, "]", 1)
 				if tClose > 0 then
-					tOut.add(the chars of tRest, 1, tClose - 1)
-					tRest = the chars of tRest, tClose + 1, tRest.length
+					tOut.add(BridgeChars(0, tRest, 1, tClose - 1))
+					tRest = BridgeChars(0, tRest, tClose + 1, tRest.length)
 					if tRest[1] = "[" then
-						tRest = the chars of tRest, 2, tRest.length
+						tRest = BridgeChars(0, tRest, 2, tRest.length)
 					else
 						tRest = EMPTY
 					end if
@@ -1076,10 +1093,10 @@ on BridgeIsBridgePath me, tPath
 	if tPath.ilk <> #string then
 		return 0
 	end if
-	if the chars of tPath, 1, 7 = "bridge." then
+	if BridgeChars(0, tPath, 1, 7) = "bridge." then
 		return 1
 	end if
-	if the chars of tPath, 1, 8 = "gBridge." then
+	if BridgeChars(0, tPath, 1, 8) = "gBridge." then
 		return 1
 	end if
 	return 0
@@ -1090,7 +1107,7 @@ on BridgeBridgeKey me, tPath
 	if tDot < 1 then
 		return tPath
 	end if
-	return the chars of tPath, tDot + 1, tPath.length
+	return BridgeChars(0, tPath, tDot + 1, tPath.length)
 end
 
 on BridgeAllowed me, tPath, tPatterns
@@ -1105,11 +1122,11 @@ on BridgeAllowed me, tPath, tPatterns
 			return 1
 		end if
 		tPrefix = tPattern & "."
-		if the chars of tPath, 1, tPrefix.length = tPrefix then
+		if BridgeChars(0, tPath, 1, tPrefix.length) = tPrefix then
 			return 1
 		end if
 		tPrefix = tPattern & "["
-		if the chars of tPath, 1, tPrefix.length = tPrefix then
+		if BridgeChars(0, tPath, 1, tPrefix.length) = tPrefix then
 			return 1
 		end if
 	end repeat

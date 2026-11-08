@@ -11,10 +11,15 @@ Checks, in the order they can bite you:
 
 1. ``on``/``end`` pairing, per handler, and no handler defined twice in one movie (Director's
    "more than one handler named X in the movie" error is a load-time failure).
-2. ``if``/``end if``, ``repeat``/``end repeat``, ``case``/``end case``, ``switch``/``endswitch``
-   balance -- inline ``if x then return 1`` is recognised as not opening a block.
-3. Balanced parentheses and brackets, and an even number of unescaped quotes per line: Lingo
-   strings never span a line, so a stray quote means the rest of the file is being read as text.
+2. ``if``/``end if``, ``repeat``/``end repeat``, ``case``/``end case`` balance -- inline
+   ``if x then return 1`` is recognised as not opening a block. And the two shapes that *look*
+   balanced but are not Lingo: a ``switch``/``endswitch`` pair (Director has no switch statement,
+   so ``switch x`` / ``case "a":`` / ``endswitch`` never compiles -- it has to be
+   ``case x of`` / ``"a":`` / ``end case``), and a branch that repeats the keyword inside a real
+   ``case … of``, which is the ActionScript tell. ``otherwise`` without its colon joins them.
+3. Balanced parentheses and brackets, and properly closed strings: Lingo uses doubled quotes
+   inside strings and does not treat backslashes as escapes. Also flag the invalid comma-separated
+   ``the chars of text, start, end`` form; character slices use chunk expressions.
 4. Every called ``Name(...)`` resolves to a handler defined in one of the files given, to a known
    Lingo/SpriteLingo builtin, or to a member access (``x.y(...)`` is not a handler call). Handler
    names defined twice across scripts are tolerated when they are Lingo *events* (``enterFrame`` and
@@ -47,15 +52,22 @@ BLOCKS = [
     (re.compile(r"^\s*else\s+if\b", re.I), "if"),
     (re.compile(r"^\s*repeat\b", re.I), "repeat"),
     (re.compile(r"^\s*case\b.*\bof\s*$", re.I), "case"),
-    (re.compile(r"^\s*switch\b", re.I), "switch"),
     (re.compile(r"^\s*tell\b", re.I), "tell"),
     (re.compile(r"^\s*try\b", re.I), "try"),
 ]
+# Two mistakes that a *balanced* file can still contain, both of them the result of writing Lingo
+# like another language, and both of them Director's compiler refusing:
+#   `switch x` / `case "a":` / `endswitch`   -- ActionScript. Lingo has no switch statement.
+#   `case "a":` inside a real `case x of`    -- a branch does not repeat the keyword.
+NOT_LINGO = re.compile(r"^\s*(?:(?:switch|end\s*switch)\b|default\s*:)", re.I)
+CASE_LABEL = re.compile(r"^\s*case\b\s+.*:\s*$", re.I)
+OTHERWISE = re.compile(r"^\s*otherwise\s*$", re.I)
+BAD_CHAR_SLICE = re.compile(r"\bthe\s+chars\s+of\s+[A-Za-z_]\w*\s*,", re.I)
+
 CLOSERS = {
     "if": re.compile(r"^\s*end if\b", re.I),
     "repeat": re.compile(r"^\s*end repeat\b", re.I),
     "case": re.compile(r"^\s*end case\b", re.I),
-    "switch": re.compile(r"^\s*end\s*switch\b", re.I),
     "tell": re.compile(r"^\s*end tell\b", re.I),
     "try": re.compile(r"^\s*end try\b", re.I),
 }
@@ -115,12 +127,10 @@ def strip_comments(line: str) -> Tuple[str, List[str]]:
     while i < len(line):
         ch = line[i]
         if in_string:
-            if ch == "\\":
-                out.append(ch)
-                if i + 1 < len(line):
-                    out.append(line[i + 1])
-                    i += 2
-                    continue
+            if ch == '"' and i + 1 < len(line) and line[i + 1] == '"':
+                out.extend(('"', '"'))
+                i += 2
+                continue
             if ch == '"':
                 in_string = False
             out.append(ch)
@@ -196,6 +206,22 @@ def analyse(path: str, source: str) -> Tuple[List[str], Dict[str, int], List[str
         stripped = blank_strings(code).strip()
         if not stripped:
             continue
+        if BAD_CHAR_SLICE.search(stripped):
+            problems.append("%s:%d: `the chars of text, start, end` is not a Lingo chunk expression"
+                            " -- use `char start to end of text`" % (path, number))
+        if NOT_LINGO.match(stripped):
+            problems.append(
+                "%s:%d: `%s` is not Lingo -- Director has no switch statement; write"
+                " `case <expr> of` ... `end case`" % (path, number, stripped.split()[0])
+            )
+        case_depth = sum(1 for name, _line in stack if name == "case")
+        if case_depth and CASE_LABEL.match(stripped):
+            problems.append(
+                "%s:%d: a `case <expr> of` branch is a bare `label:`, not `case \"label\":`"
+                " -- %s" % (path, number, raw.strip()[:50])
+            )
+        if case_depth and OTHERWISE.match(stripped):
+            problems.append("%s:%d: `otherwise` wants a colon: `otherwise:`" % (path, number))
         handler = re.match(r"^(on|function)\s+([A-Za-z_]\w*)", stripped)
         if handler:
             name = handler.group(2)
