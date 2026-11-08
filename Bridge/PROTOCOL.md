@@ -342,7 +342,7 @@ Four commands, all of which must pass for a third implementation to claim confor
     python3 Bridge/tools/bridge_proto.py selftest          # the reference, against the same file
     python3 Bridge/tools/bridge_probe.py selftest          # codec + vectors + a live two-peer loopback
     godot --headless --path Bridge/godot --script addons/shockwave_bridge/bridge_selftest.gd
-    BridgeSelfTest()                                       # in Director's Message window
+    BridgeSelfTest(0)                                      # in Director's Message window (bare `BridgeSelfTest()` works there too)
 
 Each of those also runs its own behavioural checks — handshake, the `seq` dedupe and its `HELLO`
 re-arm (§4, §8), allow-list refusals, the file frame gate (§7.1) — against the same expectations.

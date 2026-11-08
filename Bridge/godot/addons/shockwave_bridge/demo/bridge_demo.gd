@@ -45,12 +45,44 @@ func _ready() -> void:
 		return
 	bridge = get_node("/root/ShockwaveBridge")
 	_build_ui()
+	_apply_command_line()
 	bridge.bind_node(self, "Demo")
 	bridge.status_changed.connect(_on_status)
 	bridge.bridge_event_raised.connect(_on_event)
 	bridge.director_value_changed.connect(_on_value)
 	bridge.bridge_log.connect(_on_bridge_log)
-	_log("bridge bound as gd:Demo; mailbox at " + str(bridge.transport_status().get("out", "?")))
+	var transport: Dictionary = bridge.transport_status()
+	_log("bridge bound as gd:Demo; mailbox at %s (%s/%s)" % [
+		transport.get("root", "?"), transport.get("out", "?"), transport.get("in", "?"),
+	])
+
+
+func _apply_command_line() -> void:
+	## `-- --config <file>` and `-- --transport files|http|tcp`, so the demo runs from a shell (and in
+	## CI) without anyone opening the Inspector. Both are ordinary exports on the autoload — anything
+	## set here can be set in Project Settings instead — and `restart()` is what makes them take hold,
+	## because the autoload had already built its transport by the time this scene got a turn.
+	var argv := OS.get_cmdline_user_args()
+	var dirty := false
+	var index := 0
+	while index < argv.size():
+		match String(argv[index]):
+			"--config":
+				if index + 1 < argv.size():
+					bridge.config_path = String(argv[index + 1])
+					dirty = true
+					index += 1
+			"--transport":
+				if index + 1 < argv.size():
+					bridge.transport_override = String(argv[index + 1])
+					dirty = true
+					index += 1
+			"--help", "-h":
+				_log("demo flags:  --config <Bridge.Data.txt>   --transport files|http|tcp")
+		index += 1
+	if dirty:
+		bridge.restart()
+		_log("restarted: config=%s transport=%s" % [bridge.config_path, bridge.transport_override])
 
 
 func _process(delta: float) -> void:

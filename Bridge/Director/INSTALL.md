@@ -112,7 +112,7 @@ and picks up on its own when it does.
 ## 5. Check it, from the Message window
 
 ```lingo
-BridgeStatusText()
+BridgeStatusText(0)
 ```
 
 ```
@@ -221,7 +221,7 @@ partial frame is never dispatched.
 | values froze after one side was re-run | should not happen any more: a `HELLO` from a peer whose `seq` went backwards re-arms the reader (§4, §8), which is what makes restarting Godot mid-session safe. If it still looks deaf, `python3 ../tools/bridge_probe.py frames BridgeData` prints the frame that is actually in the mailbox, its marker, and every key in it |
 | values arrive but stop at some number | that path is in `expose` but its container was replaced — `gGame.vehicles[3].*` paths go stale if the movie rebuilds the list. Add the parent instead (`gGame.vehicles`) and let Godot read the subtree, or `BridgeWatch` the new path after the rebuild |
 | `err denied` in Godot | correct behaviour: the path is not in `expose` (read) or `write` (write) |
-| `io none` in `BridgeStatusText()` | browser movie. Use `http` |
+| `io none` in `BridgeStatusText(0)` | browser movie. Use `http` |
 | one long pause when the bridge starts | first `newMember(#file)` for the mailbox read; one-time, and only on the read path without FileXtra4 |
 | script error mentioning `fileOpen` | your Director build has no projector file API (some Mac builds, and any browser player). Use `io filextra4`, or `http` |
 

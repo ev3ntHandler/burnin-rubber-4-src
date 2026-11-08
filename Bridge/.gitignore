@@ -3,3 +3,6 @@ __pycache__/
 *.pyc
 .godot/
 BridgeData/
+
+# the scratch mailbox the quickstart in Bridge/README.md creates
+box/

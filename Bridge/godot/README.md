@@ -215,8 +215,21 @@ cd ../../tools && python3 bridge_proto.py vectors
 `targetKmh` autopilot that writes `gGame.CurrentVehicle.Input.*` to drive the car from Godot, a
 `list_paths` probe that prints what the movie would answer for a prefix, and a log pane. `F1` pause,
 `F2` cash, `F3` probe — the same three calls as the buttons, so you can drive it with the movie
-holding focus. Run it with the movie playing; see `../../Director/INSTALL.md` step 3 for the mailbox.
-`godot --path Bridge/godot` opens it as the main scene of the sample project.
+holding focus. `godot --path Bridge/godot` opens it as the main scene of the sample project.
+
+Two flags, after `--`, so it is drivable from a shell and from CI without the Inspector:
+`--config <Bridge.Data.txt>` (the same file the movie reads — set the autoload's `config_path` in the
+Inspector for the same effect) and `--transport files|http|tcp` (which is `transport_override`).
+Against the Python mock, with no Director anywhere:
+
+```sh
+mkdir -p ../box && sed "s|^root\t.*|root\t$PWD/../box|" ../Director/Bridge.Data.txt > ../box/Bridge.Data.txt
+(cd ../tools && python3 mock_director.py --config ../box/Bridge.Data.txt) &
+godot --path . -- --config "$PWD/../box/Bridge.Data.txt"
+```
+
+Both ends now share one mailbox folder and one config; the log pane prints the resolved path, so a
+side that is looking at the wrong folder says so in its first line instead of silently showing `VOID`.
 
 ## Transports
 

@@ -38,6 +38,43 @@ against the same generated vector file ([PROTOCOL.md §8.1](PROTOCOL.md)).
   `eval`/`exec` exist and are off by default. So "the bridge is open on this machine" is not a security
   question, and prototyping damage to your own save state is a config line away from being impossible.
 
+## 60 seconds, before you install anything
+
+Both ends are simulated in `tools/`, so you can watch the wire move — a value mirroring, a write
+landing in `gGame`, a refusal for a path that is not on the allow-list — with no Director and no
+Godot open. One config file drives both, which is the whole point of the design. From the repository
+root:
+
+```sh
+mkdir -p Bridge/box && sed "s|^root\t.*|root\t$PWD/Bridge/box|" \
+    Bridge/Director/Bridge.Data.txt > Bridge/box/Bridge.Data.txt
+
+# terminal 1 — a fake movie ticking at its own tempo, writing Bridge/box/d2g.txt
+python3 Bridge/tools/mock_director.py --config Bridge/box/Bridge.Data.txt
+
+# terminal 2 — a third peer, reading the same folder through the same config
+python3 Bridge/tools/bridge_probe.py get gGame.Cash gGame.Iteration --as godot --config Bridge/box/Bridge.Data.txt
+python3 Bridge/tools/bridge_probe.py set bridge.fromProbe hello --as godot --config Bridge/box/Bridge.Data.txt
+python3 Bridge/tools/bridge_probe.py set gGame.hiscoresURL x --as godot --config Bridge/box/Bridge.Data.txt
+python3 Bridge/tools/bridge_probe.py frames Bridge/box
+```
+
+The third `set` is the interesting one: it exits 1 with `denied gGame.hiscoresURL`, because the config
+mirrors that path but does not authorise writes to it. `frames` then shows that refusal sitting in the
+mailbox as `RSP 1 | set | err | denied | …` — which is what "read the wire, not the tea leaves" means
+in practice.
+
+`mock_godot.py` is the same pair with the roles swapped, and with Godot installed the sample project
+takes that very config file:
+
+```sh
+godot --path Bridge/godot -- --config "$PWD/Bridge/box/Bridge.Data.txt"
+```
+
+The demo scene then mirrors the fake movie's values, its buttons and F1/F2/F3 write through to it, and
+the movie can read `gd:Demo.target_kmh` back out. Nothing here touches your movie or your save data:
+`Bridge/box/` is gitignored scratch, and the mock is a dictionary with a `gGame` shape.
+
 ## Five minutes to a live mirror
 
 1. **Director** — import the three `Director/[M] Shockwave Bridge*.ls` files as movie scripts, and
