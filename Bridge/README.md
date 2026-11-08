@@ -104,9 +104,12 @@ func _process(_delta: float) -> void:
 
 func _ready() -> void:
 	ShockwaveBridge.director_value_changed.connect(_on_movie_value)   # push, instead of polling
-	ShockwaveBridge.call_director("PutMessage", {"message": "hi from godot"})
+	ShockwaveBridge.call_director("PutMessage", 0, {"message": "hi from godot"})
 	ShockwaveBridge.bind_node(hud.score_label, "Score")               # now: "gd:Score.text"
 ```
+
+`call_director` requires `allowCall TRUE` and the handler in the movie's `call` allow-list; calls
+are disabled by default. Only enable them for a trusted local peer.
 
 Director, doing the same the other way round — same semantics, Lingo spelling, and shaped like this
 game's own handlers (`PutMessage(0, …)` style: `me` is an explicit first argument):

@@ -104,7 +104,9 @@ var boost := ShockwaveBridge.read_custom("wantBoost", false)
 `bridge_log` signal and leaves the mirror alone. There is no way to make the movie execute
 something from here unless its config explicitly turns `allowEval` on.
 
-Two more channels, both gated by the movie's config:
+Two more channels, both gated by the movie's config. Handler calls are disabled by default:
+set `allowCall` to `TRUE` in the Director-side `Bridge.Data.txt` and keep the handler in its `call`
+allow-list before trying this example. Enable it only for a trusted local peer.
 
 ```gdscript
 # Invoke a Lingo handler by name with a propList; the reply is its return value.

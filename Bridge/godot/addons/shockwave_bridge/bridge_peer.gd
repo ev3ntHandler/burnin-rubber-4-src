@@ -275,9 +275,19 @@ func unsubscribe(path: String) -> void:
 
 
 ## Invoke a handler on the peer. Director side: `_movie.sendSprite(0, handler, target, dataList)`.
-func call_handler(handler: String, target := "", data: Variant = null, callback: Callable = Callable()) -> int:
+## Numeric sprite IDs and string aliases both travel as text; null means the default target.
+func call_handler(handler: String, target: Variant = "", data: Variant = null, callback: Callable = Callable()) -> int:
+	var target_text := ""
+	match typeof(target):
+		TYPE_NIL:
+			pass
+		TYPE_INT, TYPE_STRING, TYPE_STRING_NAME:
+			target_text = str(target)
+		_:
+			push_error("call_handler target must be an integer, string, or null")
+			return -1
 	var payload := "" if data == null else BridgeLingo.prints(data)
-	return request("call", [BridgeWire.sanitize(handler), BridgeWire.sanitize(target), payload], callback)
+	return request("call", [BridgeWire.sanitize(handler), BridgeWire.sanitize(target_text), payload], callback)
 
 
 ## Fire-and-forget event into the peer's own event system (Director `event(0, #name)`).

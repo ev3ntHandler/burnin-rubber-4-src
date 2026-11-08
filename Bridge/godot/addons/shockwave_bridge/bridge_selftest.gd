@@ -458,6 +458,14 @@ func _run_peer_integration() -> void:
 	pump.call(4)
 	check("call reaches a handler", game.log_lines.size() == 1 and String(game.log_lines[0]).contains("hello from godot"), str(game.log_lines))
 	check("call reply", called.size() == 1 and String(called[0]).contains("hello"), str(called))
+	var numeric_call: Array = []
+	godot.call_handler("PutMessage", 0, {"message": "numeric target"}, func(value: Variant) -> void: numeric_call.append(value))
+	pump.call(4)
+	check("numeric sprite target reaches the peer as text", game.last_call_target == "0" and numeric_call.size() == 1, str(game.last_call_target))
+	var named_call: Array = []
+	godot.call_handler("PutMessage", "Player", {"message": "named target"}, func(value: Variant) -> void: named_call.append(value))
+	pump.call(4)
+	check("string call target remains unchanged", game.last_call_target == "Player" and named_call.size() == 1, str(game.last_call_target))
 
 	godot.send_event("BridgePause", {"reason": "selftest"})
 	pump.call(3)
@@ -536,6 +544,7 @@ class FakeGame:
 		"UPStatistics": {"money": 0},
 	}
 	var log_lines: Array = []
+	var last_call_target := ""
 	var paused := false
 	var notifier: BridgePeer = null
 
@@ -587,7 +596,8 @@ class FakeGame:
 					result.append([path, notifier.store[key]])
 		return result
 
-	func bridge_call(handler: String, _target: String, data: Variant) -> Variant:
+	func bridge_call(handler: String, target: String, data: Variant) -> Variant:
+		last_call_target = target
 		match handler:
 			"PutMessage":
 				var text := "message?"
@@ -802,6 +812,14 @@ func _run_binding() -> void:
 	var cfg: BridgeConfig = bridge.get("config")
 	cfg.call_handlers = ["take_damage"]
 	var peer: BridgePeer = bridge.get("peer")
+	# Exercise the exact public signature used by the demo, not only the lower-level peer API.
+	var call_id: Variant = bridge.call("call_director", "PutMessage", 0, {"message": "hello from Godot", "level": 0}, Callable())
+	var queued: Array = peer.get("_outbox")
+	var request: Array = BridgeWire.parse(String(queued.back()[0])) if not queued.is_empty() else []
+	var fields: Array = request[1] if request.size() > 1 else []
+	check("call_director accepts integer target and sends 0", typeof(call_id) == TYPE_INT and int(call_id) > 0 and fields.size() == 5 and fields[2] == "PutMessage" and fields[3] == "0", str(request))
+	peer.pending.clear()
+	queued.clear()
 	peer.runtime = bridge
 	var result: Variant = bridge.call("bridge_call", "take_damage", "Player", 25)
 	check("call reaches a bound node method", int(target.get("hp")) == 75, "hp=%s result=%s" % [str(target.get("hp")), str(result)])

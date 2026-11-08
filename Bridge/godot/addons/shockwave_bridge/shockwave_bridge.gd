@@ -350,7 +350,8 @@ func write_many(pairs: Dictionary) -> int:
 
 ## Call one of the movie's handlers. Director runs `_movie.sendSprite(0, #handler, target, dataList)`
 ## and only handlers named in the config's `call` list are reachable. The reply comes to `callback`.
-func call_director(handler: String, target := "", data: Variant = null, callback := Callable()) -> int:
+## The target may be an integer sprite number, a string, or null/empty for the default target.
+func call_director(handler: String, target: Variant = "", data: Variant = null, callback := Callable()) -> int:
 	return peer.call_handler(handler, target, data, callback)
 
 
