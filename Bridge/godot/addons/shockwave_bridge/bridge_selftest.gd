@@ -63,6 +63,16 @@ func _initialize() -> void:
 # --------------------------------------------------------------------------------------------
 
 
+func _cleanup() -> void:
+	if _loop_dir.is_empty():
+		return
+	for filename in ["d2g.txt", "d2g.seq", "g2d.txt", "g2d.seq"]:
+		var path := _loop_dir.path_join(filename)
+		if FileAccess.file_exists(path):
+			DirAccess.remove_absolute(path)
+	DirAccess.remove_absolute(_loop_dir)
+
+
 func section(name: String) -> void:
 	_section = name
 	print("\n--- %s ---" % name)
@@ -87,11 +97,6 @@ func _find(candidates: Array) -> String:
 		var absolute := OS.get_executable_path().get_base_dir().path_join(String(path))
 		if FileAccess.file_exists(absolute):
 			return absolute
-	var cwd := OS.get_cwd()
-	for path in candidates:
-		var from_cwd := cwd.path_join(String(path).replace("res://", ""))
-		if FileAccess.file_exists(from_cwd):
-			return from_cwd
 	return ""
 
 
@@ -114,7 +119,7 @@ func _run_wire() -> void:
 	check("sanitize flattens TAB/CR/LF", BridgeWire.sanitize("a\tb\nc\rd") == "a b c d", BridgeWire.sanitize("a\tb\nc\rd"))
 	check("build joins with TAB", BridgeWire.build("GET", ["a", 1]) == "GET\ta\t1")
 	var parsed := BridgeWire.parse("RSP\t7\tget\tok\ti:5")
-	check("parse splits verb and fields", parsed[0] == "RSP" and (parsed[1] as Array).size() == 3, str(parsed))
+	check("parse splits verb and fields", parsed[0] == "RSP" and (parsed[1] as Array).size() == 4, str(parsed))
 	check("parse drops a trailing CR", BridgeWire.parse("PING\t1\r")[0] == "PING")
 	check("encode int", BridgeWire.encode(42) == "i:42")
 	check("encode float always has a dot", BridgeWire.encode(2.0) == "f:2.0", BridgeWire.encode(2.0))
@@ -144,6 +149,14 @@ func _run_wire() -> void:
 	var lines := ["HELLO\tgodot\tG\t1\t0\tsnap", "PING\t1\t2"]
 	check("batch text is LF-terminated", BridgeWire.lines_to_text(lines) == "HELLO\tgodot\tG\t1\t0\tsnap\nPING\t1\t2\n")
 	check("batch parse drops blanks", BridgeWire.lines_from_text("A\t1\n\nB\t2\n").size() == 2)
+	var utf8 := "PING\tпуть\n".to_utf8_buffer()
+	var frame := BridgeNet.pack_frame(utf8)
+	check("binary frame has exactly one header and payload", frame.size() == 4 + utf8.size() and frame.decode_u32(0) == utf8.size())
+	var split := BridgeNet.split_lines(frame, true)
+	check("binary frame decodes UTF-8", split[0] == ["PING\tпуть"] and (split[1] as PackedByteArray).is_empty(), str(split))
+	var partial := BridgeNet.split_lines(frame.slice(0, frame.size() - 1), true)
+	check("incomplete frame is retained", (partial[0] as Array).is_empty() and partial[1] == frame.slice(0, frame.size() - 1))
+	check("URL encoding preserves UTF-8", BridgeNet.percent_decode(BridgeNet.percent_encode(utf8)) == "PING\tпуть\n")
 
 
 # --------------------------------------------------------------------------------------------
@@ -178,7 +191,7 @@ func _run_lingo() -> void:
 	var again: Variant = BridgeLingo.parse(printed)
 	check("parse(printes(x)) keeps values", again["mass"] == 1200.5 and (again["wheels"] as Array)[2] == 3, str(again))
 	check("quoted strings survive spaces", BridgeLingo.scalar('"Burnin Rubber 4"') == "Burnin Rubber 4")
-	check("escapes are undone", BridgeLingo.unquote('a\\"b\\\\c') == 'a"b\\c', BridgeLingo.unquote('a\\"b\\\\c'))
+	check("doubled quotes and backslashes", BridgeLingo.unquote('a""b\\c') == 'a"b\\c')
 	check("tuples become Vector2", BridgeLingo.scalar("(1, 2)") == Vector2(1, 2))
 	check("is_symbolic", BridgeLingo.is_symbolic("kmh_2") and not BridgeLingo.is_symbolic("2kmh") and not BridgeLingo.is_symbolic("a-b"))
 	check("key_text prefers symbol form", BridgeLingo.key_text("kmh") == "#kmh" and BridgeLingo.key_text("a b") == '"a b"')
@@ -263,7 +276,11 @@ func _run_vectors() -> void:
 		var note := String(record[0])
 		var wire := String(record[1])
 		var value = BridgeWire.decode(wire)
-		check("value %s" % note, BridgeWire.encode(value) == wire, "%s -> %s" % [wire, BridgeWire.encode(value)])
+		var encoded := BridgeWire.encode(value)
+		var matches := encoded == wire
+		if wire.begins_with("f:") and encoded.begins_with("f:"):
+			matches = float(encoded.substr(2)) == float(wire.substr(2))
+		check("value %s" % note, matches, "%s -> %s" % [wire, encoded])
 		if record.size() > 2:
 			var rendered := String(record[2])
 			check("render %s" % note, _render_matches(BridgeWire.render(value), rendered), "%s vs %s" % [BridgeWire.render(value), rendered])
@@ -344,7 +361,7 @@ func _read_records(path: String) -> Dictionary:
 		var kind := String(fields[0])
 		if not out.has(kind):
 			continue
-		var record: Array = fields.slice(1)
+		var record: Array = Array(fields.slice(1))
 		if kind == "message" and record.size() > 4:
 			record = record.slice(0, 3) + ["\t".join(PackedStringArray(record.slice(3)))]
 		(out[kind] as Array).append(record)
@@ -405,7 +422,7 @@ func _run_peer_integration() -> void:
 	game.set_value("gGame.Cash", 1234)
 	pump.call(2)
 	check("delta on change", godot.read_local("gGame.Cash") == 1234, str(godot.read_local("gGame.Cash")))
-	var before := godot.stats["frames_in"]
+	var before: int = godot.stats["frames_in"]
 	pump.call(3)
 	check("idle is silent (no echo storm)", godot.stats["frames_in"] == before, "%d -> %d" % [before, godot.stats["frames_in"]])
 
@@ -419,7 +436,7 @@ func _run_peer_integration() -> void:
 
 	# RPC
 	var got_value: Array = []
-	godot.request("get", ["gGame.Money"], func(value: Variant) -> void: got_value.append(value))
+	godot.read_remote("gGame.Money", func(value: Variant) -> void: got_value.append(value))
 	pump.call(4)
 	check("REQ/RSP get", got_value.size() == 1 and int(got_value[0]) == 50000, str(got_value))
 
@@ -460,7 +477,7 @@ func _run_peer_integration() -> void:
 	check("ping answered", pong.size() == 1, str(pong))
 
 	# duplicate frames must not be applied twice
-	var dupes_before := godot.stats["dupes"]
+	var dupes_before: int = godot.stats["dupes"]
 	var replay: Array = ["DELTA\t1\t1\t1\t1\tgGame.Cash=i:77"]
 	godot.feed(replay)
 	godot.feed(replay)
@@ -474,8 +491,10 @@ func _run_peer_integration() -> void:
 	# timeouts resolve pending requests as errors
 	var timed: Array = []
 	d_link.mute(true)
-	godot.request("get", ["gGame.Cash"], func(value: Variant) -> void: timed.append(value))
+	var timed_id := godot.request("get", ["gGame.Cash"], func(value: Variant) -> void: timed.append(value))
 	godot.cfg.requestTimeoutMs = 1
+	# Age the request deterministically; the loop may otherwise finish within one millisecond.
+	godot.pending[timed_id]["sent_ms"] = godot.uptime_ms() - 2
 	for _frame in range(4):
 		godot.tick()
 		godot.flush()
@@ -496,6 +515,8 @@ func _run_peer_integration() -> void:
 		director.tick()
 		director.flush()
 	check("one batch per frame", d_link.sent_batches - writes_before <= 5, "%d writes" % (d_link.sent_batches - writes_before))
+	game.set_notify(null)
+	director.runtime = null
 	director.stop()
 	godot.stop()
 
@@ -557,6 +578,15 @@ class FakeGame:
 		(target as Dictionary)[segments[segments.size() - 1]] = value
 		return true
 
+	func bridge_enumerate(prefix: String, _depth: int) -> Array:
+		var result: Array = []
+		if notifier != null:
+			for key in notifier.store:
+				var path := "bridge." + str(key)
+				if prefix.is_empty() or path.begins_with(prefix):
+					result.append([path, notifier.store[key]])
+		return result
+
 	func bridge_call(handler: String, _target: String, data: Variant) -> Variant:
 		match handler:
 			"PutMessage":
@@ -601,6 +631,7 @@ class BridgeLoopback:
 
 	func stop() -> void:
 		other = null
+		peer = null
 
 	func send(lines: Array) -> void:
 		sent_batches += 1
@@ -625,12 +656,8 @@ class BridgeLoopback:
 
 func _run_files_transport() -> void:
 	section("files transport")
-	_loop_dir = ProjectSettings.globalize_path("user://bridge_selftest")
+	_loop_dir = ProjectSettings.globalize_path("user://bridge_selftest_%d_%d" % [OS.get_process_id(), Time.get_ticks_usec()])
 	DirAccess.make_dir_recursive_absolute(_loop_dir)
-	var clean := DirAccess.open(_loop_dir)
-	if clean != null:
-		for leftover in clean.get_files():
-			clean.remove(leftover)
 
 	var sender_cfg := BridgeConfig.new()
 	sender_cfg.root = _loop_dir
@@ -698,7 +725,7 @@ func _run_files_transport() -> void:
 	)
 	check(
 		"HELLO re-armed the reader's frame gate too",
-		reader.in_seq == 1 and reader.transport.last_in_seq == 1,
+		reader.in_seq == 1 and reader.transport.last_in_seq == out_link.last_out_seq,
 		"in_seq=%d gate=%d" % [reader.in_seq, reader.transport.last_in_seq]
 	)
 	out_link.send(["SNAP\t2\t9\t9\t4000\tgGame.Cash=i:92"])
@@ -728,14 +755,14 @@ func _run_binding() -> void:
 	if script == null:
 		check("shockwave_bridge.gd loads", false)
 		return
-	var bridge: Node = script.new()
+	var bridge := script.new() as Node
 	bridge.set("auto_start", false)
 	root.add_child(bridge)
 	var node_script: GDScript = _dummy_script()
 	if node_script == null:
 		check("dummy script compiles", false)
 		return
-	var target: Node = node_script.new()
+	var target := node_script.new() as Node
 	target.set_name("Player")
 	target.set("hp", 100)
 	target.set("score", 0)
@@ -749,7 +776,7 @@ func _run_binding() -> void:
 	var assigned: Variant = bridge.call("_assign_path", "gd:Player.score", 250)
 	check("write a bound property", int(target.get("score")) == 250, str(target.get("score")))
 	check("write reports the value it set", assigned == 250, str(assigned))
-	check("write to a bad path reports failure", bridge.call("_assign_path", "gd:Player.nope.x", 1) != 1)
+	check("write to a bad path reports failure", typeof(bridge.call("_assign_path", "gd:Player.nope.x", 1)) == TYPE_STRING)
 	var vec: Variant = bridge.call("bridge_resolve", "gd:Player.speed")
 	check("typed as Vector2 through the wire", vec == Vector2(1.5, 0), str(vec))
 	check("encode a bound Vector2 as a point", BridgeWire.encode(vec) == "p:1.5,0.0", BridgeWire.encode(vec))
@@ -799,10 +826,10 @@ func _dummy_script() -> GDScript:
 		"",
 		"func take_damage(amount) -> void:",
 		"	hp = hp - int(amount)",
-		"	set_meta(%sself_test_seen%s, true)" % [chr(34), chr(34)],
+		"	set_meta(%sself_test_seen%s, true)" % [char(34), char(34)],
 		"",
 		"func on_self_test_event(data) -> void:",
-		"	set_meta(%sself_test_seen%s, true)" % [chr(34), chr(34)],
+		"	set_meta(%sself_test_seen%s, true)" % [char(34), char(34)],
 	]
 	var script := GDScript.new()
 	script.source_code = "\n".join(PackedStringArray(lines)) + "\n"

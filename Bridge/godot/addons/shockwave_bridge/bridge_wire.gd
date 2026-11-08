@@ -73,15 +73,15 @@ static func encode(value: Variant) -> String:
 		TYPE_STRING_NAME, TYPE_NODE_PATH:
 			return "y:" + sanitize(String(value).trim_prefix("#"))
 		TYPE_VECTOR2:
-			return "p:%s,%s" % [text_float(value.x), text_float(value.y)]
+			return "p:%s,%s" % [ensure_float(text_float(value.x)), ensure_float(text_float(value.y))]
 		TYPE_VECTOR3:
-			return "v:%s,%s,%s" % [text_float(value.x), text_float(value.y), text_float(value.z)]
+			return "v:%s,%s,%s" % [ensure_float(text_float(value.x)), ensure_float(text_float(value.y)), ensure_float(text_float(value.z))]
 		TYPE_COLOR:
 			return encode_color(value)
 		TYPE_RECT2:
 			return "r:%s,%s,%s,%s" % [
-				text_float(value.position.x), text_float(value.position.y),
-				text_float(value.end.x), text_float(value.end.y),
+				ensure_float(text_float(value.position.x)), ensure_float(text_float(value.position.y)),
+				ensure_float(text_float(value.end.x)), ensure_float(text_float(value.end.y)),
 			]
 		TYPE_ARRAY, TYPE_DICTIONARY:
 			return "l:" + BridgeLingo.prints(value)
@@ -388,4 +388,4 @@ static func _text(value: Variant) -> String:
 			return value
 		TYPE_STRING_NAME:
 			return "#" + String(value)
-	return String(value)
+	return str(value)

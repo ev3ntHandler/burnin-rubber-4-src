@@ -146,8 +146,9 @@ python3 Bridge/tools/lint_lingo.py Bridge/Director     # Lingo structure, and no
                                                          # 137 handlers colliding with the movie's 759
 ```
 
-In Godot: `godot --headless --path Bridge/godot --script addons/shockwave_bridge/bridge_selftest.gd`
-(exits non-zero on failure, so it is a CI step). In Director's Message window: `BridgeSelfTest(0)` (84
+For Godot 4: `Bridge/tools/test_godot.sh` imports the project, runs the addon self-test and
+smoke-tests the demo (set `GODOT_BIN` if the executable is not called `godot`).
+In Director's Message window: `BridgeSelfTest(0)` (84
 vectors), then `BridgeRunLoopbackCheck(0)` — an end-to-end write, read, denial, store and restart test
 that passes with no Godot running at all, which is what makes it useful for the "whose fault is this"
 question at 1 a.m.

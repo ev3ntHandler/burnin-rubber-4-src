@@ -77,7 +77,7 @@ func _accept_pending() -> void:
 	if fresh == null:
 		return
 	clients += 1
-	if BridgeNet.is_connected(_client):
+	if BridgeNet.is_stream_connected(_client):
 		_client.call("disconnect_from_host")  # one client at a time; the newest wins
 	_client = fresh
 	_read_buffer = PackedByteArray()
@@ -86,7 +86,7 @@ func _accept_pending() -> void:
 
 
 func _ensure_client() -> bool:
-	if BridgeNet.is_connected(_client):
+	if BridgeNet.is_stream_connected(_client):
 		return true
 	if Time.get_ticks_msec() - _last_try < retry_ms:
 		return false  # retry_ms is a floor on reconnect churn, not on latency
@@ -110,7 +110,7 @@ func _service_stream() -> void:
 	if _client == null:
 		return
 	_client.call("poll")
-	if not BridgeNet.is_connected(_client):
+	if not BridgeNet.is_stream_connected(_client):
 		_drop_link()
 		return
 	var got: PackedByteArray = BridgeNet.take_available(_client)
@@ -131,7 +131,7 @@ func _service_stream() -> void:
 func send(lines: Array) -> void:
 	if lines.is_empty():
 		return
-	var payload := BridgeWire.lines_to_text(lines).to_utf8()
+	var payload := BridgeWire.lines_to_text(lines).to_utf8_buffer()
 	_write_buffer.append_array(BridgeNet.pack_frame(payload) if binary else payload)
 	if _write_buffer.size() > BridgeNet.MAX_PENDING_BYTES:
 		# Keeping a subset would break framing, so drop the link: the reconnect re-sends HELLO and
@@ -148,14 +148,14 @@ func send(lines: Array) -> void:
 func _flush_write_buffer() -> void:
 	if _write_buffer.is_empty():
 		return
-	if not BridgeNet.is_connected(_client):
+	if not BridgeNet.is_stream_connected(_client):
 		return
 	for _attempt in range(MAX_WRITE_ATTEMPTS):
 		var result: Array = _client.call("put_partial_data", _write_buffer)
 		var written := int(result[1]) if result.size() > 1 else 0
 		if written <= 0:
 			var error := int(result[0])
-			if error != OK and error != ERR_UNAVAILABLE and error != ERR_BUSY and error != ERR_CANT_ACQUIRE:
+			if error != OK and error != ERR_UNAVAILABLE and error != ERR_BUSY:
 				_drop_link()
 				return
 			return  # kernel buffer full: the remainder goes out next frame
@@ -165,7 +165,7 @@ func _flush_write_buffer() -> void:
 
 
 func _drop_link() -> void:
-	if _client != null and BridgeNet.is_connected(_client):
+	if _client != null and BridgeNet.is_stream_connected(_client):
 		_client.call("disconnect_from_host")
 	_client = null
 	_read_buffer = PackedByteArray()
@@ -190,7 +190,7 @@ func status() -> Dictionary:
 		"role": mode,
 		"listen": "%s:%d" % [host, port] if mode == "server" else "",
 		"target": "%s:%d" % [host, port] if mode == "client" else "",
-		"connected": BridgeNet.is_connected(_client),
+		"connected": BridgeNet.is_stream_connected(_client),
 		"clients": clients,
 		"attempts": attempts,
 		"binary": binary,

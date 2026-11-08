@@ -20,7 +20,7 @@ static func parse(text: String) -> Variant:
 
 
 ## Godot value -> Lingo literal text. Rules from §3: propList keys are always `#symbol:`, strings
-## are double quoted with `"`/`\` escaped, floats always carry a `.` so Director's `value()` does
+## are double quoted with embedded quotes doubled, floats always carry a `.` so Director's `value()` does
 ## not silently turn them into integers.
 static func prints(value: Variant) -> String:
 	match typeof(value):
@@ -57,12 +57,12 @@ static func prints(value: Variant) -> String:
 		TYPE_ARRAY:
 			var items: Array[String] = []
 			for item in value:
-				items.append(prints(item))
+				items.append(BridgeLingo.prints(item))
 			return "[" + ", ".join(items) + "]"
 		TYPE_DICTIONARY:
 			var entries: Array[String] = []
 			for key in value:
-				entries.append("%s: %s" % [key_text(key), prints(value[key])])
+				entries.append("%s: %s" % [key_text(key), BridgeLingo.prints(value[key])])
 			return "[" + ", ".join(entries) + "]"
 	return quote(BridgeWire.sanitize(_plain(value)))
 
@@ -73,8 +73,8 @@ static func prints(value: Variant) -> String:
 static func quote(text: String) -> String:
 	## One Lingo string literal: a quote inside it is DOUBLED, and a backslash stays a
 	## backslash, because Director has no backslash escapes -- value() cannot read an
-	## escaped quote (spec 3). Chr(34) instead of a quote character here for the same reason.
-	return Chr(34) + text.replace(Chr(34), Chr(34) + Chr(34)) + Chr(34)
+	## escaped quote (spec 3). char(34) instead of a quote character here for the same reason.
+	return char(34) + text.replace(char(34), char(34) + char(34)) + char(34)
 
 
 ## A Dictionary key: symbol form when it can be one (Director writes propLists as `#key: value`),
@@ -130,8 +130,6 @@ static func _parse_item(text: String, index: int) -> Array:
 						index += 2  # `""` is one quote character, not the end of the string
 						continue
 					break
-				if text[index] == "\\":
-					index += 1
 				index += 1
 		index += 1
 	var token := text.substr(start, index - start).strip_edges()
@@ -163,9 +161,12 @@ static func _parse_list(text: String, index: int) -> Array:
 				break
 			elif char == '"' and depth == 0:
 				index += 1
-				while index < text.length() and text[index] != '"':
-					if text[index] == "\\":
-						index += 1
+				while index < text.length():
+					if text[index] == '"':
+						if index + 1 < text.length() and text[index + 1] == '"':
+							index += 2
+							continue
+						break
 					index += 1
 			index += 1
 		var chunk := text.substr(start, index - start).strip_edges()
@@ -218,9 +219,12 @@ static func split_key(chunk: String) -> Array:
 			depth -= 1
 		elif char == '"' and depth == 0:
 			index += 1
-			while index < chunk.length() and chunk[index] != '"':
-				if chunk[index] == "\\":
-					index += 1
+			while index < chunk.length():
+				if chunk[index] == '"':
+					if index + 1 < chunk.length() and chunk[index + 1] == '"':
+						index += 2
+						continue
+					break
 				index += 1
 		elif char == ":" and depth == 0:
 			return [scalar(chunk.substr(0, index).strip_edges()), ":", index + 1]
@@ -257,24 +261,8 @@ static func scalar(token: String) -> Variant:
 
 
 static func unquote(text: String) -> String:
-	var out := ""
-	var index := 0
-	while index < text.length():
-		var char := text[index]
-		if char == "\\" and index + 1 < text.length():
-			var next := text[index + 1]
-			match next:
-				"n":
-					out += "\n"
-				"t":
-					out += "\t"
-				_:
-					out += next
-			index += 2
-			continue
-		out += char
-		index += 1
-	return out
+	# Lingo uses doubled quotes and treats every backslash literally.
+	return text.replace('""', '"')
 
 
 static func _skip_ws(text: String, index: int) -> int:

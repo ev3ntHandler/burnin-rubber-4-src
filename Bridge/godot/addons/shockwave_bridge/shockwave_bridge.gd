@@ -28,7 +28,7 @@ signal bridge_log(level: String, text: String)
 signal peer_greeted(role: String, peer_name: String, caps: Array)
 
 ## Sentinel for "the mirror has no such key", so a genuine `null`/VOID is still a value.
-const MISSING := "\x00__bridge_missing__"
+const MISSING := "\u0001__bridge_missing__"
 
 ## Where a relative `root` in the config file is resolved against. Empty = `user://`, i.e. the save
 ## dir. To talk to Director's mailbox directly, set `root` in Bridge.Data.txt to the movie folder
@@ -38,7 +38,7 @@ const MISSING := "\x00__bridge_missing__"
 @export_file("*.txt") var config_path := ""
 @export var auto_start := true
 ## "" = whatever Bridge.Data.txt says; overrides it otherwise. The editor dock uses this.
-@export_enum("", "files", "http", "tcp") var transport_override := ""
+@export var transport_override := ""
 ## Poll in `_physics_process` (deterministic, 60 Hz) rather than `_process` (one per drawn frame).
 @export var physics_tick := true
 ## Node aliases Director may address as `gd:<alias>.<property>`, as `Alias=Node/Path`.
@@ -74,6 +74,8 @@ func _ready() -> void:
 ## Load the config, build the transport, greet the peer. Idempotent — the editor dock's "Reload"
 ## button just calls this again, which is how you re-read Bridge.Data.txt without restarting Godot.
 func start() -> bool:
+	if _started:
+		stop()
 	config = load_config()
 	if not transport_override.is_empty():
 		config.transport = transport_override
@@ -97,9 +99,13 @@ func start() -> bool:
 func stop() -> void:
 	if peer != null:
 		peer.stop()
-	if transport != null and transport.has_method("stop"):
-		transport.call("stop")
+	transport = null
 	_started = false
+
+
+func _exit_tree() -> void:
+	if _started:
+		stop()
 
 
 func restart() -> bool:
@@ -254,7 +260,7 @@ func bound_nodes() -> Array:
 ## Read. Never blocks: `gGame.*`/`bridge.*` come from the mirror, `gd:` from the live object.
 func read_path(path: String, fallback: Variant = null) -> Variant:
 	var value = peer.read_local(_resolve_alias(path), MISSING)
-	return fallback if value == MISSING else value
+	return fallback if _is_missing(value) else value
 
 
 ## Typed convenience reads for HUD code: numbers and text out of the mirror without casting.
@@ -307,7 +313,7 @@ func send_custom(key: String, value: Variant) -> Variant:
 
 func read_custom(key: String, fallback: Variant = null) -> Variant:
 	var value = peer.read_local("bridge." + key, MISSING)
-	return fallback if value == MISSING else value
+	return fallback if _is_missing(value) else value
 
 
 ## Short names from the config's `alias` lines (`kmh` → `gGame.CurrentVehicle.general.kmh`) so HUD
@@ -434,7 +440,7 @@ func bridge_write(path: String, value: Variant) -> bool:
 			peer.store[key] = value
 		return true
 	if path.begins_with("gd:"):
-		return _assign_path(path, value) != MISSING
+		return not _is_missing(_assign_path(path, value))
 	return false
 
 
@@ -509,6 +515,10 @@ func bridge_exec(_statements: String) -> Variant:
 # --------------------------------------------------------------------------------------------
 
 
+func _is_missing(value: Variant) -> bool:
+	return typeof(value) == TYPE_STRING and value == MISSING
+
+
 func _walk_path(path: String) -> Variant:
 	var segments := _path_segments(path)
 	if segments.is_empty():
@@ -521,7 +531,7 @@ func _walk_path(path: String) -> Variant:
 
 ## Dictionaries, Arrays, Objects and nested bound nodes all walk the same way, which is what makes
 ## `gd:Game.hud.speedLabel` work on a plain Dictionary as well as on a Node with sub-objects.
-func _walk_into(current: Variant, segments: Array) -> Variant:
+func _walk_into(current: Variant, segments: PackedStringArray) -> Variant:
 	var node := current
 	for segment in segments:
 		var key := String(segment)
@@ -546,7 +556,7 @@ func _walk_into(current: Variant, segments: Array) -> Variant:
 			node = (node as Object).get(key)
 			continue
 		var component := _component_get(node, key)
-		if component == MISSING:
+		if _is_missing(component):
 			return null
 		node = component
 		continue
@@ -656,7 +666,7 @@ func _assign_path(path: String, value: Variant) -> Variant:
 		if owner is Object and is_instance_valid(owner):
 			var holder := String(segments[segments.size() - 2])
 			var rebuilt := _component_with(parent, leaf, value)
-			if rebuilt != MISSING:
+			if not _is_missing(rebuilt):
 				(owner as Object).set(holder, rebuilt)
 				return value
 	peer.log_line("warn", "gd: cannot write %s" % path)
@@ -686,10 +696,10 @@ static func _component_with(node: Variant, key: String, value: Variant) -> Varia
 			channels[index] = clamp(number / 255.0, 0.0, 1.0)
 			return Color(channels[0], channels[1], channels[2], channels[3])
 		TYPE_RECT2:
-			var left := node.position.x
-			var top := node.position.y
-			var right := node.end.x
-			var bottom := node.end.y
+			var left: float = node.position.x
+			var top: float = node.position.y
+			var right: float = node.end.x
+			var bottom: float = node.end.y
 			match index:
 				0:
 					left = number

@@ -98,8 +98,8 @@ Rules for the **writer**:
 * Empty: `[]`.
 
 Rules for the **reader** (Godot): the above subset only; a doubled quote inside a string becomes
-one quote character (a hand-typed `\"` is tolerated too, because people paste JSON-ish literals
-into the Message window); `#sym` becomes the plain string `sym`; `TRUE`/`FALSE` become booleans;
+one quote character and backslashes remain literal; `#sym` becomes the plain string `sym`;
+`TRUE`/`FALSE` become booleans;
 `VOID` becomes `null`; anything unparseable becomes the raw string — never an error, because a
 debug channel must not die on data.
 

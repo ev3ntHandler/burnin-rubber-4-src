@@ -138,7 +138,7 @@ func _step_connection(conn: Object) -> bool:
 	if conn.sock == null:
 		return false
 	conn.sock.call("poll")
-	if not BridgeNet.is_connected(conn.sock):
+	if not BridgeNet.is_stream_connected(conn.sock):
 		return false
 	var got: PackedByteArray = BridgeNet.take_available(conn.sock)
 	if not got.is_empty():
@@ -171,7 +171,7 @@ func _handle(conn: Object) -> void:
 		# POST carries the batch as the body; GET carries it in `?b=`, percent-encoded. Director's
 		# NetLingo can only issue a GET with `getNetText`, and a 1-frame batch fits in a URL with
 		# room to spare, so both forms are accepted and mean the same thing (§7.2).
-		var body := conn.body_text()
+		var body: String = conn.body_text()
 		if body.is_empty():
 			body = BridgeNet.percent_decode(String(conn.query.get("b", "")))
 		for line in BridgeWire.lines_from_text(body):
@@ -281,7 +281,7 @@ class BridgeHTTPConn:
 			if buffer.size() > HEAD_MAX:
 				broken = true  # 16 KiB without a header terminator: not our client
 			return false
-		var head := buffer.slice(0, index).get_as_text()
+		var head := buffer.slice(0, index).get_string_from_utf8()
 		buffer = buffer.slice(index + 4)  # everything after CRLFCRLF belongs to the body
 		var lines := head.split("\r\n")
 		var parts: PackedStringArray = String(lines[0]).split(" ")
@@ -336,7 +336,7 @@ class BridgeHTTPConn:
 		return true
 
 	func body_text() -> String:
-		return body.get_as_text()
+		return body.get_string_from_utf8()
 
 	## Long-poll deadline. `awaiting` is only ever set for /bridge/poll.
 	func expired() -> bool:
@@ -355,10 +355,10 @@ class BridgeHTTPConn:
 		body_length = 0
 
 	func reply(payload: String, content_type := "text/plain; charset=utf-8") -> void:
-		respond(payload.to_utf8(), 200, "OK", content_type)
+		respond(payload.to_utf8_buffer(), 200, "OK", content_type)
 
 	func reply_error(code: int, message: String) -> void:
-		respond(message.to_utf8(), code, "Not Found" if code == 404 else "Error", "text/plain; charset=utf-8")
+		respond(message.to_utf8_buffer(), code, "Not Found" if code == 404 else "Error", "text/plain; charset=utf-8")
 
 	## put_data queues into Godot's own send buffer and goes out on the next poll(). If that buffer
 	## were ever full the response would be lost — which is fine here, because the client's netText
@@ -369,7 +369,7 @@ class BridgeHTTPConn:
 		var head := "HTTP/1.1 %d %s\r\nContent-Type: %s\r\nContent-Length: %d\r\nCache-Control: no-store\r\nAccess-Control-Allow-Origin: *\r\nConnection: %s\r\n\r\n" % [
 			code, label, content_type, data.size(), "keep-alive" if keep_alive else "close"
 		]
-		var out := head.to_utf8()
+		var out := head.to_utf8_buffer()
 		out.append_array(data)
 		sock.call("put_data", out)
 
@@ -406,9 +406,9 @@ class BridgeHTTPConn:
 				bytes.append(32)
 				index += 1
 				continue
-			bytes.append_array(char.to_utf8())
+			bytes.append_array(char.to_utf8_buffer())
 			index += 1
-		return bytes.get_as_text()
+		return bytes.get_string_from_utf8()
 
 	static func _hex_value(text: String) -> int:
 		if text.length() != 2:

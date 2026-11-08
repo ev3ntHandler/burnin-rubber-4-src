@@ -41,6 +41,11 @@ func _ready() -> void:
 	_timer.start()
 
 
+func _exit_tree() -> void:
+	if peer != null:
+		peer.stop()
+
+
 func _build_ui() -> void:
 	var head := HBoxContainer.new()
 	add_child(head)
@@ -215,7 +220,7 @@ func _execute(text: String) -> String:
 	match verb:
 		"get":
 			var value = peer.read_local(_alias(rest), BridgeNet.missing())
-			if value == BridgeNet.missing():
+			if typeof(value) == TYPE_STRING and value == BridgeNet.missing():
 				return "no mirror entry for %s (try: request %s)" % [rest, rest]
 			return "%s = %s  (%s)" % [rest, BridgeWire.render(value), BridgeWire.encode(value)]
 		"request":
@@ -359,6 +364,6 @@ func _run_selftest() -> void:
 		_print("This build has no OS.execute; run the command above in a terminal.")
 		return
 	var out: Array[String] = []
-	var code := OS.execute(full, out, true, true)
+	var code := OS.execute(editor, args, out, true)
 	_print("".join(out) if not out.is_empty() else "(no output)")
 	_print("exit %d" % code)

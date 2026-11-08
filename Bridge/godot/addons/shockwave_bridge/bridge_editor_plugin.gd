@@ -33,7 +33,7 @@ func _offer_autoload() -> void:
 	confirm.dialog_text = "Add %s as an autoload so the running game talks to the movie?" % AUTOLOAD_NAME
 	confirm.title = "Shockwave Bridge"
 	confirm.confirmed.connect(_install_autoload)
-	editor_interface.get_base_control().add_child(confirm)
+	get_editor_interface().get_base_control().add_child(confirm)
 	confirm.popup_centered()
 
 

@@ -17,7 +17,7 @@ extends RefCounted
 ## subset that matters here is small enough to own.
 static func percent_decode(text: String) -> String:
 	var out := PackedByteArray()
-	var bytes := text.to_utf8()
+	var bytes := text.to_utf8_buffer()
 	var index := 0
 	while index < bytes.size():
 		var byte := bytes[index]
@@ -61,7 +61,7 @@ static func _hex_value(byte: int) -> int:
 
 
 static func missing() -> String:
-	return "\x00__bridge_missing__"
+	return "\u0001__bridge_missing__"
 
 
 const MAX_READ_PER_FRAME := 64  # bounded: a chatty peer cannot starve the frame loop
@@ -101,7 +101,7 @@ static func split_lines(buffer: PackedByteArray, binary := false) -> Array:
 	while index < size:
 		if buffer[index] == 10:  # LF
 			if index > start:
-				var raw := buffer.slice(start, index).get_as_text().trim_suffix("\r")
+				var raw := buffer.slice(start, index).get_string_from_utf8().trim_suffix("\r")
 				if not raw.strip_edges().is_empty():
 					lines.append(raw)
 			start = index + 1
@@ -118,7 +118,7 @@ static func _split_frames(buffer: PackedByteArray) -> Array:
 			break  # nonsense header: leave it, the caller will drop the link
 		if buffer.size() - index - 4 < size:
 			break
-		var text := buffer.slice(index + 4, index + 4 + size).get_as_text()
+		var text := buffer.slice(index + 4, index + 4 + size).get_string_from_utf8()
 		for line in text.split("\n"):
 			if not String(line).strip_edges().is_empty():
 				lines.append(line.trim_suffix("\r"))
@@ -129,7 +129,7 @@ static func _split_frames(buffer: PackedByteArray) -> Array:
 ## `u32 length · batch bytes` — the optional binary framing of §7.3.
 static func pack_frame(payload: PackedByteArray) -> PackedByteArray:
 	var out := PackedByteArray()
-	out.resize(4 + payload.size())
+	out.resize(4)
 	out.encode_u32(0, payload.size())
 	out.append_array(payload)
 	return out
@@ -148,7 +148,7 @@ static func accept_one(server: TCPServer) -> Object:
 	return client
 
 
-static func is_connected(peer: Object) -> bool:
+static func is_stream_connected(peer: Object) -> bool:
 	if peer == null:
 		return false
 	# STATUS_CONNECTED == 2 on StreamPeerTCP

@@ -36,14 +36,14 @@ var refresh_left := 0.0
 
 
 func _ready() -> void:
-	if not Engine.has_singleton("ShockwaveBridge"):
+	bridge = get_node_or_null("/root/ShockwaveBridge")
+	if bridge == null:
 		_build_ui()
 		status_label.text = "autoload missing"
 		_log("Add res://addons/shockwave_bridge/shockwave_bridge.gd as an autoload named "
 			+ "ShockwaveBridge (Project > Project Settings > Globals), or use the Shockwave dock's "
 			+ "Install autoload button.")
 		return
-	bridge = get_node("/root/ShockwaveBridge")
 	_build_ui()
 	_apply_command_line()
 	bridge.bind_node(self, "Demo")
@@ -98,7 +98,7 @@ func _process(delta: float) -> void:
 		# a cold read, one per second, of a path that is not in the mirror at all
 		bridge.request_read("gGame.CurrentVehicle.name", func(result: Variant) -> void:
 			labels["Vehicle"].text = _pretty(result))
-		var counts := bridge.stats()
+		var counts: Dictionary = bridge.stats()
 		labels["Traffic"].text = "%d in / %d out  ·  %d torn  ·  %d denied" % [
 			int(counts["msgs_in"]), int(counts["msgs_out"]), int(counts["torn"]), int(counts["denied"])
 		]
@@ -176,7 +176,7 @@ func _pretty(value: Variant) -> String:
 		return str(value)
 	if typeof(value) == TYPE_FLOAT:
 		return "%.1f" % value
-	return String(value)
+	return str(value)
 
 
 func _log(text: String) -> void:
@@ -259,7 +259,7 @@ func _on_autopilot() -> void:
 ## 5: drive the car by pushing the same input flags the game's own input handler sets. Nothing here
 ## knows about the game's physics: it just reads kmh and writes the pedals, once per frame.
 func _drive() -> void:
-	var kmh := bridge.read_number("gGame.CurrentVehicle.general.kmh", 0.0)
+	var kmh: float = bridge.read_number("gGame.CurrentVehicle.general.kmh", 0.0)
 	var error := target_kmh - kmh
 	var forward := 1
 	var brake := 0

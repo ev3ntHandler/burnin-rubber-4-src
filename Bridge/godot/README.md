@@ -183,6 +183,12 @@ status | ping | reload      health
 
 ## Verifying a port or a change
 
+From the repository root, run `Bridge/tools/test_godot.sh` with Godot 4 on your PATH (or set
+`GODOT_BIN` to its executable). It imports the project with the editor, runs the self-test, and
+smoke-tests the demo. It also fails if Godot logs a script error despite returning exit code 0.
+
+For a project that has already been imported by the Godot editor, you can run just the self-test:
+
 ```
 godot --headless --path . --script addons/shockwave_bridge/bridge_selftest.gd
 ```
@@ -190,7 +196,7 @@ godot --headless --path . --script addons/shockwave_bridge/bridge_selftest.gd
 Exit code 1 on any failure. It checks, in order: the wire codec (every typed value, both
 directions), the Lingo literal parser, config parsing, the **conformance vectors** in
 `Bridge.Vectors.txt` — the same table the Lingo side reads and the Python tool generates, so
-"Godot agrees with Director" is a checked claim and not a hope — then two peers in lockstep over an
+both implementations can be checked against the same expected values — then two peers in lockstep over an
 in-memory transport, the real-filesystem `files` transport including a deliberately torn frame, the
 **restart re-arm** (a peer whose `seq` goes backwards after a re-run must still be heard — see
 `../PROTOCOL.md` §4 and §8), and finally `gd:` binding against a live node.
@@ -227,6 +233,11 @@ mkdir -p ../box && sed "s|^root\t.*|root\t$PWD/../box|" ../Director/Bridge.Data.
 (cd ../tools && python3 mock_director.py --config ../box/Bridge.Data.txt) &
 godot --path . -- --config "$PWD/../box/Bridge.Data.txt"
 ```
+
+With the default `files` transport and `delta` snapshots, a receiver that starts after the sender can
+miss unchanged initial values: the mailbox holds only the latest batch. For now, start Godot before
+the sender when testing, or use `request_read()` for a current value. This transport does not yet
+guarantee delivery of every intermediate batch.
 
 Both ends now share one mailbox folder and one config; the log pane prints the resolved path, so a
 side that is looking at the wrong folder says so in its first line instead of silently showing `VOID`.

@@ -93,7 +93,7 @@ func _write_marker(payload: String) -> void:
 	# "<seq> <bytes> <lines>". `bytes` is the UTF-8 size (see §7.1: a reader that cannot count UTF-8
 	# bytes verifies `lines` alone — that is what the Lingo side does). The optional 4th token
 	# (crc32hex) is a writer's nicety; Godot and Director both skip it.
-	marker.store_string("%d %d %d\n" % [last_out_seq, payload.to_utf8().size(), _count(payload, BridgeWire.LF)])
+	marker.store_string("%d %d %d\n" % [last_out_seq, payload.to_utf8_buffer().size(), _count(payload, BridgeWire.LF)])
 	marker.flush()
 	marker.close()
 
@@ -124,7 +124,7 @@ func poll() -> Array:
 	if _count(_text, BridgeWire.LF) != line_count:
 		_note_torn()
 		return []
-	if size >= 0 and _text.to_utf8().size() < size:
+	if size >= 0 and _text.to_utf8_buffer().size() < size:
 		_note_torn()
 		return []
 	last_in_seq = seq
@@ -147,7 +147,7 @@ func _read_unchecked() -> Array:
 	for index in range(parts.size() - 1, -1, -1):
 		if parts[index].strip_edges().is_empty():
 			parts.remove_at(index)
-	return parts
+	return Array(parts)
 
 
 func _read_into(path: String) -> bool:

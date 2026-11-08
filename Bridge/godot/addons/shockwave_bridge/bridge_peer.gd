@@ -106,6 +106,8 @@ func stop() -> void:
 	flush()
 	if transport != null and transport.has_method("stop"):
 		transport.call("stop")
+	# Transports also hold their peer. Break that RefCounted cycle on stop.
+	transport = null
 
 
 ## A transport calls this when a link (re)connects, so HELLO is re-greeted to whoever is now on the
@@ -288,7 +290,16 @@ func send_event(name: String, data: Dictionary = {}) -> void:
 
 
 func list_paths(prefix: String, depth := 0, callback: Callable = Callable()) -> int:
-	return request("list", [BridgeWire.sanitize(prefix), depth], callback)
+	if not callback.is_valid():
+		return request("list", [BridgeWire.sanitize(prefix), depth])
+	return request("list", [BridgeWire.sanitize(prefix), depth], func(value: Variant) -> void:
+		if value is BridgeError:
+			callback.call(value)
+		elif value is String:
+			callback.call(BridgeWire.kv_to_dict(value))
+		else:
+			callback.call(value)
+	)
 
 
 func ping(callback: Callable = Callable()) -> int:
