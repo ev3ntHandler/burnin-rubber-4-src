@@ -1,8 +1,32 @@
 #!/usr/bin/env python3
 """Regression tests for the static Lingo checks (not a Director compiler)."""
+import re
 import unittest
+from pathlib import Path
 
-from lint_lingo import analyse, strip_comments
+from lint_lingo import analyse, blank_strings, strip_comments
+
+
+def missing_bridge_globals(source):
+    """Check the bridge's gName naming convention against its script-level declarations.
+
+    This deliberately checks bridge scripts, not arbitrary Lingo: another project could use
+    local variables with a g prefix. Ignore comments, strings, properties and symbols.
+    """
+    declared = set()
+    used = set()
+    in_handler = False
+    for line in source.splitlines():
+        code = blank_strings(strip_comments(line)[0]).strip()
+        if re.match(r'^(?:on|function)\b', code, re.I):
+            in_handler = True
+        elif re.match(r'^end\s*$', code, re.I):
+            in_handler = False
+        if not in_handler and re.match(r'^global\b', code, re.I):
+            declared.update(name.lower() for name in re.findall(r'\bg[A-Z]\w*\b', code))
+        else:
+            used.update(name.lower() for name in re.findall(r'(?<![\w.#])g[A-Z]\w*\b', code))
+    return used - declared
 
 
 class LingoLintTests(unittest.TestCase):
@@ -58,6 +82,24 @@ return tRate'''))
                 self.assertTrue(any("use Lingo's `starts` operator" in p for p in problems))
         self.assertEqual([], self.problems('if _movie.movieURL starts "http" then\n    exit\nend if'))
         self.assertEqual([], self.problems('put "begins with" -- begins with'))
+
+    def test_bridge_globals_declared(self):
+        fixture = '''global gGame
+on example me
+    put gGame
+    put gSound
+    put gGame.gProperty
+    put #gSymbol
+    put "gString" -- gComment
+end'''
+        self.assertEqual({'gsound'}, missing_bridge_globals(fixture))
+        self.assertEqual(set(), missing_bridge_globals(fixture.replace('global gGame', 'global gGame, gSound')))
+        director = Path(__file__).resolve().parent.parent / 'Director'
+        scripts = sorted(director.glob('*.ls'))
+        self.assertEqual(3, len(scripts))
+        for script in scripts:
+            with self.subTest(script=script.name):
+                self.assertEqual(set(), missing_bridge_globals(script.read_text(encoding='utf-8')))
 
     def test_backslash_is_not_an_escape(self):
         code, problems = strip_comments('tSep = "\\" -- a path separator')

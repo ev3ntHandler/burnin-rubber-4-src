@@ -41,7 +41,7 @@
 --   run arbitrary code.
 --------------------------------------------------------------------------------
 
-global gSystem, gData, gGame, gBridge
+global gSystem, gData, gGame, gSound, gBridge
 
 --------------------------------------------------------------------------------
 -- LIFECYCLE
