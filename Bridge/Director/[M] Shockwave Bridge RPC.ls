@@ -827,8 +827,10 @@ end
 on BridgeWatch me, tPath, tRate
 	-- Ask to be told when something changes -- the mirror is bidirectional, so a path can
 	-- be subscribed from either end; this end's subscriptions are what we send out.
-	tPath = BridgeRequest(0, "sub", [BridgeResolveAlias(0, tPath), voidp(tRate) = 1 then 0 else tRate], VOID, VOID)
-	return tPath
+	if voidp(tRate) = 1 then
+		tRate = 0
+	end if
+	return BridgeRequest(0, "sub", [BridgeResolveAlias(0, tPath), tRate], VOID, VOID)
 end
 
 on BridgeUnwatch me, tPath
@@ -870,7 +872,13 @@ end
 
 on BridgeSnap me, tOn, tRate, tMode
 	-- Tell Godot to start or stop mirroring *its* state (the peer's half of the same op).
-	return BridgeRequest(0, "snap", ["b:" & BridgeToInt(0, tOn), string(voidp(tRate) = 1 then 0 else tRate), voidp(tMode) = 1 then "delta" else tMode], VOID, VOID)
+	if voidp(tRate) = 1 then
+		tRate = 0
+	end if
+	if voidp(tMode) = 1 then
+		tMode = "delta"
+	end if
+	return BridgeRequest(0, "snap", ["b:" & BridgeToInt(0, tOn), string(tRate), tMode], VOID, VOID)
 end
 
 on BridgeStatus me

@@ -17,6 +17,7 @@ Checks, in the order they can bite you:
    so ``switch x`` / ``case "a":`` / ``endswitch`` never compiles -- it has to be
    ``case x of`` / ``"a":`` / ``end case``), and a branch that repeats the keyword inside a real
    ``case … of``, which is the ActionScript tell. ``otherwise`` without its colon joins them.
+   ``then`` outside an if statement and inline ``then ... else`` expressions are also flagged.
 3. Balanced parentheses and brackets, and properly closed strings: Lingo uses doubled quotes
    inside strings and does not treat backslashes as escapes. Also flag the invalid comma-separated
    ``the chars of text, start, end`` form; character slices use chunk expressions.
@@ -206,6 +207,11 @@ def analyse(path: str, source: str) -> Tuple[List[str], Dict[str, int], List[str
         stripped = blank_strings(code).strip()
         if not stripped:
             continue
+        if re.search(r"\bthen\b", stripped, re.I):
+            if not re.match(r"^(?:else\s+)?if\b", stripped, re.I):
+                problems.append("%s:%d: `then` outside an if statement; Lingo has no inline conditional expression" % (path, number))
+            elif re.search(r"\bthen\b.*\belse\b", stripped, re.I):
+                problems.append("%s:%d: inline `then ... else` is not supported; use an if/else block" % (path, number))
         if BAD_CHAR_SLICE.search(stripped):
             problems.append("%s:%d: `the chars of text, start, end` is not a Lingo chunk expression"
                             " -- use `char start to end of text`" % (path, number))
