@@ -1,0 +1,29 @@
+; A self-contained Godot project whose only content is this addon, so the demo scene and the
+; headless selftest run straight out of the repository:
+;
+;     godot --headless --path Bridge/godot --script addons/shockwave_bridge/bridge_selftest.gd
+;     godot --path Bridge/godot                       # the demo scene, bound to a running movie
+;
+; To use the bridge for real, copy addons/shockwave_bridge/ into your own project and enable the
+; plugin there (godot/README.md is the install guide). No `config/features` key on purpose: it is
+; the one thing in this file that would pin the project to a specific Godot minor version.
+
+config_version=5
+
+[application]
+
+config/name="Shockwave Bridge (Director <-> Godot)"
+run/main_scene="res://addons/shockwave_bridge/demo/bridge_demo.tscn"
+
+[autoload]
+
+ShockwaveBridge="*res://addons/shockwave_bridge/shockwave_bridge.gd"
+
+[display]
+
+window/size/viewport_width=1180
+window/size/viewport_height=760
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/shockwave_bridge/plugin.cfg")

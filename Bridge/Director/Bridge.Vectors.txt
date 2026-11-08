@@ -1,0 +1,87 @@
+# Shockwave <-> Godot bridge conformance vectors -- do not edit, generate me:
+#     python3 tools/bridge_proto.py vectors
+# Fields are TAB separated. '#' starts a comment. See PROTOCOL.md 2, 3, 4, 5.
+value	zero	i:0	0
+value	negative int	i:-4213	-4213
+value	int64 max	i:9223372036854775807	9223372036854775807
+value	float	f:1.5	1.5
+value	negative float	f:-0.03125	-0.03125
+value	integral float	f:2.0	2
+value	tiny float	f:1.0e-06	1e-06
+value	large float	f:1.7976931348623157e+308	1.7976931348623157e+308
+value	string	s:Bullet350	Bullet350
+value	string with spaces	s:Burnin Rubber 4	Burnin Rubber 4
+value	empty string	s:	
+value	string with dot	s:1.0	1.0
+value	string that looks typed	s:i:12	i:12
+value	true	b:1	TRUE
+value	false	b:0	FALSE
+value	void	s:VOID	VOID
+value	none	n	VOID
+value	symbol	s:#Racing	#Racing
+value	symbol underscore	s:#update_KeyInput	#update_KeyInput
+value	point	l:[12.0, -0.5]	[12, -0.5]
+value	vector	l:[0.0001, 0.0001, -1.0]	[0.0001, 0.0001, -1]
+value	color	l:[255, 128, 0, 255]	[255, 128, 0, 255]
+value	color alpha	l:[10, 20, 30, 128]	[10, 20, 30, 128]
+value	rect	l:[0.0, 0.0, 800.0, 450.0]	[0, 0, 800, 450]
+value	list of ints	l:[1, 2, 3]	[1, 2, 3]
+value	list of strings	l:["Tank", "Taxi", "Rebel"]	[Tank, Taxi, Rebel]
+value	nested list	l:[[1, 2], [3, 4]]	[[1, 2], [3, 4]]
+value	proplist	l:[#mass: 1200.5, #wheels: [1, 2, 3]]	{mass=1200.5, wheels=[1, 2, 3]}
+value	proplist mixed	l:[#name: "Bullet350", #ok: TRUE, #nil: "VOID", #sym: "#Racing"]	{name=Bullet350, ok=TRUE, nil=VOID, sym=#Racing}
+value	proplist nested list	l:[#states: ["#update_keyInput", "#update_Waypoints"]]	{states=[#update_keyInput, #update_Waypoints]}
+value	empty list	l:[]	[]
+value	tab flattened	s:a b	a b
+value	lf flattened	s:line1 line2	line1 line2
+value	crlf flattened	s:a  b	a  b
+value	unicode	s:Größe Ünicode 42	Größe Ünicode 42
+value	quoted string	s:He said "no"	He said "no"
+message	hello	HELLO	5	HELLO	godot	BR4-Demo	1	7	write,eval,snap,sub,event
+message	hello bare caps	HELLO	5	HELLO	director	Burnin Rubber 4	1	3	
+message	bye	BYE	1	BYE	quit
+message	ping	PING	2	PING	11	99123
+message	pong	PONG	2	PONG	11	99124
+message	log	LOG	2	LOG	info	bridge ready
+message	log warn fields	LOG	3	LOG	warn	transport files: reconnecting	attempt=3
+message	snap empty	SNAP	5	SNAP	12	214	99123	213	
+message	snap scalars	SNAP	5	SNAP	12	214	99123	213	gGame.Cash=i:1000;gGame.kmh=f:187.5;gGame.Vehicle=y:Car
+message	delta nested	DELTA	5	DELTA	13	215	99154	214	gGame.vehicles[1].general.pos=v:1,2,3;bridge.mode=b:1
+message	event	EVT	3	EVT	14	GodotCommand	kind=s:boost;amount=f:1.5
+message	req get	REQ	3	REQ	12	get	gGame.Vehicle
+message	req gets	REQ	3	REQ	13	gets	gGame.Cash;gGame.Money
+message	req set	REQ	3	REQ	14	set	gGame.Cash=i:999999
+message	req sets	REQ	3	REQ	15	sets	gGame.Cash=i:99;bridge.tick=i:1
+message	req call	REQ	5	REQ	16	call	PutMessage		[#text: "hi", #type: #alert]
+message	req eval	REQ	3	REQ	17	eval	gGame.resolution[1] * 2
+message	rsp value	RSP	5	RSP	12	get	ok	gGame.Vehicle	y:Car
+message	rsp void	RSP	5	RSP	13	get	ok	gGame.Missing	n
+message	rsp err denied	RSP	5	RSP	14	set	err	denied	gGame.nope
+message	rsp err timeout	RSP	5	RSP	15	eval	err	timeout	
+message	cmd one way	CMD	3	CMD	18	sets	gGame.Cash=i:99;bridge.mode=y:autopilot
+message	cmd snap on	CMD	5	CMD	19	snap	b:1	2	delta
+message	trailing empty	PING	2	PING	20	
+literal	empty	[]	
+literal	ints	[1, 2, 3]	1=i:1|2=i:2|3=i:3
+literal	nested	[[1, 2], [3, 4]]	1[1]=i:1|1[2]=i:2|2[1]=i:3|2[2]=i:4
+literal	proplist	[#mass: 1200.5, #wheels: [1, 2, 3]]	mass=f:1200.5|wheels[1]=i:1|wheels[2]=i:2|wheels[3]=i:3
+literal	strings	["Tank", "Taxi"]	1=s:Tank|2=s:Taxi
+literal	mixed	[#name: "Bullet350", #ok: TRUE, #nil: VOID, #sym: #Racing]	name=s:Bullet350|ok=b:1|nil=n|sym=y:Racing
+literal	deep	[[#a: [1, [2]]], #b]	1.a[1]=i:1|1.a[2][1]=i:2|2=y:b
+literal	doubled quotes	["He said ""no""", "C:\path"]	1=s:He said "no"|2=s:C:\path
+literal	quote before a backslash	["tail \ ""q"""]	1=s:tail \ "q"
+literal	path-ish strings	[#file: "Data\Cars\Tank.w3d", #ok: TRUE]	file=s:Data\Cars\Tank.w3d|ok=b:1
+kv	two ints	gGame.Cash=i:1000;gGame.Money=i:-5
+kv	mixed types	gGame.Cash=i:1000;gGame.kmh=f:187.5;gGame.RaceState=y:Racing;gGame.name=s:x
+kv	one void	bridge.gone=n
+kv	point and color	gGame.pos=p:1.5,-2.0;gGame.tint=c:255,0,128
+kv	nested list payload	gGame.list=l:[1, 2, 3]
+kv	empty string value	gGame.label=s:
+path	gGame.Cash	gGame	gGame	Cash
+path	gGame	gGame		gGame
+path	bridge.wantBoost	bridge	bridge	wantBoost
+path	gGame.vehicles[3].general.kmh	gGame	gGame.vehicles[3].general	kmh
+path	gGame.CurrentVehicle.Input.forward	gGame	gGame.CurrentVehicle.Input	forward
+path	member("Console").text.line[3]	member("Console")	member("Console").text.line	3
+path	gd:Player.hp	gd:Player	gd:Player	hp
+path	sprite(12).locH	sprite(12)	sprite(12)	locH

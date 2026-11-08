@@ -1,0 +1,167 @@
+-- [Text] Bridge.Data
+//
+// Shockwave <-> Godot bridge -- runtime configuration for Burnin' Rubber 4
+//
+// Format is the one this movie already uses for every data file (see "Globals.txt" and
+// "[M] Event Manager.ls" -> AddToData): fields separated by a TAB, "//" (or "--") starts a
+// comment, blank lines are ignored. The bridge's own parser is BridgeConfigParse(); the Godot
+// addon and tools/*.py read this same file, so there is one config for both processes.
+//
+// Repeatable keys accumulate a list: expose, write, call, event, alias, ignore, hook.
+// Everything else is a scalar.
+
+//---------------------------------------------------------------------------------------------------
+// TRANSPORT
+//---------------------------------------------------------------------------------------------------
+// transport    files | http | tcp
+//                files -> the BridgeData mailbox (no Xtra needed, works offline anywhere)
+//                http  -> long-poll against the Godot addon's server (lowest effort, ~0.3 ms)
+//                tcp   -> needs a socket Xtra on this side (see INSTALL.md); relay/mock only
+transport	files
+
+// root         mailbox directory, relative to _movie.path (files) -- created if missing
+root		BridgeData
+
+// snapshot     delta (only changed keys) | full (every subscribed key every frame)
+// rate         1 = every frame; 2 = every other frame ... (frames, not seconds)
+// verify       1 = write/require the .seq commit marker (see PROTOCOL.md 7.1); 0 = lenient
+snapshot	delta
+rate		1
+verify		1
+
+// httpUrl      override the whole URL; otherwise http://<httpHost>:<httpPort>/bridge is built
+// httpHost     must match bridge/bind on the Godot side
+// httpWaitMs   long-poll hold time; 0 falls back to short polling at "rate"
+// httpPollFrameArms  1 = re-arm the poll from netTextDone (event driven), 0 = poll every frame
+httpHost	127.0.0.1
+httpPort	7778
+httpWaitMs	1500
+
+tcpHost		127.0.0.1
+tcpPort		7777
+
+// peerTimeoutMs  no traffic for this long -> status "stale"; 5x -> "down" and re-handshake
+peerTimeoutMs	2000
+
+//---------------------------------------------------------------------------------------------------
+// CAPABILITIES  (off by default: a bridge that can run Lingo is a cheat menu and a security hole)
+//---------------------------------------------------------------------------------------------------
+// allowEval    permit "eval" (value() on an arbitrary expression) from Godot
+// allowExec    permit "exec" (do() with arbitrary statements) from Godot
+// allowCall    permit "call" (invoke a movie handler with a propList) -- read+write gated
+// allowEvent   permit "event" (raise a game event through event()) -- this can do anything the
+//              data files can do, so it is the recommended way to trigger game actions remotely
+allowEval	FALSE
+allowExec	FALSE
+allowCall	FALSE
+allowEvent	TRUE
+
+//---------------------------------------------------------------------------------------------------
+// READ MIRROR  (what gets pushed to Godot every snapshot -- keep this small and flat)
+//---------------------------------------------------------------------------------------------------
+expose	gGame.name
+expose	gGame.version
+expose	gGame.Scene
+expose	gGame.World
+expose	gGame.Track
+expose	gGame.RaceState
+expose	gGame.Vehicle
+expose	gGame.Cash
+expose	gGame.Money
+expose	gGame.pause
+expose	gGame.Input
+expose	gGame.tempo
+expose	gGame.resolution
+expose	gGame.Iteration
+expose	gGame.AI
+expose	gGame.AIsBuild
+expose	gGame.PlayersBuild
+expose	gGame.Bloom
+expose	gGame.Lightmaps
+expose	gGame.CheckPoints.done
+expose	gGame.CheckPoints.total
+expose	gGame.traffic.count
+expose	gGame.MiniMap.rotation
+expose	gGame.CurrentVehicle.name
+expose	gGame.CurrentVehicle.general.kmh
+expose	gGame.CurrentVehicle.general.health
+expose	gGame.CurrentVehicle.general.nitro
+expose	gGame.CurrentVehicle.general.pos
+expose	gGame.CurrentVehicle.general.rot
+expose	gGame.CurrentVehicle.general.state
+expose	gGame.CurrentVehicle.Input.forward
+expose	gGame.CurrentVehicle.Input.backward
+expose	gGame.CurrentVehicle.Input.left
+expose	gGame.CurrentVehicle.Input.right
+expose	gGame.CurrentVehicle.Input.brake
+expose	gGame.CurrentVehicle.physics.wheelSpin
+expose	gGame.UPStatistics.money
+expose	gGame.UPStatistics.totalTime
+expose	gGame.UPStatistics.carsWrecked
+
+// ignore       keys matched here are never mirrored even if an "expose" wildcard would hit them
+ignore	gGame.scriptList
+ignore	gGame.handlerList
+ignore	gGame.actorList
+ignore	gGame.timeoutList
+ignore	gGame.vehicles
+ignore	gGame.Physics
+
+//---------------------------------------------------------------------------------------------------
+// WRITE ALLOW-LIST  (empty = the game ignores every "set"; a name allows its whole subtree)
+//---------------------------------------------------------------------------------------------------
+write		gGame.Cash
+write		gGame.Money
+write		gGame.Input
+write		gGame.pause
+write		gGame.tempo
+write		gGame.Bloom
+write		gGame.Lightmaps
+write		gGame.MiniMap.rotation
+write		gGame.CurrentVehicle.Input
+write		gGame.CurrentVehicle.general.health
+write		gGame.CurrentVehicle.general.kmh
+write		gGame.bridge
+write		bridge
+
+//---------------------------------------------------------------------------------------------------
+// RPC HANDLERS  (which of the movie's ~1500 handlers Godot may call through "call"/"event")
+//---------------------------------------------------------------------------------------------------
+call	PutMessage
+call	LogMessage
+call	PlaySound
+call	AddValue
+call	SetValue
+call	AddToList
+call	RemoveFromList
+call	MiniCalculator
+call	GetScript
+call	ResetGame
+
+event	GameInitialization
+event	WorldEnter
+event	WorldExit
+event	RaceStart
+event	RaceEnd
+event	SplashInitialization
+event	MenuEnter
+event	BridgePause
+event	BridgeResume
+event	BridgeReset
+
+//---------------------------------------------------------------------------------------------------
+// ALIASES  short HUD names -> full paths, so the Godot side can ask for "kmh"
+//---------------------------------------------------------------------------------------------------
+alias	kmh	gGame.CurrentVehicle.general.kmh
+alias	health	gGame.CurrentVehicle.general.health
+alias	cash	gGame.Cash
+alias	track	gGame.Track
+alias	state	gGame.RaceState
+alias	pos	gGame.CurrentVehicle.general.pos
+alias	nitro	gGame.CurrentVehicle.general.nitro
+
+//---------------------------------------------------------------------------------------------------
+// HOOKS  bridge -> game events fired on bridge lifecycle (handler = event name)
+//---------------------------------------------------------------------------------------------------
+hook	BridgeConnected
+hook	BridgeDisconnected

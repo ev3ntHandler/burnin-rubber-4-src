@@ -1,0 +1,5 @@
+# The Python tooling in tools/ is run in place; nothing it leaves behind belongs in git.
+__pycache__/
+*.pyc
+.godot/
+BridgeData/
